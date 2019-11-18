@@ -1,0 +1,37 @@
+<div class="container-fluid">
+  <header id="header" class="">
+    <div class="content-header">
+      <div class="m-0">
+    
+        <a class="col-xs-10" href="https://www.sunseap.com/residential/electricity-plans/">
+          <img src="/assets/sign-up/images/logo/large-logo.png" includeVersion height="50" alt="">
+        </a>
+        <button class="btn btn-admin ml-0 pt-2 col-xs-2" (click)="logout()">Logout</button>  
+    </div>
+    </div>
+  </header>
+</div>
+
+      
+<div class="wrapper bg_img">
+  <div class="row m-0 dashboard">
+    <div class="col-md-3 p-0">
+      <div class="sidebar" id="menu-sidebar">
+        <a class="menus" routerLink="../admin-dash/">Add Plan</a>
+        <a class="menus" routerLink= "../admin-dash/view-plan">View Plan</a>
+        <a class="menus" routerLink= "../admin-dash/audit">Audit Log</a>
+       
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="content">
+        <router-outlet></router-outlet>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+

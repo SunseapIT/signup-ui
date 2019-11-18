@@ -1,0 +1,73 @@
+
+  
+<section>
+
+<form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
+        <div class="form-content container">
+       <div class="row">
+            <div class="form-group col-lg-6">
+                    <label class="form-control-label" for="planName">Plan Name</label>
+                    <input name="planName" id="planName" class="form-control"
+                           [class.is-invalid]="planName.invalid && (planName.touched || form.submitted)"
+                           required 
+                           [(ngModel)]="model.planName" #planName="ngModel"/>
+              
+                    <div *ngIf="planName.invalid && (planName.touched || form.submitted)" class="invalid-feedback">
+                      <div *ngIf="planName?.errors.required">
+                        <i>Plan name is required</i>
+                      </div>                    
+                    </div>
+                  </div>
+              
+                  <div class="form-group col-lg-6">
+                        <label class="form-control-label" for="planId">Plan Code</label>
+                        <input name="planId" id="planId" class="form-control"
+                               [class.is-invalid]="planId.invalid && (planId.touched || form.submitted)"
+                              required
+                               [(ngModel)]="model.planId" #planId="ngModel"/>
+                  
+                        <div *ngIf="planId.invalid && (planId.touched || planId.submitted)" class="invalid-feedback">
+                          <div *ngIf="planId?.errors.required">
+                            <i>Plan code is required</i>
+                          </div>                    
+                        </div>
+                      </div>
+       </div>
+
+      
+   <div class="row">
+      <div class="form-group col-lg-6">
+     <input type="text" name="factSheet"
+     class="form-control"
+      [(ngModel)]="myfile"
+      [value]="uploaded"
+      disabled
+      required
+       #myfile1="ngModel">
+    <div class="upload-btn-wrapper">
+      <button class="btnUpload" >Upload</button>
+      <input type="file" name="myfile" (change)="onFileSelected($event)"/>
+    </div>
+      <ng-container class="valid-feedback" *ngIf="uploadSuccess">
+           <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span> 
+          </ng-container>   
+   
+   
+    </div>
+   </div>
+        
+      
+     
+      
+          <div class="col-12">
+            <button class="btn step-next mx-auto" type="submit">
+              <span>Add</span>
+            </button>
+          </div>
+      
+        </div>
+      
+   
+      </form>
+</section>
+

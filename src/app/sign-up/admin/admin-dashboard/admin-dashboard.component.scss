@@ -1,0 +1,119 @@
+.project-tab {  
+    margin-top: 2%;
+}
+.project-tab #tabs{
+    background: #007b5e;
+    color: #eee;
+}
+.project-tab #tabs h6.section-title{
+    color: #eee;
+}
+.project-tab #tabs .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: #007bff;
+    background-color: transparent;
+    border-color: transparent transparent #f3f3f3;
+    border-bottom: 3px solid !important;
+    font-size: 16px;
+    font-weight: bold;
+}
+.project-tab .nav-link {
+    border: 1px solid transparent;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+    color: #007bff;
+    font-size: 16px;
+    font-weight: 600;
+}
+.project-tab .nav-link:hover {
+    border: none;
+}
+.project-tab thead{
+    background: #f3f3f3;
+    color: #333;
+}
+.project-tab a{
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+}
+
+
+.sidebar {
+    margin: 0;
+    padding: 0;
+    width: 250px;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+   
+    
+  }
+  
+  .sidebar a {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+  }
+   
+  .sidebar a.active {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .sidebar a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+  }
+  
+  .content {
+      height: 100%;
+    // scroll-behavior: smooth;
+    display: block;
+    margin-top: 110px;
+    padding: 10px;
+    background-color: #909090;
+    padding: 10px;
+    background-color: #fff;
+    margin: 0 auto;
+    margin-top: 18px;
+    /* border-top-right-radius: 32px; */
+    border-radius: 5px;
+  }
+
+
+  .bg_img{
+    background-image: url('/assets/sign-up/images/background/bg-garden-bay.jpg');
+    width: 100%;
+    background-size: cover;
+    height: calc(100vh - 9vh);
+    
+  }
+  
+
+  
+  @media screen and (max-width: 700px) {
+    .sidebar {
+      width: 100%;
+      height: auto;
+      position: relative;
+    }
+    .sidebar a {float: left;}
+    div.content {margin-left: 0;}
+  }
+  
+  @media screen and (max-width: 400px) {
+    .sidebar a {
+      text-align: center;
+      float: none;
+    }
+}
+
+header#header div.content-header {
+  padding-left: 0%;
+  padding-right: 5%;
+}
+
+.btn-admin{
+  float: right;
+}

@@ -1,0 +1,76 @@
+<form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
+    <div class="content-document-upload">
+      <div id="content-upload" class="form-content">
+  
+        <div class="document-upload-container">
+          <ng-container *ngIf="parent.isSPAccountHolder">
+             
+            <div class="form-row">
+              <div class="form-group col-lg-6 mb-0 mb-lg-auto">
+                <label class="form-control-label">SP past month bill  {{parent.isSPAccountHolder}}</label>
+                <app-document-upload-input [ngModel]="documents[DocumentName.SpPastMonthBill]"
+                                           [name]="DocumentName.SpPastMonthBill"
+                                           [documentName]="DocumentName.SpPastMonthBill"
+                                           [isSubmitted]="form.submitted"
+                                           [required]="parent.isSPAccountHolder && !documents[DocumentName.NewSpAccountOpeningLetter]?.uploadedId"
+                                           (selectFile)="selectFile($event)"
+                                           (cancel)="cancelUpload($event)">
+                </app-document-upload-input>
+              </div>
+              <div class="form-control-label d-block d-lg-none pl-3">or</div>
+              <div class="form-group col-lg-6">
+                <div class="connection-div d-none d-lg-block">or</div>
+                <label class="form-control-label">New SP account opening letter</label>
+                <app-document-upload-input [ngModel]="documents[DocumentName.NewSpAccountOpeningLetter]"
+                                           [name]="DocumentName.NewSpAccountOpeningLetter"
+                                           [documentName]="DocumentName.NewSpAccountOpeningLetter"
+                                           [isSubmitted]="form.submitted"
+                                           [required]="!documents[DocumentName.SpPastMonthBill]?.uploadedId"
+                                           placeHolder="(Optional)"
+                                           (selectFile)="selectFile($event)"
+                                           (cancel)="cancelUpload($event)">
+                </app-document-upload-input>
+              </div>
+            </div>
+          </ng-container>
+  
+          <ng-container *ngIf="!parent.isSPAccountHolder">
+            <div class="form-row">
+             
+              <div class="form-group col-lg-12 mb-0 mb-lg-auto">
+                <label class="form-control-label">Lettspaner of Authorisation by SP account holder  {{parent.isSPAccountHolder}}</label>
+                <app-document-upload-input [ngModel]="spandocuments[DocumentName.LetterOfAuthorisation]"
+                                           [name]="DocspanumentName.LetterOfAuthorisation"
+                                           [documentName]="DocumentName.LetterOfAuthorisation"
+                                           [isSubmitted]="form.submitted"
+                                           [required]="!parent.isSPAccountHolder && !documents[DocumentName.ProofOfResidency]?.uploadedId"
+                                           (selectFile)="selectFile($event)"
+                                           (cancel)="cancelUpload($event)">
+                </app-document-upload-input>
+                <span class="text-secondary mr-2 font-italic">
+                    Please make sure that the SP account holder has given you the authorisation via this form.
+                  </span>
+              </div>
+            </div>
+              <div class="form-row">
+              <div class="form-group col-lg-12">
+                <label class="form-control-label d-none d-lg-block">&nbsp;</label>
+              
+                <a href="/assets/sign-up/download/Authorisation_Letter.pdf" includeVersion download>
+                  <p><i>DOWNLOAD FORM</i></p>
+                </a>
+              </div>
+            </div>    
+        
+          </ng-container>
+        </div>
+  
+        <div class="d-flex justify-content-center pt-4 pb-4">
+          <button class="btn step-next">
+            <span>Next</span> <img src="/assets/sign-up/images/content/next.png" includeVersion>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+  

@@ -1,0 +1,25 @@
+.audit-content{
+margin-top: 20px;
+}
+
+.audit-content > span{
+padding: 10px 10px;
+color: red;
+
+}
+
+.top{
+    margin-top:20px;
+}
+
+.body{
+    height: 100vh;
+}
+
+.audit-box{
+    height:  calc(100vh-105px);
+    overflow-y: auto;
+    scroll-behavior: smooth;
+
+}
+

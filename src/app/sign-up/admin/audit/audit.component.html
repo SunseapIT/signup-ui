@@ -1,0 +1,42 @@
+<!-- <section class="body">
+    <div class="audit-box">
+        <div class="container">
+            <div class="row">
+                <angular2csv [data]="data" filename="test.csv" [options]="options">Download</angular2csv>
+            </div>
+          </div>
+      <div class="container">
+
+               <table class="table table-striped">
+                    <thead>
+                      
+                        <th>Customer Name</th>
+                        <th>Initial Attempt</th>
+                        <th>Final Attempt</th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let customerList of data">
+                        <td>{{customerList.fullName}}</td>
+                            <td>{{customerList.sighnUpStarTimeStamp}}</td>
+                            <td>{{customerList.sighnUpEndTimeStamp}}</td>  
+                        </tr>       
+              
+                    </tbody>
+                </table>
+      </div>
+    
+
+  
+       
+     
+    </div>
+</section> -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-right">
+        <angular2csv [data]="data" type="button" class="download" filename="test.csv" [options]="options">Download</angular2csv>
+        </div>
+    </div>
+  </div>
+   <ng2-smart-table class="table table-bordered" [settings]="settings" [source]="data"></ng2-smart-table>

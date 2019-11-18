@@ -1,0 +1,48 @@
+.fa-stack-1x, .fa-stack-2x {
+    left: 0px;
+    top: 131%;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+
+.form-content {
+    margin-top: 1%;
+    padding: 10px 15px;
+    margin-bottom: 30px;
+    background-color: #f6f6f6;
+}
+
+.upload-btn-wrapper {
+    left: 455px;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    top: -40px;
+}
+  
+  .btnUpload {
+    border: 2px solid gray;
+    color: rgb(255, 255, 255);
+    background-color: rgb(77, 73, 73);
+    padding: 1px 8px;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .upload-btn-wrapper input[type=file] {
+    font-size: 20px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+  }
+  
+  pdf-viewer {
+    display: block;
+    height: 100vh;
+  }
+
+ 
+ 

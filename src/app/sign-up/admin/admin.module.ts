@@ -12,6 +12,12 @@ import { ToastrModule } from 'ngx-toastr';
 import { TabsModule } from 'ngx-bootstrap/tabs'
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { FileUploadModule } from 'ng2-file-upload';
+import { UploadFactsheetComponent } from './add-plan/upload-factsheet/upload-factsheet.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { PaginationComponent } from './pagination/pagination.component';
+import { GrdFilterPipe } from './filter';
+import { NgxPaginationModule } from 'ngx-pagination'
 
 
 @NgModule({
@@ -23,14 +29,21 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     ToastrModule.forRoot(),
     TabsModule,
     PdfViewerModule,
-    Ng2SmartTableModule
-    // NgTableComponent,
-    // NgTableFilteringDirective,
-    // NgTablePagingDirective,
-    // NgTableSortingDirective
-
+    Ng2SmartTableModule,
+    FileUploadModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    NgxPaginationModule
+    
   
   ],
-  declarations: [AdminLoginComponent, AddPlanComponent, AuditComponent, AdminDashboardComponent, ViewPlanComponent]
+  declarations: [AdminLoginComponent,
+     AddPlanComponent, 
+     AuditComponent, 
+     AdminDashboardComponent,
+     ViewPlanComponent, 
+     UploadFactsheetComponent,
+     GrdFilterPipe, 
+     PaginationComponent]
 })
 export class AdminModule { }

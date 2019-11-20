@@ -7,7 +7,9 @@ export class CustomerDto {
    postelCode:string;
     
    fullName:string;
-    
+   
+   lastName:string;
+
    eamilAddress:string;
     
    mobileNumber:string;

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { PlanBean } from '@app/core/plan-bean';
 import { HttpParams } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import { LocalDataSource } from 'ng2-smart-table';
 
 @Component({
   selector: 'app-view-plan',
@@ -12,13 +13,19 @@ import { ToastrService } from 'ngx-toastr';
 export class ViewPlanComponent implements OnInit {
 
   planList =[];
+  source: LocalDataSource;
+  p:number=1;
+  searchText : string;
  
 
   constructor(private service: ApiServiceServiceService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService) {
+      this.source = new LocalDataSource(this.planList);
+     }
 
   ngOnInit() {
     this.getPlanList();
+    
   }
 
   getPlanList(){
@@ -54,20 +61,43 @@ export class ViewPlanComponent implements OnInit {
     })
 
   }
+  onSearch(query: string = '') {    
+    this.source.setFilter(
+      [                
+      {        
+        field: 'fullName',        
+        search: query     
+       },      
+      {        
+        field: 'sighnUpStarTimeStamp',        
+        search: query     
+       },      
+      {        
+        field: 'sighnUpEndTimeStamp',        
+        search: query      
+      }    
+    ], false);  
+  }
 
   settings = {
     actions: {
       edit: false,
-      delete: true,
+      delete: false,
       add: false
   },
     columns : {
-      planName : { //Same as DTO name to iterate data
-      title : 'Plan Name'
+      planName : { 
+      title : 'Plan Name',
+      filter: false
+    },
+    planId : { 
+      title : 'Plan Code',
+      filter: false
     },
   
-    sighnUpStarTimeStamp : {
-    title : 'Fact Sheet'
+    factSheetName : {
+    title : 'Fact Sheet',
+    filter: false
   }
  
   }

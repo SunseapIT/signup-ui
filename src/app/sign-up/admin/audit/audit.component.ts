@@ -1,3 +1,4 @@
+import { LocalDataSource } from 'ng2-smart-table';
 import { ApiServiceServiceService } from '@app/api-service-service.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,16 +9,38 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuditComponent implements OnInit {
 
+  public dateTimeRange: Date[];
   data =[] ;
+  tempData =[] ;
+  source: LocalDataSource;
+
+  p:number=1;
+  searchText : string;
 
 
   constructor(private service:ApiServiceServiceService,
-   ) {}
+   ) {
+    this.source = new LocalDataSource(this.data);
+   }
 
   ngOnInit() {
     this.getAllUsers();
   }
 
+  getTableData(){
+    // alert();
+    console.log("range",this.dateTimeRange);
+    let filterData = [];
+    this.tempData.forEach(element => {
+      
+      if(new Date(element.sighnUpStarTimeStamp) > this.dateTimeRange[0] && new Date(element.sighnUpEndTimeStamp) < this.dateTimeRange[1]){
+        filterData.push(element);
+      }
+    });
+    console.log(filterData);
+    this.data = filterData;
+    // this.data = this.data.filter(i => i.sighnUpStarTimeStamp > this.dateTimeRange[0]);
+  }
   getAllUsers(){
    this.service.get_service(ApiServiceServiceService.apiList.getAllusersUrl).subscribe((response)=>{
     console.log('response------>', response);   
@@ -25,8 +48,12 @@ export class AuditComponent implements OnInit {
     var responseData  = response;
     var resultObject = responseData['data'];
     this.data = resultObject;
+    this.tempData = JSON.parse(JSON.stringify(this.data));
+    this.source = new LocalDataSource(this.data);
    })
   }
+
+
 
   settings = {
     actions: {
@@ -35,15 +62,22 @@ export class AuditComponent implements OnInit {
       add: false
   },
     columns : {
-      fullName : { //Same as DTO name to iterate data
-      title : 'Name'
+      fullName : { 
+      title : 'Name',
+      filter: false
+    },
+    eamilAddress : { 
+      title : 'Email',
+      filter: false
     },
   
     sighnUpStarTimeStamp : {
-    title : 'Initial Timestamp '
+    title : 'Initial Timestamp',
+    filter: false
   },
-  sighnUpEndTimeStamp : {
-    title : 'Final Timestamp'
+    sighnUpEndTimeStamp : {
+    title : 'Final Timestamp',
+    filter: false
   },
  
   }
@@ -56,10 +90,10 @@ export class AuditComponent implements OnInit {
     showLabels: false,
     headers: [],
     showTitle: true,
-    title: 'asfasf',
+    title: 'Audit Log',
     useBom: false,
     removeNewLines: true,
-    keys: ['fullName', 'plan','mobileNumber' ]
+    keys: ['fullName', 'eamilAddress','sighnUpStarTimeStamp', 'sighnUpEndTimeStamp']
   };
 
  

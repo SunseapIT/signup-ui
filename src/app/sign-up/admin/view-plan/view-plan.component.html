@@ -1,4 +1,40 @@
-<div class="content">
-        <ng2-smart-table class="table table-bordered" [settings]="settings" [source]="planList"></ng2-smart-table>
+<div class="container">
+    <div class="row mb-4 mt-3">
+        <div class="col-md-12 text-left">        
+            <div class="search-bar">
+                <input type="text" placeholder="Search..." [(ngModel)]="searchText">
+              </div>
 </div>
+        </div>
+  
 
+    <!-- <div class="row">
+        <div class="col-md-12">
+            <ng2-smart-table class="table table-striped" [settings]="settings" [source]="planList"></ng2-smart-table>
+        </div>
+    </div> -->
+
+    <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped">
+                    <thead>
+                            <th>Plan Name</th>
+                            <th>Plan Code</th>
+                            <th>Fact Sheet</th>                           
+                            <th>Action</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let planList of planList | grdFilter: {planName: searchText, planId:searchText} | paginate : {itemsPerPage : 10,  currentPage : p}; let i=index;">
+                            <td>{{planList.planName}}</td>
+                            <td>{{planList.planId}}</td>
+                            <td>{{planList.factSheetName}}</td>
+                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
+                        </tr>
+                    </tbody>
+                  
+                </table>
+                <pagination-controls (pageChange)="pageChange($event)" class="my-pagination"></pagination-controls>
+                <!-- <app-pagination [offset]="offset" [limit]="limit" [size]="size" (pageChange)="onPageChange($event)"></app-pagination> -->
+            </div>
+        </div>
+</div>

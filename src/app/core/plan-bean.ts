@@ -6,5 +6,8 @@ export class PlanBean {
  planId:string;
 
  planName:string;
+
+ factSheetName:string;
+
  
 }

@@ -5,5 +5,5 @@ export const environment = {
   subDomain: false,
   apiUrl: '',
   reCaptchaSiteKey: '',
-  baseUrl: "http://a19ecfdb.ngrok.io",
+  baseUrl: "http://111.93.31.229:8085/api/v1/",
 };

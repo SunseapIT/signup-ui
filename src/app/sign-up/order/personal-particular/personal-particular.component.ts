@@ -17,6 +17,7 @@ import { OrderComponent } from '../order.component';
 import { STORAGE_KEYS, ORDER_ROUTES, ORDER_GA_EVENT_NAMES } from '../order.constant';
 import { NgForm } from '@angular/forms';
 import { TimeStampDto } from '@app/sign-up/admin/dto/time-stamp-dto';
+import { ToastrService } from 'ngx-toastr';
 declare var $:any
 const IDENTIFICATION_EXPIRY_DATE_CONFIG = {
   minMonthsFromToday: 6
@@ -75,7 +76,8 @@ export class PersonalParticularComponent implements OnInit {
     private route: ActivatedRoute,
     private gtagService: GoogleTagManagerService,
     configService: ConfigService,
-    private service : ApiServiceServiceService
+    private service : ApiServiceServiceService,
+    private toster : ToastrService
   ) {
     this.config.bootstrap = configService.get('bootstrap');
     this.config.validationRegex = configService.get('validationRegex');
@@ -97,7 +99,7 @@ export class PersonalParticularComponent implements OnInit {
   }
 
   isEmailVerified() {
-    return  (this.verifiedEmail === this.parent.model.confirmEmailValue)
+    return  (this.verifiedEmail === this.parent.model.email)
   }
 
   onExpiryDateChange(value) {
@@ -112,7 +114,7 @@ export class PersonalParticularComponent implements OnInit {
   }
 
   onSubmit(form : NgForm) {
-    if (form.valid && this.isEmailConfirmed() && this.isMobileNoVerified()) {
+    if (form.valid && this.isMobileNoVerified()) {
       if (!_.includes([IdentificationType.EmploymentPass, IdentificationType.WorkPermit], this.parent.model.identificationType)) {
         this.parent.model.identificationExpiryDate = '';
       }
@@ -133,13 +135,14 @@ export class PersonalParticularComponent implements OnInit {
       customerDto.fullName = form.value.identificationName;
       customerDto.eamilAddress = form.value.email;
       customerDto.mobileNumber = form.value.mobileNo;
+      customerDto.lastName = form.value.lastName;
       localStorage.setItem("customerObj",JSON.stringify(customerDto))
       var timeStampDto = new TimeStampDto();
       timeStampDto.pageType = "PERSONAL_DETAILS",
       timeStampDto.token = localStorage.getItem("Token")
-      
+      console.log("form values",form.value);      
       this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{
-      
+      console.log(response);
         
       })
       
@@ -153,8 +156,6 @@ export class PersonalParticularComponent implements OnInit {
     this.verificationProgress = 'pending';
     this.errorMessage = '';
     this.mobileVerification.otp = '';
-
-    if(this.verifiedEmail === this.parent.model.confirmEmailValue)
     $('#mobileOTP').modal('show')
   }
 
@@ -163,6 +164,7 @@ export class PersonalParticularComponent implements OnInit {
     this.errorMessage = '';
     this.emailVerification.otp = '';
     $('#emailOTP').modal('show')
+   
 
   }
 
@@ -247,6 +249,9 @@ export class PersonalParticularComponent implements OnInit {
       this.verifiedMobileNo = this.parent.model.mobileNo;
      this.otp=null
       $("#mobileOTP").modal('hide');
+      this.toster.success('', 'Mobile number is verified',{
+        timeOut : 3000
+      });
     }else{
 
     }
@@ -254,10 +259,12 @@ export class PersonalParticularComponent implements OnInit {
 
   validateEmailOTPModal(){
     if(this.otp == '898911'){
-      this.verifiedEmail = this.parent.model.confirmEmailValue;
-
-   this.otp=null
+      this.verifiedEmail = this.parent.model.email;
+     this.otp=null
       $("#emailOTP").modal('hide');
+      this.toster.success('', 'Email address is verified',{
+        timeOut : 3000
+      });
     }else{ 
 
     }

@@ -1,49 +1,62 @@
+import { OrderComponent } from './../../order/order.component';
 import { ApiServiceServiceService } from './../../../api-service-service.service';
-import { HttpClient, HttpEventType } from '@angular/common/http';
 
-import { DocumentName } from './../../order/documents-upload/documents-upload.component';
-import { Component, OnInit, Input, Output, EventEmitter, KeyValueDiffer, KeyValueDiffers, DoCheck } from '@angular/core';
-import { NgForm, AbstractControl, ValidationErrors, ControlValueAccessor, Validator, FormGroup } from '@angular/forms';
-import { SubscriberDataBean } from '@app/subscriber-data-bean';
-import { PlanBean } from '@app/core/plan-bean';
+import { Component, KeyValueDiffer, KeyValueDiffers, DoCheck, Host } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import * as _ from 'lodash';
+
 declare const $:any;
+
+export enum DocumentName { 
+  factSheet = 'Plan Factsheet',
+
+}
+
+interface UploadDocument { name: DocumentName; file: File; fileName: string; uploadedId?: number; }
+
+
+const FACTSHEET_DOCUMENT_NAMES = [
+  DocumentName.factSheet
+ 
+];
 @Component({
   selector: 'app-add-plan',
   templateUrl: './add-plan.component.html',
   styleUrls: ['./add-plan.component.scss']
 })
 export class AddPlanComponent {
+
+  DocumentName:any;
+
+  documents: { [name: string]: UploadDocument } = {};
   document: { name: DocumentName, file: File, fileName: string, uploadedId?: number };
-  @Input() documentName: DocumentName;
-  @Input() isSubmitted: boolean;
-  @Input() placeHolder: string;
-  @Input() required: boolean;
+  
 
 
-  factSheet:any={};
-  @Output() selectFile: EventEmitter<any> = new EventEmitter();
- // @Output() upload: EventEmitter<any> = new EventEmitter();
-  @Output() cancel: EventEmitter<any> = new EventEmitter();
+
   formData=new FormData();
   model:any ={};
   uploadSuccess: boolean;
   uploaded:any;
+  file:any;
+  documentIds: number[] = [];
+
+  factSheet:any={};
 
   private onValidatorChange: () => void;
   private documentDiffer: KeyValueDiffer<string, any>;
   fileName: string;
-  src = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
-  constructor(  private differs: KeyValueDiffers,
+  myfile: any;
+  constructor(  
+ 
     private service:ApiServiceServiceService,
-    private http : HttpClient,
     private toastr: ToastrService) { }
 
   ngOnInit() {
   }
 
 
-  file:any;
   
   onSubmit(form:NgForm){ 
   //  if(form.valid){
@@ -63,11 +76,18 @@ export class AddPlanComponent {
   //   });
   //  }
   //   form.resetForm();
+ 
 
   if(form.valid){
+
+    this.uploadSuccess=false;
+  
   this.service.multiPartPost_service(ApiServiceServiceService.apiList.addPlanUrl
     +"?planName="+this.model.planName+"&planId="+this.model.planId,this.formData).subscribe
   (response=>{
+    
+    console.log('------->',response);
+    
     
     this.toastr.success('', 'Plan added successfully', {
          timeOut: 2000
@@ -84,16 +104,45 @@ export class AddPlanComponent {
 
 
 
-onFileSelected(event) {
+onFileSelected(event) { 
 
-  this.uploaded = event.target.files[0].name;
-  this.formData.append("multipartFile", event.target.files[0]); 
-  
+ this.myfile = event.target.files[0].name;
+  this.formData.append("multipartFile", event.target.files[0]);   
   this.uploadSuccess=true;
- 
   
   
 }
+
+
+// selectFile(event) {
+//   const document = event.document;
+//   if (document && document.name) {
+//     this.documents[document.name] = document;
+//     const documentName = document.name + '.' + document.file.name.split('.').pop();
+//     readFile(document.file).subscribe(
+//       content => this.utilService.uploadDocument(content, documentName, this.parent.token).subscribe(
+//         uploadedDocument => {
+//           this.documents[document.name].uploadedId = uploadedDocument.id;
+//           this.documents[document.name].file = null;
+//         },
+//         rs => {
+//           if (_.get(rs, 'error.code') === ErrorCode.TokenFail) {
+//             this.parent.token = null;
+//             this.parent.openErrorModal('Errors',
+//               'Your session was expired. Please go back to previous page and verify your mobile again.');
+//           } else {
+//             this.parent.openErrorModal('Errors', _.get(rs, 'error.message'));
+//           }
+//         }
+//       )
+//     );
+//   }
+// }
+
+cancelUpload(event) {
+  delete this.documents[event.documentName];
+}
+
 
 }
 

@@ -1362,3 +1362,23 @@ div.left-image {
 p{
   display: inline;
 }
+
+.fa, .fas, .far, .fal, .fad, .fab {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+  position: relative;
+  right: 35px;
+  color: gray;
+}
+
+.search {
+  border-radius: 5px;
+  border: 1px solid gray;
+  width: 300px;
+
+}

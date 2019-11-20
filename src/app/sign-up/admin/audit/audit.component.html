@@ -1,42 +1,48 @@
-<!-- <section class="body">
-    <div class="audit-box">
-        <div class="container">
-            <div class="row">
-                <angular2csv [data]="data" filename="test.csv" [options]="options">Download</angular2csv>
-            </div>
-          </div>
-      <div class="container">
-
-               <table class="table table-striped">
-                    <thead>
-                      
-                        <th>Customer Name</th>
-                        <th>Initial Attempt</th>
-                        <th>Final Attempt</th>
-                        <th></th>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let customerList of data">
-                        <td>{{customerList.fullName}}</td>
-                            <td>{{customerList.sighnUpStarTimeStamp}}</td>
-                            <td>{{customerList.sighnUpEndTimeStamp}}</td>  
-                        </tr>       
-              
-                    </tbody>
-                </table>
-      </div>
-    
-
-  
-       
-     
-    </div>
-</section> -->
 <div class="container">
+    <div class="row mb-4 mt-4">
+        <div class="col-md-4 mt-1 p-0 text-left"> 
+            <div class="search-bar">
+                <input type="text" placeholder="Search..." [(ngModel)]="searchText">
+              </div>
+        </div>
+        <div class="col-md 6 p-0 mt-1 text-right">    
+                <input placeholder="Select a range..."
+                [style.width]="'250px'"
+                [(ngModel)]="dateTimeRange"
+                [selectMode]="'range'"
+                (afterPickerClosed)="getTableData()"
+                [owlDateTimeTrigger]="dtRange1" [owlDateTime]="dtRange1" (ngModelChange)="getTableData()">
+         <owl-date-time #dtRange1></owl-date-time>
+        </div>
+        <div class="col-md-2 p-0 csv-div text-right">       
+             <angular2csv [data]="data" type="button" class="download" filename="test.csv" [options]="options">Download</angular2csv>
+        </div>
+    </div>  
+  
+    <!-- <div class="row">
+        <ng2-smart-table class="table table-striped" [settings]="settings" [source]="data"></ng2-smart-table>
+    </div> -->
     <div class="row">
-        <div class="col-md-12 text-right">
-        <angular2csv [data]="data" type="button" class="download" filename="test.csv" [options]="options">Download</angular2csv>
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Initial Timestamp</th>
+                        <th>Final Timestamp</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let customerList of data | grdFilter: {fullName: searchText, eamilAddress:searchText} | paginate : {itemsPerPage : 10,  currentPage : p}; let i=index;">
+                        <td>{{customerList.fullName}}</td>
+                        <td>{{customerList.eamilAddress}}</td>
+                        <td>{{customerList.sighnUpStarTimeStamp}}</td>
+                        <td>{{customerList.sighnUpEndTimeStamp}}</td>
+                    </tr>
+                </tbody>
+              
+            </table>
+            <pagination-controls (pageChange)="pageChange($event)" class="my-pagination"></pagination-controls>
         </div>
     </div>
-  </div>
-   <ng2-smart-table class="table table-bordered" [settings]="settings" [source]="data"></ng2-smart-table>
+    
+    </div>

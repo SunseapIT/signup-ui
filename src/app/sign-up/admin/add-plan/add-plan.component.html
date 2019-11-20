@@ -5,7 +5,7 @@
 <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
         <div class="form-content container">
        <div class="row">
-            <div class="form-group col-lg-6">
+            <div class="form-group col-lg-12">
                     <label class="form-control-label" for="planName">Plan Name</label>
                     <input name="planName" id="planName" class="form-control"
                            [class.is-invalid]="planName.invalid && (planName.touched || form.submitted)"
@@ -18,8 +18,10 @@
                       </div>                    
                     </div>
                   </div>
+       </div>
+       <div class="row">
               
-                  <div class="form-group col-lg-6">
+                  <div class="form-group col-lg-12">
                         <label class="form-control-label" for="planId">Plan Code</label>
                         <input name="planId" id="planId" class="form-control"
                                [class.is-invalid]="planId.invalid && (planId.touched || form.submitted)"
@@ -33,20 +35,22 @@
                         </div>
                       </div>
        </div>
+       
 
       
    <div class="row">
-      <div class="form-group col-lg-6">
+      <div class="form-group col-lg-12">
+          <label class="form-control-label" for="factSheet">Upload Fact Sheet</label>
      <input type="text" name="factSheet"
-     class="form-control"
+     class="form-control fileUpload"
       [(ngModel)]="myfile"
       [value]="uploaded"
       disabled
       required
        #myfile1="ngModel">
     <div class="upload-btn-wrapper">
-      <button class="btnUpload" >Upload</button>
-      <input type="file" name="myfile" (change)="onFileSelected($event)"/>
+      <label class="btnUpload" for="file">Upload</label>
+      <input type="file" id="file" name="myfile" (change)="onFileSelected($event)"/>
     </div>
       <ng-container class="valid-feedback" *ngIf="uploadSuccess">
            <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span> 
@@ -54,18 +58,34 @@
    
    
     </div>
+    <!-- <div class="form-group col-lg-6">
+        <label class="form-control-label" for="planFactsheet">Upload Fact Sheet</label>
+        <app-upload-factsheet [ngModel]="documents[DocumentName.planFactsheet]"
+        [name]="DocumentName.planFactsheet"
+        [documentName]="DocumentName.planFactsheet"
+        [isSubmitted]="form.submitted"
+        [required]="DocumentName.planFactsheet"
+        (change)="selectFile($event)"
+        [ngModelOptions]="{standalone: true}"
+        (cancel)="cancelUpload($event)">
+</app-upload-factsheet>
+      </div> -->
+
+
+    
    </div>
+   <div class="col-12">
+    <button class="btn step-next mx-auto" type="submit">
+      <span>Add</span>
+    </button>
+  </div>
         
-      
+        </div>
      
       
-          <div class="col-12">
-            <button class="btn step-next mx-auto" type="submit">
-              <span>Add</span>
-            </button>
-          </div>
+         
       
-        </div>
+       
       
    
       </form>

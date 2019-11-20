@@ -61,16 +61,19 @@
 
   <div class="row pb-2">
     <div class="col-md-6">SP account No:</div>
-    <div class="col-md-6 font-weight-bold">
+    <div class="col-md-5 font-weight-bold">
       <div class="card-text-right p-0">
         <div *ngIf="!spFlag" class="input-group">
          {{serviceNo}} 
         </div>
 
         <input *ngIf="spFlag" type="text" name="serviceNo" [(ngModel)]="serviceNo">
-        <i *ngIf="!spFlag" class="fas fa-pencil-alt" (click)="spFlag = !spFlag"></i>
-        <i *ngIf="spFlag" class="fas fa-trash" (click)="spFlag = !spFlag"></i>
+       
       </div>
+    </div>
+    <div class="col-md-1"> 
+      <i *ngIf="!spFlag" class="fas fa-pencil-alt" (click)="spFlag = !spFlag"></i>
+      <i *ngIf="spFlag" class="fas fa-pencil-alt" (click)="spFlag = !spFlag"></i>
     </div>
   </div>
 
@@ -96,16 +99,20 @@
 
     <div class="row pb-2">
       <div class="col-md-6">Full name:</div>
-      <div class="col-md-6 font-weight-bold">
+      <div class="col-md-5 font-weight-bold">
         <div class="card-text-right p-0">
           <div *ngIf="!nameFlag" class="input-group">
             {{fullName}}
           </div>
           <input *ngIf="nameFlag" type="text" name="fullName" [(ngModel)]="fullName">
+        
+      </div>
+     
+      </div>
+      <div class="col-md 1">
           <i *ngIf="!nameFlag" class="fas fa-pencil-alt" (click)="nameFlag = !nameFlag"></i>
           <i *ngIf="nameFlag" class="fas fa-pencil-alt" (click)="nameFlag = !nameFlag"></i>
         </div>
-      </div>
     </div>
 
     

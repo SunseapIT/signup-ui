@@ -1,5 +1,3 @@
-
-  
 <section>
 
 <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
@@ -35,9 +33,7 @@
                         </div>
                       </div>
        </div>
-       
-
-      
+           
    <div class="row">
       <div class="form-group col-lg-12">
           <label class="form-control-label" for="factSheet">Upload Fact Sheet</label>
@@ -56,23 +52,8 @@
            <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span> 
           </ng-container>   
    
-   
     </div>
-    <!-- <div class="form-group col-lg-6">
-        <label class="form-control-label" for="planFactsheet">Upload Fact Sheet</label>
-        <app-upload-factsheet [ngModel]="documents[DocumentName.planFactsheet]"
-        [name]="DocumentName.planFactsheet"
-        [documentName]="DocumentName.planFactsheet"
-        [isSubmitted]="form.submitted"
-        [required]="DocumentName.planFactsheet"
-        (change)="selectFile($event)"
-        [ngModelOptions]="{standalone: true}"
-        (cancel)="cancelUpload($event)">
-</app-upload-factsheet>
-      </div> -->
-
-
-    
+       
    </div>
    <div class="col-12">
     <button class="btn step-next mx-auto" type="submit">
@@ -81,12 +62,7 @@
   </div>
         
         </div>
-     
-      
-         
-      
-       
-      
+          
    
       </form>
 </section>

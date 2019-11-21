@@ -15,7 +15,6 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { FileUploadModule } from 'ng2-file-upload';
 import { UploadFactsheetComponent } from './add-plan/upload-factsheet/upload-factsheet.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
-import { PaginationComponent } from './pagination/pagination.component';
 import { GrdFilterPipe } from './filter';
 import { NgxPaginationModule } from 'ngx-pagination'
 
@@ -44,6 +43,6 @@ import { NgxPaginationModule } from 'ngx-pagination'
      ViewPlanComponent, 
      UploadFactsheetComponent,
      GrdFilterPipe, 
-     PaginationComponent]
+    ]
 })
 export class AdminModule { }

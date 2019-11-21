@@ -73,7 +73,8 @@ export class PlanDetailComponent implements OnInit {
   getPdf()
 {
   this.pricingPlanList;
-}  constructor(
+} 
+ constructor(
     @Host() public parent: OrderComponent,
     public modal: ModalService,
     private activateRoute: ActivatedRoute,

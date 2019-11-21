@@ -28,8 +28,6 @@ export class AuditComponent implements OnInit {
   }
 
   getTableData(){
-    // alert();
-    console.log("range",this.dateTimeRange);
     let filterData = [];
     this.tempData.forEach(element => {
       
@@ -37,9 +35,7 @@ export class AuditComponent implements OnInit {
         filterData.push(element);
       }
     });
-    console.log(filterData);
     this.data = filterData;
-    // this.data = this.data.filter(i => i.sighnUpStarTimeStamp > this.dateTimeRange[0]);
   }
   getAllUsers(){
    this.service.get_service(ApiServiceServiceService.apiList.getAllusersUrl).subscribe((response)=>{

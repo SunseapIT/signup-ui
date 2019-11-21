@@ -5,6 +5,8 @@ import { HttpParams } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { LocalDataSource } from 'ng2-smart-table';
 
+declare const $:any;
+
 @Component({
   selector: 'app-view-plan',
   templateUrl: './view-plan.component.html',
@@ -61,46 +63,21 @@ export class ViewPlanComponent implements OnInit {
     })
 
   }
-  onSearch(query: string = '') {    
-    this.source.setFilter(
-      [                
-      {        
-        field: 'fullName',        
-        search: query     
-       },      
-      {        
-        field: 'sighnUpStarTimeStamp',        
-        search: query     
-       },      
-      {        
-        field: 'sighnUpEndTimeStamp',        
-        search: query      
-      }    
-    ], false);  
-  }
-
-  settings = {
-    actions: {
-      edit: false,
-      delete: false,
-      add: false
-  },
-    columns : {
-      planName : { 
-      title : 'Plan Name',
-      filter: false
-    },
-    planId : { 
-      title : 'Plan Code',
-      filter: false
-    },
   
-    factSheetName : {
-    title : 'Fact Sheet',
-    filter: false
-  }
+  pdfSrc: any;
+  planName:string = '';
+
  
-  }
-  }
+viewFactSheet(){
+  this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet+"?planName="+this.planName).subscribe(response=>{
+    console.log(response);
+    var data = "data:application/pdf;base64," +response['data']
+    this.pdfSrc = data;
+    $("#myModal").modal("show")
+   
+  })
+}
+
+ 
 
 }

@@ -46,7 +46,7 @@
       </div>
     </div>
 
-    <div class="form-group col-6">
+    <!-- <div class="form-group col-6">
       <label class="form-control-label" for="email">Email address</label>
       <input name="email" id="email" 
       class="form-control"
@@ -59,49 +59,44 @@
              [disabled]="isEmailVerified() || !parent.model.email || email.invalid"
              (click)="requestEmailOTP()"><span>Verify</span></button>
 
-     <div *ngIf="isEmailVerified()" class="valid-feedback"><i>Email number is verified</i></div>
+             <div *ngIf="isEmailVerified()" class="valid-feedback"><i>Mobile number is verified</i></div>
 
      <i *ngIf="!isEmailVerified()" class="text-secondary"><small>Email needs to be verified.</small></i>
 
      <div *ngIf="!isEmailVerified() && (email.touched || form.submitted)" class="invalid-feedback">
        <i>Email is not verified</i>
      </div>
-    </div>
-    <!-- <div class="form-group col-lg-6">
-  
-        <label class="form-control-label" for="confirmEmail">Confirm email address</label>
-        <input name="confirmEmail" id="confirmEmail" class="form-control"
-               [class.is-valid]="isEmailVerified()"
-               [class.is-invalid]="!isEmailVerified() && (confirmEmail.touched || form.submitted)"
-               [pattern]="config.validationRegex.confirmEmail"
-               [(ngModel)]="confirmEmailValue" #confirmEmail="ngModel"/>
+    </div> -->
+    <div class="form-group col-6">
+        <label class="form-control-label" for="email">Email Address</label>
+        <input name="email" id="email" class="form-control"
+               [class.is-valid]="isEmailVerified() && parent.model.email"
+               [class.is-invalid]="!isEmailVerified() && (email.touched || form.submitted)"
+               [pattern]="config.validationRegex.email"
+               [(ngModel)]="parent.model.email" #email="ngModel"
+               blockCopyPaste
+            />
                 <button type="submit" class="btn input-button"
-                [disabled]="parent.model.email !=confirmEmailValue"
+                [disabled]="isEmailVerified() || !parent.model.email || email.invalid"
                 (click)="requestEmailOTP()"><span>Verify</span></button>
-               
-                <div *ngIf="confirmEmail.dirty && (parent.model.email !=confirmEmailValue)" class="invalid-feedback">
-                    <i>Your confirm email does not match</i>
-                  </div>
-  
-        <div *ngIf="isEmailVerified()" class="valid-feedback"><i>Email is verified</i></div>
-  
+             
+        <!-- <div *ngIf="isEmailVerified()" class="valid-feedback"><i>Email is verified</i></div> -->
         <i *ngIf="!isEmailVerified()" class="text-secondary"><small>Email address needs to be verified.</small></i>
-  
-        <div *ngIf="!isEmailVerified() && (confirmEmail.touched || form.submitted)" class="invalid-feedback">
-          <i>Email address is not verified</i>
+        <div *ngIf="!isEmailVerified() && (email.touched || form.submitted)" class="invalid-feedback">
+          <i>Email is not verified</i>
         </div>
-         pattern="^(8|9)([0-9]{8})$"
-      </div> -->
-
+      </div>
+     
     <div class="form-group col-6">
       <label class="form-control-label" for="mobileNo">Mobile number</label>
       <input name="mobileNo" id="mobileNo" class="form-control"
-             [class.is-valid]="isMobileNoVerified()"
+             [class.is-valid]="isMobileNoVerified() && parent.model.mobileNo"
              [class.is-invalid]="!isMobileNoVerified() && (mobileNo.touched || form.submitted)"
             
              [(ngModel)]="parent.model.mobileNo" #mobileNo="ngModel"
              pattern="^(8|9)\d{7}$"
-             maxlength="8"/>
+             maxlength="8"
+             blockCopyPaste />
               <button type="submit" class="btn input-button"
               [disabled]="isMobileNoVerified() || !parent.model.mobileNo || mobileNo.invalid"
               (click)="requestOTP()"><span>Verify</span></button>

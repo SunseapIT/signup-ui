@@ -147,6 +147,7 @@ export class PersonalParticularComponent implements OnInit {
       })
       
       this.parent.saveAndNext();
+      form.resetForm();
 
     }
   

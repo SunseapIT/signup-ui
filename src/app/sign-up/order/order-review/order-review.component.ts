@@ -227,6 +227,8 @@ export class OrderReviewComponent implements OnInit {
 
    
     if (this.acknowledgePrivacy && this.acknowledgeConsent) {
+
+      
   this.service.post_service(ApiServiceServiceService.apiList.saveCustomerurl,this.customerDto).subscribe((response)=>{
     var responseData  = response;
     if(responseData['statusCode']==200){

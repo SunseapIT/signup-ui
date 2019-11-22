@@ -180,6 +180,7 @@ export class ServiceAddressComponent implements OnInit {
         this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{
          console.log("response",response);
          parent.saveAndNext(); 
+         form.resetForm();
       
        })
         }

@@ -34,6 +34,7 @@
         <input name="serviceNo" id="serviceNo" class="form-control" placeholder="10 Digits"
               [class.is-invalid]="serviceNo.invalid && (serviceNo.touched || form.submitted)"
               required  maxlength="10"
+              blockCopyPaste
               [(ngModel)]="parent.model.premise.serviceNo" #serviceNo="ngModel">
 
           <ng-template #serviceNoTooltip>

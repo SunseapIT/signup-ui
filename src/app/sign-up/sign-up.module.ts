@@ -18,6 +18,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 
 
+
 @NgModule({
   imports: [
     BrowserAnimationsModule, 
@@ -31,8 +32,12 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     CoreModule, 
     SharedModule,
     Angular2CsvModule,
-    ToastrModule.forRoot(),
-    PdfViewerModule
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-top-center',
+      preventDuplicates: true,
+    }),
+    PdfViewerModule,
 
   ],
   declarations: [ SignUpComponent, ORDER_COMPONENTS ],

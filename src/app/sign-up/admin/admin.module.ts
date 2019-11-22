@@ -16,7 +16,8 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { UploadFactsheetComponent } from './add-plan/upload-factsheet/upload-factsheet.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { GrdFilterPipe } from './filter';
-import { NgxPaginationModule } from 'ngx-pagination'
+import { NgxPaginationModule } from 'ngx-pagination';
+import { SidebarComponent } from './sidebar/sidebar.component'
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { NgxPaginationModule } from 'ngx-pagination'
      AdminDashboardComponent,
      ViewPlanComponent, 
      UploadFactsheetComponent,
-     GrdFilterPipe, 
+     GrdFilterPipe,
+     SidebarComponent, 
     ]
 })
 export class AdminModule { }

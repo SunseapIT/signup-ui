@@ -1,12 +1,127 @@
-<div class="container">
+<section id="tabs" class="project-tab">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav>
+                        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#successfulsignup" role="tab" aria-controls="nav-home" aria-selected="true">Successful Sign-Up</a>
+                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#abandonedsignup" role="tab" aria-controls="nav-profile" aria-selected="false">Abandoned Sign-Up</a>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="successfulsignup" role="tabpanel" aria-labelledby="nav-home-tab">
+                           <!-- <div class="container"> -->
+                                <div class="row mb-4 mt-4">
+                                        <div class="col-md-4 text-left"> 
+                                     
+                                                <input type="text" class="form-control searchbar" placeholder="Search..." [(ngModel)]="searchTextSuccess">
+                                                <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
+                                             
+                                        </div>
+                                        <div class="col-md 6 p-0  text-right ">    
+                                                <input placeholder="Select a range..." class="form-control searchbar"
+                                               
+                                                [(ngModel)]="dateTimeRange"
+                                                [selectMode]="'range'"
+                                                (afterPickerClosed)="getTableData()"
+                                                [owlDateTimeTrigger]="dtRange1" [owlDateTime]="dtRange1" (ngModelChange)="getTableData()">
+                                         <owl-date-time #dtRange1></owl-date-time>
+                                        </div>
+                                        <div class="col-md-2 csv-div  mt-2 text-right">       
+                                             <angular2csv [data]="data" type="button" class="download" filename="test.csv" [options]="options">Download</angular2csv>
+                                        </div>
+                                    </div>  
+                                    <div class="row">
+                                            <div class="col-md-12">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                            <th>Name</th>
+                                                            <th>Email</th>
+                                                            <th>Initial Timestamp</th>
+                                                            <th>Final Timestamp</th>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let customerList of data | grdFilter: {fullName: searchTextSuccess, eamilAddress:searchTextSuccess} | paginate : {itemsPerPage : 10,  currentPage : p}; let i=index;">
+                                                            <td>{{customerList.fullName}}</td>
+                                                            <td>{{customerList.eamilAddress}}</td>
+                                                            <td>{{customerList.sighnUpStarTimeStamp}}</td>
+                                                            <td>{{customerList.sighnUpEndTimeStamp}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                  
+                                                </table>
+                                                <pagination-controls (pageChange)="pageChange($event)" class="my-pagination"></pagination-controls>
+                                            </div>
+                                        </div>
+                           <!-- </div> -->
+                        </div>
+                        <div class="tab-pane fade" id="abandonedsignup" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                <div class="container">
+                                        <div class="row mb-4 mt-4">
+                                                <div class="col-md-4 p-0 text-left"> 
+                                             
+                                                        <input type="text" class="form-control searchbar" placeholder="Search..." [(ngModel)]="searchTextAbandoned">
+                                                        <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
+                                                     
+                                                </div>
+                                                <div class="col-md 6 p-0 mt-1 text-right">    
+                                                        <!-- <input placeholder="Select a range..." class="form-control"
+                                                        [style.width]="'250px'"
+                                                        [(ngModel)]="dateTimeRange"
+                                                        [selectMode]="'range'"
+                                                        (afterPickerClosed)="getTableData()"
+                                                        [owlDateTimeTrigger]="dtRange1" [owlDateTime]="dtRange1" (ngModelChange)="getabandond()">
+                                                 <owl-date-time #dtRange1></owl-date-time> -->
+                                                </div>
+                                                <div class="col-md-2 mt-2 csv-div text-right">       
+                                                     <angular2csv [data]="data" type="button" class="download" filename="test.csv" [options]="options">Download</angular2csv>
+                                                </div>
+                                            </div>  
+                                            <div class="row">
+                                                    <div class="col-md-12">
+                                                        <table class="table table-striped">
+                                                            <thead>
+                                                                    <th>Name</th>
+                                                                    <th>Email</th>
+                                                                    <th>Plan Detail</th>
+                                                                    <th>Personal Detail</th>
+                                                                    <th>Address</th>
+                                                                    <th>Upload Document</th>
+                                                                    <th>Review Order</th>
+                                                                    <th>Confirm Order</th>
+                                                            </thead>
+                                                            <!-- <tbody>
+                                                                <tr *ngFor="let customerList of data | grdFilter: {fullName: searchText, eamilAddress:searchText} | paginate : {itemsPerPage : 10,  currentPage : p}; let i=index;">
+                                                                    <td>{{customerList.fullName}}</td>
+                                                                    <td>{{customerList.eamilAddress}}</td>
+                                                                    <td>{{customerList.sighnUpStarTimeStamp}}</td>
+                                                                    <td>{{customerList.sighnUpEndTimeStamp}}</td>
+                                                                </tr>
+                                                            </tbody> -->
+                                                          
+                                                        </table>
+                                                        <pagination-controls (pageChange)="pageChange($event)" class="my-pagination"></pagination-controls>
+                                                    </div>
+                                                </div>
+                                   </div>
+                        </div>
+                   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- 
     <div class="row mb-4 mt-4">
         <div class="col-md-4 mt-1 p-0 text-left"> 
-            <div class="search-bar">
-                <input type="text" placeholder="Search..." [(ngModel)]="searchText">
-              </div>
+     
+                <input type="text" class="form-control searchbar" placeholder="Search..." [(ngModel)]="searchText">
+                <i class="fa fa-search" aria-hidden="true"></i>
+             
         </div>
         <div class="col-md 6 p-0 mt-1 text-right">    
-                <input placeholder="Select a range..."
+                <input placeholder="Select a range..." class="form-control"
                 [style.width]="'250px'"
                 [(ngModel)]="dateTimeRange"
                 [selectMode]="'range'"
@@ -19,9 +134,7 @@
         </div>
     </div>  
   
-    <!-- <div class="row">
-        <ng2-smart-table class="table table-striped" [settings]="settings" [source]="data"></ng2-smart-table>
-    </div> -->
+  
     <div class="row">
         <div class="col-md-12">
             <table class="table table-striped">
@@ -43,6 +156,6 @@
             </table>
             <pagination-controls (pageChange)="pageChange($event)" class="my-pagination"></pagination-controls>
         </div>
-    </div>
+    </div> -->
     
-    </div>
+   

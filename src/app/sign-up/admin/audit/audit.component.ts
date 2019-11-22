@@ -12,16 +12,12 @@ export class AuditComponent implements OnInit {
   public dateTimeRange: Date[];
   data =[] ;
   tempData =[] ;
-  source: LocalDataSource;
-
   p:number=1;
-  searchText : string;
+  searchTextSuccess : string;
+  searchTextAbandoned : string;
 
 
-  constructor(private service:ApiServiceServiceService,
-   ) {
-    this.source = new LocalDataSource(this.data);
-   }
+  constructor(private service:ApiServiceServiceService) {}
 
   ngOnInit() {
     this.getAllUsers();
@@ -39,44 +35,11 @@ export class AuditComponent implements OnInit {
   }
   getAllUsers(){
    this.service.get_service(ApiServiceServiceService.apiList.getAllusersUrl).subscribe((response)=>{
-    console.log('response------>', response);   
-
     var responseData  = response;
     var resultObject = responseData['data'];
     this.data = resultObject;
     this.tempData = JSON.parse(JSON.stringify(this.data));
-    this.source = new LocalDataSource(this.data);
    })
-  }
-
-
-
-  settings = {
-    actions: {
-      edit: false,
-      delete: false,
-      add: false
-  },
-    columns : {
-      fullName : { 
-      title : 'Name',
-      filter: false
-    },
-    eamilAddress : { 
-      title : 'Email',
-      filter: false
-    },
-  
-    sighnUpStarTimeStamp : {
-    title : 'Initial Timestamp',
-    filter: false
-  },
-    sighnUpEndTimeStamp : {
-    title : 'Final Timestamp',
-    filter: false
-  },
- 
-  }
   }
   
   options = {
@@ -84,9 +47,9 @@ export class AuditComponent implements OnInit {
     quoteStrings: '"',
     decimalseparator: '.',
     showLabels: false,
-    headers: [],
+    headers: ['Name', 'Email Address', 'Initialstamp', 'Finalstamp'],
     showTitle: true,
-    title: 'Audit Log',
+    title: '',
     useBom: false,
     removeNewLines: true,
     keys: ['fullName', 'eamilAddress','sighnUpStarTimeStamp', 'sighnUpEndTimeStamp']

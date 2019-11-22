@@ -1,18 +1,12 @@
 <div class="container">
     <div class="row mb-4 mt-3">
         <div class="col-md-12 text-left">        
-            <div class="search-bar">
-                <input type="text" placeholder="Search..." [(ngModel)]="searchText">
-              </div>
+           
+                <input type="text" class="form-control searchbar" placeholder="Search..." [(ngModel)]="searchText">
+                <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
+           
 </div>
         </div>
-  
-
-    <!-- <div class="row">
-        <div class="col-md-12">
-            <ng2-smart-table class="table table-striped" [settings]="settings" [source]="planList"></ng2-smart-table>
-        </div>
-    </div> -->
 
     <div class="row">
             <div class="col-md-12">
@@ -21,14 +15,14 @@
                             <th>Plan Name</th>
                             <th>Plan Code</th>
                             <th>Fact Sheet</th>                           
-                            <th>Action</th>
+                            <th class="text-center">Action</th>
                     </thead>
                     <tbody>
                         <tr *ngFor="let planList of planList | grdFilter: {planName: searchText, planId:searchText} | paginate : {itemsPerPage : 10,  currentPage : p}; let i=index;">
                             <td>{{planList.planName}}</td>
                             <td>{{planList.planId}}</td>
-                            <td><a (click)="viewFactSheet()">{{planList.factSheetName}}</a></td>
-                            <td><i class="fa fa-trash" aria-hidden="true" (click)="delete(planList.id)"></i></td>
+                            <td><a  (click)="viewFactSheet(planList.planName)"><span class="textunderline">{{planList.factSheetName}}</span></a></td>
+                            <td class="text-center text-danger" ><i class="fa fa-trash" aria-hidden="true" (click)="delete(planList.id)"></i></td>
                         </tr>
                     </tbody>
                   
@@ -56,7 +50,6 @@
         <div class="row m-0">
             <div class="container">
                 <div class="col-md-12">
-                  <!-- <img alt="EMA Fact Sheet" class="img-fluid" includecurrenttimestamp="" src="https://s3-ap-southeast-1.amazonaws.com/sse-documents-storage-test/media/a67bf2c3f24a42899151fcb722b3913220472830/SUNSEAP-ONE_DOT_12mths.png?t=1572836617964"> -->
                   <div class="pdf-container">
                       <pdf-viewer [src]="pdfSrc"
                                   [original-size]="false"

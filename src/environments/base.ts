@@ -5,6 +5,6 @@ export const environment = {
   subDomain: false,
   apiUrl: '',
   reCaptchaSiteKey: '',
-   baseUrl: "http://e0bca2cb.ngrok.io",
+   baseUrl: "http://eebd7a26.ngrok.io",
 
 };

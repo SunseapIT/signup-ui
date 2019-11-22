@@ -15,15 +15,13 @@ declare const $:any;
 export class ViewPlanComponent implements OnInit {
 
   planList =[];
-  source: LocalDataSource;
   p:number=1;
   searchText : string;
+  pdfSrc: any;
+  planName:string = '';
  
 
-  constructor(private service: ApiServiceServiceService,
-    private toastr: ToastrService) {
-      this.source = new LocalDataSource(this.planList);
-     }
+  constructor(private service: ApiServiceServiceService, private toastr: ToastrService) {}
 
   ngOnInit() {
     this.getPlanList();
@@ -34,48 +32,41 @@ export class ViewPlanComponent implements OnInit {
     this.service.get_service(ApiServiceServiceService.apiList.viewPlanUrl).subscribe((response)=>{
       var responseData  = response;
       var resultObject = responseData['data'];
-      this.planList = resultObject;
-     
-      // this.plans = this.planList.map(plan =>plan.planName);
-      
-      console.log("plan list",this.planList);
-            
-    });
-  
+      this.planList = resultObject;           
+    });  
   }
+  
   deletePlan(id){
-    var data;
-    let queryParams = new HttpParams();
-    queryParams = queryParams.append("planId",id);
-    this.service.post_service(ApiServiceServiceService.apiList.removePlansUrl+"?"+queryParams,data).subscribe((response)=>{
-      var responseData  = response;
-      var resultObject = responseData['data'];
-      var planBean = new PlanBean();
-      planBean = resultObject;
-      var findIndex = this.planList.findIndex(plan =>plan.id === planBean.id);
-      this.planList.splice(findIndex,1);
 
-      this.toastr.error('', 'Plan deleted !', {
-        timeOut: 2000
-      });
-      
+    
+    // var data;
+    // let queryParams = new HttpParams();
+    // queryParams = queryParams.append("planId",id);
+    // this.service.post_service(ApiServiceServiceService.apiList.removePlansUrl+"?"+queryParams,data).subscribe((response)=>{
+    //   var responseData  = response;
+    //   var resultObject = responseData['data'];
+    //   var planBean = new PlanBean();
+    //   planBean = resultObject;
+    //   var findIndex = this.planList.findIndex(plan =>plan.id === planBean.id);
+    //   this.planList.splice(findIndex,1);
 
-    })
+    //   this.toastr.error('', 'Plan deleted !', {
+    //     timeOut: 2000
+    //   }); 
+
+    // })
 
   }
   
-  pdfSrc: any;
-  planName:string = '';
-
  
-viewFactSheet(){
-  this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet+"?planName="+this.planName).subscribe(response=>{
+viewFactSheet(name){
+  this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet+"?planName="+name).subscribe(response=>{
     console.log(response);
     var data = "data:application/pdf;base64," +response['data']
     this.pdfSrc = data;
-    $("#myModal").modal("show")
-   
+    
   })
+  $("#myModal").modal("show")
 }
 
  

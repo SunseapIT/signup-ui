@@ -125,13 +125,10 @@ export class PersonalParticularComponent implements OnInit {
       subscriberDataBean.fullName = form.value.identificationName;
       subscriberDataBean.emailAddress = form.value.email;
       subscriberDataBean.phoneNumber = form.value.mobileNo;
-
-      console.log("log",subscriberDataBean);
       var customerDto = new CustomerDto();
 
       var objStr = localStorage.getItem("customerObj");
       customerDto = JSON.parse(objStr);
-      console.log("customer Dto",customerDto);
       customerDto.fullName = form.value.identificationName;
       customerDto.eamilAddress = form.value.email;
       customerDto.mobileNumber = form.value.mobileNo;
@@ -139,10 +136,8 @@ export class PersonalParticularComponent implements OnInit {
       localStorage.setItem("customerObj",JSON.stringify(customerDto))
       var timeStampDto = new TimeStampDto();
       timeStampDto.pageType = "PERSONAL_DETAILS",
-      timeStampDto.token = localStorage.getItem("Token")
-      console.log("form values",form.value);      
+      timeStampDto.token = localStorage.getItem("Token")     
       this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{
-      console.log(response);
         
       })
       

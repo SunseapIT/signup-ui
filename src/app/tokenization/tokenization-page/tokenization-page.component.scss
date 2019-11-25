@@ -1,0 +1,47 @@
+.shadow {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    width: 85%;
+    margin: auto;
+}
+
+.paynow{
+    width: 85% !important;
+    margin: auto;
+}
+
+.form-control {
+    height: 45px;
+    border-radius: 0;
+    margin-top: 5px;
+    border-radius: 5px;
+}
+
+.textVerification{
+    color: gray;
+    font-weight: 500;
+}
+
+.box-width{
+    width: 80px;
+}
+
+// .cvv{
+
+//     position: absolute;
+//     bottom: 10px;
+
+// }
+.mt_10{
+    margin-top: 15px
+}
+ul{
+    padding: 0;
+    display: inline-flex;
+}
+li{
+    list-style: none;
+}
+
+.row{
+    margin: 0px;
+}

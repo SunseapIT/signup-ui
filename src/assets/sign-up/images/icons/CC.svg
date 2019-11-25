@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120px" height="81px" viewBox="0 0 120 81" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>CC</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-12.4%" y="-24.9%" width="124.9%" height="149.8%" filterUnits="objectBoundingBox" id="filter-1">
+            <feGaussianBlur stdDeviation="2.22199985" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+    </defs>
+    <g id="CC" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-100" transform="translate(15.000000, 11.000000)" fill-rule="nonzero">
+            <rect id="Rectangle" stroke="#C6CCCC" stroke-width="0.807999944" fill="#E5F0EF" x="0" y="0" width="90" height="60" rx="2.42399983"></rect>
+            <rect id="Rectangle-Copy-28" fill="#132323" x="0" y="10.2040816" width="90" height="11.8367347"></rect>
+            <g id="Group-99" opacity="0.286667597" transform="translate(39.033708, 36.530612)" fill="#132323">
+                <rect id="Rectangle" x="3.23595506" y="0" width="1" height="12.6530612"></rect>
+                <rect id="Rectangle-Copy-29" x="34.5842697" y="0" width="1" height="12.6530612"></rect>
+                <rect id="Rectangle-Copy-30" x="29.5280899" y="0" width="1" height="12.6530612"></rect>
+                <rect id="Rectangle-Copy-31" x="31.1460674" y="0" width="1" height="12.6530612"></rect>
+                <rect id="Rectangle-Copy-32" x="26.2921348" y="0" width="1" height="12.6530612"></rect>
+                <rect id="Rectangle-Copy-33" x="23.0561798" y="0" width="1" height="12.6530612"></rect>
+                <rect id="Rectangle-Copy-34" x="19.8202247" y="0" width="1" height="12.6530612"></rect>
+                <rect id="Rectangle-Copy-35" x="16.3820225" y="0" width="1" height="12.6530612"></rect>
+                <rect id="Rectangle-Copy-36" x="14.7640449" y="0" width="1" height="12.6530612"></rect>
+                <rect id="Rectangle-Copy-37" x="13.1460674" y="0" width="1" height="12.6530612"></rect>
+                <rect id="Rectangle-Copy-38" x="11.5280899" y="0" width="1" height="12.6530612"></rect>
+                <rect id="Rectangle-Copy-39" x="8.29213483" y="0" width="1" height="12.6530612"></rect>
+                <rect id="Rectangle-Copy-40" x="6.6741573" y="0" width="1" height="12.6530612"></rect>
+                <rect id="Rectangle-Copy-41" x="4.85393258" y="0" width="1" height="12.6530612"></rect>
+                <rect id="Rectangle-Copy-42" x="0" y="0" width="1" height="12.6530612"></rect>
+                <rect id="Rectangle-Copy-43" x="1.61797753" y="0" width="1" height="12.6530612"></rect>
+                <rect id="Rectangle-Copy-44" x="9.91011236" y="0" width="1" height="12.6530612"></rect>
+                <rect id="Rectangle-Copy-45" x="21.4382022" y="0" width="1" height="12.6530612"></rect>
+                <rect id="Rectangle-Copy-46" x="18" y="0" width="1" height="12.6530612"></rect>
+                <rect id="Rectangle-Copy-47" x="24.6741573" y="0" width="1" height="12.6530612"></rect>
+                <rect id="Rectangle-Copy-48" x="27.9101124" y="0" width="1" height="12.6530612"></rect>
+                <rect id="Rectangle-Copy-49" x="32.9662921" y="0" width="1" height="12.6530612"></rect>
+                <rect id="Rectangle-Copy-50" x="37.8202247" y="0" width="1" height="12.6530612"></rect>
+                <rect id="Rectangle-Copy-51" x="39.4382022" y="0" width="1" height="12.6530612"></rect>
+                <rect id="Rectangle-Copy-52" x="36.2022472" y="0" width="1" height="12.6530612"></rect>
+            </g>
+            <ellipse id="Oval" stroke="#FF242D" stroke-width="1.00999993" cx="58.9550562" cy="42.755102" rx="28.8202247" ry="14.3877551"></ellipse>
+            <ellipse id="Oval-Copy-20" stroke="#FF242D" stroke-width="1.00999993" opacity="0.446335565" filter="url(#filter-1)" cx="58.9550562" cy="42.755102" rx="28.8202247" ry="14.3877551"></ellipse>
+        </g>
+    </g>
+</svg>

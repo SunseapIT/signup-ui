@@ -214,4 +214,9 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('admin-login/login')
   }
 
+  payment(){
+    this.router.navigateByUrl('payment/pay')
+  }
+
+
 }

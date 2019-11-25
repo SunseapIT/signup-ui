@@ -229,9 +229,7 @@ export class PlanDetailComponent implements OnInit {
         }, 1000);
       }
       this.parent.model.premise.serviceNo='';
-      this.pricingPlanList = collection.items;
-      console.log("selected list",this.pricingPlanList);
-      
+      this.pricingPlanList = collection.items;      
       const pricingPlan = _.get(this.activateRoute.snapshot.queryParams, 'plan');
       if (pricingPlan) {
         const index = _.findIndex(this.pricingPlanList, plan => _.isEqual(plan.prefillUrl, pricingPlan));
@@ -252,7 +250,6 @@ export class PlanDetailComponent implements OnInit {
   
 viewFactSheet(){
   this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet+"?planName="+this.planName).subscribe(response=>{
-    console.log(response);
     var data = "data:application/pdf;base64," +response['data']
     this.pdfSrc = data;
     $("#myModal").modal("show")
@@ -364,7 +361,6 @@ viewFactSheet(){
         var responseData  = response;
         var resultObject = responseData['data'];
         var token = resultObject['token'];
-        console.log("Token",token);
         localStorage.setItem("Token",token);
         customerDto.token = token;
        localStorage.setItem("customerObj",JSON.stringify(customerDto));
@@ -400,10 +396,9 @@ viewFactSheet(){
   }
 
   addPromoCode(){
-    this.promoCode.push({referralCode :''})
-    console.log(this.promoCode);
-    
+    this.promoCode.push({referralCode :''})    
   }
+
   delete(i:number){
     this.promoCode.splice(i,1)
   }

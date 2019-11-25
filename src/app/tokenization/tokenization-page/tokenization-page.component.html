@@ -1,3 +1,102 @@
-<p>
-  tokenization-page works!
-</p>
+<div class="container-fuild">
+    <div class="row">
+            <div class="shadow p-5 bg-white rounded">
+                    <form>
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="cardNumber"><strong>Card Number</strong><span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="cardNumber" [(ngModel)]="cardNumber">
+                            </div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-md-6">
+                            <img src="src/assets/sign-up/images/icons/MasterCard.svg" height="30px" width="40px"/>
+                            <img src="src/assets/sign-up/images/icons/VisaCard.svg"  height="30px" width="40px"/>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-1 pr-0 text-left">
+                                <label for="expMonth"><strong>Expiry month</strong><span class="text-danger">*</span></label>
+                               <select name="expMonth" [(ngModel)]="expMonth" class="form-control box-width">
+                                   <option value='' ng-selected="selected">MM</option>
+                                   <option *ngFor="let month of months">{{ month }}</option>
+                                   
+                               </select>
+                            </div>
+                            <div class="col-2 text-left">
+                                <label for="expYear"><strong>Expiry year</strong><span class="text-danger">*</span></label>
+                                <select name="expYear" [(ngModel)]="expYear" class="form-control box-width">
+                                        <option value="MM" ng-selected="selected">YY</option>
+                                        <option *ngFor="let year of years">{{ year }}</option>
+                                        
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <label for="cardHolderName"><strong>Cardholder Name</strong><span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="cardHolderName" [(ngModel)]="cardHolderName">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                            <label for="cardHolderName"><strong>Security code</strong><span class="text-danger">*</span></label>
+
+                            </div>
+                                <div class="col-12">
+                                    <ul>
+                                        <li ><input type="text" class="form-control box-width" name="cardHolderName" [(ngModel)]="cardHolderName"></li>
+                                        <li class="mt_10"><img src="src/assets/sign-up/images/icons/CC.svg" height="30px" width="40px" class="cvv ml-2"/></li>
+                                        <li  class="mt_10"><p><strong>3 digits</strong> on back of your card</p></li>
+                                    </ul>
+                                    <!-- <div class="d-flex">  
+                                        <div class="box-width"> <input type="text" class="form-control" name="cardHolderName" [(ngModel)]="cardHolderName"></div>
+                                        <div class="p-2"> <img src="src/assets/sign-up/images/icons/CC.svg" height="30px" width="40px" class="cvv ml-2"/> </div>
+                                        <div class="ml-5 mt-3"> <p><strong>3 digits</strong>
+                                                                        on back of your card</p></div>
+                                      </div> -->
+                             </div>
+                           
+                               
+                    </div>
+                    </form>
+                </div>
+    </div>
+    <div class="row mt-5">
+            <div class="shadow p-5 bg-white rounded">
+              <div class="row">
+                  <div class="col-12">
+                      <h3>Order Details</h3>
+                  </div>
+              </div>
+              <div class="row mt-3">
+                    <div class="col-12">
+                       <p class="textVerification">Verification</p>
+                    </div>
+                </div>
+                <div class="row">
+                        <div class="col-12 text-right">
+                           <h5><strong>TOTAL SGD: $1.00</strong></h5>
+                        </div>
+                    </div>
+                </div>
+    </div>
+    <div class="paynow">
+            <div class="row mt-5">
+                    <div class="col-md-12 text-right">
+                        <p><strong>The next screen you see may be payment card verification through your card issuer.</strong></p>
+                    </div>
+                 </div>
+                 <div class="row mt-3">
+                         <div class="col-md-11 text-right">
+                             <a href="#" class="textunderline pt-5">Cancel</a>
+                         </div>
+                         <div class="col-md-1">
+                                <button class="btn btn-success">Pay now</button>
+                             </div>
+                      </div>
+    </div>
+   
+  
+   
+</div>

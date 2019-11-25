@@ -17,13 +17,7 @@
           </option>
         </select>
         <a class="showPdf"  *ngIf="openButtonFlag"  (click)="viewFactSheet()"><i class="textunderline">View Fact Sheet</i></a>
-      
-      
-        <!-- <button type="button" class="btn btn-view"  *ngIf="openButtonFlag"> view</button> -->
-        <!-- <button type="button" className="btn btn-success"  *ngIf="openButtonFlag" onClick="getPdf()">View Report</button> -->
-      
-
-        <div *ngIf="productName.invalid && (productName.touched || form.submitted)" class="invalid-feedback">
+         <div *ngIf="productName.invalid && (productName.touched || form.submitted)" class="invalid-feedback">
           <div *ngIf="productName?.errors.required">
             <i>Plan details is required</i>
           </div>

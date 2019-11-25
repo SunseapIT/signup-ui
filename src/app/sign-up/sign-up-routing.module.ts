@@ -1,3 +1,5 @@
+import { TokenizationModule } from './../tokenization/tokenization.module';
+import { TokenRoutingModule } from './../tokenization/token-routing.module';
 import { AdminModule } from './admin/admin.module';
 
 import { NgModule } from '@angular/core';
@@ -12,6 +14,7 @@ import {
 
 const routes: Routes = [
   { path : 'admin-login', loadChildren : 'app/sign-up/admin/admin.module#AdminModule'},
+  { path : 'payment', loadChildren : 'app/tokenization/tokenization.module#TokenizationModule'},
   { path: ORDER_ROUTES.ORDER_CONFIRMATION, component: OrderConfirmationComponent },
   
   { path: '', component: OrderComponent, children: [
@@ -25,6 +28,7 @@ const routes: Routes = [
      
     ]
   },
+
   { path: '**', component: PageNotFoundComponent },
 ];
 

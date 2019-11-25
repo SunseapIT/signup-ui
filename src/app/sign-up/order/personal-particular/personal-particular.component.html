@@ -102,7 +102,7 @@
               (click)="requestOTP()"><span>Verify</span></button>
 
       <!-- <div *ngIf="isMobileNoVerified()" class="valid-feedback"><i>Mobile number is verified</i></div> -->
-      <div *ngIf="mobileNo.errors?.pattern || mobileNo.touched" class="invalid-feedback"><i>Please enter a valid mobile number.</i></div>
+      <div *ngIf="mobileNo.errors?.pattern" class="invalid-feedback"><i>Please enter a valid mobile number.</i></div>
       <i *ngIf="!isMobileNoVerified()" class="text-secondary"><small>Mobile number needs to be verified.</small></i>
       <div *ngIf="!isMobileNoVerified() && (mobileNo.touched || form.submitted)" class="invalid-feedback">
         <i>Mobile number is not verified</i>

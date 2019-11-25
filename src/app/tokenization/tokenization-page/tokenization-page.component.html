@@ -1,11 +1,24 @@
 <div class="container-fuild">
-    <div class="row">
+   
+        <form #form="ngForm" (ngSubmit)="onSubmit(form)">
             <div class="shadow p-5 bg-white rounded">
-                    <form>
+                    <div class="row">
+                            <div class="col-md-12 ">
+                                <span class="card-font"><strong>Link Card To My Account</strong></span>
+                            </div>
+                        </div>
+                   
                         <div class="row">
-                            <div class="col-4">
-                                <label for="cardNumber"><strong>Card Number</strong><span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="cardNumber" [(ngModel)]="cardNumber">
+                            <div class="col-xl-4 col-12 col-md-6">
+                                <label for="cardNumber" class="card-font"><strong>Card Number</strong><span class="text-danger">*</span></label>
+                                <input type="text" 
+                                class="form-control" 
+                                name="cardNumber" 
+                                [(ngModel)]="modal.cardNumber"
+                                #cardNumber="ngModel"
+                                required
+                                maxlength="16"
+                                blockCopyPaste />
                             </div>
                         </div>
                         <div class="row mt-1">
@@ -15,54 +28,67 @@
                             </div>
                         </div>
                         <div class="row mt-3">
-                            <div class="col-1 pr-0 text-left">
-                                <label for="expMonth"><strong>Expiry month</strong><span class="text-danger">*</span></label>
-                               <select name="expMonth" [(ngModel)]="expMonth" class="form-control box-width">
-                                   <option value='' ng-selected="selected">MM</option>
+                            <div class="col-xl-1 col-12 col-md-3 pr-0 text-left">
+                                <label for="expMonth"class="card-font"><strong>Expiry Month</strong><span class="text-danger">*</span></label>
+                               <select name="expMonth" 
+                               [(ngModel)]="modal.expMonth" 
+                                #expMonth="ngModel"
+                                required
+                               class="form-control box-width">
+                                   <!-- <option value='' ng-selected="selected">MM</option> -->
                                    <option *ngFor="let month of months">{{ month }}</option>
                                    
                                </select>
                             </div>
-                            <div class="col-2 text-left">
-                                <label for="expYear"><strong>Expiry year</strong><span class="text-danger">*</span></label>
-                                <select name="expYear" [(ngModel)]="expYear" class="form-control box-width">
-                                        <option value="MM" ng-selected="selected">YY</option>
+                            <div class="col-xl-1 col-12 col-md-6   text-left">
+                                <label for="expYear" class="card-font"><strong>Expiry Year</strong><span class="text-danger">*</span></label>
+                                <select name="expYear" [(ngModel)]="modal.expYear" class="form-control box-width">
+                                        <!-- <option value="MM" ng-selected="selected">YY</option> -->
                                         <option *ngFor="let year of years">{{ year }}</option>
                                         
                                     </select>
                             </div>
                         </div>
                         <div class="row mt-3">
-                            <div class="col-6">
-                                <label for="cardHolderName"><strong>Cardholder Name</strong><span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="cardHolderName" [(ngModel)]="cardHolderName">
+                            <div class="col-xl-4 col-12 col-md-6">
+                                <label for="cardHolderName" class="card-font"><strong>Cardholder Name</strong><span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="cardHolderName" [(ngModel)]="modal.cardHolderName"
+                                #cardHolderName="ngModel"
+                                blockCopyPaste/>
                             </div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-12">
-                            <label for="cardHolderName"><strong>Security code</strong><span class="text-danger">*</span></label>
+                            <label for="cardHolderName" class="card-font"><strong>Security Code</strong><span class="text-danger">*</span></label>
 
                             </div>
-                                <div class="col-12">
-                                    <ul>
+                                <div class="col-md-12">
+                                        <input type="text" 
+                                        class="form-control box-width" 
+                                        name="cvvCode" 
+                                        [(ngModel)]="modal.cvvCode"
+                                        required
+                                        maxlength="3"
+                                        #cvvCode="ngModel"
+                                        blockCopyPaste/>
+                                    <!-- <ul>
                                         <li ><input type="text" class="form-control box-width" name="cardHolderName" [(ngModel)]="cardHolderName"></li>
                                         <li class="mt_10"><img src="src/assets/sign-up/images/icons/CC.svg" height="30px" width="40px" class="cvv ml-2"/></li>
-                                        <li  class="mt_10"><p><strong>3 digits</strong> on back of your card</p></li>
-                                    </ul>
-                                    <!-- <div class="d-flex">  
-                                        <div class="box-width"> <input type="text" class="form-control" name="cardHolderName" [(ngModel)]="cardHolderName"></div>
-                                        <div class="p-2"> <img src="src/assets/sign-up/images/icons/CC.svg" height="30px" width="40px" class="cvv ml-2"/> </div>
-                                        <div class="ml-5 mt-3"> <p><strong>3 digits</strong>
-                                                                        on back of your card</p></div>
-                                      </div> -->
+                                        <li  class="mt_10"><p class="card-font"><strong>3 digits</strong> on back of your card</p></li>
+                                    </ul> -->
+                                  
+                             </div>
+                             <div class="col-md-12 mt-2">
+                                    <img src="src/assets/sign-up/images/icons/CC.svg" height="30px" width="40px" class="cvv"/>
+                                   <p> <strong>3 digits</strong> on back of your card</p>
                              </div>
                            
                                
                     </div>
-                    </form>
-                </div>
-    </div>
-    <div class="row mt-5">
+                    </div>
+                   
+    <!-- </div> -->
+    <!-- <div class="row mt-5">
             <div class="shadow p-5 bg-white rounded">
               <div class="row">
                   <div class="col-12">
@@ -80,23 +106,30 @@
                         </div>
                     </div>
                 </div>
-    </div>
+    </div> -->
     <div class="paynow">
             <div class="row mt-5">
                     <div class="col-md-12 text-right">
-                        <p><strong>The next screen you see may be payment card verification through your card issuer.</strong></p>
+                        <p class="card-font"><strong>The next screen you see may be card verification through your card issuer.</strong></p>
                     </div>
                  </div>
                  <div class="row mt-3">
-                         <div class="col-md-11 text-right">
-                             <a href="#" class="textunderline pt-5">Cancel</a>
-                         </div>
-                         <div class="col-md-1">
-                                <button class="btn btn-success">Pay now</button>
+                       
+                         <div class="col-md-12 text-right">
+                                <button type="submit" class="btn btn-success card-font">Add My Card</button>
                              </div>
                       </div>
-    </div>
+                      <div class="row mt-3">
+                        <div class="col-md-12 text-right mr-4">
+                            <a href="#" class="card-font pt-5">Cancel</a>
+                        </div>
+                       
+                     </div>
+                    
    
-  
    
+   
+   
+</div>
+</form>
 </div>

@@ -1,18 +1,19 @@
+<form #form="ngForm" (ngSubmit)="onSubmit(form)">
 <div class="form-content ema-scroll-view pl-5 pr-5 myriad-cond" #reviewForm>
   <div class="clearfix pb-4">
     <div class="float-left font-weight-bold">Plan summary</div>
   </div>
 
-  <div class="row pb-2">
-    <div class="col-md-6">Plan name:</div>
-    <div class="col-md-6 font-weight-bold">
+  <div class="row">
+    <div class="col-lg-6 col-sm-6">Plan name:</div>
+    <div class="col-lg-6 col-sm-6 font-weight-bold">
       {{ selectedPricingPlan }}
     </div>
   </div>
 
   <!-- <div class="row pb-2">
-    <div class="col-md-6">DOT / Fixed rate:</div>
-    <div class="col-md-6 font-weight-bold">
+    <div class="col-lg-6">DOT / Fixed rate:</div>
+    <div class="col-lg-6 font-weight-bold">
       <span *ngIf="isDotPlan">
         <ng-container *ngFor="let rate of selectedPricingPlan?.promotionTemplates; let last = last">
           <ng-container>{{ (rate?.percentDiscount * 100).toFixed(2) }}</ng-container>
@@ -59,78 +60,82 @@
     </div>
   </div> -->
 
-  <div class="row pb-2">
-    <div class="col-md-6">SP account No:</div>
-    <div class="col-md-5 font-weight-bold">
+  <div class="row">
+    <div class="col-lg-6 col-sm-6">SP account No:</div>
+    <div class="col-lg-5 col-sm-5 font-weight-bold">
       <div class="card-text-right p-0">
         <div *ngIf="!spFlag" class="input-group">
          {{serviceNo}} 
         </div>
 
-        <input *ngIf="spFlag" type="text" name="serviceNo" [(ngModel)]="serviceNo">
+        <input *ngIf="spFlag" type="text" 
+        name="serviceNo" 
+        maxlength="10"
+        numbersOnly
+        [(ngModel)]="serviceNo">
        
       </div>
     </div>
-    <div class="col-md-1"> 
+    <div class="col-lg-1 col-sm-1"> 
       <i *ngIf="!spFlag" class="fas fa-pencil-alt" (click)="spFlag = !spFlag"></i>
-      <i *ngIf="spFlag" class="fas fa-pencil-alt" (click)="spFlag = !spFlag"></i>
+      <i *ngIf="spFlag" class="fa fa-check" (click)="spFlag = !spFlag"></i>
     </div>
   </div>
 
   
 
-  <div class="row pb-2">
-    <div class="col-md-6">Early termination charge:</div>
-    <div class="col-md-6 font-weight-bold">${{ ETC_FEE_OPTIONS[parent.model.premise.dwellingType] }} per remaining month</div>
+  <div class="row">
+    <div class="col-lg-6 col-sm-6">Early termination charge:</div>
+    <div class="col-lg-6 col-sm-6 font-weight-bold">${{ ETC_FEE_OPTIONS[parent.model.premise.dwellingType] }} per remaining month</div>
   </div>
 
-  <div class="row pb-2">
-    <div class="col-md-6">Security deposit:</div>
-    <div class="col-md-6 font-weight-bold">$0.00</div>
+  <div class="row">
+    <div class="col-lg-6 col-sm-6">Security deposit:</div>
+    <div class="col-lg-6 col-sm-6 font-weight-bold">$0.00</div>
   </div>
 
   <div class="order-customer-review">
-    <div class="clearfix pb-4">
+    <div class="clearfix">
       <div class="float-left font-weight-bold">Customer Details</div>
       <!--<div class="float-right text-danger font-weight-bold">-->
         <!--<a [routerLink]="['..', ORDER_ROUTES.PERSONAL_PARTICULAR]" class="text-danger">Edit</a>-->
       <!--</div>-->
     </div>
 
-    <div class="row pb-2">
-      <div class="col-md-6">Full name:</div>
-      <div class="col-md-5 font-weight-bold">
+    <div class="row">
+      <div class="col-lg-6 col-sm-6">Full name:</div>
+      <div class="col-lg-5 col-sm-5 font-weight-bold">
         <div class="card-text-right p-0">
           <div *ngIf="!nameFlag" class="input-group">
             {{fullName}}
           </div>
-          <input *ngIf="nameFlag" type="text" name="fullName" [(ngModel)]="parent.model.identificationName">
+          <input *ngIf="nameFlag" type="text" name="fullName" [(ngModel)]="fullName">
         
       </div>
      
       </div>
-      <div class="col-md 1">
+      <div class="col-lg-1 col-sm-1 ">
           <i *ngIf="!nameFlag" class="fas fa-pencil-alt" (click)="nameFlag = !nameFlag"></i>
-          <i *ngIf="nameFlag" class="fas fa-pencil-alt" (click)="nameFlag = !nameFlag"></i>
+          <i *ngIf="nameFlag" class="fa fa-check" (click)="nameFlag = !nameFlag"></i>
         </div>
     </div>
 
     
 
     <div *ngIf="parent.model.identificationType === IdentificationType.EmploymentPass || parent.model.identificationType === IdentificationType.WorkPermit" class="row pb-2">
-      <div class="col-md-6">Expiry date:</div>
-      <div class="col-md-6 font-weight-bold">{{ parent.model.identificationExpiryDate }}</div>
+      <div class="col-lg-6 col-sm-6">Expiry date:</div>
+      <div class="col-lg-6 col-sm-6 font-weight-bold">{{ parent.model.identificationExpiryDate }}</div>
     </div>
 
 
-    <div class="row pb-2">
-      <div class="col-md-6">Email address:</div>
-      <div class="col-md-6 font-weight-bold">{{ emailAddress }}</div>
+    <div class="row">
+      <div class="col-lg-6 col-sm-6">Email address:</div>
+      <div class="col-lg-6 col-sm-6 font-weight-bold">{{ emailAddress }}</div>
     </div>
 
     <div class="row pb-2">
-      <div class="col-md-6">Mobile number:</div>
-      <div class="col-md-6 font-weight-bold">{{mobileNumber}}</div>
+      <div class="col-lg-6 col-sm-6">Mobile number:</div>
+      <div class="col-lg-6 col-sm-6 font-weight-bold">{{mobileNumber}}</div>
     </div>
   </div>
 
@@ -139,8 +144,8 @@
   </div>
 
   <div class="row pb-2">
-    <div class="col-md-6">Block/House No.:</div>
-    <div class="col-md-6 font-weight-bold">
+    <div class="col-lg-6 col-sm-6">Block/House No.:</div>
+    <div class="col-lg-6 col-sm-6 font-weight-bold">
       <div class="card-text-right p-0">
         <div class="input-group">
       {{houseNumber}}
@@ -150,8 +155,8 @@
   </div>
 
   <div class="row pb-2">
-    <div class="col-md-6">Level - Unit No.:</div>
-    <div class="col-md-6 font-weight-bold">
+    <div class="col-lg-6 col-sm-6">Level - Unit No.:</div>
+    <div class="col-lg-6 col-sm-6 font-weight-bold">
       <div class="card-text-right p-0">
         <div class="input-group">
    {{levelUnit}}
@@ -162,8 +167,8 @@
   </div>
 
   <div class="row pb-2">
-    <div class="col-md-6">Street name:</div>
-    <div class="col-md-6 font-weight-bold">
+    <div class="col-lg-6 col-sm-6">Street name:</div>
+    <div class="col-lg-6 col-sm-6 font-weight-bold">
       <div class="card-text-right p-0">
         <div class="input-group">
         {{streetName}}
@@ -175,8 +180,8 @@
   </div>
 
   <div class="row pb-2">
-    <div class="col-md-6">Building name:</div>
-    <div class="col-md-6 font-weight-bold">
+    <div class="col-lg-6 col-sm-6">Building name:</div>
+    <div class="col-lg-6 col-sm-6 font-weight-bold">
       <div class="card-text-right p-0">
         <div class="input-group">
            {{buildingName}}
@@ -188,9 +193,9 @@
     </div>
   </div>
 
-  <div class="row pb-2">
-    <div class="col-md-6">Postal code:</div>
-    <div class="col-md-6 font-weight-bold">
+  <div class="row">
+    <div class="col-lg-6 col-sm-6">Postal code:</div>
+    <div class="col-lg-6 col-sm-6 font-weight-bold">
       <div class="card-text-right p-0">
         <div class="input-group">
        {{servicePostalCode}}
@@ -201,9 +206,9 @@
     </div>
   </div>
 
-  <div class="row pb-2">
-    <div class="col-md-6">Dwelling type:</div>
-    <div class="col-md-6 font-weight-bold">
+  <div class="row">
+    <div class="col-lg-6 col-sm-6">Dwelling type:</div>
+    <div class="col-lg-6 col-sm-6 font-weight-bold">
       {{dwellingType }}
     </div>
   </div>
@@ -213,21 +218,21 @@
       <div class="float-left font-weight-bold">Promotion summary</div>
     </div>
 
-    <div class="row pb-2">
-      <div class="col-md-6">Rebate:</div>
-      <div class="col-md-6 font-weight-bold">
+    <div class="row">
+      <div class="col-lg-6 col-sm-6">Rebate:</div>
+      <div class="col-lg-6 col-sm-6 font-weight-bold">
         {{ parent.model.referralCode ? ( rebateAmount < 0 ? rebateAmount * (-1) : rebateAmount ) + '$ (Referral/Promo Code: ' + parent.model.referralCode + ')' : 'Not applicable' }}
       </div>
     </div>
 
-    <div class="row pb-2">
-      <div class="col-md-6">Gift:</div>
-      <div class="col-md-6 font-weight-bold">Not applicable</div>
+    <div class="row">
+      <div class="col-lg-6 col-sm-6">Gift:</div>
+      <div class="col-lg-6 col-sm-6 font-weight-bold">Not applicable</div>
     </div>
 
-    <div class="row pb-2">
-      <div class="col-md-6">Others:</div>
-      <div class="col-md-6 font-weight-bold">Not applicable</div>
+    <div class="row">
+      <div class="col-lg-6 col-sm-6">Others:</div>
+      <div class="col-lg-6 col-sm-6 font-weight-bold">Not applicable</div>
     </div>
   </div>
 
@@ -250,27 +255,28 @@
     party media entities (whether in Singapore or otherwise) for publicity purposes and Sunseap Energy Pte. Ltd. may identify me by name.</p>
 
   <label class="control control--checkbox text-justify">I consent to Sunseap contacting me for their marketing and promotional purposes. (Optional)
-    <input type="checkbox" [(ngModel)]="checked"/>
+    <input type="checkbox" [(ngModel)]="checked" name="one"/>
     <div class="control__indicator"></div>
   </label>
 
   <label class="control control--checkbox text-justify">I hereby acknowledge that I have read, understood and consent to the above terms and conditions.
-    <input type="checkbox" [(ngModel)]="acknowledgeConsent"/>
+    <input type="checkbox" [(ngModel)]="acknowledgeConsent" name="two"/>
     <div class="control__indicator"></div>
   </label>
 
   <label class="control control--checkbox text-justify">I acknowledge that I have read and understood the Sunseap Privacy Policy as set out in Sunseap Website https://www.sunseap.com/pdf/PrivacyPolicy.pdf , and consent to the collection, use and disclosure of my personal data details by Sunseap Energy Pte Ltd for the purposes set out in the Sunseap Privacy Policy.
-      <input type="checkbox" [(ngModel)]="acknowledgePrivacy" />
+      <input type="checkbox" [(ngModel)]="acknowledgePrivacy" name="three"/>
       <div class="control__indicator"></div> 
     </label>
 
 
 
   <div class="pt-5 d-flex justify-content-center mb-4 pb-4">
-    <button [disabled]="!acknowledgeConsent || !acknowledgePrivacy" class="btn step-next" (click)="onSubmit()" #submitBtn>
+    <button [disabled]="!acknowledgeConsent || !acknowledgePrivacy" class="btn step-next" type="submit">
       <span>Confirm Order</span>
     </button>
   </div>
+
 
   <ng-template #warningModal>
     <!-- Modal Header -->
@@ -297,6 +303,8 @@
 
   </ng-template>
 </div>
+
+</form>
 <!--<div style="position: absolute; top: calc(100vh - 100px); right: 30px;">-->
   <!--<div class="share-buttons d-flex justify-content-center pt-sm-4 mt-sm-1">-->
     <!--<a (click)="scrollToBottom()" href="javascript:void(0)" class="btn rounded-circle btn-social"-->

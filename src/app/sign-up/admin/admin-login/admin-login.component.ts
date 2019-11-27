@@ -30,7 +30,6 @@ export class AdminLoginComponent implements OnInit {
     var loginBean = new LoginBean();
     loginBean.userId = form.value.username;
     loginBean.password = form.value.password;
-    console.log("bean",loginBean);
     this.apiService.post_service(ApiServiceServiceService.apiList.adminLogin,loginBean).subscribe((response)=>{
       
       var responseData = response;
@@ -39,7 +38,6 @@ export class AdminLoginComponent implements OnInit {
         var resultObject = responseData['data']
         var token = resultObject['token'];
         localStorage.setItem("Authorization",token);
-        console.log("token",token);
         this.router.navigateByUrl('/admin-login/admin-dash')
       }
       else{

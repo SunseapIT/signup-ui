@@ -70,10 +70,6 @@ export class PlanDetailComponent implements OnInit {
   pdfSrc: any;
 
 
-  getPdf()
-{
-  this.pricingPlanList;
-} 
  constructor(
     @Host() public parent: OrderComponent,
     public modal: ModalService,
@@ -368,8 +364,8 @@ viewFactSheet(){
       })     
   
       this.parent.saveAndNext();
-    }
-    //form.resetForm();
+      }
+    
   }
 
   delayedPopover(pop) {

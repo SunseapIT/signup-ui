@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { PlanBean } from '@app/core/plan-bean';
 import { HttpParams } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import { LocalDataSource } from 'ng2-smart-table';
+
 
 declare const $:any;
 
@@ -21,7 +21,11 @@ export class ViewPlanComponent implements OnInit {
   planName:string = '';
  
 
-  constructor(private service: ApiServiceServiceService, private toastr: ToastrService) {}
+  constructor(private service: ApiServiceServiceService, private toastr: ToastrService) {
+    for (let i = 1; i <= 100; i++) {
+      this.planList.push(`item ${i}`);
+    }
+  }
 
   ngOnInit() {
     this.getPlanList();
@@ -61,7 +65,6 @@ export class ViewPlanComponent implements OnInit {
  
 viewFactSheet(name){
   this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet+"?planName="+name).subscribe(response=>{
-    console.log(response);
     var data = "data:application/pdf;base64," +response['data']
     this.pdfSrc = data;
     

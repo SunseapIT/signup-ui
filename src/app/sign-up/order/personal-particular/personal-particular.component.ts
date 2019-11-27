@@ -120,7 +120,6 @@ export class PersonalParticularComponent implements OnInit {
       }
       this.gtagService.sendEvent(ORDER_GA_EVENT_NAMES.ENTER_YOUR_DETAIL_2);
 
-
       var subscriberDataBean = new SubscriberDataBean();
       subscriberDataBean.fullName = form.value.identificationName;
       subscriberDataBean.emailAddress = form.value.email;
@@ -137,17 +136,15 @@ export class PersonalParticularComponent implements OnInit {
       var timeStampDto = new TimeStampDto();
       timeStampDto.pageType = "PERSONAL_DETAILS",
       timeStampDto.token = localStorage.getItem("Token")     
-      this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{
-        
+      this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{        
       })
       
       this.parent.saveAndNext();
       form.resetForm();
 
     }
-  
-
   }
+
   requestOTP (){
     this.verificationProgress = 'pending';
     this.errorMessage = '';
@@ -159,8 +156,7 @@ export class PersonalParticularComponent implements OnInit {
     this.verificationProgress = 'pending';
     this.errorMessage = '';
     this.emailVerification.otp = '';
-    $('#emailOTP').modal('show')
-   
+    $('#emailOTP').modal('show') 
 
   }
 

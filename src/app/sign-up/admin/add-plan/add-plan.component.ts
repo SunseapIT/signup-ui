@@ -86,6 +86,7 @@ onFileSelected(event) {
   
 }
 
+
 cancelUpload(event) {
   delete this.documents[event.documentName];
 }

@@ -1,3 +1,4 @@
+import { SharedModule } from './../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -8,7 +9,8 @@ import { TokenRoutingModule } from './token-routing.module';
   imports: [
     CommonModule,
     TokenRoutingModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ],
   declarations: [TokenizationPageComponent]
 })

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgModel, NgForm } from '@angular/forms';
 
+
 @Component({
   selector: 'app-tokenization-page',
   templateUrl: './tokenization-page.component.html',
@@ -19,8 +20,15 @@ export class TokenizationPageComponent implements OnInit {
 
   onSubmit(form:NgForm){
     if(form.valid){
-      console.log('Tokenisation', form.value);
-      
+       
     }
+  }
+
+  onSelectMonth(event){
+    let selectedMonth = event.target.value;
+  }
+
+  onSelectYear(event){
+    let selectedYear = event.target.value;
   }
 }

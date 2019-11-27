@@ -1,11 +1,8 @@
-
-
 .sidebar {
-    margin: 0;
-    padding: 0;
-    width: 250px;
+    // margin: 0;
+    // padding: 0;
+   // width: 250px;
     background-color: #f1f1f1;
-    // position: fixed;
     height: 100vh;   
     
   }
@@ -15,17 +12,10 @@
     color: black;
     padding: 16px;
     text-decoration: none;
+
   }
    
-   a.active {
-    background-color: #4CAF50;
-    color: white;
-  }
-  
-  // .sidebar a:hover:not(.active) {
-  //   background-color: #555;
-  //   color: white;
-  // }
+
   
   .sidebar a:hover:not(.active) {
     background-color: #000;
@@ -37,32 +27,23 @@
 }
 
 
-  .bg_img{
-    background-image: url('/assets/sign-up/images/background/BG.png');
+ 
+@media screen and (max-width: 768px) {
+  .sidebar {
     width: 100%;
-    background-size: cover;
-    height: calc(100vh - 15vh);
-    
+    height: auto;
+    position: relative;
   }
-  
-
-  
-  @media screen and (max-width: 700px) {
-    .sidebar {
-      width: 100%;
-      height: auto;
-      position: relative;
-    }
-    .sidebar a {float: left;}
-    div.content {margin-left: 0;}
-  }
-  
-  @media screen and (max-width: 400px) {
-    .sidebar a {
-      text-align: center;
-      float: none;
-    }
+  .sidebar a {float: none;
+  text-align: center;}
+  div.content {margin-left: 0;}
 }
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
 
 header#header div.content-header {
   padding-left: 0%;
@@ -73,4 +54,4 @@ header#header div.content-header {
   float: right;
 }
 
-
+}

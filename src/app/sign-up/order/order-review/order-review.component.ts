@@ -1,3 +1,4 @@
+import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ApiServiceServiceService } from './../../../api-service-service.service';
 import {Component, ElementRef, Host, OnInit, ViewChild} from '@angular/core';
@@ -19,6 +20,7 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 import { Route, Router } from '@angular/router';
 import { CustomerDto } from '@app/core/customer-dto';
+import { SubscriberDataBean } from '@app/subscriber-data-bean';
 
 const POSTAL_CODE_WARNING = 'The postal code you have entered is currently not eligible for the Open Electricity Market. ' +
   'Please refer to <a href="https://www.openelectricitymarket.sg/index.html" target="_blank">EMA\'s site</a> for more information.';
@@ -59,6 +61,8 @@ export class OrderReviewComponent implements OnInit {
   servicePostalCode:string;
   dwellingType:string;
   serviceNo:string;
+
+  model={};
 
 
   acknowledgeConsent: false;
@@ -105,20 +109,7 @@ export class OrderReviewComponent implements OnInit {
   }
 
   ngOnInit() {
-   
-    var objStr = localStorage.getItem("customerObj");
-    this.customerDto = JSON.parse(objStr);
-    this.selectedPricingPlan = this.customerDto.plan;
-    this.fullName = this.customerDto.fullName;
-    this. emailAddress = this.customerDto.eamilAddress;
-    this.mobileNumber = this.customerDto.mobileNumber;
-    this.houseNumber = this.customerDto.houseNo;
-    this.levelUnit ="";
-    this.streetName= this.customerDto.streetName;
-    this.buildingName = this.customerDto.buildingName;
-    this.servicePostalCode= this.customerDto.postelCode;
-    this.dwellingType = this.customerDto.dwelingType;
-    this.serviceNo= this.customerDto.spAccountNumber;
+   this.getCustomerDetail();
 
   }
 
@@ -222,15 +213,36 @@ export class OrderReviewComponent implements OnInit {
     input.focus();
   }
 
-  onSubmit() {
-    console.log("request");
+  getCustomerDetail(){
+    var objStr = localStorage.getItem("customerObj");
+    this.customerDto = JSON.parse(objStr);
+    this.selectedPricingPlan = this.customerDto.plan;
+    this.fullName = this.customerDto.fullName;
+    this. emailAddress = this.customerDto.eamilAddress;
+    this.mobileNumber = this.customerDto.mobileNumber;
+    this.houseNumber = this.customerDto.houseNo;
+    this.levelUnit ="";
+    this.streetName= this.customerDto.streetName;
+    this.buildingName = this.customerDto.buildingName;
+    this.servicePostalCode= this.customerDto.postelCode;
+    this.dwellingType = this.customerDto.dwelingType;
+    this.serviceNo= this.customerDto.spAccountNumber;
+  }
 
-   
-    if (this.acknowledgePrivacy && this.acknowledgeConsent) {
 
+  onSubmit(form:NgForm) {
+    if (this.acknowledgePrivacy && this.acknowledgeConsent) { 
       
-  this.service.post_service(ApiServiceServiceService.apiList.saveCustomerurl,this.customerDto).subscribe((response)=>{
-    var responseData  = response;
+    var customerDto = new CustomerDto();
+    var objStr = localStorage.getItem("customerObj");
+      customerDto = JSON.parse(objStr);
+      customerDto.fullName = this.fullName; 
+      customerDto.spAccountNumber = this.serviceNo;
+      localStorage.setItem("customerObj", JSON.stringify(customerDto))
+
+
+    this.service.post_service(ApiServiceServiceService.apiList.saveCustomerurl,customerDto).subscribe((response)=>{
+    var responseData  = response;    
     if(responseData['statusCode']==200){
       localStorage.removeItem("customerObj")
       localStorage.removeItem("Token")

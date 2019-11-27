@@ -54,9 +54,9 @@ export class DocumentsUploadComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log(' this.localStorage.setItem(STORAGE_KEYS.IS_SP_ACCOUNT_HOLDER',  this.localStorage.getItem(STORAGE_KEYS.IS_SP_ACCOUNT_HOLDER));
     
   }
+  
   onSubmit(form) {
     
       this.parent.model.documentIds = _.chain(this.documents)

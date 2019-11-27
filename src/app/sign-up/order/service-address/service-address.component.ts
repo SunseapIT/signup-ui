@@ -137,30 +137,24 @@ export class ServiceAddressComponent implements OnInit {
 
   onSubmit(form : NgForm) {
     const parent = this.parent;
-
     if (form.valid) {
-
       this.serviceAddress.levelUnit = (this.serviceAddress.level) ? `#${this.serviceAddress.level}-${this.serviceAddress.unitNo}` : '';
-
       parent.model.premise.serviceAddress = _.chain(this.serviceAddress)
         .pick([ 'houseNo', 'streetName', 'buildingName', 'levelUnit' ])
         .values()
         .without('')
         .join(' ')
         .value();
-
         var addressDto = new AddressDto();
         addressDto.buildingName = form.value.buildingName;
         addressDto.dwellingType = form.value.dwellingType;
         addressDto.houseNo = form.value.houseNo;
         addressDto.postalCode = form.value.servicePostalCode;
         addressDto.streetName = form.value.streetName;
-
-
-      var customerDto = new CustomerDto();
+        
+     var customerDto = new CustomerDto();
       var objStr = localStorage.getItem("customerObj");
       customerDto = JSON.parse(objStr);
-      console.log("customer Dto",customerDto);
       customerDto.postelCode = form.value.servicePostalCode;
       customerDto.buildingName = form.value.buildingName;
       customerDto.dwelingType = form.value.dwellingType;
@@ -178,18 +172,12 @@ export class ServiceAddressComponent implements OnInit {
         var status = responseData['statusCode'];
         if(status == 200){
         this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{
-         console.log("response",response);
          parent.saveAndNext(); 
          form.resetForm();
       
        })
         }
-      })
-      console.log("address dto",addressDto);
-    
+      })    
     } 
-    
-  
   }
-
 }

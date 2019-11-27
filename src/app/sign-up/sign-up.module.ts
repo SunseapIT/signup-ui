@@ -15,6 +15,7 @@ import { ORDER_COMPONENTS } from './order';
 import { SignUpComponent } from './sign-up.component';
 import { ToastrModule } from 'ngx-toastr';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -29,6 +30,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     PopoverModule.forRoot(), 
     RecaptchaFormsModule, 
     SignUpRoutingModule, 
+    NgxPaginationModule,
     CoreModule, 
     SharedModule,
     Angular2CsvModule,
@@ -51,6 +53,5 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 })
 export class SignUpModule {
   constructor() {
-    console.log('Environment config', environment);
   }
 }

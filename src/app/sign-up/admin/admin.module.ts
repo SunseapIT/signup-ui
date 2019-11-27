@@ -10,8 +10,8 @@ import { Angular2CsvModule } from 'angular2-csv';
 import { ViewPlanComponent } from './view-plan/view-plan.component';
 import { ToastrModule } from 'ngx-toastr';
 import { TabsModule } from 'ngx-bootstrap/tabs'
+import { PaginationModule } from 'ngx-bootstrap/pagination'
 import { PdfViewerModule } from 'ng2-pdf-viewer';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { FileUploadModule } from 'ng2-file-upload';
 import { UploadFactsheetComponent } from './add-plan/upload-factsheet/upload-factsheet.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
@@ -29,11 +29,12 @@ import { SidebarComponent } from './sidebar/sidebar.component'
     ToastrModule.forRoot(),
     TabsModule,
     PdfViewerModule,
-    Ng2SmartTableModule,
     FileUploadModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    PaginationModule.forRoot()
+    
     
   
   ],

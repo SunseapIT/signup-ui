@@ -1,4 +1,4 @@
-import { LocalDataSource } from 'ng2-smart-table';
+
 import { ApiServiceServiceService } from '@app/api-service-service.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -17,13 +17,20 @@ export class AuditComponent implements OnInit {
   searchTextAbandoned : string;
 
 
-  constructor(private service:ApiServiceServiceService) {}
+  constructor(private service:ApiServiceServiceService) {
+
+    for (let i = 1; i <= 100; i++) {
+      this.data.push(`item ${i}`);
+    }
+  }
+
+
 
   ngOnInit() {
     this.getAllUsers();
   }
 
-  getTableData(){
+  getSuccessfulSignUp(){
     let filterData = [];
     this.tempData.forEach(element => {
       
@@ -33,6 +40,8 @@ export class AuditComponent implements OnInit {
     });
     this.data = filterData;
   }
+
+  
   getAllUsers(){
    this.service.get_service(ApiServiceServiceService.apiList.getAllusersUrl).subscribe((response)=>{
     var responseData  = response;

@@ -1,3 +1,4 @@
+import { NumberDirective } from './numbers-only.directive';
 import { BlockCopyPasteDirective, TogglePasswordDirective } from './input.directive';
 import {
   ImageIncludeCurrentTimestampDirective,
@@ -15,5 +16,6 @@ export const SHARED_DIRECTIVES = [
   ImageIncludeVersionDirective,
   ResourceIncludeCurrentTimestampDirective,
   ResourceIncludeVersionDirective,
-  LoadingDisableDirective
+  LoadingDisableDirective,
+  NumberDirective
 ];

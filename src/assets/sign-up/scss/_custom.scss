@@ -314,6 +314,7 @@ div.left-image {
   padding: 0;
   height: 45px;
   position: relative;
+  z-index: 111;
 
   img {
     height: 20px;
@@ -1369,7 +1370,7 @@ p{
 .searchbar {
   border-radius: 50px;
   border: 1px solid gray;
-  width: 350px;
+  width: 100%;
   float: right;
 
 }

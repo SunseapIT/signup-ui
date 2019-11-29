@@ -218,7 +218,7 @@ export class OrderReviewComponent implements OnInit {
     this.customerDto = JSON.parse(objStr);
     this.selectedPricingPlan = this.customerDto.plan;
     this.fullName = this.customerDto.fullName;
-    this. emailAddress = this.customerDto.eamilAddress;
+    this.emailAddress = this.customerDto.eamilAddress;
     this.mobileNumber = this.customerDto.mobileNumber;
     this.houseNumber = this.customerDto.houseNo;
     this.levelUnit ="";
@@ -239,10 +239,14 @@ export class OrderReviewComponent implements OnInit {
       customerDto.fullName = this.fullName; 
       customerDto.spAccountNumber = this.serviceNo;
       localStorage.setItem("customerObj", JSON.stringify(customerDto))
+      console.log('Request Object--->',customerDto);
+      
 
 
     this.service.post_service(ApiServiceServiceService.apiList.saveCustomerurl,customerDto).subscribe((response)=>{
-    var responseData  = response;    
+    var responseData  = response;   
+    console.log('Response Object----->',responseData);
+     
     if(responseData['statusCode']==200){
       localStorage.removeItem("customerObj")
       localStorage.removeItem("Token")

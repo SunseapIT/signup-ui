@@ -66,7 +66,8 @@ export class PlanDetailComponent implements OnInit {
   planList:Array<PlanBean>;
   plans:Array<string>;
 
-  public promoCode:any[] = [{referralCode:""}];
+  promoCode = [{referralCode:""}];
+  public i:number=0;
   pdfSrc: any;
 
 
@@ -260,27 +261,7 @@ viewFactSheet(){
     }
     else { 
       this.openButtonFlag = false;
-    } 
-    // this.parent.model.premise.productName = name;
-    // const pricingPlan = _.find(this.pricingPlanList, { name: name });
-    // const eventName = _.get(pricingPlan, 'name');
-    // const queryParams: Params = Object.assign({}, this.activateRoute.snapshot.queryParams);
-    // queryParams[ 'plan' ] = _.get(pricingPlan, 'prefillUrl');
-    // this.router.navigate(['.'], { queryParams: queryParams, replaceUrl: true });
-    // this.parent.model.premise.contractDuration = _.get(pricingPlan, 'subscription');
-    // this.parent.model.premise.planId = _.get(pricingPlan, 'id');
-    // this.parent.model.premise.cleanEnergyPercentage = _.get(pricingPlan, 'activePricingPlanRate');
-    // if (name) {
-    //   this.openButtonFlag=true;
-    //   this.gtagService.sendEvent(eventName);
-
-    // }else{
-    //   // debugger
-    //   this.openButtonFlag=false;
-    // }
-    // this.parent.model.referralCode = '';
-    // this.verifiedPromotionCode = '';
-    // this.isPromotionCodeVerifyFail = false;
+    }   
   }
 
 
@@ -352,6 +333,8 @@ viewFactSheet(){
       var customerDto = new CustomerDto();
       customerDto.spAccountNumber = form.value.serviceNo;
       customerDto.plan = form.value.productName;
+      customerDto.promoCode = this.promoCode.map(item=>item.referralCode);     
+      console.log('planDetail---',customerDto);      
 
       this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{
         var responseData  = response;
@@ -392,7 +375,7 @@ viewFactSheet(){
   }
 
   addPromoCode(){
-    this.promoCode.push({referralCode :''})    
+   this.promoCode.push({referralCode :''})    
   }
 
   delete(i:number){

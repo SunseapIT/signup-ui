@@ -1,53 +1,48 @@
-import { OrderComponent } from './../../order/order.component';
 import { ApiServiceServiceService } from './../../../api-service-service.service';
-
-import { Component, KeyValueDiffer, KeyValueDiffers, DoCheck, Host } from '@angular/core';
+import { Component, KeyValueDiffer } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import * as _ from 'lodash';
 
 declare const $:any;
-
 export enum DocumentName { 
   factSheet = 'Plan Factsheet',
-
 }
-
-interface UploadDocument { name: DocumentName; file: File; fileName: string; uploadedId?: number; }
+interface UploadDocument { 
+  name: DocumentName; 
+  file: File; 
+  fileName: string; 
+  uploadedId?: number; 
+}
 
 
 const FACTSHEET_DOCUMENT_NAMES = [
   DocumentName.factSheet
- 
 ];
+
 @Component({
   selector: 'app-add-plan',
   templateUrl: './add-plan.component.html',
   styleUrls: ['./add-plan.component.scss']
 })
 export class AddPlanComponent {
-
   DocumentName:any;
-
   documents: { [name: string]: UploadDocument } = {};
-  document: { name: DocumentName, file: File, fileName: string, uploadedId?: number };
-  
+  document: { name: DocumentName, file: File, fileName: string, uploadedId?: number };  
   formData=new FormData();
   model:any ={};
   uploadSuccess: boolean;
   uploaded:any;
   file:any;
   documentIds: number[] = [];
-
   factSheet:any={};
 
   private onValidatorChange: () => void;
   private documentDiffer: KeyValueDiffer<string, any>;
   fileName: string;
   myfile: any;
-  constructor(  
- 
-    private service:ApiServiceServiceService,
+  fileType:any;
+  constructor(private service:ApiServiceServiceService,
     private toastr: ToastrService) { }
 
   ngOnInit() {
@@ -56,7 +51,7 @@ export class AddPlanComponent {
 
   
   onSubmit(form:NgForm){ 
-     if(form.valid){
+     if(form.valid && this.fileType == "application/pdf"){
 
     this.uploadSuccess=false;
   
@@ -68,22 +63,29 @@ export class AddPlanComponent {
          timeOut: 2000
          });
   })
+  form.resetForm();
  }
  else{
     this.toastr.error('', 'Fill the form', {
       timeOut: 3000
     });
    }
-    form.resetForm();
+   
 }
 
 
 onFileSelected(event) { 
-
  this.myfile = event.target.files[0].name;
+ this.fileType = event.target.files[0].type;
+ if(this.fileType == "application/pdf"){
   this.formData.append("multipartFile", event.target.files[0]);   
   this.uploadSuccess=true;  
-  
+ }
+ else{
+  this.toastr.error('', 'Upload PDF file',{
+    timeOut: 2000
+  })
+ }
 }
 
 

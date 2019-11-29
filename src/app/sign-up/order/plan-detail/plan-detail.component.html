@@ -22,7 +22,11 @@
       <div class="form-group col-md-6">
           <label class="form-control-label" for="serviceNo">SP Account No.</label>
           <input name="serviceNo" id="serviceNo" class="form-control" placeholder="10 Digits"
-          [class.is-invalid]="serviceNo.invalid && (serviceNo.touched || form.submitted)" required maxlength="10" blockCopyPaste numbersOnly [(ngModel)]="parent.model.premise.serviceNo" #serviceNo="ngModel">
+          [class.is-invalid]="serviceNo.invalid && (serviceNo.touched || form.submitted)" 
+          required maxlength="10" 
+          blockCopyPaste numbersOnly 
+          [(ngModel)]="parent.model.premise.serviceNo" 
+          #serviceNo="ngModel">
 
           <ng-template #serviceNoTooltip>
               <img src='/assets/sign-up/images/content/SP_Account.jpg' alt="SP Account" includeVersion/>
@@ -44,8 +48,13 @@
       <div class="form-group col-sm-6">
           <label class="form-control-label" for="referralCode">Enter your promotion/referral code if you have one:</label>
 
-          <div *ngFor="let promo of promoCode; let i = index">
-              <input [name]="'referralCode'+i" id="referralCode" class="form-control" (focus)="onPromotionCodeFocus()" (blur)="onPromotionCodeBlur()" (change)="isPromotionCodeVerifyFail = false" [class.is-valid]="parent.model.referralCode && isPromotionCodeValid()" [class.is-invalid]="!isPromotionCodeValid() && form.submitted" [(ngModel)]="promo.referralCode" #promo="ngModel" />
+          <div *ngFor="let promo of promoCode; let i=index">
+            
+              <input [name]="'referralCode'+i" 
+        
+              class="form-control" 
+              (focus)="onPromotionCodeFocus()" (blur)="onPromotionCodeBlur()" (change)="isPromotionCodeVerifyFail = false" [class.is-valid]="parent.model.referralCode && isPromotionCodeValid()" [class.is-invalid]="!isPromotionCodeValid() && form.submitted"
+               [(ngModel)]="promo.referralCode" #referralCode="ngModel" />
               <button type="button" data-toggle="modal" data-target="#validateOTP" class="btn input-button" [disabled]="!parent.model.referralCode || isPromotionCodeValid() || isPromotionCodeVerifyFail" (click)="verifyPromotionCode()">
                   <span>Verify</span>
               </button>

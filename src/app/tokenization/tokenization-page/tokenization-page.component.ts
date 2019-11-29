@@ -20,6 +20,7 @@ export class TokenizationPageComponent implements OnInit {
 
   onSubmit(form:NgForm){
     if(form.valid){
+  console.log('Tokenization data', form.value);
        
     }
   }

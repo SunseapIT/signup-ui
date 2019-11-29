@@ -21,7 +21,7 @@
                   <tr *ngFor="let planList of planList | grdFilter: {planName: searchText, planId:searchText} | paginate : {itemsPerPage : 10,  currentPage : p}; let i=index;">
                       <td>{{planList.planName}}</td>
                       <td>{{planList.planId}}</td>
-                      <td><a (click)="viewFactSheet(planList.planName)"><span class="textunderline">{{planList.factSheetName}}</span></a></td>
+                      <td class="textunderline"><a (click)="viewFactSheet(planList.planName)">{{planList.factSheetName}}</a></td>
                       <td class="text-center text-danger"><i class="fa fa-trash" aria-hidden="true" (click)="delete(planList.id)"></i></td>
                   </tr>
               </tbody>

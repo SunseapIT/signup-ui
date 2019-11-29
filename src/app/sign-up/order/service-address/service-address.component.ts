@@ -163,21 +163,28 @@ export class ServiceAddressComponent implements OnInit {
       customerDto.unitNo = form.value.unitNo;
       customerDto.lavel = form.value.lavel  
 
+      console.log('addresssssssssss', customerDto);
+      
+
       localStorage.setItem("customerObj",JSON.stringify(customerDto))
       var timeStampDto = new TimeStampDto();
       timeStampDto.pageType = "ADDRESS_DETAILS",
       timeStampDto.token = localStorage.getItem("Token");
       this.service.post_service(ApiServiceServiceService.apiList.addAddressUrl,addressDto).subscribe((response)=>{
         var responseData  = response;
+
+        console.log('address',responseData);
+        
         var status = responseData['statusCode'];
         if(status == 200){
         this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{
-         parent.saveAndNext(); 
-         form.resetForm();
+        
       
        })
         }
-      })    
+      })   
+      parent.saveAndNext(); 
+      form.resetForm(); 
     } 
   }
 }

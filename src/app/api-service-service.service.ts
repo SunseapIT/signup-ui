@@ -2,7 +2,7 @@ import { environment } from '@env/base';
 
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 
 
 @Injectable({
@@ -78,6 +78,7 @@ get_service(url) {
 
     };
     const httpOptions = {
+      // params: new HttpParams().set('Authorization',localStorageVariable)
     headers: new HttpHeaders(headerJson)
     };
     return this.http.post(url, data, httpOptions).pipe(map((response) => {

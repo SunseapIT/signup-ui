@@ -16,7 +16,7 @@ export class CustomerDto {
     
    spAccountNumber:string;
     
-   promotionCode:string;
+   promoCode : Array<string>; 
     
    buildingName:string;
     

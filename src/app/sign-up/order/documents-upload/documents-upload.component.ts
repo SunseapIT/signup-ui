@@ -57,16 +57,8 @@ export class DocumentsUploadComponent implements OnInit {
     
   }
   
-  onSubmit(form) {
-    
-      this.parent.model.documentIds = _.chain(this.documents)
-        .pick(this.parent.isSPAccountHolder ? SP_ACCOUNT_DOCUMENT_NAMES : NON_SP_ACCOUNT_DOCUMENT_NAMES)
-        .values().map('uploadedId')
-        .value();
-      this.localStorage.setItem(STORAGE_KEYS.UPLOADED_DOCUMENT, this.documents).subscribe();
-      this.gtagService.sendEvent(ORDER_GA_EVENT_NAMES.UPLOAD_DOCUMENT);
-      this.parent.saveAndNext();
-    
+  onSubmit(form) {     
+    this.parent.saveAndNext();
   }
 
   selectFile(event) {
@@ -80,15 +72,15 @@ export class DocumentsUploadComponent implements OnInit {
             this.documents[document.name].uploadedId = uploadedDocument.id;
             this.documents[document.name].file = null;
           },
-          rs => {
-            if (_.get(rs, 'error.code') === ErrorCode.TokenFail) {
-              this.parent.token = null;
-              this.parent.openErrorModal('Errors',
-                'Your session was expired. Please go back to previous page and verify your mobile again.');
-            } else {
-              this.parent.openErrorModal('Errors', _.get(rs, 'error.message'));
-            }
-          }
+          // rs => {
+          //   if (_.get(rs, 'error.code') === ErrorCode.TokenFail) {
+          //     this.parent.token = null;
+          //     this.parent.openErrorModal('Errors',
+          //       'Your session was expired. Please go back to previous page and verify your mobile again.');
+          //   } else {
+          //     this.parent.openErrorModal('Errors', _.get(rs, 'error.message'));
+          //   }
+          // }
         )
       );
     }

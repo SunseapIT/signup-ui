@@ -38,15 +38,14 @@
                   [(ngModel)]="myfile" 
                   [value]="uploaded" 
                   disabled required 
-                  [class.is-invalid]="myfile1.touched || form.submitted"
                   #myfile1="ngModel">
                   <div class="upload-btn-wrapper">
                       <label class="btnUpload" for="file">Upload</label>
                       <input type="file" id="file" name="myfile" (change)="onFileSelected($event)" />
                   </div>
-                  <div *ngIf="myfile1.touched || form.submitted" class="invalid-feedback">
+                  <!-- <div *ngIf="myfile1.touched || form.submitted" class="invalid-feedback">
                       Please upload file
-                  </div>
+                  </div> -->
                   <ng-container class="valid-feedback" *ngIf="uploadSuccess">
                       <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
                   </ng-container>

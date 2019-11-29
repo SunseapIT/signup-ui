@@ -71,7 +71,7 @@ viewFactSheet(name){
   })
   $("#myModal").modal("show")
 }
-
+  
  
 
 }

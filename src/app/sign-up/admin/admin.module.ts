@@ -18,6 +18,8 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { GrdFilterPipe } from './filter';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SidebarComponent } from './sidebar/sidebar.component'
+import { SuccessfullSignupComponent } from './audit/successfull-signup/successfull-signup.component';
+import { AbandonedSignupComponent } from './audit/abandoned-signup/abandoned-signup.component';
 
 
 @NgModule({
@@ -45,7 +47,10 @@ import { SidebarComponent } from './sidebar/sidebar.component'
      ViewPlanComponent, 
      UploadFactsheetComponent,
      GrdFilterPipe,
-     SidebarComponent, 
+     SidebarComponent,
+     SuccessfullSignupComponent,
+     AbandonedSignupComponent, 
+  
     ]
 })
 export class AdminModule { }

@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="row mb-4 mt-4">
+        <div class="col-lg-4 text-left">
+  
+            <input type="text" class="form-control searchbar" placeholder="Search..." [(ngModel)]="searchTextAbandoned">
+            <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
+  
+        </div>
+        <div class="col-lg-5  p-0  text-right ">
+            <input placeholder="Select a range..." 
+            class="form-control searchbar" 
+            [(ngModel)]="dateTimeRange" 
+            [selectMode]="'range'" 
+            (afterPickerClosed)="getSuccessfulSignUp()" 
+            [owlDateTimeTrigger]="dtRange1" 
+            [owlDateTime]="dtRange1" 
+            (ngModelChange)="getSuccessfulSignUp()">
+            <owl-date-time #dtRange1></owl-date-time>
+        </div>
+        <div class="col-lg-3 csv-div  mt-2 text-right">
+            <angular2csv [data]="abandonedData" type="button" class="download" filename="test.csv" [options]="options">Download</angular2csv>
+        </div>
+    </div>
+  <div class="row">
+      <div class="col-lg-12">
+          <table class="table table-striped">
+              <thead>
+                
+                  <th>Plan Detail</th>
+                  <th>Personal Detail</th>
+                  <th>Address</th>
+                  <th>Upload Document</th>
+                  <th>Review Order</th>
+                  <th>Confirm Order</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let abandonedList of abandonedData  | grdFilter: {plan_Details: searchTextAbandoned}; let i=index">
+                  <td>{{ abandonedList.plan_Details }}</td>
+                  <td>{{ abandonedList.personal_Details }}</td>
+                  <td>{{ abandonedList.address_Details }}</td>
+                  <td>{{ abandonedList.upload_Documents }}</td>
+                  <td>{{ abandonedList.review_order }}</td>
+                  <td>{{ abandonedList.signUp }}</td>
+                </tr>
+
+              </tbody>
+
+          </table>
+          <pagination-controls (pageChange)="q = $event"  class="my-pagination"></pagination-controls>
+      </div>
+  </div>
+</div>

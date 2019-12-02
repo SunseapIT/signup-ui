@@ -12,17 +12,32 @@ export class ApiServiceServiceService {
 
 
   public static apiList = {
-    
+
+    //POST API   
     adminLogin:environment.baseUrl+"/api/v1/user/login",
     addPlanUrl:environment.baseUrl+"/api/v1/admin/addPlan",
-    viewPlanUrl: environment.baseUrl+"/api/v1/admin/getPlans",
-    customerViewPlanUrl:environment.baseUrl+"/api/v1/customer/getPlans",
-    removePlansUrl:environment.baseUrl+"/api/v1/admin/removePlan",
-    updateTimeUrl:environment.baseUrl+"/api/v1/customer/updateTime",
     addAddressUrl:environment.baseUrl+"/api/v1/customer/addAddress",
     saveCustomerurl:environment.baseUrl+"/api/v1/customer/saveCustomer",
-    getAllusersUrl:environment.baseUrl+"/api/v1/admin/getAllUsers" ,
-    getFactSheet:environment.baseUrl+"/api/v1/customer/getFactSheet",   
+    verifyPromoUrl:environment.baseUrl+"/api/v1/customer/verifyPromoCode",
+    verifyMobileUrl:environment.baseUrl+"/api/v1/customer/verifyMobile",
+    generateOtpUrl:environment.baseUrl+"/api/v1/customer/generateOtp",
+
+    //GET API
+    viewPlanUrl: environment.baseUrl+"/api/v1/admin/getPlans",
+    customerViewPlanUrl:environment.baseUrl+"/api/v1/customer/getPlans",
+    getAllusersUrl:environment.baseUrl+"/api/v1/admin/getAllUsers",
+    getFactSheet:environment.baseUrl+"/api/v1/customer/getFactSheet",
+    getTimestampUrl: environment.baseUrl+"/api/v1/customer/timestamps",
+
+    //DELETE API
+    removePlansUrl:environment.baseUrl+"/api/v1/admin/removePlan",
+
+    //TIMESTAMP API
+    updateTimeUrl:environment.baseUrl+"/api/v1/customer/updateTime",
+  
+   
+  
+   
 
   }
 

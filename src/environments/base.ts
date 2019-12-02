@@ -5,6 +5,7 @@ export const environment = {
   subDomain: false,
   apiUrl: '',
   reCaptchaSiteKey: '',
-   baseUrl: "http://91f85064.ngrok.io",
+  baseUrl: "http://0ed6aa8c.ngrok.io",
+  // baseUrl : "http://sunseap.herokuapp.com"
 
 };

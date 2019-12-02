@@ -2,10 +2,14 @@
     <input type="hidden" [name]="'fileUploaded-' + documentName" [ngModel]="document?.uploadedId"
            [required]="required"
            #fileUploaded="ngModel">
-    <input type="file" name="idFile" [id]="'idFile-' + documentName" class="custom-file-input" accept="application/pdf"
-           [class.is-valid]="document?.uploadedId"
-           [class.is-invalid]="fileUploaded.invalid && (fileUploaded.touched || isSubmitted)"
-           (change)="onSelectFile($event.target.files[0], documentName)" #idFile/>
+    <input type="file" 
+    name="idFile" 
+    [id]="'idFile-' + documentName" 
+    class="custom-file-input" 
+    accept="application/pdf"
+    [class.is-valid]="document?.uploadedId"
+    [class.is-invalid]="fileUploaded.invalid && (fileUploaded.touched || isSubmitted)"
+    (change)="onSelectFile($event.target.files[0], documentName)" #idFile/>
     <div class="custom-file-label">
       <label [for]="'fileUploaded-' + documentName">{{ document?.fileName || placeHolder || '&nbsp;' }}</label>
     </div>

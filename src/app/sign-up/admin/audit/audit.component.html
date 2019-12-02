@@ -11,84 +11,10 @@
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="successfulsignup" role="tabpanel" aria-labelledby="nav-home-tab">
-                        <!-- <div class="container"> -->
-                        <div class="row mb-4 mt-4">
-                            <div class="col-lg-4 text-left">
-
-                                <input type="text" class="form-control searchbar" placeholder="Search..." [(ngModel)]="searchTextSuccess">
-                                <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
-
-                            </div>
-                            <div class="col-lg-5  p-0  text-right ">
-                                <input placeholder="Select a range..." 
-                                class="form-control searchbar" 
-                                [(ngModel)]="dateTimeRange" 
-                                [selectMode]="'range'" 
-                                (afterPickerClosed)="getSuccessfulSignUp()" 
-                                [owlDateTimeTrigger]="dtRange1" 
-                                [owlDateTime]="dtRange1" 
-                                (ngModelChange)="getSuccessfulSignUp()">
-                                <owl-date-time #dtRange1></owl-date-time>
-                            </div>
-                            <div class="col-lg-3 csv-div  mt-2 text-right">
-                                <angular2csv [data]="data" type="button" class="download" filename="test.csv" [options]="options">Download</angular2csv>
-                            </div>
-                        </div>
-                        <div class="row m-0">
-                            <div class="col-lg-12">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Initial Timestamp</th>
-                                        <th>Final Timestamp</th>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let customerList of data | grdFilter: {fullName: searchTextSuccess, eamilAddress:searchTextSuccess} | paginate : {itemsPerPage : 10,  currentPage : p}; let i=index;">
-                                            <td>{{customerList.fullName}}</td>
-                                            <td>{{customerList.eamilAddress}}</td>
-                                            <td>{{customerList.sighnUpStarTimeStamp}}</td>
-                                            <td>{{customerList.sighnUpEndTimeStamp}}</td>
-                                        </tr>
-                                    </tbody>
-
-                                </table>
-                                <pagination-controls (pageChange)="p = $event"  class="my-pagination"></pagination-controls>
-                                                        </div>
-                        </div>
-                        <!-- </div> -->
+                      <app-successfull-signup></app-successfull-signup>
                     </div>
                     <div class="tab-pane fade" id="abandonedsignup" role="tabpanel" aria-labelledby="nav-profile-tab">
-                        <div class="container">
-                            <div class="row mb-4 mt-4">
-                                <div class="col-lg-4 p-0 text-left">
-
-                                    <input type="text" class="form-control searchbar" placeholder="Search..." [(ngModel)]="searchTextAbandoned">
-                               
-                                </div>                               
-                                <div class="col-lg-8 mt-2 csv-div text-right">
-                                    <angular2csv [data]="data" type="button" class="download" filename="test.csv" [options]="options">Download</angular2csv>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Plan Detail</th>
-                                            <th>Personal Detail</th>
-                                            <th>Address</th>
-                                            <th>Upload Document</th>
-                                            <th>Review Order</th>
-                                            <th>Confirm Order</th>
-                                        </thead>
-
-                                    </table>
-                                    <!-- <pagination-controls (pageChange)="pageChange($event)" class="my-pagination"></pagination-controls> -->
-                                </div>
-                            </div>
-                        </div>
+                        <app-abandoned-signup></app-abandoned-signup>
                     </div>
                 </div>
             </div>

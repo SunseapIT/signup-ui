@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { TimeStampEvent } from './../../../time-stamp-event.enum';
 import { ApiServiceServiceService } from './../../../api-service-service.service';
 import { SubscriberDataBean } from './../../../subscriber-data-bean';
@@ -242,11 +243,10 @@ export class PlanDetailComponent implements OnInit {
       }
   })
 }
-
  
   
 viewFactSheet(){
-  this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet+"?planName="+this.planName).subscribe(response=>{
+  this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet+"?planName="+this.planName.replace(/ /g,"@").replace(/%/g,"*")).subscribe(response=>{
     var data = "data:application/pdf;base64," +response['data']
     this.pdfSrc = data;
     $("#myModal").modal("show")
@@ -266,53 +266,67 @@ viewFactSheet(){
 
 
   verifyPromotionCode() {
-    this.showAddFlag=!this.showAddFlag
-    let { referralCode } = this.parent.model;
-    if (!referralCode) {
-      referralCode = '';
-    }
-    if (_.size(this.listPricePlanByRefOrProCode[ referralCode.trim().toUpperCase() ]) > 0
-      && !this.listPricePlanByRefOrProCode[ referralCode.trim().toUpperCase() ]
-        .includes(this.parent.model.premise.productName.toUpperCase())) {
-      this.isPromotionCodeVerifyFail = true;
-      return;
-    }
-    this.utilService.verifyPromotionCode(referralCode.trim().toLocaleUpperCase())
-      .subscribe((rs: SuccessResponse) => {
+    var customerDto = new CustomerDto();
+    customerDto.promoCode = this.promoCode.map(item=>item.referralCode);
+       
+    this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl+"?promoCode="+customerDto.promoCode,customerDto).subscribe((response: any) => {
+      
+      this.promotionMessage = response.data;
+      console.log('success---->PromoCode---->', response);
+      
+    })
 
-        this.rebateAmount = rs.data.amount.fixed;
-        this.promotionPercent = Number(Math.round(Number(rs.data.amount.percent * 100 + 'e' + 2)) + 'e-' + 2);
-        if (this.promotionPercent > 0 && this.rebateAmount > 0) {
-          this.promotionMessage = this.rebateAmount + '$' + ' and ' + this.promotionPercent + '%';
-        } else if (this.rebateAmount > 0) {
-          this.promotionMessage = this.rebateAmount > 0 ? this.rebateAmount + '$' : '';
-        } else {
-          this.promotionMessage = this.promotionPercent > 0 ? this.promotionPercent + '%' : '';
-        }
 
-        this.verifiedPromotionCode = referralCode;
-        this.isPromotionCodeVerifyFail = false;
-      }, (err) => {
-        this.isPromotionCodeVerifyFail = true;
-        if (err.code === 'E_LIMITED_REFERRAL_CODE') {
-          this.promotionMessage = 'Sorry! Promo code fully redeemed';
-        } else {
-          this.promotionMessage = '';
-        }
-      });
-  }
 
-  onPromotionCodeFocus() {
-    this.gtagService.sendEvent(ORDER_GA_EVENT_NAMES.REFERRAL_CODE);
-  }
 
-  onPromotionCodeBlur() {
-    const { referralCode } = this.parent.model;
-    if (referralCode && referralCode !== this.verifiedPromotionCode) {
-      this.verifiedPromotionCode = '';
-    } else {
-      this.isPromotionCodeVerifyFail = false;
-    }
+    // this.showAddFlag=!this.showAddFlag
+    // let { referralCode } = this.parent.model;
+    // if (!referralCode) {
+    //   referralCode = '';
+    // }
+    // if (_.size(this.listPricePlanByRefOrProCode[ referralCode.trim().toUpperCase() ]) > 0
+    //   && !this.listPricePlanByRefOrProCode[ referralCode.trim().toUpperCase() ]
+    //     .includes(this.parent.model.premise.productName.toUpperCase())) {
+    //   this.isPromotionCodeVerifyFail = true;
+    //   return;
+    // }
+    // this.utilService.verifyPromotionCode(referralCode.trim().toLocaleUpperCase())
+    //   .subscribe((rs: SuccessResponse) => {
+
+    //     this.rebateAmount = rs.data.amount.fixed;
+    //     this.promotionPercent = Number(Math.round(Number(rs.data.amount.percent * 100 + 'e' + 2)) + 'e-' + 2);
+    //     if (this.promotionPercent > 0 && this.rebateAmount > 0) {
+    //       this.promotionMessage = this.rebateAmount + '$' + ' and ' + this.promotionPercent + '%';
+    //     } else if (this.rebateAmount > 0) {
+    //       this.promotionMessage = this.rebateAmount > 0 ? this.rebateAmount + '$' : '';
+    //     } else {
+    //       this.promotionMessage = this.promotionPercent > 0 ? this.promotionPercent + '%' : '';
+    //     }
+
+    //     this.verifiedPromotionCode = referralCode;
+    //     this.isPromotionCodeVerifyFail = false;
+    //   }, (err) => {
+    //     this.isPromotionCodeVerifyFail = true;
+    //     if (err.code === 'E_LIMITED_REFERRAL_CODE') {
+    //       this.promotionMessage = 'Sorry! Promo code fully redeemed';
+    //     } else {
+    //       this.promotionMessage = '';
+    //     }
+    //   });
+  
+
+  // onPromotionCodeFocus() {
+  //   this.gtagService.sendEvent(ORDER_GA_EVENT_NAMES.REFERRAL_CODE);
+  // }
+
+  // onPromotionCodeBlur() {
+  //   const { referralCode } = this.parent.model;
+  //   if (referralCode && referralCode !== this.verifiedPromotionCode) {
+  //     this.verifiedPromotionCode = '';
+  //   } else {
+  //     this.isPromotionCodeVerifyFail = false;
+  //   }
+  // }
   }
 
   isPromotionCodeValid(): boolean {

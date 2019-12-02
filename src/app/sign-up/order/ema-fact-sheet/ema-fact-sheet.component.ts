@@ -89,7 +89,7 @@ export class EmaFactSheetComponent implements OnInit {
 
 
   getPlanFactSheet(planName){  
-      this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet+"?planName="+planName).subscribe(response=>{
+      this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet+"?planName="+planName.replace(/ /g,"@").replace(/%/g,"*")).subscribe(response=>{
         var data = "data:application/pdf;base64," +response['data']
         this.pdfSrc = data;
        

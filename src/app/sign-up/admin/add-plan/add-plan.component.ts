@@ -3,6 +3,7 @@ import { Component, KeyValueDiffer } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import * as _ from 'lodash';
+import { Plandto } from '../dto/plan-dto';
 
 declare const $:any;
 export enum DocumentName { 
@@ -54,10 +55,18 @@ export class AddPlanComponent {
      if(form.valid && this.fileType == "application/pdf"){
 
     this.uploadSuccess=false;
+
+    console.log('-->',this.model.planName);
+    console.log('-->',this.model.planId);
+    var plandto = new Plandto()
+    plandto.planName = this.model.planName;
+    plandto.planId =  this.model.planId;
+    
   
   this.service.multiPartPost_service(ApiServiceServiceService.apiList.addPlanUrl
-    +"?planName="+this.model.planName+"&planId="+this.model.planId,this.formData).subscribe
+    +"?planName="+this.model.planName.replace(/ /g,"@").replace(/%/g,"*")+"&planId="+this.model.planId,this.formData).subscribe
   (response=>{
+    
     
     this.toastr.success('', 'Plan added successfully', {
          timeOut: 2000

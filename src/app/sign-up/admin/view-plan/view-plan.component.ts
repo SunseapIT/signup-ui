@@ -64,7 +64,7 @@ export class ViewPlanComponent implements OnInit {
   
  
 viewFactSheet(name){
-  this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet+"?planName="+name).subscribe(response=>{
+  this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet+"?planName="+name.replace(/ /g,"@").replace(/%/g,"*")).subscribe(response=>{
     var data = "data:application/pdf;base64," +response['data']
     this.pdfSrc = data;
     

@@ -231,8 +231,7 @@ export class OrderReviewComponent implements OnInit {
 
 
   onSubmit(form:NgForm) {
-    if (this.acknowledgePrivacy && this.acknowledgeConsent) { 
-      
+    if (this.acknowledgePrivacy && this.acknowledgeConsent) {       
     var customerDto = new CustomerDto();
     var objStr = localStorage.getItem("customerObj");
       customerDto = JSON.parse(objStr);
@@ -252,6 +251,10 @@ export class OrderReviewComponent implements OnInit {
       localStorage.removeItem("Token")
       this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
 
+    }else{
+      this.toster.error('',responseData['message'], {
+        timeOut : 3000
+      })
     }
   })
 }

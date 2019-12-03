@@ -40,9 +40,7 @@ export class ViewPlanComponent implements OnInit {
     });  
   }
   
-  deletePlan(id){
-
-    
+  delete(id){    
     // var data;
     // let queryParams = new HttpParams();
     // queryParams = queryParams.append("planId",id);
@@ -57,14 +55,13 @@ export class ViewPlanComponent implements OnInit {
     //   this.toastr.error('', 'Plan deleted !', {
     //     timeOut: 2000
     //   }); 
-
     // })
-
   }
   
  
 viewFactSheet(name){
-  this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet+"?planName="+name.replace(/ /g,"@").replace(/%/g,"*")).subscribe(response=>{
+  this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet
+    +"?planName="+name.replace(/ /g,"@").replace(/%/g,"*")).subscribe(response=>{
     var data = "data:application/pdf;base64," +response['data']
     this.pdfSrc = data;
     

@@ -13,13 +13,15 @@ export class SuccessfullSignupComponent implements OnInit {
   tempData =[] ;
   p:number=1;
   searchTextSuccess : string;
-
+  totalItems:any;
+  page:number;
+  currentPage=3;
 
   constructor(private service:ApiServiceServiceService) {
 
-    for (let i = 1; i <= 100; i++) {
-      this.data.push(`item ${i}`);
-    }
+    // for (let i = 1; i <= 100; i++) {
+    //   this.data.push(`item ${i}`);
+    // }
   }
 
 
@@ -44,6 +46,8 @@ export class SuccessfullSignupComponent implements OnInit {
    this.service.get_service(ApiServiceServiceService.apiList.getAllusersUrl).subscribe((response)=>{
     var responseData  = response;
     var resultObject = responseData['data'];
+    console.log(resultObject);
+    
     this.data = resultObject;
     this.tempData = JSON.parse(JSON.stringify(this.data));
    })
@@ -61,5 +65,9 @@ export class SuccessfullSignupComponent implements OnInit {
     removeNewLines: true,
     keys: ['fullName', 'eamilAddress','sighnUpStarTimeStamp', 'sighnUpEndTimeStamp']
   };
+
+  pageChanged(event: any): void {
+    this.page = event.page;
+  }
 
 }

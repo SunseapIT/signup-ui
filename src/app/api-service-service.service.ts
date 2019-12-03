@@ -28,6 +28,7 @@ export class ApiServiceServiceService {
     getAllusersUrl:environment.baseUrl+"/api/v1/admin/getAllUsers",
     getFactSheet:environment.baseUrl+"/api/v1/customer/getFactSheet",
     getTimestampUrl: environment.baseUrl+"/api/v1/customer/timestamps",
+    getCustomerFactsheetUrl : environment.baseUrl+"/api/v1/customer/getUpdatedFactSheet",
 
     //DELETE API
     removePlansUrl:environment.baseUrl+"/api/v1/admin/removePlan",

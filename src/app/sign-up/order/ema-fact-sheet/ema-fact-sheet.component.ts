@@ -1,3 +1,4 @@
+
 import { CustomerDto } from './../../../core/customer-dto';
 import { Component, OnInit, Host } from '@angular/core';
 import { Router } from '@angular/router';
@@ -57,7 +58,9 @@ export class EmaFactSheetComponent implements OnInit {
     //   });
 
     this.customerObj =  JSON.parse(localStorage.getItem("customerObj"));
-    this.getPlanFactSheet(this.customerObj.plan);
+    this.getPlanFactSheet(this.customerObj.plan, 
+                       this.customerObj.fullName,
+                       this.customerObj.postelCode);
 
 
 
@@ -88,11 +91,12 @@ export class EmaFactSheetComponent implements OnInit {
   }
 
 
-  getPlanFactSheet(planName){  
-      this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet+"?planName="+planName.replace(/ /g,"@").replace(/%/g,"*")).subscribe(response=>{
+  getPlanFactSheet(planName, fullName,postelCode){  
+     
+      this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getCustomerFactsheetUrl+"?planName="+planName.replace(/ /g,"@").replace(/%/g,"*")+
+        "&userName="+fullName+"&address="+postelCode).subscribe(response=>{
         var data = "data:application/pdf;base64," +response['data']
-        this.pdfSrc = data;
-       
+        this.pdfSrc = data;       
       })
     
   }

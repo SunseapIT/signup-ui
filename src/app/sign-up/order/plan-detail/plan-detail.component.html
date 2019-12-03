@@ -92,7 +92,8 @@
           </div>
           <button type="button" class="btn btn-add" (click)="addPromoCode()"><b>Add more</b></button>
           
-          {{promotionMessage}}
+          <div class="green-text">{{promotionMessage}}</div>
+          <div class="red-text">{{promotionCodeError}}</div>
           <div class="valid-feedback">
               <i>Congrats! You just got {{promotionMessage}} off on your first bill.</i>
           </div>

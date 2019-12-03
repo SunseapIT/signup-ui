@@ -11,21 +11,21 @@ export class AbandonedSignupComponent implements OnInit {
   public dateTimeRange: Date[];
   abandonedData=[];
   tempData =[] ;
-  q:number=1;
   searchTextAbandoned : string;
-
-
+  totalItems:any;
+  page:number;
+  currentPage=3;
   constructor(private service:ApiServiceServiceService) {
 
-    for (let i = 1; i <= 100; i++) {
-      this.abandonedData.push(`item ${i}`);
-    }
+    // for (let i = 1; i <= 100; i++) {
+    //   this.abandonedData.push(`item ${i}`);
+    // }
   }
 
 
 
   ngOnInit() {
-    this.getAbandonedUsers();
+    this.getAbandonedUsers(0);
   }
 
   getAbandonedSignUp(){
@@ -41,25 +41,28 @@ export class AbandonedSignupComponent implements OnInit {
 
   
 
-  getAbandonedUsers(){
-    this.service.get_service(ApiServiceServiceService.apiList.getTimestampUrl).subscribe((response)=>{
+  getAbandonedUsers(page){
+    this.service.get_service(ApiServiceServiceService.apiList.getTimestampUrl+"?page="+page).subscribe((response)=>{
       var responseData = response;
       var resultObject = responseData['data'];
+      this.totalItems = resultObject.totalElements;
       var resultObject1 = resultObject['content'];
       this.abandonedData = resultObject1;   
-      
       console.log('Abandoned', this.abandonedData);
       
 
     })
   }
-  
+  pageChanged(event: any): void {
+    this.page = event.page-1;
+    this.getAbandonedUsers(this.page);
+  }
   options = {
     fieldSeparator: ',',
     quoteStrings: '"',
     decimalseparator: '.',
     showLabels: false,
-    // headers: ['Name', 'Email Address', 'Initialstamp', 'Finalstamp'],
+    headers: ['Plan Detail', 'Personal Detail', 'Address', 'Upload Document', 'Review Order', 'Confirm Order'],
     showTitle: true,
     title: '',
     useBom: false,

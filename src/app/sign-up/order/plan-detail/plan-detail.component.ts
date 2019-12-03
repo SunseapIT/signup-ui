@@ -264,17 +264,26 @@ viewFactSheet(){
     }   
   }
 
+  promotionCodeError;
 
   verifyPromotionCode() {
     var customerDto = new CustomerDto();
     customerDto.promoCode = this.promoCode.map(item=>item.referralCode);
        
-    this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl+"?promoCode="+customerDto.promoCode,customerDto).subscribe((response: any) => {
+    this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl+"?promoCode="
+    +customerDto.promoCode,customerDto).subscribe((response: any) => {
+      var responseData = response;
+      if(responseData['statusCode']==200){
       
       this.promotionMessage = response.data;
       console.log('success---->PromoCode---->', response);
+      }
+      else{
+        this.promotionCodeError = response.message;
+      }
       
     })
+    
 
 
 

@@ -31,7 +31,7 @@
                   <th>Final Timestamp</th>
               </thead>
               <tbody>
-                  <tr *ngFor="let customerList of data | grdFilter: {fullName: searchTextSuccess, eamilAddress:searchTextSuccess} | paginate : {itemsPerPage : 10,  currentPage : p}; let i=index;">
+                  <tr *ngFor="let customerList of data | grdFilter: {fullName: searchTextSuccess, eamilAddress:searchTextSuccess}; let i=index;">
                       <td>{{customerList.fullName}}</td>
                       <td>{{customerList.eamilAddress}}</td>
                       <td>{{customerList.sighnUpStarTimeStamp}}</td>
@@ -40,7 +40,9 @@
               </tbody>
 
           </table>
-          <pagination-controls (pageChange)="p = $event"  class="my-pagination"></pagination-controls>
-                                  </div>
+          <pagination [totalItems]="totalItems" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="5"></pagination>
+
+          <!-- <pagination-controls (pageChange)="p = $event"  class="my-pagination"></pagination-controls> -->
+    </div>
   </div>
   <!-- </div> -->

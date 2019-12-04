@@ -21,6 +21,7 @@ export class ApiServiceServiceService {
     verifyPromoUrl:environment.baseUrl+"/api/v1/customer/verifyPromoCode",
     verifyMobileUrl:environment.baseUrl+"/api/v1/customer/verifyMobile",
     generateOtpUrl:environment.baseUrl+"/api/v1/customer/generateOtp",
+    addCardDetailUrl:environment.baseUrl+"/api/v1/tokens/tokenize",
 
     //GET API
     viewPlanUrl: environment.baseUrl+"/api/v1/admin/getPlans",

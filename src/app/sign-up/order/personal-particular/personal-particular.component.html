@@ -73,7 +73,8 @@
               [(ngModel)]="parent.model.email" 
               #email="ngModel" 
               blockCopyPaste />
-              <button type="submit" class="btn input-button" [disabled]="isEmailVerified() || !parent.model.email || email.invalid" (click)="requestEmailOTP()"><span>Verify</span></button>
+              <button type="submit" class="btn input-button" 
+              [disabled]="isEmailVerified() || !parent.model.email || email.invalid" (click)="requestEmailOTP()"><span>Verify</span></button>
 
               <!-- <div *ngIf="isEmailVerified()" class="valid-feedback"><i>Email is verified</i></div> -->
               <div *ngIf="email.errors?.pattern" class="invalid-feedback"><i>Please enter valid email address</i></div>

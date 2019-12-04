@@ -1,4 +1,8 @@
+import { Files } from "./file-dto";
+
 export class CustomerDto {
+   
+   file =  new Files(); 
 
    token:string;
 
@@ -29,7 +33,7 @@ export class CustomerDto {
    unitNo: string;
     
    streetName:string;
-
+   
    sighnUpStarTimeStamp:string;
 
    sighnUpEndTimeStamp:string;

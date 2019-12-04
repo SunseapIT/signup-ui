@@ -120,10 +120,11 @@ export class PersonalParticularComponent implements OnInit {
       }
       this.gtagService.sendEvent(ORDER_GA_EVENT_NAMES.ENTER_YOUR_DETAIL_2);
 
-      var subscriberDataBean = new SubscriberDataBean();
-      subscriberDataBean.fullName = form.value.identificationName;
-      subscriberDataBean.emailAddress = form.value.email;
-      subscriberDataBean.phoneNumber = form.value.mobileNo;
+      // var subscriberDataBean = new SubscriberDataBean();
+      // subscriberDataBean.fullName = form.value.identificationName;
+      // subscriberDataBean.emailAddress = form.value.email;
+      // subscriberDataBean.phoneNumber = form.value.mobileNo;
+
       var customerDto = new CustomerDto();
 
       var objStr = localStorage.getItem("customerObj");

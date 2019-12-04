@@ -247,8 +247,8 @@ export class OrderReviewComponent implements OnInit {
     console.log('Response Object----->',responseData);
      
     if(responseData['statusCode']==200){
-      localStorage.removeItem("customerObj")
-      localStorage.removeItem("Token")
+      // localStorage.removeItem("customerObj")
+      // localStorage.removeItem("Token")
       this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
 
     }else{

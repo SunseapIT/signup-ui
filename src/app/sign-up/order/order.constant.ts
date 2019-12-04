@@ -19,6 +19,7 @@ export const ORDER_ROUTES = {
   EMA_FACT_SHEET: 'review-fact-sheet',
   ORDER_REVIEW: 'review-order',
   ORDER_CONFIRMATION: 'confirmation',
+ 
 };
 
 export const ORDER_GA_EVENT_NAMES = {

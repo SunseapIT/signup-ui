@@ -75,7 +75,7 @@
               data-toggle="modal" 
               data-target="#validateOTP" 
               class="btn input-button" 
-              (click)="verifyPromotionCode()">              
+              (click)="verifyPromotionCode(i)">              
               <span>Verify</span>
               </button>
 
@@ -91,9 +91,9 @@
               </button>
           </div>
           <button type="button" class="btn btn-add" (click)="addPromoCode()"><b>Add more</b></button>
-          
-          <div class="green-text">{{promotionMessage}}</div>
-          <div class="red-text">{{promotionCodeError}}</div>
+          <div *ngIf="promotionMessage != ''" 
+          [ngClass]="{'green-text':promocodeStatus,'red-text':!promocodeStatus}">{{promotionMessage}}</div>
+          <!-- <div class="red-text">{{promotionCodeError}}</div> -->
           <div class="valid-feedback">
               <i>Congrats! You just got {{promotionMessage}} off on your first bill.</i>
           </div>

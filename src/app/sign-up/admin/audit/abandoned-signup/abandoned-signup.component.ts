@@ -57,6 +57,7 @@ export class AbandonedSignupComponent implements OnInit {
     this.page = event.page-1;
     this.getAbandonedUsers(this.page);
   }
+  
   options = {
     fieldSeparator: ',',
     quoteStrings: '"',

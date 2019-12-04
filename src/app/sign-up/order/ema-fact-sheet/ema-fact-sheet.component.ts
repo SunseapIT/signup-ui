@@ -80,7 +80,14 @@ export class EmaFactSheetComponent implements OnInit {
 
   onSubmit() {
     if (this.confirmationChecked && this.policyChecked) {
-      this.gtagService.sendEvent(ORDER_GA_EVENT_NAMES.REVIEW_ORDER_1);
+      // this.gtagService.sendEvent(ORDER_GA_EVENT_NAMES.REVIEW_ORDER_1);
+      var customerDto = new CustomerDto();
+      var objStr = localStorage.getItem("customerObj");
+      console.log(customerDto);
+      customerDto = JSON.parse(objStr);
+      customerDto.file.factSheet_data = this.pdfSrc
+      console.log(customerDto);
+      localStorage.setItem("customerObj",JSON.stringify(customerDto))
       this.parent.saveAndNext();
     }
     else {
@@ -91,8 +98,7 @@ export class EmaFactSheetComponent implements OnInit {
   }
 
 
-  getPlanFactSheet(planName, fullName,postelCode){  
-     
+  getPlanFactSheet(planName, fullName,postelCode){       
       this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getCustomerFactsheetUrl+"?planName="+planName.replace(/ /g,"@").replace(/%/g,"*")+
         "&userName="+fullName+"&address="+postelCode).subscribe(response=>{
         var data = "data:application/pdf;base64," +response['data']

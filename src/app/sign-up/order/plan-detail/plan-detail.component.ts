@@ -66,7 +66,7 @@ export class PlanDetailComponent implements OnInit {
   potentialCustomer: PotentialCustomer = null;
   planList:Array<PlanBean>;
   plans:Array<string>;
-
+  promocodeStatus = false;
   promoCode = [{referralCode:""}];
   public i:number=0;
   pdfSrc: any;
@@ -266,20 +266,21 @@ viewFactSheet(){
 
   promotionCodeError;
 
-  verifyPromotionCode() {
+  verifyPromotionCode(index) {
     var customerDto = new CustomerDto();
-    customerDto.promoCode = this.promoCode.map(item=>item.referralCode);
+    let promocode = this.promoCode[index].referralCode;
        
     this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl+"?promoCode="
-    +customerDto.promoCode,customerDto).subscribe((response: any) => {
+    +promocode,customerDto).subscribe((response: any) => {
       var responseData = response;
       if(responseData['statusCode']==200){
-      
+        this.promocodeStatus = true;
       this.promotionMessage = response.data;
       console.log('success---->PromoCode---->', response);
       }
       else{
-        this.promotionCodeError = response.message;
+        this.promocodeStatus = false;
+        this.promotionMessage = response.message;
       }
       
     })
@@ -353,6 +354,9 @@ viewFactSheet(){
       var timeStampDto = new TimeStampDto();
        timeStampDto.pageType = "PALN_DETAILS"
 
+       console.log("timeStampDto",timeStampDto);
+       
+
       var customerDto = new CustomerDto();
       customerDto.spAccountNumber = form.value.serviceNo;
       customerDto.plan = form.value.productName;
@@ -398,7 +402,8 @@ viewFactSheet(){
   }
 
   addPromoCode(){
-   this.promoCode.push({referralCode :''})    
+   this.promoCode.push({referralCode :''})   
+   this.promotionMessage = ''; 
   }
 
   delete(i:number){

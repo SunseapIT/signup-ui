@@ -1,3 +1,4 @@
+import { PAYMENT_COMPONENTS } from './tokenization/index';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Angular2CsvModule } from 'angular2-csv';
@@ -37,14 +38,18 @@ import { PaginationModule } from 'ngx-pagination-bootstrap'
     SharedModule,
     Angular2CsvModule,
     ToastrModule.forRoot({
-      timeOut: 10000,
+      timeOut: 3000,
       positionClass: 'toast-top-center',
       preventDuplicates: true,
     }),
     PdfViewerModule,
 
   ],
-  declarations: [ SignUpComponent, ORDER_COMPONENTS ],
+  declarations: [
+    SignUpComponent, 
+    ORDER_COMPONENTS,
+    PAYMENT_COMPONENTS
+   ],
   providers: [
     {
       provide: RECAPTCHA_SETTINGS,

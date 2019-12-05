@@ -1,3 +1,4 @@
+import { TimeStampDto } from './../../admin/dto/time-stamp-dto';
 
 import { CustomerDto } from './../../../core/customer-dto';
 import { Component, OnInit, Host } from '@angular/core';
@@ -88,6 +89,12 @@ export class EmaFactSheetComponent implements OnInit {
       customerDto.file.factSheet_data = this.pdfSrc
       console.log(customerDto);
       localStorage.setItem("customerObj",JSON.stringify(customerDto))
+      var timeStampDto = new TimeStampDto();
+      timeStampDto.pageType = "REVIEW_ORDER",
+      timeStampDto.token = localStorage.getItem("Token")     
+      this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{        
+      })
+      
       this.parent.saveAndNext();
     }
     else {

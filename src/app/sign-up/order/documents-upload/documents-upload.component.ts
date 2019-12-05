@@ -1,37 +1,13 @@
 import { ApiServiceServiceService } from '@app/api-service-service.service';
 import { CustomerDto } from './../../../core/customer-dto';
 import { Component, Host, OnInit } from '@angular/core';
-
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import * as _ from 'lodash';
-
 import { GoogleTagManagerService, UtilService } from '@app/core';
-import { readFile } from '@app/shared';
 import { OrderComponent } from '../order.component';
-import { ORDER_GA_EVENT_NAMES, STORAGE_KEYS } from '../order.constant';
-import { timestamp } from 'rxjs/operators';
 import { TimeStampDto } from '@app/sign-up/admin/dto/time-stamp-dto';
 
-enum ErrorCode {
-  TokenFail = 'E_TOKEN_FAIL',
-}
 
-export enum DocumentName { 
-  SpPastMonthBill = 'SP Past Month Bill',
-  NewSpAccountOpeningLetter = 'New SP Account Opening Letter',
-  LetterOfAuthorisation = 'Letter of Authorisation by SP Account Holder', 
-}
-
-interface UploadDocument { name: DocumentName; file: File; fileName: string; uploadedId?: number; }
-
-const SP_ACCOUNT_DOCUMENT_NAMES = [
-  DocumentName.SpPastMonthBill, DocumentName.NewSpAccountOpeningLetter
-];
-
-const NON_SP_ACCOUNT_DOCUMENT_NAMES = [
-  DocumentName.LetterOfAuthorisation
- 
-];
 
 @Component({
   selector: 'app-documents-upload',
@@ -39,18 +15,22 @@ const NON_SP_ACCOUNT_DOCUMENT_NAMES = [
 })
 export class DocumentsUploadComponent implements OnInit {
 
-  DocumentName = DocumentName;
-
-  documents: { [name: string]: UploadDocument } = {};
+currentId: number = 0;
+bill_data_file: any;
+opening_letter_data_file: any;
+authorization_data_file: any;
+factSheet_data_file: any;
+bill_data: string;
+opening_letter_data: string;
+authorization_data: string;
+factSheet_data: string;
+spPastMonthBill:any;
+newSpAccountOpeningLetter:any;
+letterOfAuthorisation:any;
 
   constructor(
     @Host() public parent: OrderComponent,
-    private utilService: UtilService,
-    private localStorage: LocalStorage,
-    private gtagService: GoogleTagManagerService,
-    private service : ApiServiceServiceService
-  ) {
-    // Don't display step section 1, 2, 3 -> not display padding
+    private service : ApiServiceServiceService ) {
     const element = document.getElementById('step-section');
     element.classList.remove('pt-3');
 
@@ -61,65 +41,135 @@ export class DocumentsUploadComponent implements OnInit {
 
     
   }
+
+  spPastMonthBillSuccess = false;
+  openingLetter = false;
+  authorization = false;
   
   onSubmit(form) {   
- 
-
-      // if (form.valid) {    
-        
-      // this.parent.model.documentIds = _.chain(this.documents)
-      //   .pick(this.parent.isSPAccountHolder ? SP_ACCOUNT_DOCUMENT_NAMES : NON_SP_ACCOUNT_DOCUMENT_NAMES)
-      //   .values().map('uploadedId')
-      //   .value();
-      //   var customerDto = new CustomerDto();
-      //   var strObj = localStorage.getItem("customerObj");
-      //   customerDto = JSON.parse(strObj);
-          
-
-
-
-      // this.localStorage.setItem(STORAGE_KEYS.UPLOADED_DOCUMENT, this.documents).subscribe();
-      // this.gtagService.sendEvent(ORDER_GA_EVENT_NAMES.UPLOAD_DOCUMENT);
+    //  if (form.valid) {    
     var customerDto = new CustomerDto()
     var objStr = localStorage.getItem("customerObj");
     customerDto = JSON.parse(objStr);
 
-    customerDto.file.authorization_data = this.myfile
 
+
+    console.log(this.bill_data);
+    console.log(this.opening_letter_data);
+    console.log(this.authorization_data);
+    
+
+    customerDto.file.bill_data = this.bill_data;
+    customerDto.file.opening_letter_data = this.opening_letter_data;
+    customerDto.file.authorization_data = this.authorization_data_file
     localStorage.setItem("customerObj",JSON.stringify(customerDto))
-
-
 
       var timeStampDto = new TimeStampDto();
       timeStampDto.pageType = "UPLOAD_DOCUMENTS";
       timeStampDto.token = localStorage.getItem("Token")
 
-    this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{
-      console.log('uploaddddddddddddddddd', response);
-      
-           
+    this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{       
     })
 
       this.parent.saveAndNext();
-    // }
+    // } 
+  } 
+    
   
+
+
+
+
+
+
+selected(event,field){
+  this.currentId = field;
+  let fileList : FileList = event.target.files;
+
+
+  if (fileList.length > 0) {
+    const file: File = fileList[0];
+ 
     
-  }
-  fileName: string;
-  myfile: any;
-  fileType:any;
-  formData=new FormData();
-  selectFile(event) {
-    this.myfile = event.document.file.name;
-  this.fileType = event.document.file.type;
-  if(this.fileType == "application/pdf"){
-  this.formData.append("multipartFile", event.document.file.name);   
-    
-  }
+    if (field == 1) {
+      this.spPastMonthBill = file.name;
+      this.bill_data_file = file;
+      this.handleInputChange(file);
+      this.spPastMonthBillSuccess = true;
+     
+    }
+    else if (field == 2) {
+      this.newSpAccountOpeningLetter=file.name;
+      this.opening_letter_data_file = file;
+      this.handleInputChange(file); 
+      this.openingLetter = true;
+    }
+    else if (field == 3) {
+      console.log();
+      this.letterOfAuthorisation = file.name;
+      this.authorization_data_file = file;
+      this.handleInputChange(file); 
+      this.authorization = true
+    }
 
   }
+ 
 
-  cancelUpload(event) {
-    delete this.documents[event.documentName];
+}
+
+handleInputChange(files) {
+  console.log("in method");
+  
+  var file = files;
+  var pattern = /pdf-*/;
+  var reader = new FileReader();
+  if (!file.type.match(pattern)) {
+    alert('invalid format');
+    return;
   }
+  reader.onloadend = this._handleReaderLoaded.bind(this);
+  reader.readAsDataURL(file);
+ 
+  
+}
+
+_handleReaderLoaded(e) {
+  let reader = e.target;
+  console.log("reader-------->",reader.result);
+  
+  var base64result = reader.result.substr(reader.result.indexOf(',') + 1);
+  console.log("base64result : ",base64result);
+  
+  let id = this.currentId;
+  switch (id) {
+    case 1:
+      this.bill_data = base64result;
+      break;
+    case 2:
+      this.opening_letter_data = base64result;
+      break;
+    case 3:
+      this.authorization_data = base64result;
+      break;
+  
+  }
+
+}
+
+  
+
+
+
+
+  // selectFile(event) {
+  //   this.myfile = event.document.file.name;
+  // this.fileType = event.document.file.type;
+  // if(this.fileType == "application/pdf"){
+  // this.formData.append("multipartFile", event.document.file.name);   
+    
+  // }
+
+  // }
+
+
 }

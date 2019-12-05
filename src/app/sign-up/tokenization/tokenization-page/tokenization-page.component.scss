@@ -1,7 +1,7 @@
 .shadow {
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.25) !important;
     width: 85%;
-    margin: auto;
+    margin : auto;
 }
 
 .paynow{
@@ -21,6 +21,12 @@
     font-weight: 500;
 }
 
+addCardBtn{
+background-color: #3AC76A;
+padding: 12px 15px;
+
+}
+
 
 
 // .cvv{
@@ -30,7 +36,7 @@
 
 // }
 .mt_10{
-    margin-top: 15px
+    margin-top: 130px
 }
 ul{
     padding: 0;

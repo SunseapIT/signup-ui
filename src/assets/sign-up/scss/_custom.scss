@@ -1381,3 +1381,41 @@ p{
 .red-text{
   color: red;
 }
+
+.fileUpload{
+  background-color: #ffffff
+}
+
+
+.upload-btn-wrapper {
+  position: absolute;
+  overflow: hidden;
+  display: inline-block;
+  top: 48px;
+  right: 20px;
+}
+  
+  .btnUpload {
+    border: 2px solid gray;
+    color: white;
+    background-color: #000000;
+    padding: 5px 20px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 4px;
+  }
+  
+  .upload-btn-wrapper input[type=file] {
+    font-size: 20px;  
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+  }
+
+  .form-control:disabled, .form-control[readonly] {
+    background-color: #ffffff;
+    opacity: 1;
+}

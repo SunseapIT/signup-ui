@@ -1,9 +1,11 @@
+import { ToastrService } from 'ngx-toastr';
 import { HttpParams } from '@angular/common/http';
 import { PaymentDto } from './../../../core/services/token-dto';
 import { CustomerDto } from '@app/core/customer-dto';
 import { ApiServiceServiceService } from '@app/api-service-service.service';
 import { Component, OnInit } from '@angular/core';
 import { NgModel, NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -13,7 +15,9 @@ import { NgModel, NgForm } from '@angular/forms';
 })
 export class TokenizationPageComponent implements OnInit {
 
-  constructor(private service: ApiServiceServiceService) { }
+  constructor(private service: ApiServiceServiceService,
+    private router : Router,
+    private toster : ToastrService) { }
   modal:any={}
   customerDetail=[];
   customerObj:CustomerDto;
@@ -51,9 +55,22 @@ export class TokenizationPageComponent implements OnInit {
       paymentDto.expiryYear = form.value.expYear;
       paymentDto.sourceType = "CARD"
 
-      this.service.post_service(ApiServiceServiceService.apiList.addCardDetailUrl+"?sp_account_no"+spAccountNumber, paymentDto).
+      this.service.post_service(ApiServiceServiceService.apiList.addCardDetailUrl+"?sp_account_no="+spAccountNumber, paymentDto).
       subscribe((response)=>{
-        console.log("token response",response);
+        var responseData  = response;   
+        if(responseData['statusCode']==200){
+          localStorage.removeItem("customerObj")
+          localStorage.removeItem("Token")
+          // this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
+
+          form.resetForm()
+    
+        }
+        else{
+          this.toster.error('',responseData['message'], {
+            timeOut : 3000
+          })
+        }
         
       })
 

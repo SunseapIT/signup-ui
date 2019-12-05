@@ -17,7 +17,7 @@ import { SignUpComponent } from './sign-up.component';
 import { ToastrModule } from 'ngx-toastr';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { PaginationModule } from 'ngx-pagination-bootstrap'
+import { PaginationModule } from 'ngx-pagination-bootstrap';
 
 
 

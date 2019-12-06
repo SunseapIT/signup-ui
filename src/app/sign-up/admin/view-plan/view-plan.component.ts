@@ -1,7 +1,5 @@
 import { ApiServiceServiceService } from '@app/api-service-service.service';
 import { Component, OnInit } from '@angular/core';
-import { PlanBean } from '@app/core/plan-bean';
-import { HttpParams } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
 
@@ -19,6 +17,7 @@ export class ViewPlanComponent implements OnInit {
   searchText : string;
   pdfSrc: any;
   planName:string = '';
+  isLoader:boolean;
  
 
   constructor(private service: ApiServiceServiceService, private toastr: ToastrService) {
@@ -33,10 +32,14 @@ export class ViewPlanComponent implements OnInit {
   }
 
   getPlanList(){
+
+    // this.isLoader=true;
     this.service.get_service(ApiServiceServiceService.apiList.viewPlanUrl).subscribe((response)=>{
       var responseData  = response;
       var resultObject = responseData['data'];
-      this.planList = resultObject;           
+      this.planList = resultObject;  
+      
+      // this.isLoader=false;
     });  
   }
   

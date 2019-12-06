@@ -61,6 +61,7 @@ export class OrderReviewComponent implements OnInit {
   servicePostalCode:string;
   dwellingType:string;
   serviceNo:string;
+  isLoader:boolean=false;
 
   model={};
 
@@ -231,6 +232,7 @@ export class OrderReviewComponent implements OnInit {
 
 
   onSubmit(form:NgForm) {
+    this.isLoader=true;
     if (this.acknowledgePrivacy && this.acknowledgeConsent) {       
     var customerDto = new CustomerDto();
     var objStr = localStorage.getItem("customerObj");
@@ -249,6 +251,7 @@ export class OrderReviewComponent implements OnInit {
     if(responseData['statusCode']==200){
       // localStorage.removeItem("customerObj")
       // localStorage.removeItem("Token")
+      this.isLoader=false;
       this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
 
     }else{

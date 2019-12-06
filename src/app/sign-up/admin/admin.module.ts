@@ -35,10 +35,7 @@ import { AbandonedSignupComponent } from './audit/abandoned-signup/abandoned-sig
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     NgxPaginationModule,
-    PaginationModule.forRoot()
-    
-    
-  
+    PaginationModule.forRoot(),
   ],
   declarations: [AdminLoginComponent,
      AddPlanComponent, 

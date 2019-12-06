@@ -4,8 +4,11 @@ import { PaymentDto } from './../../../core/services/token-dto';
 import { CustomerDto } from '@app/core/customer-dto';
 import { ApiServiceServiceService } from '@app/api-service-service.service';
 import { Component, OnInit } from '@angular/core';
-import { NgModel, NgForm } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ORDER_ROUTES } from '@app/sign-up/order';
+import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
+declare const $:any;
 
 
 @Component({
@@ -21,8 +24,8 @@ export class TokenizationPageComponent implements OnInit {
   modal:any={}
   customerDetail=[];
   customerObj:CustomerDto;
-
-  months = ['jan','Feb','March','April','May','June','July','Aug','Sep','Oct','Nov','Dec'];
+  isCardAdded:boolean=false;
+  months = ['Jan','Feb','March','April','May','June','July','Aug','Sep','Oct','Nov','Dec'];
   years = [ 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030]
 
   ngOnInit() {
@@ -54,14 +57,15 @@ export class TokenizationPageComponent implements OnInit {
       paymentDto.expiryMonth = form.value.expMonth;
       paymentDto.expiryYear = form.value.expYear;
       paymentDto.sourceType = "CARD"
-
+      this.isCardAdded=true;
       this.service.post_service(ApiServiceServiceService.apiList.addCardDetailUrl+"?sp_account_no="+spAccountNumber, paymentDto).
       subscribe((response)=>{
+        this.isCardAdded=false;
         var responseData  = response;   
-        if(responseData['statusCode']==200){
+        if(responseData['statusCode']==201){
           localStorage.removeItem("customerObj")
           localStorage.removeItem("Token")
-          // this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
+          this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
 
           form.resetForm()
     
@@ -70,13 +74,8 @@ export class TokenizationPageComponent implements OnInit {
           this.toster.error('',responseData['message'], {
             timeOut : 3000
           })
-        }
-        
-      })
-
-
-
-       
+        }        
+      })   
     }
   }
 
@@ -88,5 +87,22 @@ export class TokenizationPageComponent implements OnInit {
 
   onSelectYear(event){
     let selectedYear = event.target.value;
+  }
+
+
+  cancel(){
+    $('#cancel').modal('show');    
+  }
+
+  no(){
+    $('#cancel').modal('hide')
+  }
+
+  yes(){
+    this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
+
+
+
+    
   }
 }

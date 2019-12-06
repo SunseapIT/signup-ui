@@ -1,3 +1,5 @@
+import { LOADER_COMPONENTS } from './loader/index';
+
 import { PAYMENT_COMPONENTS } from './tokenization/index';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -42,13 +44,15 @@ import { PaginationModule } from 'ngx-pagination-bootstrap';
       positionClass: 'toast-top-center',
       preventDuplicates: true,
     }),
-    PdfViewerModule,
+    PdfViewerModule,  
 
   ],
   declarations: [
     SignUpComponent, 
     ORDER_COMPONENTS,
-    PAYMENT_COMPONENTS
+    PAYMENT_COMPONENTS,
+    LOADER_COMPONENTS,
+   
    ],
   providers: [
     {

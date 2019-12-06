@@ -15,6 +15,7 @@ export class AbandonedSignupComponent implements OnInit {
   totalItems:any;
   page:number;
   currentPage=3;
+  isLoader:boolean=false;
   constructor(private service:ApiServiceServiceService) {
 
     // for (let i = 1; i <= 100; i++) {
@@ -42,7 +43,9 @@ export class AbandonedSignupComponent implements OnInit {
   
 
   getAbandonedUsers(page){
+    // this.isLoader=true;
     this.service.get_service(ApiServiceServiceService.apiList.getTimestampUrl+"?page="+page).subscribe((response)=>{
+      // this.isLoader=false;
       var responseData = response;
       var resultObject = responseData['data'];
       this.totalItems = resultObject.totalElements;

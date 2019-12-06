@@ -16,6 +16,7 @@ export class SuccessfullSignupComponent implements OnInit {
   totalItems:any;
   page:number;
   currentPage=3;
+  isLoader:boolean=false;
 
   constructor(private service:ApiServiceServiceService) {
 
@@ -43,7 +44,9 @@ export class SuccessfullSignupComponent implements OnInit {
 
   
   getAllUsers(){
+    // this.isLoader = true;
    this.service.get_service(ApiServiceServiceService.apiList.getAllusersUrl).subscribe((response)=>{
+    //  this.isLoader=false;
     var responseData  = response;
     var resultObject = responseData['data'];
     console.log(resultObject);

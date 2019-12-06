@@ -27,14 +27,6 @@ padding: 12px 15px;
 
 }
 
-
-
-// .cvv{
-
-//     position: absolute;
-//     bottom: 10px;
-
-// }
 .mt_10{
     margin-top: 130px
 }
@@ -54,6 +46,8 @@ h3 {
     font-size: calc(.75em + 1vw);
 }
 
-// .card-font{
-//     font-size: calc(.5em + 1vw);
-// }
+.success-modal{
+    display: block !important;
+    opacity: 1;
+
+}

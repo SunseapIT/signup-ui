@@ -1,3 +1,4 @@
+import { AuthguardGuard } from './../../authguard.guard';
 import { FormsModule } from '@angular/forms';
 import { AdminLoginRoutingModule } from './admin-login-routing.module';
 import { NgModule } from '@angular/core';
@@ -48,6 +49,10 @@ import { AbandonedSignupComponent } from './audit/abandoned-signup/abandoned-sig
      SuccessfullSignupComponent,
      AbandonedSignupComponent, 
   
-    ]
+    ],
+
+    providers: [
+      AuthguardGuard
+      ]
 })
 export class AdminModule { }

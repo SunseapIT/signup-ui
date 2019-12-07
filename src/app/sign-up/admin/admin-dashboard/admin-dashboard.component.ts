@@ -13,6 +13,7 @@ export class AdminDashboardComponent implements OnInit {
   ngOnInit() {
   }
   logout(){
+    localStorage.removeItem("Authorization");
     this.router.navigateByUrl('/admin-login/login');
   }
 

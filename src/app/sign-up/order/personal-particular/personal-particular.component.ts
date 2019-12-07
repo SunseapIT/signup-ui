@@ -114,7 +114,7 @@ export class PersonalParticularComponent implements OnInit {
   }
 
   onSubmit(form : NgForm) {
-    if (form.valid && this.isMobileNoVerified()) {
+    // if (form.valid && this.isMobileNoVerified()) {
       if (!_.includes([IdentificationType.EmploymentPass, IdentificationType.WorkPermit], this.parent.model.identificationType)) {
         this.parent.model.identificationExpiryDate = '';
       }
@@ -143,7 +143,7 @@ export class PersonalParticularComponent implements OnInit {
       this.parent.saveAndNext();
       form.resetForm();
 
-    }
+    // }
   }
 
   requestOTP (){

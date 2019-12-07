@@ -3,6 +3,7 @@ import { environment } from '@env/base';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -36,14 +37,9 @@ export class ApiServiceServiceService {
 
     //TIMESTAMP API
     updateTimeUrl:environment.baseUrl+"/api/v1/customer/updateTime",
-  
-   
-  
-   
-
   }
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private router : Router) { }
 
    //Get service
 get_service(url) {
@@ -95,13 +91,14 @@ get_service(url) {
 
     };
     const httpOptions = {
-      // params: new HttpParams().set('Authorization',localStorageVariable)
     headers: new HttpHeaders(headerJson)
     };
     return this.http.post(url, data, httpOptions).pipe(map((response) => {
     return response;
     }));
   }
+
+
   multiPartPost_service(url, data) {
     var localStorageVariable = '';
     if (localStorage.getItem('Authorization')) {
@@ -140,6 +137,22 @@ get_service(url) {
     }));
     
     }
+
+
+   get_Token() {
+  return localStorage.getItem('Authorization');
+  }
+  login(): boolean {
+  if (this.get_Token() != null) {
+  return true;
+  }
+  else {
+  this.router.navigate(['/']);
+  return false;
+  }
+  }
+  
+    
 
   
 }

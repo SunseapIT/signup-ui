@@ -344,7 +344,7 @@ viewFactSheet(){
   }
 
   onSubmit(form: NgForm) {
-    if (form.valid) {
+    // if (form.valid) {
       this.parent.model.premise.startDate = moment(new Date()).add('days', 8).format(this.config.bootstrap.datePicker.dateInputFormat);
      this.localStorage.setItem(STORAGE_KEYS.IS_SP_ACCOUNT_HOLDER, this.parent.isSPAccountHolder).subscribe();
       const selectedPricingPlan = _.find(this.pricingPlanList, { name: this.parent.model.premise.productName });
@@ -374,7 +374,7 @@ viewFactSheet(){
       })     
   
       this.parent.saveAndNext();
-      }
+      // }
     
   }
 

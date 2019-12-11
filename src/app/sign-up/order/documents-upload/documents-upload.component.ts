@@ -6,8 +6,10 @@ import * as _ from 'lodash';
 import { GoogleTagManagerService, UtilService } from '@app/core';
 import { OrderComponent } from '../order.component';
 import { TimeStampDto } from '@app/sign-up/admin/dto/time-stamp-dto';
+import { ToastrService } from 'ngx-toastr';
+import { NgForm } from '@angular/forms';
 
-
+declare var $: any;
 
 @Component({
   selector: 'app-documents-upload',
@@ -19,18 +21,29 @@ currentId: number = 0;
 bill_data_file: any;
 opening_letter_data_file: any;
 authorization_data_file: any;
-factSheet_data_file: any;
+
 bill_data: string;
 opening_letter_data: string;
 authorization_data: string;
-factSheet_data: string;
+
 spPastMonthBill:any;
 newSpAccountOpeningLetter:any;
 letterOfAuthorisation:any;
 
+newSpAccountOpeningLetterUploaded:boolean=false;
+spPastMonthBillUploaded:boolean=false;
+letterOfAuthorisationUploaded:boolean=false;
+
+spPastMonthBillSuccess = false;
+openingLetter = false;
+authorization = false;
+
+
+
   constructor(
     @Host() public parent: OrderComponent,
-    private service : ApiServiceServiceService ) {
+    private service : ApiServiceServiceService,
+    private toastr:ToastrService ) {
     const element = document.getElementById('step-section');
     element.classList.remove('pt-3');
 
@@ -42,23 +55,12 @@ letterOfAuthorisation:any;
     
   }
 
-  spPastMonthBillSuccess = false;
-  openingLetter = false;
-  authorization = false;
   
-  onSubmit(form) {   
-    //  if (form.valid) {    
+  onSubmit(form:NgForm) {   
+     if (this.spPastMonthBill || this.newSpAccountOpeningLetter || this.letterOfAuthorisation) {    
     var customerDto = new CustomerDto()
     var objStr = localStorage.getItem("customerObj");
     customerDto = JSON.parse(objStr);
-
-
-
-    console.log(this.bill_data);
-    console.log(this.opening_letter_data);
-    console.log(this.authorization_data);
-    
-
     customerDto.file.bill_data = this.bill_data;
     customerDto.file.opening_letter_data = this.opening_letter_data;
     customerDto.file.authorization_data = this.authorization_data_file
@@ -72,54 +74,48 @@ letterOfAuthorisation:any;
     })
 
       this.parent.saveAndNext();
-    // } 
+    } 
+
+    else{
+      this.toastr.error('', 'Upload PDF file', {
+        timeOut: 3000
+      });
+     }
   } 
     
   
 
-
-
-
-
-
-selected(event,field){
+selected(event,field){  
   this.currentId = field;
   let fileList : FileList = event.target.files;
-
-
   if (fileList.length > 0) {
-    const file: File = fileList[0];
- 
-    
+    const file: File = fileList[0];    
     if (field == 1) {
       this.spPastMonthBill = file.name;
       this.bill_data_file = file;
       this.handleInputChange(file);
       this.spPastMonthBillSuccess = true;
-     
+      this.spPastMonthBillUploaded=true; 
     }
     else if (field == 2) {
       this.newSpAccountOpeningLetter=file.name;
       this.opening_letter_data_file = file;
       this.handleInputChange(file); 
       this.openingLetter = true;
+      this.newSpAccountOpeningLetterUploaded=true;
     }
     else if (field == 3) {
       console.log();
       this.letterOfAuthorisation = file.name;
       this.authorization_data_file = file;
       this.handleInputChange(file); 
-      this.authorization = true
+      this.authorization = true;
+      this.letterOfAuthorisationUploaded=true;
     }
-
-  }
- 
-
+  } 
 }
 
-handleInputChange(files) {
-  console.log("in method");
-  
+handleInputChange(files) {  
   var file = files;
   var pattern = /pdf-*/;
   var reader = new FileReader();
@@ -135,11 +131,8 @@ handleInputChange(files) {
 
 _handleReaderLoaded(e) {
   let reader = e.target;
-  console.log("reader-------->",reader.result);
-  
   var base64result = reader.result.substr(reader.result.indexOf(',') + 1);
-  console.log("base64result : ",base64result);
-  
+
   let id = this.currentId;
   switch (id) {
     case 1:
@@ -156,7 +149,28 @@ _handleReaderLoaded(e) {
 
 }
 
-  
+removeFile(event,removeid){
+console.log("removeFile : ",removeid);
+
+  if(removeid == 1){
+
+ this.spPastMonthBill=''
+ this.spPastMonthBillSuccess = false;
+ this.spPastMonthBillUploaded=false;
+}
+else if(removeid==2){
+  this.newSpAccountOpeningLetter='';
+  this.openingLetter = false;
+  this.newSpAccountOpeningLetterUploaded=false;
+}
+else if(removeid ==3){
+  this.letterOfAuthorisation='';
+  this.authorization = false;
+  this.letterOfAuthorisationUploaded=false;
+  // this.isUploaded=false;
+
+}
+}  
 
 
 

@@ -33,11 +33,18 @@ export class AbandonedSignupComponent implements OnInit {
     let filterData = [];
     this.tempData.forEach(element => {
       
-      if(new Date(element.sighnUpStarTimeStamp) > this.dateTimeRange[0] && new Date(element.sighnUpEndTimeStamp) < this.dateTimeRange[1]){
+      if((new Date(element.plan_Details) > this.dateTimeRange[0] && new Date(element.plan_Details) < this.dateTimeRange[1]) ||
+      (new Date(element.personal_Details) > this.dateTimeRange[0] && new Date(element.personal_Details) < this.dateTimeRange[1]) ||
+      (new Date(element.address_Details) > this.dateTimeRange[0] && new Date(element.address_Details) < this.dateTimeRange[1]) ||
+      (new Date(element.upload_Documents) > this.dateTimeRange[0] && new Date(element.upload_Documents) < this.dateTimeRange[1]) ||
+      (new Date(element.review_order) > this.dateTimeRange[0] && new Date(element.review_order) < this.dateTimeRange[1])
+      ){
         filterData.push(element);
       }
     });
     this.abandonedData = filterData;
+    console.log('this.abandonedData=========>',this.abandonedData);
+    
   }
 
   
@@ -51,8 +58,7 @@ export class AbandonedSignupComponent implements OnInit {
       this.totalItems = resultObject.totalElements;
       var resultObject1 = resultObject['content'];
       this.abandonedData = resultObject1;   
-      console.log('Abandoned', this.abandonedData);
-      
+      this.tempData= JSON.parse(JSON.stringify(this.abandonedData));
 
     })
   }

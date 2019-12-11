@@ -246,26 +246,27 @@ export class OrderReviewComponent implements OnInit {
 
     this.service.post_service(ApiServiceServiceService.apiList.saveCustomerurl,customerDto).subscribe((response)=>{
     var responseData  = response;   
-    console.log('Response Object----->',responseData);
-     
-    if(responseData['statusCode']==200){
-      // localStorage.removeItem("customerObj")
-      // localStorage.removeItem("Token")
-      this.isLoader=false;
+    this.isLoader=false;
       this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
+     
+//     if(responseData['statusCode']==200){
+//       localStorage.removeItem("customerObj")
+//       localStorage.removeItem("Token")
+//       this.isLoader=false;
+//       this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
 
-    }else{
-      this.toster.error('',responseData['message'], {
-        timeOut : 3000
-      })
-    }
-  })
-}
-else{
-  this.toster.error('','Please select the mandatory checkboxes.', {
-    timeOut : 3000
-  })
-}
+//     }else{
+//       this.toster.error('',responseData['message'], {
+//         timeOut : 3000
+//       })
+//     }
+//   })
+// }
+// else{
+//   this.toster.error('','Please select the mandatory checkboxes.', {
+//     timeOut : 3000
+ })
+ }
   }
 
  

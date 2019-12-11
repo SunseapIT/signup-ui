@@ -61,9 +61,10 @@
                         <div class="row mt-3">
                             <div class="col-xl-2 col-md-6 col-lg-3 pr-0 text-left form-group">
                                 <label for="expMonth" class="card-font"><strong>Expiry Month</strong><span class="text-danger">*</span></label>
-                                <select name="expMonth" [(ngModel)]="modal.expMonth" [class.is-invalid]="expMonth.invalid && (expMonth.touched || form.submitted)" #expMonth="ngModel" (change)="onSelectMonth($event)" required class="form-control box-width">
+                                <select name="expMonth" [(ngModel)]="modal.expMonth" 
+                                [class.is-invalid]="expMonth.invalid && (expMonth.touched || form.submitted)" #expMonth="ngModel" (change)="onSelectMonth($event)" required class="form-control box-width">
                                     <!-- <option value='' ng-selected="selected">MM</option> -->
-                                    <option *ngFor="let month of months">{{ month }}</option>
+                                    <option value="{{month.monthId}}" *ngFor="let month of months">{{ month.name }}</option>
 
                                 </select>
                                 <div *ngIf="expMonth.invalid && (expMonth.touched || form.submitted)" class="invalid-feedback">

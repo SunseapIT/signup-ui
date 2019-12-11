@@ -25,7 +25,20 @@ export class TokenizationPageComponent implements OnInit {
   customerDetail=[];
   customerObj:CustomerDto;
   isCardAdded:boolean=false;
-  months = ['Jan','Feb','March','April','May','June','July','Aug','Sep','Oct','Nov','Dec'];
+  months = [ 
+  {monthId : "01", name :"Jan"},
+  {monthId : "02", name :"Feb"},
+  {monthId : "03", name :"March"},
+  {monthId : "04", name :"April"},
+  {monthId : "05", name :"May"},
+  {monthId : "06", name :"June"},
+  {monthId : "07", name :"July"},
+  {monthId : "08", name :"Aug"},
+  {monthId : "09", name :"Sep"},
+  {monthId : "10", name :"Oct"},
+  {monthId : "11", name :"Nov"},
+  {monthId : "12", name :"Dec"},
+  ]
   years = [ 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030]
 
   ngOnInit() {
@@ -40,12 +53,11 @@ export class TokenizationPageComponent implements OnInit {
      customerDto = JSON.parse(objStr); 
      this.userName = customerDto.fullName;
 
-     console.log("Token customer name", this.userName);
-     
+ 
 
   }
 
-  onSubmit(form:NgForm){
+  onSubmit(form:NgForm){       
     if(form.valid){
     var customerDto = new CustomerDto();
      var objStr = localStorage.getItem("customerObj");

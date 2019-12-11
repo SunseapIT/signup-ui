@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class SuccessfullSignupComponent implements OnInit {
   public dateTimeRange: Date[];
   data =[] ;
-  abandonedData=[];
+
   tempData =[] ;
   p:number=1;
   searchTextSuccess : string;
@@ -20,12 +20,18 @@ export class SuccessfullSignupComponent implements OnInit {
 
   constructor(private service:ApiServiceServiceService) {
 
-    // for (let i = 1; i <= 100; i++) {
-    //   this.data.push(`item ${i}`);
-    // }
+    for (let i = 1; i <= 100; i++) {
+      this.data.push(`item ${i}`);
+    }
   }
 
+  isDateTimeSelected:boolean=false;
 
+  clearValue() {
+    this.tempData=[];
+    this.getAllUsers();
+    //this.dateTimeRange.setValue([null, null]);
+  }
 
   ngOnInit() {
     this.getAllUsers();
@@ -69,8 +75,8 @@ export class SuccessfullSignupComponent implements OnInit {
     keys: ['fullName', 'eamilAddress','sighnUpStarTimeStamp', 'sighnUpEndTimeStamp']
   };
 
-  pageChanged(event: any): void {
-    this.page = event.page;
-  }
+  // pageChanged(event: any): void {
+  //   this.page = event.page;
+  // }
 
 }

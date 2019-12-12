@@ -44,7 +44,6 @@ export class SuccessfullSignupComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.getAllUsers(0);
     this.getAllSuccessSignupUsers();
   }
 

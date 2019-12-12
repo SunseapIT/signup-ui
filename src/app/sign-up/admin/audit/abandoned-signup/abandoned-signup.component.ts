@@ -99,17 +99,4 @@ export class AbandonedSignupComponent implements OnInit {
   }
 
 
-
-    
-  // getAbandonedUsers(page){
-  //   this.service.get_service(ApiServiceServiceService.apiList.getTimestampUrl+"?page="+page).subscribe((response)=>{
-  //     var responseData = response;
-  //     var resultObject = responseData['data'];
-  //     this.totalItems = resultObject.totalElements;
-  //     var resultObject1 = resultObject['content'];
-  //     this.abandonedData = resultObject1;   
-  //     this.tempData= JSON.parse(JSON.stringify(this.abandonedData));
-
-  //   })
-  // }
 }

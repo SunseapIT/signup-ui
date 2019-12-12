@@ -106,7 +106,7 @@ export class PersonalParticularComponent implements OnInit {
   }
 
   onSubmit(form : NgForm) {
-    if (form.valid && this.isMobileNoVerified()) {
+    if (form.valid && this.isMobileNoVerified() && this.isEmailVerified()) {
       if (!_.includes([IdentificationType.EmploymentPass, IdentificationType.WorkPermit], this.parent.model.identificationType)) {
         this.parent.model.identificationExpiryDate = '';
       }
@@ -135,14 +135,13 @@ export class PersonalParticularComponent implements OnInit {
     this.verificationProgress = 'pending';
     this.errorMessage = '';
     this.emailVerification.otp = '';
-  
     var customerDto = new CustomerDto();
     var objStr = localStorage.getItem("customerObj");
     customerDto = JSON.parse(objStr);
-    var email = this.parent.model.email;
+    this.verifiedEmail = this.parent.model.email;
     var token = customerDto.token;
 
-    this.service.post_service(ApiServiceServiceService.apiList.sendEmailOtp+"?token="+token+"&email="+email,null).subscribe((response)=>
+    this.service.post_service(ApiServiceServiceService.apiList.sendEmailOtp+"?token="+token+"&email="+this.verifiedEmail,null).subscribe((response)=>
     {
       $('#emailOTP').modal('show');     
     })

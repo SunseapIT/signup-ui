@@ -74,7 +74,7 @@
               required
               #email="ngModel" 
               blockCopyPaste />
-              <button type="submit" class="btn input-button" 
+              <button type="button" class="btn input-button" 
               [disabled]="isEmailVerified() || !parent.model.email || email.invalid" 
               (click)="requestEmailOTP()"><span>Verify</span></button>
 
@@ -204,7 +204,7 @@
           name="otpMobile" [(ngModel)]="otpMobile">
 
           <div class="pt-4 d-flex justify-content-center">
-              <button class="btn btn-submit" type="submit" (click)="validateOTPModal()"><span>Validate OTP</span></button>
+              <button class="btn btn-submit" type="button" (click)="validateOTPModal()"><span>Validate OTP</span></button>
           </div>
           <div class="pt-1 d-flex justify-content-center">
               <button class="btn btn-light btn-resend-otp" type="button"><span>Resend OTP</span></button>
@@ -235,7 +235,7 @@
            name="otp" [(ngModel)]="otp">
 
           <div class="pt-4 d-flex justify-content-center">
-              <button class="btn btn-submit" type="submit" (click)="validateEmailOTPModal()">
+              <button class="btn btn-submit" type="button" (click)="validateEmailOTPModal()">
                   <span>Validate OTP</span></button>
           </div>
           <div class="pt-1 d-flex justify-content-center">

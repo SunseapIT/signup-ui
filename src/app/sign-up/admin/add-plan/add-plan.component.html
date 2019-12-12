@@ -11,11 +11,11 @@
                   required 
                   [(ngModel)]="model.planName" 
                   #planName="ngModel" />
-                  <div *ngIf="planName.invalid && (planName.touched || form.submitted)" class="invalid-feedback">
+                  <!-- <div *ngIf="planName.invalid && (planName.touched || form.submitted)" class="invalid-feedback">
                       <div *ngIf="planName?.errors.required">
                           <i>Plan name is required</i>
                       </div>
-                  </div>
+                  </div> -->
               </div>
           </div>
           <div class="row">
@@ -25,11 +25,11 @@
                   [class.is-invalid]="planId.invalid && (planId.touched || form.submitted)" 
                   required 
                   [(ngModel)]="model.planId" #planId="ngModel" />
-                  <div *ngIf="planId.invalid && (planId.touched || form.submitted)" class="invalid-feedback">
+                  <!-- <div *ngIf="planId.invalid && (planId.touched || form.submitted)" class="invalid-feedback">
                       <div *ngIf="planId?.errors.required">
                           <i>Plan code is required</i>
                       </div>
-                  </div>
+                  </div> -->
               </div>
           </div>
           <div class="row">

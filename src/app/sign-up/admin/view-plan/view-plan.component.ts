@@ -1,3 +1,5 @@
+import { PlanBean } from './../../../core/plan-bean';
+import { HttpParams } from '@angular/common/http';
 import { ApiServiceServiceService } from '@app/api-service-service.service';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
@@ -18,47 +20,51 @@ export class ViewPlanComponent implements OnInit {
   pdfSrc: any;
   planName:string = '';
   isLoader:boolean;
+  totalItems:any;
+  page:number;
+  currentPage:number = 1;
  
 
   constructor(private service: ApiServiceServiceService, private toastr: ToastrService) {
-    for (let i = 1; i <= 100; i++) {
-      this.planList.push(`item ${i}`);
-    }
+    // for (let i = 1; i <= 100; i++) {
+    //   this.planList.push(`item ${i}`);
+    // }
   }
 
   ngOnInit() {
-    this.getPlanList();
+    this.getPlanList(0);
     
   }
 
-  getPlanList(){
+  getPlanList(page){
 
     // this.isLoader=true;
-    this.service.get_service(ApiServiceServiceService.apiList.viewPlanUrl).subscribe((response)=>{
-      var responseData  = response;
-      var resultObject = responseData['data'];
-      this.planList = resultObject;  
+    this.service.get_service(ApiServiceServiceService.apiList.viewPlanUrl+"?page="+page).subscribe((response:any)=>{
+      var resultObject = response.data;
+      this.totalItems = resultObject.totalElements;
+      var resultObject1 = resultObject['content'];
+      this.planList = resultObject1;  
       
       // this.isLoader=false;
     });  
   }
   
   delete(id){    
-    // var data;
-    // let queryParams = new HttpParams();
-    // queryParams = queryParams.append("planId",id);
-    // this.service.post_service(ApiServiceServiceService.apiList.removePlansUrl+"?"+queryParams,data).subscribe((response)=>{
-    //   var responseData  = response;
-    //   var resultObject = responseData['data'];
-    //   var planBean = new PlanBean();
-    //   planBean = resultObject;
-    //   var findIndex = this.planList.findIndex(plan =>plan.id === planBean.id);
-    //   this.planList.splice(findIndex,1);
+    var data;
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("planId",id);
+    this.service.post_service(ApiServiceServiceService.apiList.removePlansUrl+"?"+queryParams,data).subscribe((response)=>{
+      var responseData  = response;
+      var resultObject = responseData['data'];
+      var planBean = new PlanBean();
+      planBean = resultObject;
+      var findIndex = this.planList.findIndex(plan =>plan.id === planBean.id);
+      this.planList.splice(findIndex,1);
 
-    //   this.toastr.error('', 'Plan deleted !', {
-    //     timeOut: 2000
-    //   }); 
-    // })
+      this.toastr.error('', 'Plan has been successfully removed.', {
+        timeOut: 2000
+      }); 
+    })
   }
   
  
@@ -72,6 +78,9 @@ viewFactSheet(name){
   $("#myModal").modal("show")
 }
   
- 
+pageChanged(event: any): void {
+  this.page = event.page-1;
+  this.getPlanList(this.page);
+}
 
 }

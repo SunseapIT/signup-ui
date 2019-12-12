@@ -12,11 +12,18 @@
           class="form-control searchbar" 
           [(ngModel)]="dateTimeRange" 
           [selectMode]="'range'" 
-          (afterPickerClosed)="getSuccessfulSignUp()" 
           [owlDateTimeTrigger]="dtRange1" 
           [owlDateTime]="dtRange1" 
+          [max]="max"
           (ngModelChange)="getSuccessfulSignUp()">
+          <div *ngIf="!isDateTimeSelected">
+                <button type="button" class="btn remove-time" (click)="clearValue()">
+                      <i class="fa fa-times mr-2" aria-hidden="true"></i>
+                </button>
+  
+            </div>
           <owl-date-time #dtRange1></owl-date-time>
+         
       </div>
       <div class="col-lg-3 csv-div  mt-2 text-right">
           <angular2csv [data]="data" type="button" class="download" filename="test.csv" [options]="options">Download</angular2csv>
@@ -24,6 +31,7 @@
   </div>
   <div class="row m-0">
       <div class="col-lg-12">
+          <div class="table-responsive">
           <table class="table table-striped">
               <thead>
                   <th>Name</th>
@@ -32,7 +40,7 @@
                   <th>Final Timestamp</th>
               </thead>
               <tbody>
-                  <tr *ngFor="let customerList of data | grdFilter: {fullName: searchTextSuccess, eamilAddress:searchTextSuccess}; let i=index;">
+                  <tr *ngFor="let customerList of successData | grdFilter: {fullName: searchTextSuccess, eamilAddress:searchTextSuccess}; let i=index;">
                       <td>{{customerList.fullName}}</td>
                       <td>{{customerList.eamilAddress}}</td>
                       <td>{{customerList.sighnUpStarTimeStamp}}</td>
@@ -43,7 +51,9 @@
           </table>
           <pagination [totalItems]="totalItems" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="5"></pagination>
 
-          <!-- <pagination-controls (pageChange)="p = $event"  class="my-pagination"></pagination-controls> -->
+          <!-- <pagination-controls  (pageChange)="q = $event"  class="my-pagination"></pagination-controls> -->
+        </div>
+          
     </div>
   </div>
   <!-- </div> -->

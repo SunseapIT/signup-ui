@@ -284,59 +284,6 @@ viewFactSheet(){
       }
       
     })
-    
-
-
-
-
-    // this.showAddFlag=!this.showAddFlag
-    // let { referralCode } = this.parent.model;
-    // if (!referralCode) {
-    //   referralCode = '';
-    // }
-    // if (_.size(this.listPricePlanByRefOrProCode[ referralCode.trim().toUpperCase() ]) > 0
-    //   && !this.listPricePlanByRefOrProCode[ referralCode.trim().toUpperCase() ]
-    //     .includes(this.parent.model.premise.productName.toUpperCase())) {
-    //   this.isPromotionCodeVerifyFail = true;
-    //   return;
-    // }
-    // this.utilService.verifyPromotionCode(referralCode.trim().toLocaleUpperCase())
-    //   .subscribe((rs: SuccessResponse) => {
-
-    //     this.rebateAmount = rs.data.amount.fixed;
-    //     this.promotionPercent = Number(Math.round(Number(rs.data.amount.percent * 100 + 'e' + 2)) + 'e-' + 2);
-    //     if (this.promotionPercent > 0 && this.rebateAmount > 0) {
-    //       this.promotionMessage = this.rebateAmount + '$' + ' and ' + this.promotionPercent + '%';
-    //     } else if (this.rebateAmount > 0) {
-    //       this.promotionMessage = this.rebateAmount > 0 ? this.rebateAmount + '$' : '';
-    //     } else {
-    //       this.promotionMessage = this.promotionPercent > 0 ? this.promotionPercent + '%' : '';
-    //     }
-
-    //     this.verifiedPromotionCode = referralCode;
-    //     this.isPromotionCodeVerifyFail = false;
-    //   }, (err) => {
-    //     this.isPromotionCodeVerifyFail = true;
-    //     if (err.code === 'E_LIMITED_REFERRAL_CODE') {
-    //       this.promotionMessage = 'Sorry! Promo code fully redeemed';
-    //     } else {
-    //       this.promotionMessage = '';
-    //     }
-    //   });
-  
-
-  // onPromotionCodeFocus() {
-  //   this.gtagService.sendEvent(ORDER_GA_EVENT_NAMES.REFERRAL_CODE);
-  // }
-
-  // onPromotionCodeBlur() {
-  //   const { referralCode } = this.parent.model;
-  //   if (referralCode && referralCode !== this.verifiedPromotionCode) {
-  //     this.verifiedPromotionCode = '';
-  //   } else {
-  //     this.isPromotionCodeVerifyFail = false;
-  //   }
-  // }
   }
 
   isPromotionCodeValid(): boolean {
@@ -344,7 +291,7 @@ viewFactSheet(){
   }
 
   onSubmit(form: NgForm) {
-    // if (form.valid) {
+   if (form.valid) {
       this.parent.model.premise.startDate = moment(new Date()).add('days', 8).format(this.config.bootstrap.datePicker.dateInputFormat);
      this.localStorage.setItem(STORAGE_KEYS.IS_SP_ACCOUNT_HOLDER, this.parent.isSPAccountHolder).subscribe();
       const selectedPricingPlan = _.find(this.pricingPlanList, { name: this.parent.model.premise.productName });
@@ -354,8 +301,6 @@ viewFactSheet(){
       var timeStampDto = new TimeStampDto();
        timeStampDto.pageType = "PALN_DETAILS"
 
-       console.log("timeStampDto",timeStampDto);
-       
 
       var customerDto = new CustomerDto();
       customerDto.spAccountNumber = form.value.serviceNo;
@@ -374,7 +319,7 @@ viewFactSheet(){
       })     
   
       this.parent.saveAndNext();
-      // }
+      }
     
   }
 

@@ -1,5 +1,6 @@
 import { ApiServiceServiceService } from '@app/api-service-service.service';
 import { Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-abandoned-signup',
@@ -14,53 +15,16 @@ export class AbandonedSignupComponent implements OnInit {
   searchTextAbandoned : string;
   totalItems:any;
   page:number;
-  currentPage=3;
+  currentPage:number = 1;
   isLoader:boolean=false;
-  constructor(private service:ApiServiceServiceService) {
-
-    // for (let i = 1; i <= 100; i++) {
-    //   this.abandonedData.push(`item ${i}`);
-    // }
+  max = new Date();
+  queryParams = "";
+  filters = {
+    fromTimestamp:"",
+    toTimestamp:"",
+    size:10,
+    page:0,
   }
-
-
-
-  ngOnInit() {
-    this.getAbandonedUsers(0);
-  }
-
-  getAbandonedSignUp(){
-    let filterData = [];
-    this.tempData.forEach(element => {
-      
-      if(new Date(element.sighnUpStarTimeStamp) > this.dateTimeRange[0] && new Date(element.sighnUpEndTimeStamp) < this.dateTimeRange[1]){
-        filterData.push(element);
-      }
-    });
-    this.abandonedData = filterData;
-  }
-
-  
-
-  getAbandonedUsers(page){
-    // this.isLoader=true;
-    this.service.get_service(ApiServiceServiceService.apiList.getTimestampUrl+"?page="+page).subscribe((response)=>{
-      // this.isLoader=false;
-      var responseData = response;
-      var resultObject = responseData['data'];
-      this.totalItems = resultObject.totalElements;
-      var resultObject1 = resultObject['content'];
-      this.abandonedData = resultObject1;   
-      console.log('Abandoned', this.abandonedData);
-      
-
-    })
-  }
-  pageChanged(event: any): void {
-    this.page = event.page-1;
-    this.getAbandonedUsers(this.page);
-  }
-  
   options = {
     fieldSeparator: ',',
     quoteStrings: '"',
@@ -71,6 +35,81 @@ export class AbandonedSignupComponent implements OnInit {
     title: '',
     useBom: false,
     removeNewLines: true,
-    // keys: ['fullName', 'eamilAddress','sighnUpStarTimeStamp', 'sighnUpEndTimeStamp']
+    keys: ['planDetails', 'personal_Details','address_Details', 'upload_Documents','review_order']
   };
+  constructor(private service:ApiServiceServiceService,private dateFormat:DatePipe) {}
+  ngOnInit() {
+    this.getAllSignupUsers();
+  }
+  getAllSignupUsers(){
+    this.buildQueryParams();
+    console.log(this.queryParams);
+    this.service.get_service(ApiServiceServiceService.apiList.searchTimestampsByDateRangeUrl+"/?"+this.queryParams).subscribe((responseData:any)=>{
+       var resultObject = responseData['data'];
+       this.totalItems = resultObject.totalElements;
+       var resultObject1 = resultObject['content'];
+       this.currentPage = resultObject.number+1;
+       this.abandonedData = resultObject1;   
+    })
+    console.log(this.currentPage);
+    
+  }
+  clearValue(){
+    this.page = 0;
+    this.dateTimeRange = [];
+    this.resetFilters();
+    this.getAllSignupUsers();
+  }
+  getFilteredList(){
+    this.filters['fromTimestamp'] =this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[0]) : null;
+    this.filters['toTimestamp'] =this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[1]) : null;
+    this.filters['page']= this.page ? this.page-1 : 0;
+    this.getAllSignupUsers();  
+  }
+  getAbandonedSignUp(){
+    this.filters['fromTimestamp'] =this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[0]) : null;
+    this.filters['toTimestamp'] =this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[1]) : null;
+    this.filters['page'] = 0;
+    this.getAllSignupUsers();  
+  }
+  buildQueryParams() {
+    let finalQuery = '';
+    for (const item in this.filters) {
+      if (this.filters[item]) {
+        finalQuery = finalQuery + '&' + item + '=' + this.filters[item];
+      }
+    }
+    this.queryParams = finalQuery.replace('&', '');
+  }
+  getTimeStamp(time){
+    return this.dateFormat.transform(time,"dd-MM-yyyy hh:mm:ss");
+  }
+  pageChanged(event: any): void {
+    this.page = event.page;
+    this.getFilteredList();
+  }
+
+  resetFilters(){
+    this.filters = {
+      fromTimestamp:"",
+      toTimestamp:"",
+      size:10,
+      page: 0,
+    }
+  }
+
+
+
+    
+  // getAbandonedUsers(page){
+  //   this.service.get_service(ApiServiceServiceService.apiList.getTimestampUrl+"?page="+page).subscribe((response)=>{
+  //     var responseData = response;
+  //     var resultObject = responseData['data'];
+  //     this.totalItems = resultObject.totalElements;
+  //     var resultObject1 = resultObject['content'];
+  //     this.abandonedData = resultObject1;   
+  //     this.tempData= JSON.parse(JSON.stringify(this.abandonedData));
+
+  //   })
+  // }
 }

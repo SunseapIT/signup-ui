@@ -2,7 +2,7 @@ import { AuthguardGuard } from './../../authguard.guard';
 import { FormsModule } from '@angular/forms';
 import { AdminLoginRoutingModule } from './admin-login-routing.module';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { AddPlanComponent } from './add-plan/add-plan.component';
 import { AuditComponent } from './audit/audit.component';
@@ -52,7 +52,8 @@ import { AbandonedSignupComponent } from './audit/abandoned-signup/abandoned-sig
     ],
 
     providers: [
-      AuthguardGuard
+      AuthguardGuard,
+      DatePipe
       ]
 })
 export class AdminModule { }

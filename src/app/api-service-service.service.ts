@@ -24,14 +24,21 @@ export class ApiServiceServiceService {
     generateOtpUrl:environment.baseUrl+"/api/v1/customer/generateOtp",
     addCardDetailUrl:environment.baseUrl+"/api/v1/tokens/tokenize",
 
+    sendEmailOtp:environment.baseUrl+"/api/v1/customer/send-email-otp",
+    sendMobileOtp:environment.baseUrl+"/api/v1/customer/generateOtp",
+
+
     //GET API
     viewPlanUrl: environment.baseUrl+"/api/v1/admin/getPlans",
     customerViewPlanUrl:environment.baseUrl+"/api/v1/customer/getPlans",
     getAllusersUrl:environment.baseUrl+"/api/v1/admin/getAllUsers",
     getFactSheet:environment.baseUrl+"/api/v1/customer/getFactSheet",
     getTimestampUrl: environment.baseUrl+"/api/v1/customer/timestamps",
+    searchTimestampsByDateRangeUrl : environment.baseUrl+"/api/v1/admin/searchTimestampsByDateRange",
+    searchCustomersByDateRangeUrl : environment.baseUrl+"/api/v1/admin/searchCustomersByDateRange",
     getCustomerFactsheetUrl : environment.baseUrl+"/api/v1/customer/getUpdatedFactSheet",
-
+    getEmailOtp: environment.baseUrl+"/api/v1/customer/validate-email-otp",
+    dateTimeRangePicker : environment.baseUrl+"/api/v1/customer/search",
     //DELETE API
     removePlansUrl:environment.baseUrl+"/api/v1/admin/removePlan",
 

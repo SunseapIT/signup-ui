@@ -27,6 +27,7 @@ export class EmaFactSheetComponent implements OnInit {
 
   acknowledge=false;
   acknowledge1=false;
+  isLoader:boolean=false;
 
   constructor(
     @Host() public parent: OrderComponent,
@@ -60,7 +61,7 @@ export class EmaFactSheetComponent implements OnInit {
 
     this.customerObj =  JSON.parse(localStorage.getItem("customerObj"));
     this.getPlanFactSheet(this.customerObj.plan, 
-                       this.customerObj.fullName,
+                       this.customerObj.fullName.concat(' ').concat(this.customerObj.lastName),
                        this.customerObj.postelCode);
 
 
@@ -105,9 +106,13 @@ export class EmaFactSheetComponent implements OnInit {
   }
 
 
-  getPlanFactSheet(planName, fullName,postelCode){       
+  getPlanFactSheet(planName, fullName,postelCode){  
+    this.isLoader=true;
+
       this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getCustomerFactsheetUrl+"?planName="+planName.replace(/ /g,"@").replace(/%/g,"*")+
         "&userName="+fullName+"&address="+postelCode).subscribe(response=>{
+
+          this.isLoader = false;
         var data = "data:application/pdf;base64," +response['data']
         this.pdfSrc = data;       
       })

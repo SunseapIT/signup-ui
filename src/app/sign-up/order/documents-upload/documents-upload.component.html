@@ -14,13 +14,24 @@
                   [value]="uploaded" 
                   disabled required 
                   #spPastMonthBillError="ngModel">
+                  <!-- <div class="upload-btn-remove">
+                    <div *ngIf="spPastMonthBillUploaded" class="d-inline"><button type="button" class="btn" (click)="removeFile($event,1)"><i class="fa fa-times mr-2" aria-hidden="true"></i></button></div>
+
+                  </div> -->
+
                   <div class="upload-btn-wrapper">
+                    
                       <label class="btnUpload" for="file">Upload</label>
                       <input type="file" id="file" name="myfile"   (change)="selected($event,1)" />
                   </div>
-                  <ng-container class="valid-feedback" *ngIf="spPastMonthBillSuccess">
-                      <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
-                  </ng-container>
+                 
+
+                  <div class="text-secondary"><small><i>Please upload PDF format only.</i></small>            
+                  </div>
+                  
+                  <ng-container class="valid-feedback mt-2" *ngIf="spPastMonthBillSuccess">
+                    <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
+                </ng-container>
               </div>
               <div class="form-control-label d-block d-lg-none pl-3">or</div>
               <div class="form-group col-lg-6 col-md-12 col-xs-12 mb-0 mb-lg-auto">
@@ -34,6 +45,9 @@
                 placeHolder="(Optional)"
                 disabled required 
                 #newSpAccountOpeningLetterError="ngModel">
+                <div class="upload-btn-remove">
+                  <div *ngIf="newSpAccountOpeningLetterUploaded" class="d-inline"><button type="button" class="btn" (click)="removeFile($event,2)"><i class="fa fa-times mr-2" aria-hidden="true"></i></button></div>
+                </div>
                 <div class="upload-btn-wrapper">
                     <label class="btnUpload" for="file">Upload</label>
                     <input type="file" id="file" name="myfile"  (change)="selected($event,2)" />
@@ -41,8 +55,7 @@
                 <ng-container class="valid-feedback" *ngIf="openingLetter">
                     <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
                 </ng-container>
-
-             </div>
+           </div>
             </div>
           </ng-container>
   
@@ -58,17 +71,28 @@
                 [value]="uploaded"                
                 disabled required                
                 #letterOfAuthorisationError="ngModel">
+                <div class="upload-btn-remove">
+                  <!-- <div *ngIf="letterOfAuthorisationUploaded" class="d-inline">
+                    <button type="button" class="btn" (click)="removeFile($event,3)"><i class="fa fa-times mr-2" aria-hidden="true"></i></button>
+                  </div> -->
+                </div>
+                
                 <div class="upload-btn-wrapper">
+                   
+                   
                     <label class="btnUpload" for="file">Upload</label>
                     <input type="file" id="file" name="myfile1"   (change)="selected($event,3)" />
                 </div>
-                <ng-container class="valid-feedback" *ngIf="authorization">
+                <div class="text-secondary"><small><i>Please upload PDF format only.  Please make sure that the SP account holder has given you the authorisation via this form.</i></small>            
+                </div>
+              
+<!-- 
+                <div class="text-secondary mr-2 font-italic mt-1">
+                  <small>  Please make sure that the SP account holder has given you the authorisation via this form.</small>
+                </div> -->
+                  <ng-container class="valid-feedback mt-2" *ngIf="authorization">
                     <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
                 </ng-container>
-
-                <span class="text-secondary mr-2 font-italic">
-                    Please make sure that the SP account holder has given you the authorisation via this form.
-                  </span>
               </div>
             </div>
               <div class="form-row">

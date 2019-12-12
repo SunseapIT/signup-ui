@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import * as _ from 'lodash';
 import { Plandto } from '../dto/plan-dto';
+import { Router } from '@angular/router';
 
 declare const $:any;
 export enum DocumentName { 
@@ -44,6 +45,7 @@ export class AddPlanComponent {
   myfile: any;
   fileType:any;
   constructor(private service:ApiServiceServiceService,
+    private router : Router,
     private toastr: ToastrService) { }
 
   ngOnInit() {
@@ -55,9 +57,6 @@ export class AddPlanComponent {
      if(form.valid && this.fileType == "application/pdf"){
 
     this.uploadSuccess=false;
-
-    console.log('-->',this.model.planName);
-    console.log('-->',this.model.planId);
     var plandto = new Plandto()
     plandto.planName = this.model.planName;
     plandto.planId =  this.model.planId;
@@ -71,11 +70,15 @@ export class AddPlanComponent {
     this.toastr.success('', 'Plan added successfully', {
          timeOut: 2000
          });
+
+         this.router.navigateByUrl('/admin-login/admin-dash/view-plan')
+
+        
   })
   form.resetForm();
  }
  else{
-    this.toastr.error('', 'Fill the form', {
+    this.toastr.error('', 'All the fields are mandatory.', {
       timeOut: 3000
     });
    }

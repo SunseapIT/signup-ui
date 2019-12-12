@@ -18,6 +18,8 @@ export class SuccessfullSignupComponent implements OnInit {
   page:number;
   currentPage=1;
   isLoader:boolean=false;
+
+  csvDataSuccess=[]
   options = {
     fieldSeparator: ',',
     quoteStrings: '"',
@@ -54,11 +56,11 @@ export class SuccessfullSignupComponent implements OnInit {
       this.totalItems = resultObject.totalElements;
       var resultObject1 = resultObject['content'];
       this.currentPage = resultObject.number+1;
-      this.successData = resultObject1;    
+      this.successData = resultObject1;         
+      this.csvFormatSuccessSignup();
     })
-    console.log(this.currentPage);
-    
-  }
+ }
+
   clearValue(){
     this.page = 0;
     this.dateTimeRange = [];
@@ -103,31 +105,13 @@ export class SuccessfullSignupComponent implements OnInit {
     }
   }
 
- 
-
-  // getSuccessfulSignUp(){
-  //   let filterData = [];
-  //   this.tempData.forEach(element => {
-      
-  //     if(new Date(element.sighnUpStarTimeStamp) > this.dateTimeRange[0] && new Date(element.sighnUpEndTimeStamp) < this.dateTimeRange[1]){
-  //       filterData.push(element);
-  //     }
-  //   });
-  //   this.data = filterData;
-  // }
-
-  
-  // getAllUsers(page){
-  //  this.service.get_service(ApiServiceServiceService.apiList.getAllusersUrl+"?page="+page).subscribe((response)=>{
-  //   var responseData = response;
-  //     var resultObject = responseData['data'];
-  //     this.totalItems = resultObject.totalElements;
-  //     var resultObject1 = resultObject['content'];
-  //     this.data = resultObject1;   
-  //   this.tempData = JSON.parse(JSON.stringify(this.data));
-  //  })
-  // }
-
+ csvFormatSuccessSignup(){  
+   this.service.get_service(ApiServiceServiceService.apiList.searchCustomersByDateRangeUrl+"?size="+this.totalItems).subscribe((response:any)=>
+ {
+  var requestObj = response.data.content;
+  this.csvDataSuccess= requestObj;     
+ }) 
+ }
  
 
 }

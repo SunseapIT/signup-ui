@@ -11,7 +11,7 @@ export class AbandonedSignupComponent implements OnInit {
 
   public dateTimeRange: Date[];
   abandonedData=[];
-  tempData =[] ;
+  csvData=[];
   searchTextAbandoned : string;
   totalItems:any;
   page:number;
@@ -40,20 +40,19 @@ export class AbandonedSignupComponent implements OnInit {
   constructor(private service:ApiServiceServiceService,private dateFormat:DatePipe) {}
   ngOnInit() {
     this.getAllSignupUsers();
-    this.csvFormat();
   }
+
+
   getAllSignupUsers(){
     this.buildQueryParams();
-    console.log(this.queryParams);
     this.service.get_service(ApiServiceServiceService.apiList.searchTimestampsByDateRangeUrl+"/?"+this.queryParams).subscribe((responseData:any)=>{
-       var resultObject = responseData['data'];
-       this.totalItems = resultObject.totalElements;
+       var resultObject = responseData['data'];       
+       this.totalItems = resultObject.totalElements; 
        var resultObject1 = resultObject['content'];
        this.currentPage = resultObject.number+1;
        this.abandonedData = resultObject1;   
-    })
-    console.log(this.currentPage);
-    
+       this.csvFormat();
+    })  
   }
   clearValue(){
     this.page = 0;
@@ -99,20 +98,12 @@ export class AbandonedSignupComponent implements OnInit {
     }
   }
 
-  csvData=[];
-  csvFormat(){
-    this.service.get_service(ApiServiceServiceService.apiList.searchTimestampsByDateRangeUrl).subscribe((response:any)=>
+
+  csvFormat(){   
+    this.service.get_service(ApiServiceServiceService.apiList.searchTimestampsByDateRangeUrl+"?size="+this.totalItems).subscribe((response:any)=>
     {
-      var responseObj = response;
-      console.log('response',response.data.content);
-      
-      for(let i=0; i<responseObj ;i++){
-        this.csvData.push(responseObj)
-        console.log('for this.csvData',this.csvData);
-        
-      }
-      console.log('this.csvData',this.csvData);
-      
+     var requestObj = response.data.content;
+     this.csvData= requestObj;    
       
     })
   }

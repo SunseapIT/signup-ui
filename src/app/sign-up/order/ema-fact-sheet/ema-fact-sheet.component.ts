@@ -82,7 +82,6 @@ export class EmaFactSheetComponent implements OnInit {
 
   onSubmit() {
     if (this.confirmationChecked && this.policyChecked) {
-      // this.gtagService.sendEvent(ORDER_GA_EVENT_NAMES.REVIEW_ORDER_1);
       var customerDto = new CustomerDto();
       var objStr = localStorage.getItem("customerObj");
       console.log(customerDto);

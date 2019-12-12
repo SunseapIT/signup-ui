@@ -108,9 +108,10 @@
       <div class="col-lg-5 col-sm-5 font-weight-bold">
         <div class="card-text-right p-0">
           <div *ngIf="!nameFlag" class="input-group">
-            {{fullName}}
+            {{fullName}}&nbsp;{{lastName}}
           </div>
           <input *ngIf="nameFlag" type="text" name="fullName" [(ngModel)]="fullName">
+          <input *ngIf="nameFlag" type="text" name="lastName" [(ngModel)]="lastName">
         
       </div>
      

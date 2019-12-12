@@ -52,6 +52,7 @@ export class OrderReviewComponent implements OnInit {
 
   selectedPricingPlan:string;
   fullName:string;
+  lastName:string;
   emailAddress:string;
   mobileNumber:string;
   houseNumber:string;
@@ -80,6 +81,8 @@ export class OrderReviewComponent implements OnInit {
   minExpiryDate = moment(new Date()).add(IDENTIFICATION_EXPIRY_DATE_CONFIG.minMonthsFromToday, 'month').toDate();
   nationName = 'singapore';
    customerDto = new CustomerDto();
+
+   userFullName:any;
 
 
   constructor(
@@ -111,7 +114,6 @@ export class OrderReviewComponent implements OnInit {
 
   ngOnInit() {
    this.getCustomerDetail();
-
   }
 
   validate(fieldName: string, input: HTMLInputElement) {
@@ -219,6 +221,7 @@ export class OrderReviewComponent implements OnInit {
     this.customerDto = JSON.parse(objStr);
     this.selectedPricingPlan = this.customerDto.plan;
     this.fullName = this.customerDto.fullName;
+    this.lastName = this.customerDto.lastName;
     this.emailAddress = this.customerDto.eamilAddress;
     this.mobileNumber = this.customerDto.mobileNumber;
     this.houseNumber = this.customerDto.houseNo;
@@ -238,16 +241,15 @@ export class OrderReviewComponent implements OnInit {
     var objStr = localStorage.getItem("customerObj");
     customerDto = JSON.parse(objStr);
     customerDto.fullName = this.fullName; 
+    customerDto.lastName = this.lastName; 
     customerDto.spAccountNumber = this.serviceNo;
-    localStorage.setItem("customerObj", JSON.stringify(customerDto))
+    localStorage.setItem("customerObj", JSON.stringify(customerDto));    
     this.service.post_service(ApiServiceServiceService.apiList.saveCustomerurl,customerDto).subscribe((response)=>{
-    var responseData  = response;   
+    var responseData  = response;     
     this.isLoader=false;
-      // this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
+      this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
      
     if(responseData['statusCode']==200){
-      // localStorage.removeItem("customerObj")
-      // localStorage.removeItem("Token")
       this.isLoader=false;
       this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
 

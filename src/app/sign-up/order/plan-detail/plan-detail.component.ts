@@ -299,8 +299,6 @@ viewFactSheet(){
 
       var timeStampDto = new TimeStampDto();
        timeStampDto.pageType = "PALN_DETAILS"
-
-
       var customerDto = new CustomerDto();
       customerDto.spAccountNumber = form.value.serviceNo;
       customerDto.plan = form.value.productName;

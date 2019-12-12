@@ -24,6 +24,7 @@ export class AbandonedSignupComponent implements OnInit {
     toTimestamp:"",
     size:10,
     page:0,
+    sort : "planDetails,desc"
   }
   options = {
     fieldSeparator: ',',
@@ -95,12 +96,13 @@ export class AbandonedSignupComponent implements OnInit {
       toTimestamp:"",
       size:10,
       page: 0,
+      sort : "planDetails,desc"
     }
   }
 
 
   csvFormat(){   
-    this.service.get_service(ApiServiceServiceService.apiList.searchTimestampsByDateRangeUrl+"?size="+this.totalItems).subscribe((response:any)=>
+    this.service.get_service(ApiServiceServiceService.apiList.searchTimestampsByDateRangeUrl+"?size="+this.totalItems+"&sort=planDetails,desc").subscribe((response:any)=>
     {
      var requestObj = response.data.content;
      this.csvData= requestObj;    

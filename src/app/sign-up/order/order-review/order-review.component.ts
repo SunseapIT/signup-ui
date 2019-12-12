@@ -15,12 +15,12 @@ import {
   ProductType
 } from '@app/core';
 import { OrderComponent } from '../order.component';
-import { ORDER_GA_EVENT_NAMES, STORAGE_KEYS, ORDER_ROUTES } from '../order.constant';
+import { ORDER_ROUTES } from '../order.constant';
 import * as moment from 'moment';
 import * as _ from 'lodash';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { CustomerDto } from '@app/core/customer-dto';
-import { SubscriberDataBean } from '@app/subscriber-data-bean';
+
 
 const POSTAL_CODE_WARNING = 'The postal code you have entered is currently not eligible for the Open Electricity Market. ' +
   'Please refer to <a href="https://www.openelectricitymarket.sg/index.html" target="_blank">EMA\'s site</a> for more information.';

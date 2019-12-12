@@ -40,6 +40,7 @@ export class AbandonedSignupComponent implements OnInit {
   constructor(private service:ApiServiceServiceService,private dateFormat:DatePipe) {}
   ngOnInit() {
     this.getAllSignupUsers();
+    this.csvFormat();
   }
   getAllSignupUsers(){
     this.buildQueryParams();
@@ -96,6 +97,24 @@ export class AbandonedSignupComponent implements OnInit {
       size:10,
       page: 0,
     }
+  }
+
+  csvData=[];
+  csvFormat(){
+    this.service.get_service(ApiServiceServiceService.apiList.searchTimestampsByDateRangeUrl).subscribe((response:any)=>
+    {
+      var responseObj = response;
+      console.log('response',response.data.content);
+      
+      for(let i=0; i<responseObj ;i++){
+        this.csvData.push(responseObj)
+        console.log('for this.csvData',this.csvData);
+        
+      }
+      console.log('this.csvData',this.csvData);
+      
+      
+    })
   }
 
 

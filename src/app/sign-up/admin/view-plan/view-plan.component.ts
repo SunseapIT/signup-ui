@@ -37,15 +37,12 @@ export class ViewPlanComponent implements OnInit {
   }
 
   getPlanList(page){
-
-    // this.isLoader=true;
     this.service.get_service(ApiServiceServiceService.apiList.viewPlanUrl+"?page="+page).subscribe((response:any)=>{
       var resultObject = response.data;
       this.totalItems = resultObject.totalElements;
       var resultObject1 = resultObject['content'];
       this.planList = resultObject1;  
       
-      // this.isLoader=false;
     });  
   }
   

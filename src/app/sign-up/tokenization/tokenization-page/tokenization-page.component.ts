@@ -25,6 +25,7 @@ export class TokenizationPageComponent implements OnInit {
   customerDetail=[];
   customerObj:CustomerDto;
   isCardAdded:boolean=false;
+  userName:any;
   months = [ 
   {monthId : "01", name :"Jan"},
   {monthId : "02", name :"Feb"},
@@ -44,14 +45,13 @@ export class TokenizationPageComponent implements OnInit {
   ngOnInit() {
     this.getUserDetail();
   }
-
-  userName:any;
+ 
 
   getUserDetail(){
      var customerDto = new CustomerDto();
      var objStr = localStorage.getItem("customerObj");
      customerDto = JSON.parse(objStr); 
-     this.userName = customerDto.fullName;
+     this.userName = customerDto.fullName.concat(" ").concat(customerDto.lastName);
 
  
 

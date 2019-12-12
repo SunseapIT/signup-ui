@@ -236,41 +236,39 @@ export class OrderReviewComponent implements OnInit {
     if (this.acknowledgePrivacy && this.acknowledgeConsent) {       
     var customerDto = new CustomerDto();
     var objStr = localStorage.getItem("customerObj");
-      customerDto = JSON.parse(objStr);
-      customerDto.fullName = this.fullName; 
-      customerDto.spAccountNumber = this.serviceNo;
-      localStorage.setItem("customerObj", JSON.stringify(customerDto))
-      console.log('Request Object--->',customerDto);
-      
-
-
+    customerDto = JSON.parse(objStr);
+    customerDto.fullName = this.fullName; 
+    customerDto.spAccountNumber = this.serviceNo;
+    localStorage.setItem("customerObj", JSON.stringify(customerDto))
     this.service.post_service(ApiServiceServiceService.apiList.saveCustomerurl,customerDto).subscribe((response)=>{
     var responseData  = response;   
     this.isLoader=false;
-      this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
+      // this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
      
-//     if(responseData['statusCode']==200){
-//       localStorage.removeItem("customerObj")
-//       localStorage.removeItem("Token")
-//       this.isLoader=false;
-//       this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
+    if(responseData['statusCode']==200){
+      // localStorage.removeItem("customerObj")
+      // localStorage.removeItem("Token")
+      this.isLoader=false;
+      this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
 
-//     }else{
-//       this.toster.error('',responseData['message'], {
-//         timeOut : 3000
-//       })
-//     }
-//   })
-// }
-// else{
-//   this.toster.error('','Please select the mandatory checkboxes.', {
-//     timeOut : 3000
- })
- }
-  }
+    }
+    else if(responseData['statusCode']==500 || responseData['statusCode']==400){
+      this.isLoader = false; 
+      this.toster.error('',responseData['message'], {
+        timeOut : 3000
+      }) 
 
- 
-
+    }
+    else{
+      this.toster.error('',responseData['message'], {
+        timeOut : 3000
+      })
+    }
   
-  }
+  })
+}
+
+}
+}
+
 

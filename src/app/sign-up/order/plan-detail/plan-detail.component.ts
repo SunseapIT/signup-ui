@@ -276,7 +276,6 @@ viewFactSheet(){
       if(responseData['statusCode']==200){
         this.promocodeStatus = true;
       this.promotionMessage = response.data;
-      console.log('success---->PromoCode---->', response);
       }
       else{
         this.promocodeStatus = false;
@@ -306,8 +305,6 @@ viewFactSheet(){
       customerDto.spAccountNumber = form.value.serviceNo;
       customerDto.plan = form.value.productName;
       customerDto.promoCode = this.promoCode.map(item=>item.referralCode);     
-      console.log('planDetail---',customerDto);      
-
       this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{
         var responseData  = response;
         var resultObject = responseData['data'];

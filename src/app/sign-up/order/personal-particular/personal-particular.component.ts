@@ -106,7 +106,7 @@ export class PersonalParticularComponent implements OnInit {
   }
 
   onSubmit(form : NgForm) {
-    if (form.valid && this.isMobileNoVerified() && this.isEmailVerified()) {
+   if (form.valid && this.isMobileNoVerified() && this.isEmailVerified()) {
       if (!_.includes([IdentificationType.EmploymentPass, IdentificationType.WorkPermit], this.parent.model.identificationType)) {
         this.parent.model.identificationExpiryDate = '';
       }

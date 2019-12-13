@@ -129,9 +129,9 @@ export class PersonalParticularComponent implements OnInit {
     }
   }
 
-  
+  token:any;
 //Email OTP request
-  requestEmailOTP(){
+  requestEmailOTP(verifyEmail){
     this.verificationProgress = 'pending';
     this.errorMessage = '';
     this.emailVerification.otp = '';
@@ -139,11 +139,19 @@ export class PersonalParticularComponent implements OnInit {
     var objStr = localStorage.getItem("customerObj");
     customerDto = JSON.parse(objStr);
     this.verifiedEmail = this.parent.model.email;
-    var token = customerDto.token;
+    this.token = customerDto.token;
 
-    this.service.post_service(ApiServiceServiceService.apiList.sendEmailOtp+"?token="+token+"&email="+this.verifiedEmail,null).subscribe((response)=>
+    this.service.post_service(ApiServiceServiceService.apiList.sendEmailOtp+"?token="+this.token+"&email="+this.verifiedEmail,null).subscribe((response)=>
     {
-      $('#emailOTP').modal('show');     
+      if(verifyEmail){
+        $('#emailOTP').modal('show');   
+      }
+      else{
+        this.toster.success('', 'OTP has been resent to email address.',{
+          timeOut : 3000
+          });
+      }
+      
     })
 
   }
@@ -173,8 +181,8 @@ export class PersonalParticularComponent implements OnInit {
     }
     })
   }
-
-  
+ 
+   
   //Mobile OTP request
   requestOTP (){
     this.verificationProgress = 'pending';

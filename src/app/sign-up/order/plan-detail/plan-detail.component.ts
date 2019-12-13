@@ -1,7 +1,4 @@
-import { HttpParams } from '@angular/common/http';
-import { TimeStampEvent } from './../../../time-stamp-event.enum';
 import { ApiServiceServiceService } from './../../../api-service-service.service';
-import { SubscriberDataBean } from './../../../subscriber-data-bean';
 import { Component, OnInit, Host, ViewChild, HostListener, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
@@ -246,7 +243,7 @@ export class PlanDetailComponent implements OnInit {
  
   
 viewFactSheet(){
-  this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet+"?planName="+this.planName.replace(/ /g,"@").replace(/%/g,"*")).subscribe(response=>{
+  this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet+"?planName="+(btoa(this.planName))).subscribe(response=>{
     var data = "data:application/pdf;base64," +response['data']
     this.pdfSrc = data;
     $("#myModal").modal("show")

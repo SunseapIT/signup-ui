@@ -76,7 +76,7 @@
               blockCopyPaste />
               <button type="button" class="btn input-button" 
               [disabled]="isEmailVerified() || !parent.model.email || email.invalid" 
-              (click)="requestEmailOTP()"><span>Verify</span></button>
+              (click)="requestEmailOTP(true)"><span>Verify</span></button>
 
 
               <div *ngIf="email.invalid && (email.touched || form.submitted)" class="invalid-feedback">
@@ -130,57 +130,6 @@
 
       </div>
 
-      <ng-template #validateOTP>
-          <div class="modal-content">
-
-              <!-- Modal Header -->
-              <div class="modal-header border-bottom-0 pb-0">
-                  <h4 class="modal-title">&nbsp;</h4>
-                  <button type="button" class="close" (click)="modal.hide(); mobileVerification.otp = ''">&times;</button>
-              </div>
-
-              <!-- Modal body -->
-              <div class="modal-body d-flex flex-column pt-0 pl-5 ml-0 ml-lg-5 pr-5 mr-0 mr-lg-5">
-                  <div class="text-center">
-                      <h5>Validate OTP (One Time Password)</h5></div>
-                  {{verificationProgress}}
-                  <div class="pt-5 pb-4 text-center">
-                      <ng-container *ngIf="verificationProgress === 'pending'">
-                          <p>A One Time Passcode has been sent to &nbsp;<strong>{{ parent.model.mobileNo }}</strong></p>
-                          &nbsp;
-                          <p>Please enter the OTP below to verify your Mobile Phone.</p>
-                      </ng-container>
-                      <ng-container *ngIf="verificationProgress === 'doing'">
-                          <p class="text-warning"><strong>Please enter the OTP below to verify your Mobile Phone.</strong></p>
-                      </ng-container>
-                      <ng-container *ngIf="verificationProgress === 'success'">
-                          <p class="text-success"><strong>Mobile verification success!</strong></p>
-                      </ng-container>
-                      <ng-container *ngIf="verificationProgress === 'fail'">
-                          <p class="text-danger"><strong>{{ errorMessage }}</strong></p>
-                      </ng-container>
-                      <p class="text-danger">{{ warningMessage }}</p>
-                  </div>
-
-                  <input name="optToVerify" class="form-control" [(ngModel)]="mobileVerification.otp" 
-                  [disabled]="isOTPExpired()" />
-
-                  <div class="pt-4 d-flex justify-content-center">
-                      <button type="button" class="btn btn-submit" (click)="verifyOTP()" [disabled]="isOTPExpired()">
-                          <span>Validate OTP</span>
-                      </button>
-                  </div>
-
-                  <div class="pt-1 d-flex justify-content-center">
-                      <button type="button" class="btn btn-light btn-resend-otp" (click)="modal.hide(); resendOTP()" [disabled]="isOTPExpired()">
-                          <span>Resend OTP</span>
-                      </button>
-                  </div>
-
-              </div>
-
-          </div>
-      </ng-template>
 
 <div class="modal" id="mobileOTP" data-backdrop="static" data-keyboard="false">
   <div class="modal-content1">
@@ -239,7 +188,7 @@
                   <span>Validate OTP</span></button>
           </div>
           <div class="pt-1 d-flex justify-content-center">
-              <button class="btn btn-light btn-resend-otp" type="button"><span>Resend OTP</span></button>
+              <button class="btn btn-light btn-resend-otp" type="button" (click)="requestEmailOTP(false)"><span>Resend OTP</span></button>
           </div>
       </div>
   </div>

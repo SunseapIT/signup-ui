@@ -46,18 +46,20 @@ export class SuccessfullSignupComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getAllSuccessSignupUsers();
+    this.getAllSuccessSignupUsers(null);
   }
 
-  getAllSuccessSignupUsers(){
+  getAllSuccessSignupUsers(val){
+    this.isLoader=true;
     this.buildQueryParams();
     this.service.get_service(ApiServiceServiceService.apiList.searchCustomersByDateRangeUrl+"/?"+this.queryParams).subscribe((responseData:any)=>{
+     this.isLoader=false;
       var resultObject = responseData['data'];
       this.totalItems = resultObject.totalElements;
       var resultObject1 = resultObject['content'];
       this.currentPage = resultObject.number+1;
-      this.successData = resultObject1;         
-      this.csvFormatSuccessSignup();
+      this.successData = resultObject1;        
+      this.csvFormatSuccessSignup(val);
     })
  }
 
@@ -65,19 +67,19 @@ export class SuccessfullSignupComponent implements OnInit {
     this.page = 0;
     this.dateTimeRange = [];
     this.resetFilters();
-    this.getAllSuccessSignupUsers();
+    this.getAllSuccessSignupUsers(null);
   }
   getFilteredList(){
     this.filters['fromTimestamp'] =this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[0]) : null;
     this.filters['toTimestamp'] =this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[1]) : null;
     this.filters['page']= this.page ? this.page-1 : 0;
-    this.getAllSuccessSignupUsers();  
+    this.getAllSuccessSignupUsers(null);  
   }
   getSuccessfulSignUp(){
     this.filters['fromTimestamp'] =this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[0]) : null;
     this.filters['toTimestamp'] =this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[1]) : null;
     this.filters['page'] = 0;
-    this.getAllSuccessSignupUsers();  
+    this.getAllSuccessSignupUsers("datetime");  
   }
   buildQueryParams() {
     let finalQuery = '';
@@ -105,12 +107,21 @@ export class SuccessfullSignupComponent implements OnInit {
     }
   }
 
- csvFormatSuccessSignup(){  
-   this.service.get_service(ApiServiceServiceService.apiList.searchCustomersByDateRangeUrl+"?size="+this.totalItems).subscribe((response:any)=>
- {
-  var requestObj = response.data.content;
-  this.csvDataSuccess= requestObj;     
- }) 
+ csvFormatSuccessSignup(value){  
+   if(value == 'datetime'){
+    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersByDateRangeUrl+"?size="+this.totalItems+'&fromTimestamp='+this.getTimeStamp(this.dateTimeRange[0])+'&toTimestamp='+this.getTimeStamp(this.dateTimeRange[1])).subscribe((response:any)=>
+      {
+        var requestObj = response.data.content;
+        this.csvDataSuccess= requestObj;     
+      }) 
+   }else{
+    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersByDateRangeUrl+"?size="+this.totalItems).subscribe((response:any)=>
+      {
+        var requestObj = response.data.content;
+        this.csvDataSuccess= requestObj;     
+      }) 
+   }
+   
  }
  
 

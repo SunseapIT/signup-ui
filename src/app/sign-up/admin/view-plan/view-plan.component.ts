@@ -19,7 +19,7 @@ export class ViewPlanComponent implements OnInit {
   searchText : string;
   pdfSrc: any;
   planName:string = '';
-  isLoader:boolean;
+  isLoader:boolean=false;;
   totalItems:any;
   page:number;
   currentPage:number = 1;
@@ -37,7 +37,10 @@ export class ViewPlanComponent implements OnInit {
   }
 
   getPlanList(page){
+    this.isLoader=true;
+
     this.service.get_service(ApiServiceServiceService.apiList.viewPlanUrl+"?page="+page).subscribe((response:any)=>{
+      this.isLoader=false;
       var resultObject = response.data;
       this.totalItems = resultObject.totalElements;
       var resultObject1 = resultObject['content'];
@@ -61,13 +64,15 @@ export class ViewPlanComponent implements OnInit {
       this.toastr.error('', 'Plan has been successfully removed.', {
         timeOut: 2000
       }); 
+
+      this.getPlanList(0);
     })
   }
   
  
 viewFactSheet(name){
   this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet
-    +"?planName="+name.replace(/ /g,"@").replace(/%/g,"*")).subscribe(response=>{
+    +"?planName="+(btoa(name))).subscribe(response=>{
     var data = "data:application/pdf;base64," +response['data']
     this.pdfSrc = data;
     

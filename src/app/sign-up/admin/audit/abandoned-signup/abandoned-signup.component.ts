@@ -40,38 +40,40 @@ export class AbandonedSignupComponent implements OnInit {
   };
   constructor(private service:ApiServiceServiceService,private dateFormat:DatePipe) {}
   ngOnInit() {
-    this.getAllSignupUsers();
+    this.getAllSignupUsers(null);
   }
 
 
-  getAllSignupUsers(){
+  getAllSignupUsers(value){
+    this.isLoader=true;
     this.buildQueryParams();
     this.service.get_service(ApiServiceServiceService.apiList.searchTimestampsByDateRangeUrl+"/?"+this.queryParams).subscribe((responseData:any)=>{
-       var resultObject = responseData['data'];       
+      this.isLoader=false; 
+      var resultObject = responseData['data'];       
        this.totalItems = resultObject.totalElements; 
        var resultObject1 = resultObject['content'];
        this.currentPage = resultObject.number+1;
        this.abandonedData = resultObject1;   
-       this.csvFormat();
+       this.csvFormat(value);
     })  
   }
   clearValue(){
     this.page = 0;
     this.dateTimeRange = [];
     this.resetFilters();
-    this.getAllSignupUsers();
+    this.getAllSignupUsers(null);
   }
   getFilteredList(){
     this.filters['fromTimestamp'] =this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[0]) : null;
     this.filters['toTimestamp'] =this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[1]) : null;
     this.filters['page']= this.page ? this.page-1 : 0;
-    this.getAllSignupUsers();  
+    this.getAllSignupUsers(null);  
   }
   getAbandonedSignUp(){
     this.filters['fromTimestamp'] =this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[0]) : null;
     this.filters['toTimestamp'] =this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[1]) : null;
     this.filters['page'] = 0;
-    this.getAllSignupUsers();  
+    this.getAllSignupUsers("datetime");  
   }
   buildQueryParams() {
     let finalQuery = '';
@@ -101,13 +103,22 @@ export class AbandonedSignupComponent implements OnInit {
   }
 
 
-  csvFormat(){   
-    this.service.get_service(ApiServiceServiceService.apiList.searchTimestampsByDateRangeUrl+"?size="+this.totalItems+"&sort=planDetails,desc").subscribe((response:any)=>
+  csvFormat(value){   
+    if(value == "datetime"){
+      this.service.get_service(ApiServiceServiceService.apiList.searchTimestampsByDateRangeUrl+"?size="+this.totalItems+"&sort=planDetails,desc"+"&fromTimestamp="+this.getTimeStamp(this.dateTimeRange[0])+'&toTimestamp='+this.getTimeStamp(this.dateTimeRange[1])).subscribe((response:any)=>
+         {
+         var requestObj = response.data.content;
+         this.csvData= requestObj;    
+         
+         })
+  }else{
+      this.service.get_service(ApiServiceServiceService.apiList.searchTimestampsByDateRangeUrl+"?size="+this.totalItems+"&sort=planDetails,desc").subscribe((response:any)=>
     {
      var requestObj = response.data.content;
      this.csvData= requestObj;    
       
     })
+    }
   }
 
 

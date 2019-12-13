@@ -40,7 +40,7 @@ import { PaginationModule } from 'ngx-pagination-bootstrap';
     SharedModule,
     Angular2CsvModule,
     ToastrModule.forRoot({
-      timeOut: 3000,
+      timeOut: 2000,
       positionClass: 'toast-top-center',
       preventDuplicates: true,
     }),

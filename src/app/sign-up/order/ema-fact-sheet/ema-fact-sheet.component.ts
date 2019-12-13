@@ -108,7 +108,7 @@ export class EmaFactSheetComponent implements OnInit {
   getPlanFactSheet(planName, fullName,postelCode){  
     this.isLoader=true;
 
-      this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getCustomerFactsheetUrl+"?planName="+planName.replace(/ /g,"@").replace(/%/g,"*")+
+      this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getCustomerFactsheetUrl+"?planName="+(btoa(planName))+
         "&userName="+fullName+"&address="+postelCode).subscribe(response=>{
 
           this.isLoader = false;

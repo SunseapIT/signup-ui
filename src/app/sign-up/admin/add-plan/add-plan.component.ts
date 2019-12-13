@@ -63,7 +63,7 @@ export class AddPlanComponent {
     
   
   this.service.multiPartPost_service(ApiServiceServiceService.apiList.addPlanUrl
-    +"?planName="+this.model.planName.replace(/ /g,"@").replace(/%/g,"*")+"&planId="+this.model.planId,this.formData).subscribe
+    +"?planName="+(btoa(this.model.planName))+"&planId="+this.model.planId,this.formData).subscribe
   (response=>{
     
     

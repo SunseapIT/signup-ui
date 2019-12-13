@@ -1,3 +1,5 @@
+
+
 import { AuthguardGuard } from './../../authguard.guard';
 import { FormsModule } from '@angular/forms';
 import { AdminLoginRoutingModule } from './admin-login-routing.module';
@@ -21,6 +23,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SidebarComponent } from './sidebar/sidebar.component'
 import { SuccessfullSignupComponent } from './audit/successfull-signup/successfull-signup.component';
 import { AbandonedSignupComponent } from './audit/abandoned-signup/abandoned-signup.component';
+import { DOTS_LOADER_COMPONENTS } from '../loader';
 
 
 @NgModule({
@@ -47,10 +50,11 @@ import { AbandonedSignupComponent } from './audit/abandoned-signup/abandoned-sig
      GrdFilterPipe,
      SidebarComponent,
      SuccessfullSignupComponent,
-     AbandonedSignupComponent, 
-  
+     AbandonedSignupComponent,
+     DOTS_LOADER_COMPONENTS
     ],
 
+    
     providers: [
       AuthguardGuard,
       DatePipe

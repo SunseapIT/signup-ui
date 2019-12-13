@@ -56,7 +56,7 @@ authorization = false;
   }
   
   onSubmit(form:NgForm) {   
-    if(this.spPastMonthBill || this.letterOfAuthorisation) {    
+    if(this.spPastMonthBill || this.newSpAccountOpeningLetter || this.letterOfAuthorisation) {    
     var customerDto = new CustomerDto()
     var objStr = localStorage.getItem("customerObj");
     customerDto = JSON.parse(objStr);

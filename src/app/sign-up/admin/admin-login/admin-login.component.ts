@@ -15,8 +15,8 @@ import { ToastrService } from 'ngx-toastr';
 export class AdminLoginComponent implements OnInit {
  
   model: any = {};
-  // username : any;
-  // password: any;
+  loginMessage = '';
+  loginStatus:boolean=false;
   constructor(private router:Router,
     private apiService :ApiServiceServiceService,
     private toastr: ToastrService) { }
@@ -26,12 +26,11 @@ export class AdminLoginComponent implements OnInit {
 
 
   onSubmit(form: NgForm) {        
-
+    if(form.valid){
     var loginBean = new LoginBean();
     loginBean.userId = form.value.username;
     loginBean.password = form.value.password;
     this.apiService.post_service(ApiServiceServiceService.apiList.adminLogin,loginBean).subscribe((response)=>{
-      
       var responseData = response;
       //checking status code
       if(responseData['statusCode']==200){
@@ -39,15 +38,20 @@ export class AdminLoginComponent implements OnInit {
         var token = resultObject['token'];
         localStorage.setItem("Authorization",token);
         this.router.navigateByUrl('/admin-login/admin-dash')
+     
       }
-      else{
-        this.toastr.error('', 'Incorrect username or password', {
-          timeOut: 3000
-        });
+     
       
-      }     
-      
+    },error =>{
+      this.toastr.error("Error", error.message)
     })
+  }
+  // this.toastr.error('', '', {
+  //   timeOut: 3000
+  // });
+ 
+ 
+    
    }
 
    home(){

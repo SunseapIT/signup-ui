@@ -247,14 +247,16 @@ export class OrderReviewComponent implements OnInit {
     this.service.post_service(ApiServiceServiceService.apiList.saveCustomerurl,customerDto).subscribe((response)=>{
     var responseData  = response;     
     this.isLoader=false;
-      this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
-     
-    if(responseData['statusCode']==200){
+     // this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
+      let statusCode = responseData['statusCode']
+    console.log("status Code",statusCode);
+    
+      if(statusCode == 200){
       this.isLoader=false;
       this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
 
     }
-    else if(responseData['statusCode']==500 || responseData['statusCode']==400){
+    else if(statusCode == 500 || statusCode == 400){
       this.isLoader = false; 
       this.toster.error('',responseData['message'], {
         timeOut : 3000

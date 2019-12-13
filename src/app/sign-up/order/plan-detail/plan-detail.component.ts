@@ -168,7 +168,6 @@ export class PlanDetailComponent implements OnInit {
   }
 
   verifyPostalCode() {
-    // Postal codes with the 2 first degits between 01 and 33 and after 1 May 2018 will be allowed
     const postalCodePattern = new RegExp(this.config.validationRegex.postalCode);
     const inputPostalCode = this.potentialCustomer.postalCode;
     if (!postalCodePattern.test(inputPostalCode)

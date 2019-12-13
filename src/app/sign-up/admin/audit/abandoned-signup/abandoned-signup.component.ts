@@ -39,6 +39,7 @@ export class AbandonedSignupComponent implements OnInit {
     keys: ['planDetails', 'personal_Details','address_Details', 'upload_Documents','review_order']
   };
   constructor(private service:ApiServiceServiceService,private dateFormat:DatePipe) {}
+
   ngOnInit() {
     this.getAllSignupUsers(null);
   }
@@ -47,7 +48,8 @@ export class AbandonedSignupComponent implements OnInit {
   getAllSignupUsers(value){
     this.isLoader=true;
     this.buildQueryParams();
-    this.service.get_service(ApiServiceServiceService.apiList.searchTimestampsByDateRangeUrl+"/?"+this.queryParams).subscribe((responseData:any)=>{
+    this.service.get_service(ApiServiceServiceService.apiList.searchTimestampsByDateRangeUrl+"/?"+this.queryParams).
+    subscribe((responseData:any)=>{
       this.isLoader=false; 
       var resultObject = responseData['data'];       
        this.totalItems = resultObject.totalElements; 
@@ -57,24 +59,28 @@ export class AbandonedSignupComponent implements OnInit {
        this.csvFormat(value);
     })  
   }
+
   clearValue(){
     this.page = 0;
     this.dateTimeRange = [];
     this.resetFilters();
     this.getAllSignupUsers(null);
   }
+
   getFilteredList(){
     this.filters['fromTimestamp'] =this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[0]) : null;
     this.filters['toTimestamp'] =this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[1]) : null;
     this.filters['page']= this.page ? this.page-1 : 0;
     this.getAllSignupUsers(null);  
   }
+
   getAbandonedSignUp(){
     this.filters['fromTimestamp'] =this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[0]) : null;
     this.filters['toTimestamp'] =this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[1]) : null;
     this.filters['page'] = 0;
     this.getAllSignupUsers("datetime");  
   }
+
   buildQueryParams() {
     let finalQuery = '';
     for (const item in this.filters) {
@@ -84,9 +90,11 @@ export class AbandonedSignupComponent implements OnInit {
     }
     this.queryParams = finalQuery.replace('&', '');
   }
+
   getTimeStamp(time){
     return this.dateFormat.transform(time,"dd-MM-yyyy hh:mm:ss");
   }
+
   pageChanged(event: any): void {
     this.page = event.page;
     this.getFilteredList();
@@ -105,14 +113,17 @@ export class AbandonedSignupComponent implements OnInit {
 
   csvFormat(value){   
     if(value == "datetime"){
-      this.service.get_service(ApiServiceServiceService.apiList.searchTimestampsByDateRangeUrl+"?size="+this.totalItems+"&sort=planDetails,desc"+"&fromTimestamp="+this.getTimeStamp(this.dateTimeRange[0])+'&toTimestamp='+this.getTimeStamp(this.dateTimeRange[1])).subscribe((response:any)=>
+      this.service.get_service(ApiServiceServiceService.apiList.searchTimestampsByDateRangeUrl+"?size="+
+      this.totalItems+"&sort=planDetails,desc"+"&fromTimestamp="+this.getTimeStamp(this.dateTimeRange[0])+'&toTimestamp='
+      +this.getTimeStamp(this.dateTimeRange[1])).subscribe((response:any)=>
          {
          var requestObj = response.data.content;
          this.csvData= requestObj;    
          
          })
   }else{
-      this.service.get_service(ApiServiceServiceService.apiList.searchTimestampsByDateRangeUrl+"?size="+this.totalItems+"&sort=planDetails,desc").subscribe((response:any)=>
+      this.service.get_service(ApiServiceServiceService.apiList.searchTimestampsByDateRangeUrl+"?size="+this.totalItems+
+      "&sort=planDetails,desc").subscribe((response:any)=>
     {
      var requestObj = response.data.content;
      this.csvData= requestObj;    

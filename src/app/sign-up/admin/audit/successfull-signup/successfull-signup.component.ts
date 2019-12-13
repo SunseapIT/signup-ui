@@ -8,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./successfull-signup.component.scss']
 })
 export class SuccessfullSignupComponent implements OnInit {
-  public dateTimeRange: Date[];
-  data =[] ;
 
+  public dateTimeRange: Date[];
+  
+  
   successData =[];
   p:number=1;
   searchTextSuccess : string;
@@ -120,9 +121,6 @@ export class SuccessfullSignupComponent implements OnInit {
         var requestObj = response.data.content;
         this.csvDataSuccess= requestObj;     
       }) 
-   }
-   
+   }   
  }
- 
-
 }

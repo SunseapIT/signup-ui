@@ -63,6 +63,8 @@ export class PersonalParticularComponent implements OnInit {
   otpMobile:any;
   mobileOtpError:any;
   mobileOtpStatus:boolean;
+  token:any;
+
 
   constructor(
     @Host() public parent: OrderComponent,
@@ -129,8 +131,7 @@ export class PersonalParticularComponent implements OnInit {
     }
   }
 
-  token:any;
-//Email OTP request
+ 
   requestEmailOTP(verifyEmail){
     this.verificationProgress = 'pending';
     this.errorMessage = '';
@@ -156,7 +157,6 @@ export class PersonalParticularComponent implements OnInit {
 
   }
 
-  //Validate Email OTP
   validateEmailOTPModal(){
     var customerDto = new CustomerDto();
     var objStr = localStorage.getItem("customerObj");
@@ -169,13 +169,13 @@ export class PersonalParticularComponent implements OnInit {
     var responseData = response;
     if(responseData['statusCode']==200){
     $("#emailOTP").modal('hide');
-    this.toster.success('', 'Email is verified',{
+    this.toster.success('', 'Email is verified successfully.',{
     timeOut : 3000
     });
     }   
     else 
     {
-    this.toster.error('', 'Email Does not Exist',{
+    this.toster.error('', 'You have entered an invalid OTP.',{
     timeOut : 3000
     });
     }
@@ -183,7 +183,7 @@ export class PersonalParticularComponent implements OnInit {
   }
  
    
-  //Mobile OTP request
+  
   requestOTP (){
     this.verificationProgress = 'pending';
     this.errorMessage = '';
@@ -212,13 +212,13 @@ export class PersonalParticularComponent implements OnInit {
     // var responseData = response;
     // if(responseData['statusCode']==200){
     // $("#mobileOTP").modal('hide');
-    // this.toster.success('', 'Mobile number is verified',{
+    // this.toster.success('', 'Mobile number is verified successfully',{
     // timeOut : 3000
     // });
     // }   
     // else 
     // {
-    // this.toster.error('', 'Number Does not Exist',{
+    // this.toster.error('', 'You have entered an invalid OTP',{
     // timeOut : 3000
     // });
     // }
@@ -226,11 +226,13 @@ export class PersonalParticularComponent implements OnInit {
     if(this.otpMobile == '25580'){
       this.verifiedMobileNo = this.parent.model.mobileNo;
       $("#mobileOTP").modal('hide');
-      this.toster.success('', 'Mobile number is verified',{
+      this.toster.success('', 'Mobile number is verified successfully',{
         timeOut : 3000
       });
     }else{
-
+      this.toster.error('', 'You have entered an invalid OTP.',{
+        timeOut : 3000
+        });
     }
   }
 

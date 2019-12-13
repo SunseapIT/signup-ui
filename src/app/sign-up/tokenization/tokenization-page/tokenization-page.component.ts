@@ -40,7 +40,7 @@ export class TokenizationPageComponent implements OnInit {
   {monthId : "11", name :"Nov"},
   {monthId : "12", name :"Dec"},
   ]
-  years = [ 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030]
+  years = [2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030]
 
   ngOnInit() {
     this.getUserDetail();

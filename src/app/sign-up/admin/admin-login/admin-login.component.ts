@@ -15,9 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 export class AdminLoginComponent implements OnInit {
  
   model: any = {};
-  loginMessage = '';
-  loginStatus:boolean=false;
-  constructor(private router:Router,
+ constructor(private router:Router,
     private apiService :ApiServiceServiceService,
     private toastr: ToastrService) { }
 
@@ -32,7 +30,6 @@ export class AdminLoginComponent implements OnInit {
     loginBean.password = form.value.password;
     this.apiService.post_service(ApiServiceServiceService.apiList.adminLogin,loginBean).subscribe((response)=>{
       var responseData = response;
-      //checking status code
       if(responseData['statusCode']==200){
         var resultObject = responseData['data']
         var token = resultObject['token'];
@@ -43,16 +40,10 @@ export class AdminLoginComponent implements OnInit {
      
       
     },error =>{
-      this.toastr.error("Error", error.message)
+      this.toastr.error("", error.message)
     })
   }
-  // this.toastr.error('', '', {
-  //   timeOut: 3000
-  // });
- 
- 
-    
-   }
+  }
 
    home(){
      this.router.navigateByUrl(ORDER_ROUTES.PLAN_DETAIL);

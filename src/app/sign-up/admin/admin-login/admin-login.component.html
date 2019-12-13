@@ -12,7 +12,7 @@
 
 <div class="container-fluid p-0">
   <div class="row m-0">
-      <div class="col-lg-4 left-image d-none d-md-block">
+      <div class="col-lg-4 left-image d-none d-md-block p-0">
           <img src="/assets/sign-up/images/background/bg-garden-building.jpg" includeVersion alt="Marketing image" onerror="this.onerror = null; this.src='/assets/sign-up/images/background/default/bg-garden-building';">
           <img src="/assets/sign-up/images/background/bg-green-building.jpg" includeVersion alt="Marketing image" onerror="this.onerror = null; this.src='/assets/sign-up/images/background/default/bg-green-building.jpg';">
       </div>
@@ -41,9 +41,7 @@
                               <div *ngIf="password?.errors.required">
                                   <i>Password is required</i>
                               </div>
-                          </div>
-                          <!-- <div *ngIf="loginMessage != ''" 
-                          [ngClass]="{'green-text':loginStatus,'red-text':!loginStatus}"><i>{{loginMessage}}</i></div> -->
+                            </div>
                       </div>
                   </div>
                   <div class="row">

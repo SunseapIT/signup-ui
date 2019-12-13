@@ -16,7 +16,6 @@ import { TabsModule } from 'ngx-bootstrap/tabs'
 import { PaginationModule } from 'ngx-bootstrap/pagination'
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { FileUploadModule } from 'ng2-file-upload';
-import { UploadFactsheetComponent } from './add-plan/upload-factsheet/upload-factsheet.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { GrdFilterPipe } from './filter';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -46,7 +45,6 @@ import { DOTS_LOADER_COMPONENTS } from '../loader';
      AuditComponent, 
      AdminDashboardComponent,
      ViewPlanComponent, 
-     UploadFactsheetComponent,
      GrdFilterPipe,
      SidebarComponent,
      SuccessfullSignupComponent,

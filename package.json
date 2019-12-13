@@ -39,7 +39,7 @@
     "jquery": "^3.3.1",
     "lodash": "^4.17.11",
     "moment": "^2.22.2",
-    "ng-pick-datetime": "^7.0.0",
+    "ng-pick-datetime": "^6.0.16",
     "ng-pick-datetime-moment": "^1.0.8",
     "ng-recaptcha": "^4.0.0",
     "ng2-completer": "^3.0.3",

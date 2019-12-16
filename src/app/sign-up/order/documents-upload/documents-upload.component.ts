@@ -60,9 +60,9 @@ authorization = false;
     var customerDto = new CustomerDto()
     var objStr = localStorage.getItem("customerObj");
     customerDto = JSON.parse(objStr);
-    customerDto.file.bill_data = this.bill_data;
-    customerDto.file.opening_letter_data = this.opening_letter_data;
-    customerDto.file.authorization_data = this.authorization_data_file
+    customerDto.files.bill_data = this.bill_data;
+    customerDto.files.opening_letter_data = this.opening_letter_data;
+    customerDto.files.authorization_data = this.authorization_data;
     localStorage.setItem("customerObj",JSON.stringify(customerDto))
 
       var timeStampDto = new TimeStampDto();
@@ -76,52 +76,49 @@ authorization = false;
     } 
 
     else{
-      this.toastr.error('', 'Upload PDF file', {
+      this.toastr.error('', 'Please upload PDF file', {
         timeOut: 3000
       });
      }
   } 
-    
-  
 
 selected(event,field){  
   this.currentId = field;
   let fileList : FileList = event.target.files;
   if (fileList.length > 0) {
     const file: File = fileList[0];    
-    if (field == 1) {
-      this.spPastMonthBill = file.name;
+    if (field == 1 && file.type == "application/pdf") {
+      this.spPastMonthBill = file.name;    
       this.bill_data_file = file;
       this.handleInputChange(file);
       this.spPastMonthBillSuccess = true;
       this.spPastMonthBillUploaded=true; 
+
     }
-    else if (field == 2) {
+    else if (field == 2 && file.type == "application/pdf") {
       this.newSpAccountOpeningLetter=file.name;
       this.opening_letter_data_file = file;
       this.handleInputChange(file); 
       this.openingLetter = true;
       this.newSpAccountOpeningLetterUploaded=true;
     }
-    else if (field == 3) {
-      console.log();
+    else if (field == 3 && file.type == "application/pdf") {
       this.letterOfAuthorisation = file.name;
       this.authorization_data_file = file;
       this.handleInputChange(file); 
       this.authorization = true;
       this.letterOfAuthorisationUploaded=true;
+    }else{
+      this.toastr.error('', 'Upload PDF file only.', {
+        timeOut: 3000
+      });
     }
   } 
 }
 
 handleInputChange(files) {  
   var file = files;
-  var pattern = /pdf-*/;
   var reader = new FileReader();
-  if (!file.type.match(pattern)) {
-   
-    return;
-  }
   reader.onloadend = this._handleReaderLoaded.bind(this);
   reader.readAsDataURL(file);
  
@@ -149,8 +146,6 @@ _handleReaderLoaded(e) {
 }
 
 removeFile(event,removeid){
-console.log("removeFile : ",removeid);
-
   if(removeid == 1){
 
  this.spPastMonthBill=''

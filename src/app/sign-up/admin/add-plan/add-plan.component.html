@@ -32,7 +32,7 @@
                   #myfile1="ngModel">
                   <div class="upload-btn-wrapper">
                       <label class="btnUpload" for="file">Upload</label>
-                      <input type="file" id="file" name="myfile" (change)="onFileSelected($event)" />
+                      <input type="file" id="file" name="myfile" accept="application/pdf" (change)="onFileSelected($event)" />
                   </div>
                   <ng-container class="valid-feedback" *ngIf="uploadSuccess">
                       <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>

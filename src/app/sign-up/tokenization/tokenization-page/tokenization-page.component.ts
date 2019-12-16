@@ -52,10 +52,7 @@ export class TokenizationPageComponent implements OnInit {
      var objStr = localStorage.getItem("customerObj");
      customerDto = JSON.parse(objStr); 
      this.userName = customerDto.fullName.concat(" ").concat(customerDto.lastName);
-
- 
-
-  }
+    }
 
   onSubmit(form:NgForm){       
     if(form.valid){

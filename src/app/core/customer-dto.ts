@@ -2,7 +2,7 @@ import { Files } from "./file-dto";
 
 export class CustomerDto {
    
-   file =  new Files(); 
+   files =  new Files(); 
 
    token:string;
 

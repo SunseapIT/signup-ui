@@ -8,7 +8,7 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
 
 import { GoogleTagManagerService, PricingPlan } from '@app/core';
 import { OrderComponent } from '../order.component';
-import { ORDER_GA_EVENT_NAMES, STORAGE_KEYS } from '../order.constant';
+import { ORDER_GA_EVENT_NAMES } from '../order.constant';
 import { ToastrService } from 'ngx-toastr';
 import { ApiServiceServiceService } from '@app/api-service-service.service';
 
@@ -39,32 +39,10 @@ export class EmaFactSheetComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
-    // this.localStorage.getItem<PricingPlan>(STORAGE_KEYS.PRICING_PLAN)
-    //   .subscribe(selectedPricingPlan => {
-    //     if (selectedPricingPlan) {
-    //       this.emaFactSheetPdfFileName = 'https://' + selectedPricingPlan.factSheetPDF;
-    //       this.emaFactSheetImageFileName = 'https://' + selectedPricingPlan.factSheetPNG;
-    //     } else {
-    //       this.parent.clearLocalStorage();
-    //       const modalConfig: { [ key: string ]: any } = {
-    //         events: {
-    //           onHidden: (reason: string) => {
-    //             this.parent.modal.hide();
-    //             this.router.navigate(['']);
-    //           }
-    //         }
-    //       };
-    //       this.parent.openErrorModal('Errors', 'You need to select your pricing plan first!', modalConfig);
-    //     }
-    //   });
-
     this.customerObj =  JSON.parse(localStorage.getItem("customerObj"));
     this.getPlanFactSheet(this.customerObj.plan, 
                        this.customerObj.fullName.concat(' ').concat(this.customerObj.lastName),
                        this.customerObj.postelCode);
-
-
 
   }
 
@@ -84,17 +62,14 @@ export class EmaFactSheetComponent implements OnInit {
     if (this.confirmationChecked && this.policyChecked) {
       var customerDto = new CustomerDto();
       var objStr = localStorage.getItem("customerObj");
-      console.log(customerDto);
       customerDto = JSON.parse(objStr);
-      customerDto.file.factSheet_data = this.pdfSrc
-      console.log(customerDto);
+      customerDto.files.factSheet_data = this.pdfSrc;
       localStorage.setItem("customerObj",JSON.stringify(customerDto))
       var timeStampDto = new TimeStampDto();
       timeStampDto.pageType = "REVIEW_ORDER",
       timeStampDto.token = localStorage.getItem("Token")     
       this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{        
-      })
-      
+      })      
       this.parent.saveAndNext();
     }
     else {
@@ -107,10 +82,8 @@ export class EmaFactSheetComponent implements OnInit {
 
   getPlanFactSheet(planName, fullName,postelCode){  
     this.isLoader=true;
-
       this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getCustomerFactsheetUrl+"?planName="+(btoa(planName))+
         "&userName="+fullName+"&address="+postelCode).subscribe(response=>{
-
           this.isLoader = false;
         var data = "data:application/pdf;base64," +response['data']
         this.pdfSrc = data;       

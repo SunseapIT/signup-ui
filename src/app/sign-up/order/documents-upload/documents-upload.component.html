@@ -9,9 +9,9 @@
               <div class="form-group col-lg-6 col-md-12 col-xs-12 mb-0 mb-lg-auto">              
 
                  <label class="form-control-label" for="spPastMonthBill">SP past month bill</label>
-                  <input type="text" name="spPastMonthBill" class="form-control fileUpload" 
+                  <input type="text" name="spPastMonthBill"  class="form-control fileUpload" 
                   [(ngModel)]="spPastMonthBill" 
-                  [value]="uploaded" 
+                  [value]="uploaded"
                   disabled required 
                   #spPastMonthBillError="ngModel">
                   <div class="upload-btn-remove">
@@ -19,16 +19,12 @@
 
                   </div>
 
-                  <div class="upload-btn-wrapper">
-                    
+                  <div class="upload-btn-wrapper">                    
                       <label class="btnUpload" for="file">Upload</label>
-                      <input type="file" id="file" name="myfile"   (change)="selected($event,1)" />
+                      <input type="file" id="file" name="myfile" accept="application/pdf"  (change)="selected($event,1)" />
                   </div>
-                 
-
                   <div class="text-secondary"><small><i>Please upload PDF format only.</i></small>            
-                  </div>
-                  
+                  </div>                  
                   <ng-container class="valid-feedback mt-2" *ngIf="spPastMonthBillSuccess">
                     <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
                 </ng-container>
@@ -50,7 +46,7 @@
                 </div>
                 <div class="upload-btn-wrapper">
                     <label class="btnUpload" for="file">Upload</label>
-                    <input type="file" id="file" name="myfile"  (change)="selected($event,2)" />
+                    <input type="file" id="file" name="myfile"  accept="application/pdf" (change)="selected($event,2)" />
                 </div>
                 <ng-container class="valid-feedback" *ngIf="openingLetter">
                     <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
@@ -58,7 +54,6 @@
            </div>
             </div>
           </ng-container>
-  
           <ng-container *ngIf="!parent.isSPAccountHolder">
             <div class="form-row">
              
@@ -81,11 +76,10 @@
                    
                    
                     <label class="btnUpload" for="file">Upload</label>
-                    <input type="file" id="file" name="myfile1"   (change)="selected($event,3)" />
+                    <input type="file" id="file" name="myfile1"  accept="application/pdf"  (change)="selected($event,3)" />
                 </div>
                 <div class="text-secondary"><small><i>Please upload PDF format only.  Please make sure that the SP account holder has given you the authorisation via this form.</i></small>            
-                </div>
-              
+                </div>              
 <!-- 
                 <div class="text-secondary mr-2 font-italic mt-1">
                   <small>  Please make sure that the SP account holder has given you the authorisation via this form.</small>

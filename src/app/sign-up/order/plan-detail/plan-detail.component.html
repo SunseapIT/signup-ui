@@ -17,7 +17,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="serviceNo">SP Account No.</label>
-                <input name="serviceNo" id="serviceNo" class="form-control" placeholder="10 Digits" [class.is-invalid]="serviceNo.invalid && (serviceNo.touched || form.submitted)" required maxlength="10" blockCopyPaste numbersOnly [(ngModel)]="parent.model.premise.serviceNo" #serviceNo="ngModel">
+                <input name="serviceNo" id="serviceNo" pattern="^[1-9]\d{9}$|^[1-9]\d{9}$" class="form-control" placeholder="10 Digits" [class.is-invalid]="serviceNo.invalid && (serviceNo.touched || form.submitted)" required maxlength="10" blockCopyPaste numbersOnly [(ngModel)]="parent.model.premise.serviceNo" #serviceNo="ngModel">
                 <ng-template #serviceNoTooltip>
                     <img src='/assets/sign-up/images/content/SP_Account.jpg' alt="SP Account" includeVersion/>
                 </ng-template>
@@ -29,7 +29,7 @@
                     <div *ngIf="serviceNo?.errors.required">
                         <i>Your SP Account No. is required</i>
                     </div>
-                    <div *ngIf="!serviceNo?.errors.required && serviceNo?.errors.pattern">
+                    <div *ngIf="serviceNo?.errors.pattern">
                         <i>Your SP Account No. is invalid</i>
                     </div>
                 </div>

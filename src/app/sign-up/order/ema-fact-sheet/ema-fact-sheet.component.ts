@@ -23,6 +23,7 @@ export class EmaFactSheetComponent implements OnInit {
   emaFactSheetImageFileName: string;
   emaFactSheetPdfFileName: string;
   pdfSrc;
+  pdf;
   customerObj:CustomerDto;
 
   acknowledge=false;
@@ -40,9 +41,10 @@ export class EmaFactSheetComponent implements OnInit {
 
   ngOnInit() {
     this.customerObj =  JSON.parse(localStorage.getItem("customerObj"));
-    this.getPlanFactSheet(this.customerObj.plan, 
-                       this.customerObj.fullName.concat(' ').concat(this.customerObj.lastName),
-                       this.customerObj.postelCode);
+    // this.getPlanFactSheet(this.customerObj.plan, 
+    //                    this.customerObj.fullName.concat(' ').concat(this.customerObj.lastName),
+    //                    this.customerObj.postelCode);
+    this.getPlanFactSheet(this.customerObj.plan);
 
   }
 
@@ -63,7 +65,7 @@ export class EmaFactSheetComponent implements OnInit {
       var customerDto = new CustomerDto();
       var objStr = localStorage.getItem("customerObj");
       customerDto = JSON.parse(objStr);
-      customerDto.files.factSheet_data = this.pdfSrc;
+      customerDto.files.factSheet_data = this.pdf;
       localStorage.setItem("customerObj",JSON.stringify(customerDto))
       var timeStampDto = new TimeStampDto();
       timeStampDto.pageType = "REVIEW_ORDER",
@@ -79,14 +81,28 @@ export class EmaFactSheetComponent implements OnInit {
     }
   }
 
+  // getPlanFactSheet(planName, fullName,postelCode){  
+  //   this.isLoader=true;
+  //     this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getCustomerFactsheetUrl+"?planName="+(btoa(planName))+
+  //       "&userName="+fullName+"&address="+postelCode).subscribe(response=>{
+  //         this.isLoader = false;
+  //         this.pdf =response['data'];
+  //         console.log(' this.pdf', this.pdf);
+          
 
-  getPlanFactSheet(planName, fullName,postelCode){  
+  //       var data = "data:application/pdf;base64," +response['data']
+  //       this.pdfSrc = data;       
+  //     })
+    
+  // }
+
+  getPlanFactSheet(planName){  
     this.isLoader=true;
-      this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getCustomerFactsheetUrl+"?planName="+(btoa(planName))+
-        "&userName="+fullName+"&address="+postelCode).subscribe(response=>{
-          this.isLoader = false;
-        var data = "data:application/pdf;base64," +response['data']
-        this.pdfSrc = data;       
+    this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet+"?planName="+(btoa(planName))).subscribe(response=>{
+      this.isLoader = false;
+      this.pdf = response['data'];
+      var data = "data:application/pdf;base64," +response['data']
+      this.pdfSrc = data;   
       })
     
   }

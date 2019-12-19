@@ -32,12 +32,13 @@ export class AddPlanComponent {
   documents: { [name: string]: UploadDocument } = {};
   document: { name: DocumentName, file: File, fileName: string, uploadedId?: number };  
   formData=new FormData();
-  model:any ={};
+  model:any ={ planId : '', planName : '',  };
   uploadSuccess: boolean;
   uploaded:any;
   file:any;
   documentIds: number[] = [];
   factSheet:any={};
+  isLoader:boolean;
 
   private onValidatorChange: () => void;
   private documentDiffer: KeyValueDiffer<string, any>;
@@ -55,24 +56,31 @@ export class AddPlanComponent {
   
   onSubmit(form:NgForm){ 
      if(form.valid && this.fileType == "application/pdf"){
-
+      this.isLoader=true;
     this.uploadSuccess=false;
     var plandto = new Plandto()
     plandto.planName = this.model.planName;
-    plandto.planId =  this.model.planId;
-    
+    plandto.planId =  this.model.planId;    
   
   this.service.multiPartPost_service(ApiServiceServiceService.apiList.addPlanUrl
     +"?planName="+(btoa(this.model.planName))+"&planId="+this.model.planId,this.formData).subscribe
   (response=>{
-    
-    
-    this.toastr.success('', 'Plan added successfully', {
-         timeOut: 2000
-         });
+    this.isLoader=false;
+    let responseData = response;
+    let statusCode = responseData['statusCode']
+    if(statusCode == 200){
 
          this.router.navigateByUrl('/admin-login/admin-dash/view-plan')
-
+         this.toastr.success('', 'Plan added successfully', {
+          timeOut: 2000
+          });
+        }
+        else if(statusCode == 500 || statusCode == 400){
+       
+          this.toastr.error('',responseData['message'], {
+            timeOut : 3000
+          }) 
+        }
         
   })
   form.resetForm();
@@ -82,7 +90,6 @@ export class AddPlanComponent {
       timeOut: 3000
     });
    }
-   
 }
 
 
@@ -104,7 +111,6 @@ onFileSelected(event) {
 cancelUpload(event) {
   delete this.documents[event.documentName];
 }
-
 
 }
 

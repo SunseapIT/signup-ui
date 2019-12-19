@@ -7,7 +7,6 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ORDER_ROUTES } from '@app/sign-up/order';
-import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
 declare const $:any;
 
 
@@ -23,9 +22,14 @@ export class TokenizationPageComponent implements OnInit {
     private toster : ToastrService) { }
   modal:any={}
   customerDetail=[];
+  currentMonth:any;
   customerObj:CustomerDto;
   isCardAdded:boolean=false;
   userName:any;
+  years = [];
+  expYear:any;
+  expMonth:any;
+  monthIndex:number;
   months = [ 
   {monthId : "01", name :"Jan"},
   {monthId : "02", name :"Feb"},
@@ -40,13 +44,18 @@ export class TokenizationPageComponent implements OnInit {
   {monthId : "11", name :"Nov"},
   {monthId : "12", name :"Dec"},
   ]
-  years = [2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030]
 
   ngOnInit() {
     this.getUserDetail();
+    this.expYear = new Date().getFullYear();
+    this.expMonth = new Date().getMonth();
+    for(let i=0; i<10; i++){
+      this.years.push(this.expYear +i);
+    }
   }
- 
 
+
+  
   getUserDetail(){
      var customerDto = new CustomerDto();
      var objStr = localStorage.getItem("customerObj");
@@ -60,22 +69,19 @@ export class TokenizationPageComponent implements OnInit {
      var objStr = localStorage.getItem("customerObj");
      customerDto = JSON.parse(objStr); 
      var spAccountNumber = customerDto.spAccountNumber;
-
-      var paymentDto = new PaymentDto()
+     var paymentDto = new PaymentDto()
       paymentDto.cardNumber = form.value.cardNumber;
       paymentDto.expiryMonth = form.value.expMonth;
       paymentDto.expiryYear = form.value.expYear;
       paymentDto.sourceType = "CARD"
-      this.isCardAdded=true;
       this.service.post_service(ApiServiceServiceService.apiList.addCardDetailUrl+"?sp_account_no="+spAccountNumber, paymentDto).
       subscribe((response)=>{
-        this.isCardAdded=false;
+        this.isCardAdded=true;
         var responseData  = response;   
         if(responseData['statusCode']==201){
           localStorage.removeItem("customerObj")
           localStorage.removeItem("Token")
           this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
-
           form.resetForm()
     
         }
@@ -90,28 +96,45 @@ export class TokenizationPageComponent implements OnInit {
 
   onSelectMonth(event){
     let selectedMonth = event.target.value;
+    this.modal.expYear = "";
   }
-
-
-
+ 
   onSelectYear(event){
-    let selectedYear = event.target.value;
+    this.monthIndex = this.months.findIndex(item => item.monthId == this.modal.expMonth);
+    if(this.expYear == this.modal.expYear){
+      if(this.monthIndex > -1 && this.monthIndex < this.expMonth){
+        this.modal.expMonth = "";
+        this.toster.error('','Card is not valid 1', {
+          timeOut : 3000
+        })
+
+        
+      }
+      if((this.modal.expMonth > this.expMonth) && (this.months.length <= (this.expMonth +3))){
+        this.modal.expMonth = "";
+        this.toster.error('','Card is not valid 2', {
+          timeOut : 3000
+        })
+      }
+    }else{
+      if((this.expYear+1) == this.modal.expYear){
+        if(this.monthIndex < 3){
+          this.modal.expMonth = "";
+          this.toster.error('','Card is not valid 3', {
+            timeOut : 3000
+          })
+        }
+      }
+    }
   }
-
-
   cancel(){
     $('#cancel').modal('show');    
   }
-
   no(){
     $('#cancel').modal('hide')
   }
 
   yes(){
     this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
-
-
-
-    
-  }
+   }
 }

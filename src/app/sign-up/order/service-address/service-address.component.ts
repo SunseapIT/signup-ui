@@ -148,6 +148,8 @@ export class ServiceAddressComponent implements OnInit {
         addressDto.houseNo = form.value.houseNo;
         addressDto.postalCode = form.value.servicePostalCode;
         addressDto.streetName = form.value.streetName;
+        addressDto.unitNo = form.value.unitNo;
+        addressDto.level = form.value.level
         
      var customerDto = new CustomerDto();
       var objStr = localStorage.getItem("customerObj");
@@ -158,7 +160,7 @@ export class ServiceAddressComponent implements OnInit {
       customerDto.houseNo = form.value.houseNo;
       customerDto.streetName = form.value.streetName; 
       customerDto.unitNo = form.value.unitNo;
-      customerDto.lavel = form.value.lavel;
+      customerDto.level = form.value.lavel;
       localStorage.setItem("customerObj",JSON.stringify(customerDto))
       var timeStampDto = new TimeStampDto();
       timeStampDto.pageType = "ADDRESS_DETAILS",

@@ -14,36 +14,40 @@ export class ApiServiceServiceService {
 
   public static apiList = {
 
-    //POST API   
-    adminLogin:environment.baseUrl+"/api/v1/user/login",
+    //ADMIN 
+    approveCustomerUrl : environment.baseUrl+"/api/v1/admin/approveCustomer",
     addPlanUrl:environment.baseUrl+"/api/v1/admin/addPlan",
+    viewPlanUrl: environment.baseUrl+"/api/v1/admin/getPlans",
+    getAllusersUrl:environment.baseUrl+"/api/v1/admin/getAllUsers",
+    searchTimestampsByDateRangeUrl : environment.baseUrl+"/api/v1/admin/searchTimestampsByDateRange",
+    searchCustomersByDateRangeUrl : environment.baseUrl+"/api/v1/admin/searchCustomersByDateRange",
+    searchCustomersForApprovalUrl : environment.baseUrl+"/api/v1/admin/searchCustomersForApproval",
+    removePlansUrl:environment.baseUrl+"/api/v1/admin/removePlan",
+    encodeFileUrl : environment.baseUrl+"/api/v1/admin/encodedFile",
+
+
+    //CUSTOMER    
     addAddressUrl:environment.baseUrl+"/api/v1/customer/addAddress",
     saveCustomerurl:environment.baseUrl+"/api/v1/customer/saveCustomer",
     verifyPromoUrl:environment.baseUrl+"/api/v1/customer/verifyPromoCode",
     verifyMobileUrl:environment.baseUrl+"/api/v1/customer/verifyMobile",
     generateOtpUrl:environment.baseUrl+"/api/v1/customer/generateOtp",
-    addCardDetailUrl:environment.baseUrl+"/api/v1/tokens/tokenize",
-
     sendEmailOtp:environment.baseUrl+"/api/v1/customer/send-email-otp",
-    sendMobileOtp:environment.baseUrl+"/api/v1/customer/generateOtp",
-
-
-    //GET API
-    viewPlanUrl: environment.baseUrl+"/api/v1/admin/getPlans",
-    customerViewPlanUrl:environment.baseUrl+"/api/v1/customer/getPlans",
-    getAllusersUrl:environment.baseUrl+"/api/v1/admin/getAllUsers",
+    customerViewPlanUrl:environment.baseUrl+"/api/v1/customer/getPlans",  
     getFactSheet:environment.baseUrl+"/api/v1/customer/getFactSheet",
-    getTimestampUrl: environment.baseUrl+"/api/v1/customer/timestamps",
-    searchTimestampsByDateRangeUrl : environment.baseUrl+"/api/v1/admin/searchTimestampsByDateRange",
-    searchCustomersByDateRangeUrl : environment.baseUrl+"/api/v1/admin/searchCustomersByDateRange",
+    getTimestampUrl: environment.baseUrl+"/api/v1/customer/timestamps",   
     getCustomerFactsheetUrl : environment.baseUrl+"/api/v1/customer/getUpdatedFactSheet",
     getEmailOtp: environment.baseUrl+"/api/v1/customer/validate-email-otp",
-    dateTimeRangePicker : environment.baseUrl+"/api/v1/customer/search",
-    //DELETE API
-    removePlansUrl:environment.baseUrl+"/api/v1/admin/removePlan",
+    dateTimeRangePicker : environment.baseUrl+"/api/v1/customer/search",    
+    sendMobileOtp:environment.baseUrl+"/api/v1/customer/generateOtp",
+    
+    //LOGIN
+    adminLogin:environment.baseUrl+"/api/v1/user/login",
 
+   
     //TIMESTAMP API
     updateTimeUrl:environment.baseUrl+"/api/v1/customer/updateTime",
+    addCardDetailUrl:environment.baseUrl+"/api/v1/tokens/tokenize",
   }
 
   constructor(private http:HttpClient, private router : Router) { }
@@ -157,9 +161,7 @@ get_service(url) {
   this.router.navigate(['/']);
   return false;
   }
-  }
-  
-    
+  }    
 
   
 }

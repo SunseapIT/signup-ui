@@ -54,7 +54,6 @@ export class AbandonedSignupComponent implements OnInit {
       var resultObject = responseData['data'];       
        this.totalItems = resultObject.totalElements; 
        var resultObject1 = resultObject['content'];
-       this.currentPage = resultObject.number+1;
        this.abandonedData = resultObject1;   
        this.csvFormat(value);
     })  

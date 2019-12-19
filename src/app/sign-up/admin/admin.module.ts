@@ -23,6 +23,10 @@ import { SidebarComponent } from './sidebar/sidebar.component'
 import { SuccessfullSignupComponent } from './audit/successfull-signup/successfull-signup.component';
 import { AbandonedSignupComponent } from './audit/abandoned-signup/abandoned-signup.component';
 import { DOTS_LOADER_COMPONENTS } from '../loader';
+import { ApproveComponent } from './approve/approve.component';
+import {NgxDatatableModule} from '@swimlane/ngx-datatable';
+import { ORDER_COMPONENTS } from '../order';
+import { SharedModule } from '@app/shared';
 
 
 @NgModule({
@@ -38,6 +42,8 @@ import { DOTS_LOADER_COMPONENTS } from '../loader';
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     NgxPaginationModule,
+    SharedModule,
+    NgxDatatableModule,
     PaginationModule.forRoot(),
   ],
   declarations: [AdminLoginComponent,
@@ -49,13 +55,15 @@ import { DOTS_LOADER_COMPONENTS } from '../loader';
      SidebarComponent,
      SuccessfullSignupComponent,
      AbandonedSignupComponent,
-     DOTS_LOADER_COMPONENTS
+     DOTS_LOADER_COMPONENTS,
+     ApproveComponent
     ],
 
     
     providers: [
       AuthguardGuard,
-      DatePipe
+      DatePipe,
+      ORDER_COMPONENTS
       ]
 })
 export class AdminModule { }

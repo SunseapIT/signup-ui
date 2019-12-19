@@ -56,7 +56,8 @@ export class OrderReviewComponent implements OnInit {
   emailAddress:string;
   mobileNumber:string;
   houseNumber:string;
-  levelUnit:string;
+  level:string;
+  unitNo:string;
   streetName:string;
   buildingName:string;
   servicePostalCode:string;
@@ -180,26 +181,11 @@ export class OrderReviewComponent implements OnInit {
     this.premiseMapInput[ fieldName ] = false;
   }
 
-  // isExpiryDateValid() {
-  //   if ((this.parent.model.identificationType === IdentificationType.EmploymentPass
-  //     || this.parent.model.identificationType === IdentificationType.WorkPermit) && _.isEmpty(this.parent.model.identificationExpiryDate)) {
-  //     return false;
-  //   }
-  //   return true;
-  // }
-
   onInputChanged(event: any, fieldName: string, input: any) {
     if (event.key === 'Enter') {
       this.validate(fieldName, input);
     }
   }
-
-  // onIdTypeChanged(idType: string) {
-  //   if (!this.isExpiryDateValid()) {
-  //     this.warningMessage = 'Expiry date is required.';
-  //     this.modal.open(this.warningModal, 'md', { ignoreBackdropClick: false });
-  //   }
-  // }
 
   editService(fieldName: string, input: any) {
     this.serviceAddressMapInput[ fieldName ] = true;
@@ -225,7 +211,8 @@ export class OrderReviewComponent implements OnInit {
     this.emailAddress = this.customerDto.eamilAddress;
     this.mobileNumber = this.customerDto.mobileNumber;
     this.houseNumber = this.customerDto.houseNo;
-    this.levelUnit ="";
+    this.level= this.customerDto.level;
+    // this.unitNo = CustomerDto.unitNo;
     this.streetName= this.customerDto.streetName;
     this.buildingName = this.customerDto.buildingName;
     this.servicePostalCode= this.customerDto.postelCode;
@@ -249,7 +236,7 @@ export class OrderReviewComponent implements OnInit {
       let statusCode = responseData['statusCode']
       if(statusCode == 200){
       this.isLoader=false;
-      this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
+       this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
     }
     else if(statusCode == 500 || statusCode == 400){
       this.isLoader = false; 
@@ -265,7 +252,6 @@ export class OrderReviewComponent implements OnInit {
   
   })
 }
-
 }
 }
 

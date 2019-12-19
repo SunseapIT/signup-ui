@@ -1,0 +1,72 @@
+.approve {
+    display: block;
+    width: 100px;
+    box-sizing: border-box;
+    background-color: #d2232a;
+    color: #ffffff !important;
+    font-family: Lato-Regular;
+    border-radius: 4px;
+    text-align: center;
+    padding: 0;
+    height: 30px;
+    position: relative;
+    z-index: 111;
+}
+.model-cst{
+  box-shadow: none;
+  border: none;
+}
+.modal.slideInRight {
+  animation-duration: 0.5s;
+  animation-name: slideInRight;
+}
+
+.left .modal-dialog,
+.right .modal-dialog {
+  position: fixed;
+  margin: auto;
+  right: 0px;
+  width: 30%;
+  height: 100%;
+  overflow: auto;
+  background-color: #ffffff;
+}
+
+.text-decoration-none {
+  text-decoration: none!important
+}
+
+
+
+
+.lc-title {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 1.1em !important;
+  font-weight: 600 !important;
+  line-height: 18px !important;
+  color: #26408A !important;
+  text-align: center;
+}
+
+
+.arrowright {
+      transform: rotate(90deg)
+  }
+
+  .form-content-approve {
+    padding: 20px 15px;
+    background-color: #f6f6f6;
+}
+
+.btn-approve{
+  position: fixed;
+  bottom: 0px;
+  /* text-align: center; */
+  /* justify-content: center; */
+  margin: 0 auto;
+  margin-left: 170px;
+
+}
+
+
+

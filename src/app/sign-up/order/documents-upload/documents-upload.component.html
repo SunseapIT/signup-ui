@@ -38,7 +38,7 @@
                 class="form-control fileUpload" 
                 [(ngModel)]="newSpAccountOpeningLetter" 
                 [value]="uploaded" 
-                placeHolder="(Optional)"
+              
                 disabled required 
                 #newSpAccountOpeningLetterError="ngModel">
                 <div class="upload-btn-remove">
@@ -56,8 +56,31 @@
           </ng-container>
           <ng-container *ngIf="!parent.isSPAccountHolder">
             <div class="form-row">
+                <div class="form-group col-lg-6 col-md-12 col-xs-12 mb-0 mb-lg-auto">              
+
+                    <label class="form-control-label" for="spPastMonthBill">SP past month bill</label>
+                     <input type="text" name="spPastMonthBill"  class="form-control fileUpload" 
+                     [(ngModel)]="spPastMonthBill" 
+                     [value]="uploaded"
+                     disabled required 
+                     #spPastMonthBillError="ngModel">
+                     <div class="upload-btn-remove">
+                       <div *ngIf="spPastMonthBillUploaded" class="d-inline"><button type="button" class="btn" (click)="removeFile($event,1)"><i class="fa fa-times mr-2" aria-hidden="true"></i></button></div>
+   
+                     </div>
+   
+                     <div class="upload-btn-wrapper">                    
+                         <label class="btnUpload" for="file">Upload</label>
+                         <input type="file" id="file" name="myfile" accept="application/pdf"  (change)="selected($event,1)" />
+                     </div>
+                     <div class="text-secondary"><small><i>Please upload PDF format only.</i></small>            
+                     </div>                  
+                     <ng-container class="valid-feedback mt-2" *ngIf="spPastMonthBillSuccess">
+                       <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
+                   </ng-container>
+                 </div>
              
-              <div class="form-group  col-md-8 offset-md-2 col-xs-12 mb-0 mb-lg-auto">
+              <div class="form-group  col-lg-6 col-md-12 col-xs-12 mb-0 mb-lg-auto">
                 <label class="form-control-label" for="letterOfAuthorisation">Letter of Authorisation by SP account holder</label>
                 <input type="text" 
                 name="letterOfAuthorisation" 
@@ -78,7 +101,8 @@
                     <label class="btnUpload" for="file">Upload</label>
                     <input type="file" id="file" name="myfile1"  accept="application/pdf"  (change)="selected($event,3)" />
                 </div>
-                <div class="text-secondary"><small><i>Please upload PDF format only.  Please make sure that the SP account holder has given you the authorisation via this form.</i></small>            
+                <div class="text-secondary"><small><i>Please upload PDF format only. </i></small>             
+              
                 </div>              
 <!-- 
                 <div class="text-secondary mr-2 font-italic mt-1">
@@ -90,13 +114,29 @@
               </div>
             </div>
               <div class="form-row">
-              <div class="form-group col-lg-12 offset-lg-2">
+              <div class="form-group col-lg-12 ">
                 <label class="form-control-label d-none d-lg-block">&nbsp;</label>
+                <div class="text-secondary"><small><i>Please upload PDF format only.  Please make sure that the SP 
+                    account holder has given you the authorisation via this form.</i></small> 
+                 
+                  </div>     
               
-                <a href="/assets/sign-up/download/Authorisation_Letter.pdf" includeVersion download>
+                <!-- <a href="/assets/sign-up/download/Authorisation_Letter.pdf" includeVersion download>
                   <p><i>DOWNLOAD FORM</i></p>
-                </a>
+                </a> -->
               </div>
+              <div class="form-row">
+              <div class="col-lg-12 ">
+                              
+                      <a href="/assets/sign-up/download/Authorisation_Letter.pdf" includeVersion download>
+                        <p><i>DOWNLOAD FORM</i></p>         </a>  
+                        
+                
+                  <!-- <a href="/assets/sign-up/download/Authorisation_Letter.pdf" includeVersion download>
+                    <p><i>DOWNLOAD FORM</i></p>
+                  </a> -->
+                </div>
+                </div>
             </div>    
         
           </ng-container>

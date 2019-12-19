@@ -19,7 +19,7 @@
                         <div class="row mt_10">
                             <div class="col-md-12">
                                 <span class="card-font"><h2 ><strong>Hi, <span class="text-uppercase">{{userName}}</span>!</strong></h2></span>
-                                <p><i>Please enter your card details to link your card to your account.</i></p>
+                                <p><i>Please enter your card details to setup up your recurring credit card payment.</i></p>
                             </div>
                         </div>
 
@@ -27,12 +27,12 @@
                             <div class="col-md-12 col-lg-8 col-sm-12 pr-0 form-group">
                                 <label for="cardNumber" class="card-font"><strong>Card Number</strong><span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" name="cardNumber" id="cardNumber" [class.is-invalid]="cardNumber.invalid && (cardNumber.touched || form.submitted)" pattern="^(4|5)\d{15}$" [(ngModel)]="modal.cardNumber" #cardNumber="ngModel" required maxlength="16" blockCopyPaste numbersOnly />
-                                <!-- <div *ngIf="cardNumber.invalid && (cardNumber.touched || form.submitted)" class="invalid-feedback">
+                                <div *ngIf="cardNumber.invalid && (cardNumber.touched || form.submitted)" class="invalid-feedback">
                                             <div *ngIf="cardNumber.errors.required">
                                                 <i>Card number is required</i>
                                             </div>
-                                        </div> -->
-                                <!-- <div *ngIf="cardNumber?.errors.pattern" class="invalid-feedback"><i>Enter valid card number</i></div> -->
+                                        </div>
+                                <div *ngIf="cardNumber?.errors.pattern" class="invalid-feedback"><i>Enter valid card number</i></div>
                             </div>
                         </div>
                         <div class="row mt-1 mb-3">
@@ -50,7 +50,6 @@
                                 class="form-control card-box">
                                     <!-- <option value='' ng-selected="selected">MM</option> -->
                                     <option value="{{month.monthId}}" *ngFor="let month of months">{{ month.name }}</option>
-
                                 </select>
                                 <div *ngIf="expMonth.invalid && (expMonth.touched || form.submitted)" class="invalid-feedback">
                                     <div *ngIf="expMonth?.errors.required"><i>Select month</i></div>
@@ -72,39 +71,18 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- <div class="row mt-3">
-                                    <div class="col-md-12 form-group">
-                                        <label for="cardHolderName" class="card-font"><strong>Security Code</strong><span class="text-danger">*</span></label>
-
-                                        <input type="text" class="form-control box-width" 
-                                        name="cvvCode" 
-                                        [(ngModel)]="modal.cvvCode" 
-                                        [class.is-invalid]="cvvCode.invalid && (cvvCode.touched || form.submitted)"
-                                        required 
-                                        maxlength="3" 
-                                        #cvvCode="ngModel" 
-                                        blockCopyPaste numbersOnly/>
-                                        <div *ngIf="cvvCode.invalid && (cvvCode.touched || form.submitted)" class="invalid-feedback">
-                                            <div *ngIf="cvvCode?.errors.required"><i>Please enter CVV code</i></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <img src="src/assets/sign-up/images/icons/CC.svg" height="30px" width="40px" class="cvv" />
-                                        <p> <strong>3 digits</strong> on back of your card</p>
-                                    </div>
-
-                                </div> -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <Strong class="text-secondary"><small>Note :</small></Strong>
+                            </div>
+                            <div class="col-md-12">
+                                <p class="text-secondary"><small><i>If your card expires in the next 3 months, it is considered as invalid.</i></small></p>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="paynow">
-                        <!-- <div class="row mt-5">
-                                    <div class="col-md-12 text-right">
-                                        <p class="card-font"><strong>The next screen you see may be card verification through your card issuer.</strong></p>
-                                    </div>
-                                </div> -->
                         <div class="row mt-3">
-
                             <div class="col-md-12 text-right p-0">
                                 <button type="submit" class="btn btn-success card-font">Add My Card</button>
                             </div>
@@ -164,3 +142,6 @@
             </div>
         </div>
     </div> 
+
+
+   

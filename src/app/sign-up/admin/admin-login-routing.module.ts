@@ -1,3 +1,4 @@
+import { ApproveComponent } from './approve/approve.component';
 import { AuthguardGuard } from './../../authguard.guard';
 import { ViewPlanComponent } from './view-plan/view-plan.component';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
       {path: '' , component: AddPlanComponent},
       {path : 'view-plan', component : ViewPlanComponent},
       {path: 'audit' , component: AuditComponent},
+      {path: 'approve' , component: ApproveComponent},
     ]  },
      
 

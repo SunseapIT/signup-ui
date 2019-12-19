@@ -1,3 +1,5 @@
+<app-dots-loader *ngIf="isLoader"></app-dots-loader>
+
 <section>
   <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
       <div class="container">

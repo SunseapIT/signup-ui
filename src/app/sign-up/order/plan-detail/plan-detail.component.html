@@ -1,3 +1,4 @@
+
 <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
         <div class="form-content form-row content-plan-detail">
             <div class="form-group col-12">
@@ -40,7 +41,8 @@
     
                 <div *ngFor="let promo of promoCode; let i=index">
     
-                    <input [name]="'referralCode'+i" class="form-control" (change)="isPromotionCodeVerifyFail = false" [(ngModel)]="promo.referralCode" #referralCode="ngModel" />
+                    <input [name]="'referralCode'+i" class="form-control" (change)="isPromotionCodeVerifyFail = false"
+                     [(ngModel)]="promo.referralCode" #referralCode="ngModel" />
     
                     <button type="button" data-toggle="modal" data-target="#validateOTP" class="btn input-button" (click)="verifyPromotionCode(i)">
                         <span>Verify</span>

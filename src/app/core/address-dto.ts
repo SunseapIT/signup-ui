@@ -6,7 +6,7 @@ export class AddressDto {
 
  houseNo:string;
 
- lavel:string;
+ level:string;
 
  unitNo:string;
 

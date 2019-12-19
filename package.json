@@ -27,6 +27,7 @@
     "@angular/router": "^6.1.0",
     "@fortawesome/fontawesome-free": "^5.3.1",
     "@ngx-pwa/local-storage": "6",
+    "@swimlane/ngx-datatable": "^16.0.2",
     "@types/pdfjs-dist": "^2.1.2",
     "@types/yargs": "^12.0.0",
     "angular2-csv": "^0.2.9",

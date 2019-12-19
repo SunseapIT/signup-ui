@@ -58,7 +58,6 @@ export class SuccessfullSignupComponent implements OnInit {
       var resultObject = responseData['data'];
       this.totalItems = resultObject.totalElements;
       var resultObject1 = resultObject['content'];
-      this.currentPage = resultObject.number+1;
       this.successData = resultObject1;        
       this.csvFormatSuccessSignup(val);
     })

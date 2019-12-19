@@ -2,6 +2,8 @@ import { Files } from "./file-dto";
 
 export class CustomerDto {
    
+   customerId:any;
+
    files =  new Files(); 
 
    token:string;
@@ -28,7 +30,7 @@ export class CustomerDto {
     
    houseNo:string;
 
-   lavel:string;
+   level:string;
 
    unitNo: string;
     

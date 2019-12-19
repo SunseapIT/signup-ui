@@ -45,9 +45,7 @@ authorization = false;
     private service : ApiServiceServiceService,
     private toastr:ToastrService ) {
     const element = document.getElementById('step-section');
-    element.classList.remove('pt-3');
-
-    
+    element.classList.remove('pt-3');    
   }
 
   ngOnInit() {
@@ -56,25 +54,21 @@ authorization = false;
   }
   
   onSubmit(form:NgForm) {   
-    if(this.spPastMonthBill || this.newSpAccountOpeningLetter || this.letterOfAuthorisation) {    
+    if((this.spPastMonthBill || this.newSpAccountOpeningLetter) || (this.letterOfAuthorisation && this.spPastMonthBill)) {    
     var customerDto = new CustomerDto()
     var objStr = localStorage.getItem("customerObj");
     customerDto = JSON.parse(objStr);
     customerDto.files.bill_data = this.bill_data;
     customerDto.files.opening_letter_data = this.opening_letter_data;
     customerDto.files.authorization_data = this.authorization_data;
-    localStorage.setItem("customerObj",JSON.stringify(customerDto))
-
+    localStorage.setItem("customerObj",JSON.stringify(customerDto));
       var timeStampDto = new TimeStampDto();
       timeStampDto.pageType = "UPLOAD_DOCUMENTS";
       timeStampDto.token = localStorage.getItem("Token")
-
     this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{       
     })
-
       this.parent.saveAndNext();
     } 
-
     else{
       this.toastr.error('', 'Please upload PDF file', {
         timeOut: 3000
@@ -147,7 +141,6 @@ _handleReaderLoaded(e) {
 
 removeFile(event,removeid){
   if(removeid == 1){
-
  this.spPastMonthBill=''
  this.spPastMonthBillSuccess = false;
  this.spPastMonthBillUploaded=false;
@@ -161,23 +154,6 @@ else if(removeid ==3){
   this.letterOfAuthorisation='';
   this.authorization = false;
   this.letterOfAuthorisationUploaded=false;
-  // this.isUploaded=false;
-
 }
 }  
-
-
-
-
-  // selectFile(event) {
-  //   this.myfile = event.document.file.name;
-  // this.fileType = event.document.file.type;
-  // if(this.fileType == "application/pdf"){
-  // this.formData.append("multipartFile", event.document.file.name);   
-    
-  // }
-
-  // }
-
-
 }

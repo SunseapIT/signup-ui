@@ -204,17 +204,7 @@ export class PlanDetailComponent implements OnInit {
     setTimeout(() => {
     this.parent.model.premise.productName = null;
     },100);
-    this.verifiedPromotionCode = (this.parent.model.referralCode || '');
-
-    this.service.get_service(ApiServiceServiceService.apiList.customerViewPlanUrl).subscribe((response)=>{
-      var responseData  = response;
-      var resultObject = responseData['data'];
-      this.planList = resultObject;
-      this.plans = this.planList.map(plan =>plan.planName);
-      
-    })
-
-  
+    this.verifiedPromotionCode = (this.parent.model.referralCode || '');  
     this.pricingPlanService.fetchAll().subscribe(collection => {
       if (!this.parent.isAdvisoryAgreed) {
         setTimeout(() => {
@@ -238,6 +228,15 @@ export class PlanDetailComponent implements OnInit {
         }
       }
   })
+  this.getPlans();
+}
+
+getPlans(){
+  this.service.get_service(ApiServiceServiceService.apiList.customerViewPlanUrl).subscribe((response)=>{
+    var responseData  = response;
+    var resultObject = responseData['data'];
+    this.planList = resultObject;   
+  })
 }
  
   
@@ -260,12 +259,10 @@ viewFactSheet(){
     }   
   }
 
-  promotionCodeError;
-
   verifyPromotionCode(index) {
     var customerDto = new CustomerDto();
-    let promocode = this.promoCode[index].referralCode;
-       
+    let promocode = this.promoCode[index].referralCode; 
+    
     this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl+"?promoCode="
     +promocode,customerDto).subscribe((response: any) => {
       var responseData = response;
@@ -279,10 +276,6 @@ viewFactSheet(){
       }
       
     })
-  }
-
-  isPromotionCodeValid(): boolean {
-    return !this.isPromotionCodeVerifyFail && (_.isEmpty(this.parent.model.referralCode) || !_.isEmpty(this.verifiedPromotionCode));
   }
 
   onSubmit(form: NgForm) {

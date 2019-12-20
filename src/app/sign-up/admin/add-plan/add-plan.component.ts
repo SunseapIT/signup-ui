@@ -50,6 +50,7 @@ export class AddPlanComponent {
     private toastr: ToastrService) { }
 
   ngOnInit() {
+    this.getAdminMessage();
   }
 
 
@@ -110,6 +111,28 @@ onFileSelected(event) {
 
 cancelUpload(event) {
   delete this.documents[event.documentName];
+}
+
+message
+msgModal = {message : ''}
+addMessage(){
+   this.message = this.msgModal.message; 
+this.service.get_service(ApiServiceServiceService.apiList.messageUrl+"?message="+(btoa(this.message))).subscribe((response)=>{
+})
+}
+
+getAdminMessage(){
+  this.service.get_service(ApiServiceServiceService.apiList.getMessageUrl).subscribe((response)=>{
+    this.msgModal.message=response['data']
+    
+  })    
+}
+
+deleteMessage(){
+  this.msgModal.message="";
+  this.message = this.msgModal.message;
+  this.service.get_service(ApiServiceServiceService.apiList.messageUrl+"?message="+(btoa(this.message))).subscribe((response)=>{
+  })
 }
 
 }

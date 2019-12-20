@@ -67,6 +67,9 @@ export class PlanDetailComponent implements OnInit {
   promoCode = [{referralCode:""}];
   public i:number=0;
   pdfSrc: any;
+  verifiedPromocodes = [];
+  adminMessage:any;
+  duplicatePromoCode:boolean
 
 
  constructor(
@@ -229,6 +232,7 @@ export class PlanDetailComponent implements OnInit {
       }
   })
   this.getPlans();
+  this.getAdminMessage();
 }
 
 getPlans(){
@@ -260,21 +264,35 @@ viewFactSheet(){
   }
 
   verifyPromotionCode(index) {
-    var customerDto = new CustomerDto();
     let promocode = this.promoCode[index].referralCode; 
-    
+    if(this.verifiedPromocodes.length){
+     this.verifiedPromocodes.findIndex(item => item == promocode)
+      if(this.verifiedPromocodes.findIndex(item => item == promocode) == -1){
+        this.verifyPromocode(index,promocode);
+        this.duplicatePromoCode=false;
+      }else{
+        this.duplicatePromoCode=true;
+      }
+    }else{
+      this.verifyPromocode(index,promocode);
+      this.duplicatePromoCode=false;
+    }
+  }
+
+  verifyPromocode(index,promocode){
+    var customerDto = new CustomerDto();
+    this.verifiedPromocodes.push(promocode)
     this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl+"?promoCode="
     +promocode,customerDto).subscribe((response: any) => {
       var responseData = response;
       if(responseData['statusCode']==200){
         this.promocodeStatus = true;
-      this.promotionMessage = response.data;
+        this.promotionMessage = response.data;
       }
       else{
         this.promocodeStatus = false;
         this.promotionMessage = response.message;
       }
-      
     })
   }
 
@@ -335,7 +353,15 @@ viewFactSheet(){
    this.promotionMessage = ''; 
   }
 
-  delete(i:number){
-    this.promoCode.splice(i,1)
+  delete(i:number){      
+        this.promoCode.splice(i,1) 
+
+  }
+
+  getAdminMessage(){
+    this.service.get_service(ApiServiceServiceService.apiList.getMessageUrl).subscribe((response)=>{
+      this.adminMessage=response['data']
+      
+    })    
   }
 }

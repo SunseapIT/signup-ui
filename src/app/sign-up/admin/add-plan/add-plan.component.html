@@ -49,3 +49,23 @@
       </div>
   </form>
 </section>
+
+
+<section class="mt-5">
+
+  <form>
+      <div class="container">
+       <div class="col-md-6">
+       <div class="form-group">
+  <label for="comment">Message:</label>
+  <textarea class="form-control" rows="5" id="comment" [(ngModel)]="msgModal.message" name="message" ></textarea>
+  <button class="btn btn-success mt-3" (click)="addMessage()">add</button>
+  <button class="btn btn-danger mt-3 ml-3" (click)="deleteMessage()">delete</button>
+</div>
+       </div>
+        
+
+     
+      </div>
+  </form>
+</section>

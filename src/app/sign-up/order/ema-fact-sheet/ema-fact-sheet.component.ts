@@ -41,9 +41,6 @@ export class EmaFactSheetComponent implements OnInit {
 
   ngOnInit() {
     this.customerObj =  JSON.parse(localStorage.getItem("customerObj"));
-    // this.getPlanFactSheet(this.customerObj.plan, 
-    //                    this.customerObj.fullName.concat(' ').concat(this.customerObj.lastName),
-    //                    this.customerObj.postelCode);
     this.getPlanFactSheet(this.customerObj.plan);
 
   }
@@ -81,21 +78,6 @@ export class EmaFactSheetComponent implements OnInit {
     }
   }
 
-  // getPlanFactSheet(planName, fullName,postelCode){  
-  //   this.isLoader=true;
-  //     this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getCustomerFactsheetUrl+"?planName="+(btoa(planName))+
-  //       "&userName="+fullName+"&address="+postelCode).subscribe(response=>{
-  //         this.isLoader = false;
-  //         this.pdf =response['data'];
-  //         console.log(' this.pdf', this.pdf);
-          
-
-  //       var data = "data:application/pdf;base64," +response['data']
-  //       this.pdfSrc = data;       
-  //     })
-    
-  // }
-
   getPlanFactSheet(planName){  
     this.isLoader=true;
     this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet+"?planName="+(btoa(planName))).subscribe(response=>{
@@ -103,8 +85,7 @@ export class EmaFactSheetComponent implements OnInit {
       this.pdf = response['data'];
       var data = "data:application/pdf;base64," +response['data']
       this.pdfSrc = data;   
-      })
-    
+      })    
   }
 
   downloadFactSheet(){

@@ -1,4 +1,10 @@
-
+<div class="container">
+    <div class="row">
+        <div class="col-md 6">
+        <h3>{{adminMessage}}</h3>
+        </div>
+    </div>
+</div>
 <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
         <div class="form-content form-row content-plan-detail">
             <div class="form-group col-12">
@@ -44,21 +50,19 @@
                     <input [name]="'referralCode'+i" class="form-control" (change)="isPromotionCodeVerifyFail = false"
                      [(ngModel)]="promo.referralCode" #referralCode="ngModel" />
     
-                    <button type="button" data-toggle="modal" data-target="#validateOTP" class="btn input-button" (click)="verifyPromotionCode(i)">
+                    <button type="button" data-toggle="modal" data-target="#validateOTP" class="btn input-button" 
+                    (click)="verifyPromotionCode(i)">
                         <span>Verify</span>
                     </button>
-                    <button type="button" (click)="delete(i)" *ngIf="i" data-toggle="modal" data-target="#validateOTP" class="btn varify-button">
+                    <button type="button" (click)="delete(i)" *ngIf="i" data-toggle="modal"
+                     data-target="#validateOTP" class="btn varify-button">
                         <i class="fa fa-times" aria-hidden="true"></i>
                     </button>
                 </div>
                 <button type="button" class="btn btn-add" (click)="addPromoCode()"><b>Add more</b></button>
+                <div *ngIf="duplicatePromoCode" class="text-danger"><i>Promo/ Referral code already exists.</i></div>
                 <div *ngIf="promotionMessage != ''" [ngClass]="{'green-text':promocodeStatus,'red-text':!promocodeStatus}"><i>{{promotionMessage}}</i></div>
-                <div class="valid-feedback">
-                    <i>Congrats! You just got {{promotionMessage}} off on your first bill.</i>
-                </div>
-                <div *ngIf="isPromotionCodeVerifyFail" class="fail-feedback">
-                    <i>{{promotionMessage.length > 0 ? 'Sorry! Promo code fully redeemed' : 'Sorry this promotion/referral code is invalid'}}</i>
-                </div>
+               
             </div>
             <div class="container">
                 <div class="row mb-3">

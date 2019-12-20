@@ -24,7 +24,8 @@ export class ApiServiceServiceService {
     searchCustomersForApprovalUrl : environment.baseUrl+"/api/v1/admin/searchCustomersForApproval",
     removePlansUrl:environment.baseUrl+"/api/v1/admin/removePlan",
     encodeFileUrl : environment.baseUrl+"/api/v1/admin/encodedFile",
-
+    messageUrl : environment.baseUrl+"/api/v1/admin/addNote",
+   
 
     //CUSTOMER    
     addAddressUrl:environment.baseUrl+"/api/v1/customer/addAddress",
@@ -39,7 +40,9 @@ export class ApiServiceServiceService {
     getCustomerFactsheetUrl : environment.baseUrl+"/api/v1/customer/getUpdatedFactSheet",
     getEmailOtp: environment.baseUrl+"/api/v1/customer/validate-email-otp",
     dateTimeRangePicker : environment.baseUrl+"/api/v1/customer/search",    
-    sendMobileOtp:environment.baseUrl+"/api/v1/customer/generateOtp",
+    sendMobileOtp:environment.baseUrl+"/api/v1/customer/generateOtp",   
+    getMessageUrl : environment.baseUrl+"/api/v1/customer/getNote",
+
     
     //LOGIN
     adminLogin:environment.baseUrl+"/api/v1/user/login",

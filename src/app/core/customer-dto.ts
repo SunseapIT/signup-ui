@@ -4,6 +4,10 @@ export class CustomerDto {
    
    customerId:any;
 
+   approved:boolean;
+
+   approvedTime: any;
+
    files =  new Files(); 
 
    token:string;

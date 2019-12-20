@@ -1,412 +1,403 @@
 <!-- <div class="container"> -->
-        <app-dots-loader *ngIf="isLoader"></app-dots-loader>
-        <div class="row col-md-12 mb-4 mt-4">
-            <div class="col-lg-4 text-left">
-                <input type="text"
-                      class="form-control searchbar" 
-                      placeholder="Search..." 
-                      [(ngModel)]="searchTextSuccess">
-            </div>
-    
-           
-        </div>
-        <div class="row m-0">
-            <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <th>Name</th>
-                            <th>SP Account Number</th>
-                            <th>Address</th>
-                            <th>Date of Sign Up</th>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let customerList of approvalData | grdFilter: {fullName: searchTextSuccess, eamilAddress:searchTextSuccess};
+<app-dots-loader *ngIf="isLoader"></app-dots-loader>
+<div class="row col-md-12 mb-4 mt-4">
+    <div class="col-lg-4 text-left">
+        <input type="text" class="form-control searchbar" placeholder="Search..." [(ngModel)]="searchTextSuccess">
+    </div>
+</div>
+<div class="row m-0">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <th>Name</th>
+                    <th>SP Account Number</th>
+                    <th>Address</th>
+                    <th>Date of Sign Up</th>
+                    <th>Status</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let customerList of approvalData | grdFilter: {fullName: searchTextSuccess, eamilAddress:searchTextSuccess};
                              let i=index;" (click)="editCustomer(customerList)">
-                                <td>{{customerList.fullName}}</td>
-                                <td>{{customerList.spAccountNumber}}</td>
-                                <td>{{customerList.houseNumber}} &nbsp; {{customerList.levelUnit}} &nbsp; {{customerList.buildingName}}
-                                        &nbsp; {{customerList.streetName}} &nbsp; {{customerList.servicePostalCode}}
-                                </td>
-                                <td>{{customerList.sighnUpEndTimeStamp}}</td>
-                            </tr>
-                        </tbody>
-        
-                    </table>
-                    <pagination [totalItems]="totalItems" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="5"></pagination>
-                </div>
-        
-            </div>
+                        <td>{{customerList.fullName}}</td>
+                        <td>{{customerList.spAccountNumber}}</td>
+                        <td>{{customerList.houseNumber}} &nbsp; {{customerList.levelUnit}} &nbsp; {{customerList.buildingName}} &nbsp; {{customerList.streetName}} &nbsp; {{customerList.servicePostalCode}}
+                        </td>
+                        <td>{{customerList.sighnUpEndTimeStamp}}</td>
+                        <td [ngClass]=" !customerList.approved ? 'primary' : 'secondary'">Approval</td>
+                    </tr>
+                </tbody>
+            </table>
+            <pagination [totalItems]="totalItems" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="5"></pagination>
         </div>
-      
-        
-        <div class="modal right slideInRight" id="customer" tabindex="-1" role="dialog">
-            <div class="modal-dialog">
-                <div class="model-cst modal-content">
-        
-                    <div class="modal-body">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+    </div>
+</div>
+<div class="modal right slideInRight" id="customer" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="model-cst modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+                    <div class="row">
+                        <div class="col-md-12 col-xl-12">
+                            <a class="lc-title text-decoration-none" data-toggle="collapse" (click)="arrowChange()" href="#planDetail" role="button" aria-expanded="false" aria-controls="family">
+                                <img id="close" width="12px" height="12px" [ngClass]="arrow?'arrowright':'down'"> &nbsp; &nbsp; Plan Details </a>
+                        </div>
+                    </div>
+                    <div class="collapse show mt-3" id="planDetail">
+                        <div class="form-content-approve content-plan-detail">
                             <div class="row">
-                                <div class="col-md-12 col-xl-12">
-                                    <a class="lc-title text-decoration-none" data-toggle="collapse" (click)="arrowChange()" href="#planDetail" role="button" aria-expanded="false" aria-controls="family">
-                                        <img id="close" width="12px" height="12px" [ngClass]="arrow?'arrowright':'down'"> &nbsp; &nbsp; Plan Details </a>
-                                </div>
-                            </div>
-                            <div class="collapse show mt-3" id="planDetail">
-                                <div class="form-content-approve content-plan-detail">
-                                  
-                                    <div class="row">
-                                        <div class="col-lg-4 col-sm-6">Plan name:</div>
-                                        <div class="col-lg-7 col-sm-5 font-weight-bold">
-                                            <div class="card-text-right p-0">
-                                                <div *ngIf="!isPlanFlag" class="input-group">
-                                                    {{selectedPricingPlan}}
-                                                </div>
-        
-                                                <select name="productName" *ngIf="isPlanFlag" id="productName" class="form-control" [class.is-invalid]="productName.invalid && (productName.touched || form.submitted)" required 
-                                                [(ngModel)]="selectedPricingPlan"  
-                                                #productName="ngModel">
-                                                    <option value='' ng-selected="selected" disabled>Select your plan</option>
-                                                    <option *ngFor="let item of planList" [value]="item.planName">
-                                                        {{ item.planName }}
-                                                    </option>
-                                                </select>
-        
-                                            </div>
+                                <div class="col-lg-4 col-sm-6">Plan name:</div>
+                                <div class="col-lg-7 col-sm-5 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        <div *ngIf="!isPlanFlag" class="input-group">
+                                            {{selectedPricingPlan}}
                                         </div>
-                                        <div class="col-lg-1 col-sm-1">
-                                            <i *ngIf="!isPlanFlag" class="fas fa-pencil-alt" (click)="isPlanFlag = !isPlanFlag"></i>
-                                            <i *ngIf="isPlanFlag" class="fa fa-check" (click)="isPlanFlag = !isPlanFlag"></i>
-                                        </div>        
+                                        <select name="productName" *ngIf="isPlanFlag" id="productName" class="form-control" [class.is-invalid]="productName.invalid && (productName.touched || form.submitted)" required [(ngModel)]="selectedPricingPlan" #productName="ngModel">
+                                            <option value='' ng-selected="selected" disabled>Select your plan</option>
+                                            <option *ngFor="let item of planList" [value]="item.planName">
+                                                {{ item.planName }}
+                                            </option>
+                                        </select>
                                     </div>
-                                    <div class="row mt-3">
-                                            <div class="col-lg-4 col-sm-6">SP account No:</div>
-                                            <div class="col-lg-7 col-sm-5 font-weight-bold">
-                                                <div class="card-text-right p-0">
-                                                    <div *ngIf="!spFlag" class="input-group">
-                                                        {{serviceNo}}
-                                                    </div>
-            
-                                                    <input *ngIf="spFlag" type="text" name="serviceNo" maxlength="10" numbersOnly [(ngModel)]="serviceNo">
-            
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-1 col-sm-1">
-                                                <i *ngIf="!spFlag" class="fas fa-pencil-alt" (click)="spFlag = !spFlag"></i>
-                                                <i *ngIf="spFlag" class="fa fa-check" (click)="spFlag = !spFlag"></i>
-                                            </div>
-                                        </div>
-                                        <div class="row mt-3">
-                                                <div class="col-lg-4 col-sm-6">Promotion/Referral Code:</div>
-                                                <div class="col-lg-7 col-sm-5 font-weight-bold">
-                                                    <div class="card-text-right p-0">
-                                                        <div *ngIf="!isPromoCodeFlag" class="input-group">
-                                                                <textarea rows="4" cols="50" [disabled]="'true'">
-                                                                        {{promoCode}}
-                                                                </textarea>
-                                                           
-                                                        </div>
-                
-                                                        {{promoCode.length}}
-                                                        <div  *ngFor="let promo of promoCode; let i=index">
-                                                                <input *ngIf="isPromoCodeFlag" type="text" [id]="'promoId'+i" [name]="'referralCode'+i" class="form-control" 
-                                                                  [(ngModel)]="promoCode[i]"/>
-                                                                <button   *ngIf="isPromoCodeFlag" type="button" data-toggle="modal" data-target="#validateOTP" class="btn input-button" (click)="verifyPromotionCode(i)">
-                                                                    <span>Verify</span>
-                                                                </button>
-                                                                <button   type="button" (click)="delete(i)" *ngIf="i != '0' && isPromoCodeFlag" data-toggle="modal" data-target="#validateOTP" class="btn varify-button">
-                                                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                                                </button>
-                                                        </div>                
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-1 col-sm-1">
-                                                    <i *ngIf="!isPromoCodeFlag" class="fas fa-pencil-alt" (click)="isPromoCodeFlag = !isPromoCodeFlag"></i>
-                                                    <i *ngIf="isPromoCodeFlag" class="fa fa-check" (click)="isPromoCodeFlag = !isPromoCodeFlag"></i>
-                                                </div>
-                                            </div>
+                                </div>
+                                <div class="col-lg-1 col-sm-1">
+                                    <i *ngIf="!isPlanFlag" class="fas fa-pencil-alt" (click)="isPlanFlag = !isPlanFlag"></i>
+                                    <i *ngIf="isPlanFlag" class="fa fa-check" (click)="isPlanFlag = !isPlanFlag"></i>
                                 </div>
                             </div>
                             <div class="row mt-3">
-                                <div class="col-md-12 col-xl-12">
-                                    <a class="lc-title text-decoration-none" data-toggle="collapse" (click)="arrowChange()" href="#personalDetail" role="button" aria-expanded="false" aria-controls="family">
-                                        <img id="close" width="12px" height="12px" [ngClass]="arrow?'arrowright':'down'"> &nbsp; &nbsp; Personal Details </a>
-                                </div>
-                            </div>
-                            <div class="collapse show mt-3" id="personalDetail">
-                                <div class="form-content-approve content-plan-detail">
-                                    <div class="row">
-                                        <div class="col-lg-4 col-sm-6">Full name:</div>
-                                        <div class="col-lg-8 col-sm-5 font-weight-bold">
-                                            <div class="card-text-right p-0">
-                                                {{fullName}}&nbsp;{{lastName}}
-        
-                                            </div>
-        
+                                <div class="col-lg-4 col-sm-6">SP account No:</div>
+                                <div class="col-lg-7 col-sm-5 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        <div *ngIf="!spFlag" class="input-group">
+                                            {{serviceNo}}
                                         </div>
-        
-                                    </div>
-                                    <div class="row mt-3">
-                                        <div class="col-lg-4 col-sm-6">Email:</div>
-                                        <div class="col-lg-8 col-sm-5 font-weight-bold">
-                                            <div class="card-text-right p-0">
-                                                {{emailAddress}}
-        
-                                            </div>
-        
-                                        </div>
-        
-                                    </div>
-                                    <div class="row mt-3">
-                                        <div class="col-lg-4 col-sm-6">Mobile:</div>
-                                        <div class="col-lg-8 col-sm-5 font-weight-bold">
-                                            <div class="card-text-right p-0">
-                                                {{mobileNumber}}
+                                        <input *ngIf="spFlag" type="text" name="serviceNo" maxlength="10" numbersOnly [(ngModel)]="serviceNo">
 
-                                            </div>
-        
-                                        </div>
-        
                                     </div>
-        
+                                </div>
+                                <div class="col-lg-1 col-sm-1">
+                                    <i *ngIf="!spFlag" class="fas fa-pencil-alt" (click)="spFlag = !spFlag"></i>
+                                    <i *ngIf="spFlag" class="fa fa-check" (click)="spFlag = !spFlag"></i>
                                 </div>
                             </div>
                             <div class="row mt-3">
-                                <div class="col-md-12 col-xl-12">
-                                    <a class="lc-title text-decoration-none" data-toggle="collapse" (click)="arrowChange()" href="#address" role="button"
-                                     aria-expanded="false" aria-controls="family">
-                                        <img id="close" width="12px" height="12px" [ngClass]="arrow?'arrowright':'down'"> &nbsp; &nbsp; Address </a>
+                                <div class="col-lg-4 col-sm-6">Promotion/Referral Code:</div>
+                                <div class="col-lg-7 col-sm-5 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        <div *ngIf="!isPromoCodeFlag" class="input-group">
+                                            <textarea rows="4" cols="50" [disabled]="'true'">
+                                                {{promoCode}}
+                                            </textarea>
+                                        </div>
+                                    
+                                        <div *ngFor="let promo of promoCode; let i=index">
+
+                                            <input *ngIf="isPromoCodeFlag" type="text"
+                                            [name]="'referralCode'+i" class="form-control"
+                                             [value]="promo" (blur)="editPromoCode($event,i)"/>
+
+
+                                            <button *ngIf="isPromoCodeFlag" type="button"  class="btn input-button" (click)="verifyPromotionCode(i)">
+                                                <span>Verify</span>
+                                            </button>
+                                            <button type="button" (click)="delete(i)" *ngIf="i != '0' && isPromoCodeFlag" class="btn varify-button">
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-1 col-sm-1">
+                                    <i *ngIf="!isPromoCodeFlag" class="fas fa-pencil-alt" (click)="isPromoCodeFlag = !isPromoCodeFlag"></i>
+                                    <i *ngIf="isPromoCodeFlag" class="fa fa-check" (click)="isPromoCodeFlag = !isPromoCodeFlag"></i>
                                 </div>
                             </div>
-                            <div class="collapse show mt-3" id="address">
-                                    <div class="form-content-approve content-plan-detail">
-                                        <div class="row">
-                                        <div class="col-lg-4 col-sm-6">Postal code:</div>
-                                        <div class="col-lg-7 col-sm-6 font-weight-bold">
-                                        <div class="card-text-right p-0">
-                                        <div *ngIf="!isPostalFlag" class="input-group">
-                                        {{servicePostalCode}}                            
-                                        </div>
-                                        <input *ngIf="isPostalFlag" name="servicePostalCode" id="servicePostalCode" 
-                                         class="form-control" 
-                                         (blur)="validatePostalCode($event.target.value)" 
-                                         maxlength="6" 
-                                         [class.is-invalid]="servicePostalCode.invalid && (servicePostalCode.touched || form.submitted)" required 
-                                         [(ngModel)]="servicePostalCode" #servicePostalCoderef="ngModel" numbersOnly/>
-                                        </div>
-                                        </div>
-                                        <div class="col-lg-1 col-sm-1">
-                                                <i *ngIf="!isPostalFlag" class="fas fa-pencil-alt" (click)="isPostalFlag = !isPostalFlag"></i>
-                                                <i *ngIf="isPostalFlag" class="fa fa-check" (click)="isPostalFlag = !isPostalFlag"></i>
-                                            </div>
-                                        </div>
-                                        <div class="row mt-3">
-                                        <div class="col-lg-4 col-sm-6">Block/House No.:</div>
-
-                                        <div class="col-lg-7 col-sm-6 font-weight-bold">
-                                                      <div class="card-text-right p-0">
-                                                        <div *ngIf="!isPostalFlag" class="input-group">
-                                                      {{houseNo}}
-                                                        </div>
-                                                        <input name="houseNo"  id="houseNo" *ngIf="isPostalFlag"  class="form-control" 
-                                                        [class.is-invalid]="houseNo.invalid && (houseNo.touched || form.submitted)" required
-                                                        
-                                                         [(ngModel)]="houseNo" #houseNoRef="ngModel" />
-
-                                                      </div>
-                                                    </div>
-                                                 
-                                                  </div>
-                                                
-                                                  <div class="row mt-3">
-                                                    <div class="col-lg-4 col-sm-6">Level </div>
-                                                    <div class="col-lg-7 col-sm-6 font-weight-bold">
-                                                      <div class="card-text-right p-0">
-                                                        <div *ngIf="!isPostalFlag"  class="input-group">
-                                                   {{level}}
-                                                  
-                                                        </div>
-                                                        <input name="level" *ngIf="isPostalFlag" id="level" class="form-control"
-                                                         [(ngModel)]="level" #levelRef="ngModel" />
-
-                                                      </div>
-                                                    </div>
-                                                   
-                                                  </div>
-
-                                                  <div class="row mt-3">
-                                                        <div class="col-lg-4 col-sm-6">Unit No.:</div>
-                                                        <div class="col-lg-7 col-sm-6 font-weight-bold">
-                                                          <div class="card-text-right p-0">
-                                                            <div *ngIf="!isPostalFlag"  class="input-group">
-                                                       {{unitNo}}
-                                                      
-                                                            </div>
-                                                            <input name="level"*ngIf="isPostalFlag" class="form-control"
-                                                             [(ngModel)]="unitNo" #unitNoRef="ngModel" />
-    
-                                                          </div>
-                                                        </div>
-                                                     
-                                                      </div>
-                                                
-                                                  <div class="row mt-3">
-                                                    <div class="col-lg-4 col-sm-6">Street name:</div>
-                                                    <div class="col-lg-7 col-sm-6 font-weight-bold">
-                                                      <div class="card-text-right p-0">
-                                                        <div *ngIf="!isPostalFlag" class="input-group">
-                                                        {{streetName}}                                        
-                                                        </div>
-                                                        <input *ngIf="isPostalFlag" name="streetName" id="streetName" 
-                                                        class="form-control"
-                                                         [class.is-invalid]="streetName.invalid && (streetName.touched || form.submitted)"
-                                                          required [(ngModel)]="streetName" #streetNameRef="ngModel" />
-
-                                                      </div>
-                                                    </div>
-                                                
-                                                 
-                                                  </div>
-                                                
-                                                  <div class="row mt-3">
-                                                    <div class="col-lg-4 col-sm-6">Building name:</div>
-                                                    <div class="col-lg-7 col-sm-6 font-weight-bold">
-                                                      <div class="card-text-right p-0">
-                                                        <div *ngIf="!isPostalFlag" class="input-group">
-                                                           {{buildingName}}                                              
-                                                        </div>  
-                                                        <input *ngIf="isPostalFlag" name="buildingName" id="buildingName" class="form-control"
-                                                         placeholder="(Optional)" [(ngModel)]="buildingName" />
-                                                    
-                                                      </div>
-                                                    </div>
-                                                
-                                                  </div>                                             
-                                                  <div class="row mt-3">
-                                                    <div class="col-lg-4 col-sm-6">Dwelling type:</div>
-                                                    <div class="col-lg-7 col-sm-6 font-weight-bold">
-                                                            <div *ngIf="!isDwellingFlag" class="input-group">
-                                                      {{dwellingType }}
-                                                      </div>
-                                                    
-                                                    <select name="dwellingType" id="dwellingType" *ngIf="isDwellingFlag" 
-                                                    class="form-control" 
-                                                     required (change)="onSelectDwellingType($event.target.value)" 
-                                                     [(ngModel)]="dwellingType"
-                                                      #dwellingTypeRef="ngModel">
-                                                            <option [value]="null" disabled>Select your dwelling type</option>
-                                                            <option *ngFor="let option of DWELLING_TYPE_OPTIONS | toArray" [value]="option.key">{{ option.value }}</option>
-                                                        </select>
-                                                        </div>
-
-                                                        <div class="col-lg-1 col-sm-1">
-                                                                <i *ngIf="!isDwellingFlag" class="fas fa-pencil-alt" (click)="isDwellingFlag = !isDwellingFlag"></i>
-                                                                <i *ngIf="isDwellingFlag" class="fa fa-check" (click)="isDwellingFlag = !isDwellingFlag"></i>
-                                                            </div> 
-                                                  </div>
-                                        </div>
-                            </div>
-                     
-                                <div class="row mt-3">
-                                        <div class="col-md-12 col-xl-12">
-                                            <a class="lc-title text-decoration-none" data-toggle="collapse" 
-                                            (click)="arrowChange()" href="#upload-documents" role="button"
-                                             aria-expanded="false" aria-controls="family">
-                                                <img id="close" width="12px" height="12px" [ngClass]="arrow?'arrowright':'down'"> &nbsp; &nbsp; Uploaded Documents </a>
-                                        </div>
-                                    </div>
-                                    <div class="collapse show mt-3" id="upload-documents">
-                                            <div class="form-content-approve content-plan-detail">
-                                                    <div class="row">
-                                                            <div class="col-lg-4 col-sm-6">SP past month bill:</div>
-                                                            <div class="col-lg-7 col-sm-6 font-weight-bold">
-                                                            <div class="card-text-right p-0" (click)="getCustomerFile(bill_fileName)">
-                                                           
-                                                            {{bill_fileName}}                            
-                                                            
-                                                    
-                                                            </div>
-                                                            </div>
-                                                           
-                                                            </div>
-                                                            <div class="row mt-3">
-                                                                    <div class="col-lg-4 col-sm-6">New SP account opening letter:</div>
-                                                                    <div class="col-lg-7 col-sm-6 font-weight-bold">
-                                                                    <div class="card-text-right p-0" (click)="getCustomerFile(opening_letter_fileName)">                                                                   
-                                                                    {{opening_letter_fileName}}                            
-                                                                   
-                                                                   </div>
-                                                                    </div>                                                           
-                                                                    </div>
-                                                                    <div class="row mt-2">
-                                                                            <div class="col-lg-4 col-sm-6">Letter of Authorisation:</div>
-                                                                            <div class="col-lg-7 col-sm-6 font-weight-bold">
-                                                                            <div class="card-text-right p-0" (click)="getCustomerFile(authorization_fileName)">
-                                                                            
-                                                                            {{authorization_fileName}}                            
-                                                                            
-                                                                         
-                                                                            </div>
-                                                                            </div>
-                                                                        
-                                                                            </div>
-                                                       
-                                                </div>
-                                    </div>
-                                    <div class="row mt-3">
-                                            <div class="col-md-12 col-xl-12">
-                                                <a class="lc-title text-decoration-none" data-toggle="collapse" 
-                                                (click)="arrowChange()" href="#plan-type" role="button"
-                                                 aria-expanded="false" aria-controls="family">
-                                                    <img id="close" width="12px" height="12px" [ngClass]="arrow?'arrowright':'down'"> &nbsp; &nbsp; Plan Type </a>
-                                            </div>
-                                        </div>
-                                        <div class="collapse show mt-3" id="plan-type">
-                                                <div class="form-content-approve content-plan-detail">
-                                                   
-                                                           
-                                                    </div>
-                                        </div>
-                            <div class="row  mt-5 mb-5">
-                                <div class="col-md-12 col-sm-12">
-                                        <button class="btn step-next mx-auto">
-                                            <span>Approve</span> 
-                                        </button>
-                                    </div>
                         </div>
-                           
-                        </form>
                     </div>
-                </div>
-              
+                    <div class="row mt-3">
+                        <div class="col-md-12 col-xl-12">
+                            <a class="lc-title text-decoration-none" data-toggle="collapse" (click)="arrowChange()" href="#personalDetail" role="button" aria-expanded="false" aria-controls="family">
+                                <img id="close" width="12px" height="12px" [ngClass]="arrow?'arrowright':'down'"> &nbsp; &nbsp; Personal Details </a>
+                        </div>
+                    </div>
+                    <div class="collapse show mt-3" id="personalDetail">
+                        <div class="form-content-approve content-plan-detail">
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-6">Full name:</div>
+                                <div class="col-lg-8 col-sm-5 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        {{fullName}}&nbsp;{{lastName}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">Email:</div>
+                                <div class="col-lg-8 col-sm-5 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        {{emailAddress}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">Mobile:</div>
+                                <div class="col-lg-8 col-sm-5 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        {{mobileNumber}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12 col-xl-12">
+                            <a class="lc-title text-decoration-none" data-toggle="collapse" (click)="arrowChange()" href="#address" role="button" aria-expanded="false" aria-controls="family">
+                                <img id="close" width="12px" height="12px" [ngClass]="arrow?'arrowright':'down'"> &nbsp; &nbsp; Address </a>
+                        </div>
+                    </div>
+                    <div class="collapse show mt-3" id="address">
+                        <div class="form-content-approve content-plan-detail">
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-6">Postal code:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        <div *ngIf="!isPostalFlag" class="input-group">
+                                            {{servicePostalCode}}
+                                        </div>
+                                        <input *ngIf="isPostalFlag" name="servicePostalCode" id="servicePostalCode" class="form-control" (blur)="validatePostalCode($event.target.value)" maxlength="6" [class.is-invalid]="servicePostalCode.invalid && (servicePostalCode.touched || form.submitted)" required [(ngModel)]="servicePostalCode" #servicePostalCoderef="ngModel" numbersOnly/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-1 col-sm-1">
+                                    <i *ngIf="!isPostalFlag" class="fas fa-pencil-alt" (click)="isPostalFlag = !isPostalFlag"></i>
+                                    <i *ngIf="isPostalFlag" class="fa fa-check" (click)="isPostalFlag = !isPostalFlag"></i>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">Block/House No.:</div>
 
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        <div *ngIf="!isPostalFlag" class="input-group">
+                                            {{houseNo}}
+                                        </div>
+                                        <input name="houseNo" id="houseNo" *ngIf="isPostalFlag" class="form-control" [class.is-invalid]="houseNo.invalid && (houseNo.touched || form.submitted)" required [(ngModel)]="houseNo" #houseNoRef="ngModel" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">Level </div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        <div *ngIf="!isPostalFlag" class="input-group">
+                                            {{level}}
+                                        </div>
+                                        <input name="level" *ngIf="isPostalFlag" id="level" class="form-control" [(ngModel)]="level" #levelRef="ngModel" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">Unit No.:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        <div *ngIf="!isPostalFlag" class="input-group">
+                                            {{unitNo}}
+                                        </div>
+                                        <input name="level" *ngIf="isPostalFlag" class="form-control" [(ngModel)]="unitNo" #unitNoRef="ngModel" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">Street name:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        <div *ngIf="!isPostalFlag" class="input-group">
+                                            {{streetName}}
+                                        </div>
+                                        <input *ngIf="isPostalFlag" name="streetName" id="streetName" class="form-control" [class.is-invalid]="streetName.invalid && (streetName.touched || form.submitted)" required [(ngModel)]="streetName" #streetNameRef="ngModel" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">Building name:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        <div *ngIf="!isPostalFlag" class="input-group">
+                                            {{buildingName}}
+                                        </div>
+                                        <input *ngIf="isPostalFlag" name="buildingName" id="buildingName" class="form-control" placeholder="(Optional)" [(ngModel)]="buildingName" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">Dwelling type:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div *ngIf="!isDwellingFlag" class="input-group">
+                                        {{dwellingType }}
+                                    </div>
+                                    <select name="dwellingType" id="dwellingType" *ngIf="isDwellingFlag" class="form-control" required (change)="onSelectDwellingType($event.target.value)" [(ngModel)]="dwellingType" #dwellingTypeRef="ngModel">
+                                        <option [value]="null" disabled>Select your dwelling type</option>
+                                        <option *ngFor="let option of DWELLING_TYPE_OPTIONS | toArray" [value]="option.key">{{ option.value }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-1 col-sm-1">
+                                    <i *ngIf="!isDwellingFlag" class="fas fa-pencil-alt" (click)="isDwellingFlag = !isDwellingFlag"></i>
+                                    <i *ngIf="isDwellingFlag" class="fa fa-check" (click)="isDwellingFlag = !isDwellingFlag"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12 col-xl-12">
+                            <a class="lc-title text-decoration-none" data-toggle="collapse" (click)="arrowChange()" href="#upload-documents" role="button" aria-expanded="false" aria-controls="family">
+                                <img id="close" width="12px" height="12px" [ngClass]="arrow?'arrowright':'down'"> &nbsp; &nbsp; Uploaded Documents </a>
+                        </div>
+                    </div>
+                    <div class="collapse show mt-3" id="upload-documents">
+                        <div class="form-content-approve content-plan-detail">
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-6">SP past month bill:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0" (click)="getCustomerFile(bill_fileName)">
+                                        {{bill_fileName}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">New SP account opening letter:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0" (click)="getCustomerFile(opening_letter_fileName)">
+                                        {{opening_letter_fileName}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-lg-4 col-sm-6">Letter of Authorisation:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0" (click)="getCustomerFile(authorization_fileName)">
+                                        {{authorization_fileName}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12 col-xl-12">
+                            <a class="lc-title text-decoration-none" data-toggle="collapse" (click)="arrowChange()" href="#plan-type" role="button" aria-expanded="false" aria-controls="family">
+                                <img id="close" width="12px" height="12px" [ngClass]="arrow?'arrowright':'down'"> &nbsp; &nbsp; Plan Type </a>
+                        </div>
+                    </div>
+                    <div class="collapse show mt-3" id="plan-type">
+                        <div class="form-content-approve content-plan-detail">
+                          <div class="row mt-2">
+                                <div class="col-lg-4 col-sm-6">Approve:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        <!-- data -->
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="row mt-2">
+                                <div class="col-lg-4 col-sm-6">Clean Energy:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0">
+
+                                    </div>
+                                </div>
+
+                            </div>
+                              <div class="row mt-2">
+                                <div class="col-lg-4 col-sm-6">Discount:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0">
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                              <div class="row mt-2">
+                                <div class="col-lg-4 col-sm-6">Rate:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0" (click)="getCustomerFile(authorization_fileName)">
+
+                                    </div>
+                                </div>
+
+                            </div>
+                              <div class="row mt-2">
+                                <div class="col-lg-4 col-sm-6">Price Plan Rate Change: will change:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0" (click)="getCustomerFile(authorization_fileName)">
+
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                        </div>
+                          <div class="row mt-3">
+                        <div class="col-md-12 col-xl-12">
+                            <a class="lc-title text-decoration-none"  role="button" aria-expanded="false" aria-controls="family">
+                                <img id="close" width="12px" height="12px" [ngClass]="arrow?'arrowright':'down'"> &nbsp; &nbsp; Final Approval Date </a>
+
+                                <div class="col-xs-12 col-md-6 form-group">
+                            <input type="text" class="form-control" 
+                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY ', containerClass: 'theme-red' }" 
+                            [minDate]="min"
+                            bsDatepicker 
+                            readOnly
+                            [(bsValue)]="approvalDate">
+                        </div>
+                        </div>
+                    </div>      
+
+                    <div class="row  mt-5 mb-5">
+                        <div class="col-md-12 col-sm-12">
+                            <button class="btn step-next mx-auto">
+                                <span>Approve</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
+    </div>
+</div>
 
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form novalidate="" class="ng-untouched ng-pristine ng-valid">
+                    <div class="form-content ema-scroll-view">
+                        <div class="clearfix p-3">
 
-        <div class="modal fade" id="myModal">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">         
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>      
-                        <div class="modal-body">
-                            <form novalidate="" class="ng-untouched ng-pristine ng-valid">
-                                <div class="form-content ema-scroll-view">
-                                    <div class="row m-0">
-                                        <div class="container">
-                                            <div class="col-md-12">
-                                                <div class="pdf-container">
-                                                    <pdf-viewer [src]="pdfSrc" [original-size]="false"></pdf-viewer>
-                                                </div>
-                                            </div>
-                                        </div>
+                            <button class="float-right btn-up-down-load" (click)="downloadFactSheet()">
+                                <span>DOWNLOAD</span></button>
+                        </div>
+                        <div class="row m-0">
+                            <div class="container">
+                                <div class="col-md-12">
+                                    <div class="pdf-container">
+                                        <pdf-viewer [src]="pdfSrc" [original-size]="false"></pdf-viewer>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
+                        </div>
+                        <div class="row m-0">
+                            <div class="container">
+                                <div class="col-md-12">
+                                    <div class="pdf-container">
+                                        <pdf-viewer [src]="pdfSrc" [original-size]="false"></pdf-viewer>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-              </div>
-     
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

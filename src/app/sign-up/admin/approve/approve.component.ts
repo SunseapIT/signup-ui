@@ -11,6 +11,9 @@ import * as moment from 'moment';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { BsLocaleService } from 'ngx-bootstrap'
+import { ThrowStmt } from '@angular/compiler';
+
 declare const $:any;
 
 
@@ -29,8 +32,6 @@ const POSTAL_CODE_REDIRECT_DELAY = 5000;
   styleUrls: ['./approve.component.scss']
 })
 export class ApproveComponent implements OnInit {
-
-  public dateTimeRange: Date[];
 
    @ViewChild('warningModal') warningModal: any;
   @ViewChild('pickUpModal') pickUpModal: any;
@@ -94,29 +95,40 @@ export class ApproveComponent implements OnInit {
   files=[];
   pdfSrc:any;
   promoCode=[];
-
+  approvalStatus:boolean;
   postalCode:any;
+
+   approvalDate:Date;
+
+  sighnUpEndTimeStamp:Date;
 
   warningMessage = '';
    size = 10;
    page:number = 1;
   customerId: any;
+  myDateValue: Date;
+ 
 
   constructor(private service:ApiServiceServiceService,
     public parent: OrderComponent,
     public modal: ModalService,
     private dateFormat:DatePipe,
+    private localeService: BsLocaleService,
     private utilService: UtilService,
     private localStorage: LocalStorage,
     private router: Router,
     private gtagService: GoogleTagManagerService,
-    private toster : ToastrService) {
+    private toastr : ToastrService) {
+     
   }
 
-  ngOnInit() {
+  ngOnInit() {  
+  
+    this.approvalStatus = this.customerDto.approved
+    console.log(' this.approvalStatus', this.approvalStatus);
+    
     this.getCustomerForApproval();
     this.getPlans();
-
     this.postalCode=""
     this.localStorage.getItem(STORAGE_KEYS.SERVICE_ADDRESS)
       .subscribe(newServiceAddress => newServiceAddress && (this.newServiceAddress = newServiceAddress));
@@ -126,6 +138,7 @@ export class ApproveComponent implements OnInit {
     
   }
 
+
   getCustomerForApproval(){
     this.isLoader=true;
     this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl+"?size="+this.size+'&page='+(this.page-1)).subscribe((responseData:any)=>{
@@ -133,12 +146,13 @@ export class ApproveComponent implements OnInit {
       var resultObject = responseData['data'];
       this.totalItems = resultObject.totalElements;
       var resultObject1 = resultObject['content'];
-      this.approvalData = resultObject1;     
-      console.log(' this.approvalData', this.approvalData);
-         
+      this.approvalData = resultObject1;              
     })
  }
 
+ getTimeStamp(time){
+  return this.dateFormat.transform(time,"yyyy-MM-dd");
+}
 
   pageChanged(event: any): void {
     this.page = event.page;
@@ -156,7 +170,15 @@ export class ApproveComponent implements OnInit {
 
   
  editCustomer(customerList){
-console.log('customerList customerList',customerList);
+
+  let approved = customerList.approved
+  if(approved ==true){
+    $('#customer').modal('hide');
+    this.toastr.success('', 'Customer already approved.',{
+      timeOut: 2000
+    })
+  }
+  else {
   this.selectedPricingPlan = customerList.plan;
   this.promoCode = customerList.promoCode;
   this.fullName = customerList.fullName;
@@ -178,7 +200,17 @@ console.log('customerList customerList',customerList);
     this.opening_letter_fileName= customerList.files.opening_letter_fileName;
   }
 
+  this.sighnUpEndTimeStamp = customerList.sighnUpEndTimeStamp.split('-');
+  let day = this.sighnUpEndTimeStamp[0];
+  let month = this.sighnUpEndTimeStamp[1]-1;
+  let year = this.sighnUpEndTimeStamp[2].toString().split(' ')[0];
+  let hours = this.sighnUpEndTimeStamp[2].toString().split(' ')[1].toString().split(':')[0];
+  let minutes = this.sighnUpEndTimeStamp[2].toString().split(' ')[1].toString().split(':')[1];
+  let seconds = this.sighnUpEndTimeStamp[2].toString().split(' ')[1].toString().split(':')[2];
+  this.approvalDate =  new Date(year, month, day, hours, minutes, seconds);
+  this.approvalDate.setDate(this.approvalDate.getDate() + 5);  
    $('#customer').modal('show');
+}
  }
 
 
@@ -248,8 +280,7 @@ isPostalCodeValid(code: string): boolean {
 
 getCustomerFile(name){
   this.service.get_service(ApiServiceServiceService.apiList.encodeFileUrl
-    +"?fileName="+name).subscribe(response=>{
-      console.log('response file',response);      
+    +"?fileName="+name).subscribe(response=>{  
     var data = "data:application/pdf;base64," +response['data']
     this.pdfSrc = data; 
   })
@@ -258,6 +289,7 @@ getCustomerFile(name){
 
 onSubmit(form:NgForm){
    // this.isLoader=true;  
+   if(form.valid){
   var customerDto = new CustomerDto(); 
   customerDto.customerId = this.customerId ;
   customerDto.plan = this.selectedPricingPlan
@@ -277,10 +309,28 @@ onSubmit(form:NgForm){
   customerDto.files.bill_data = this.customerDto.files.bill_data;
   customerDto.files.authorization_data = this.customerDto.files.authorization_data;
   customerDto.files.factSheet_data = this.customerDto.files.factSheet_data;
+  customerDto.approvedTime = this.getTimeStamp(this.approvalDate);
+  console.log('data for approval', customerDto);  
   this.service.post_service(ApiServiceServiceService.apiList.approveCustomerUrl, customerDto).subscribe((response)=>{
    
 })
+   }
 }
+
+downloadFactSheet(){
+  const linkSource = this.pdfSrc;
+  const downloadLink = document.createElement("a");
+  const fileName = "Letter.pdf";
+  downloadLink.href = linkSource;
+  downloadLink.download = fileName;
+  downloadLink.click();
+}
+
+editPromoCode(event,i){
+  this.promoCode[i] = event.target.value;
+  
+}
+
 }
 
 

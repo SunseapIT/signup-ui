@@ -27,6 +27,8 @@ import { ApproveComponent } from './approve/approve.component';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import { ORDER_COMPONENTS } from '../order';
 import { SharedModule } from '@app/shared';
+import { DatepickerModule, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
 
 
 @NgModule({
@@ -44,6 +46,8 @@ import { SharedModule } from '@app/shared';
     NgxPaginationModule,
     SharedModule,
     NgxDatatableModule,
+    BsDatepickerModule.forRoot(),
+    DatepickerModule.forRoot() ,
     PaginationModule.forRoot(),
   ],
   declarations: [AdminLoginComponent,

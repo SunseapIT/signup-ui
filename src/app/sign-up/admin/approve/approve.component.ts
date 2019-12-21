@@ -73,7 +73,7 @@ export class ApproveComponent implements OnInit {
   newServiceAddress = { houseNo: '', level: '', unitNo: '', levelUnit: '', streetName: '', buildingName: '' };
 
 
-
+  promocodeStatus = false;
   customerDto = new CustomerDto();
   selectedPricingPlan:string;
   fullName:string;
@@ -97,6 +97,8 @@ export class ApproveComponent implements OnInit {
   promoCode=[];
   approvalStatus:boolean;
   postalCode:any;
+  verifiedPromocodes = [];
+  duplicatePromoCode:boolean;
 
    approvalDate:Date;
 
@@ -213,10 +215,29 @@ export class ApproveComponent implements OnInit {
 }
  }
 
+ arrowPlan:boolean;
+ arrowPersonal:boolean;
+ arrowAddress:boolean;
+ arrowUpload:boolean;
+ arrowPlanType:boolean;
 
+ arrowChange(i){
+  if(i == 1){
+  this.arrowPlan=!this.arrowPlan;
+   }
+  else if(i == 2){
+  this.arrowPersonal=!this.arrowPersonal;
+   }
+  else  if(i == 3){
+    this.arrowAddress=!this.arrowAddress;
+   }
+  else if(i == 4){
+    this.arrowUpload=!this.arrowUpload;
+   }
+  else if(i == 5){
+  this.arrowPlanType=!this.arrowPlanType;
+   }
 
- arrowChange(){
-  this.arrow=!this.arrow
 }
 
 getPlans(){
@@ -228,7 +249,7 @@ getPlans(){
 }
 
 addPromoCode(){
-  this.promoCode.push({referralCode :''})   
+  this.promoCode.push("")   
   this.promotionMessage = ''; 
  }
 
@@ -327,9 +348,53 @@ downloadFactSheet(){
 }
 
 editPromoCode(event,i){
-  this.promoCode[i] = event.target.value;
-  
+  this.promoCode[i] = event.target.value;  
 }
+
+indexTracker(index: number) {
+  return index;
+}
+
+verifyPromotionCode(index) {
+  let promocode = this.promoCode[index].referralCode; 
+ 
+  if(this.verifiedPromocodes.length){
+
+   this.verifiedPromocodes.findIndex(item => item == promocode)
+    if(this.verifiedPromocodes.findIndex(item => item == promocode) == -1){
+      this.verifyPromocode(promocode);
+      this.duplicatePromoCode=false;
+    }else{
+      this.duplicatePromoCode=true;
+    }
+  }else{
+    this.verifyPromocode(promocode);
+    this.duplicatePromoCode=false;
+  }
+}
+
+
+
+
+verifyPromocode(promocode){  
+  var customerDto = new CustomerDto();
+  // this.verifiedPromocodes.push(promocode)
+  this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl+"?promoCode="
+  +promocode,customerDto).subscribe((response: any) => {
+    var responseData = response;
+    if(responseData['statusCode']==200){
+      this.promocodeStatus = true;
+      this.promotionMessage = response.data;
+    
+    }
+    else{
+      this.promocodeStatus = false;
+      this.promotionMessage = response.message;
+     
+    }
+  })
+}
+
 
 }
 

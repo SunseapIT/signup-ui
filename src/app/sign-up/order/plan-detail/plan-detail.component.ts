@@ -69,7 +69,8 @@ export class PlanDetailComponent implements OnInit {
   pdfSrc: any;
   verifiedPromocodes = [];
   adminMessage:any;
-  duplicatePromoCode:boolean
+  duplicatePromoCode:boolean;
+  verified : boolean;
 
 
  constructor(
@@ -265,7 +266,9 @@ viewFactSheet(){
 
   verifyPromotionCode(index) {
     let promocode = this.promoCode[index].referralCode; 
+   
     if(this.verifiedPromocodes.length){
+      this.verified=false
      this.verifiedPromocodes.findIndex(item => item == promocode)
       if(this.verifiedPromocodes.findIndex(item => item == promocode) == -1){
         this.verifyPromocode(index,promocode);
@@ -279,6 +282,9 @@ viewFactSheet(){
     }
   }
 
+
+  
+
   verifyPromocode(index,promocode){
     var customerDto = new CustomerDto();
     this.verifiedPromocodes.push(promocode)
@@ -288,10 +294,12 @@ viewFactSheet(){
       if(responseData['statusCode']==200){
         this.promocodeStatus = true;
         this.promotionMessage = response.data;
+        this.verified=true;
       }
       else{
         this.promocodeStatus = false;
         this.promotionMessage = response.message;
+       
       }
     })
   }
@@ -309,7 +317,7 @@ viewFactSheet(){
       var customerDto = new CustomerDto();
       customerDto.spAccountNumber = form.value.serviceNo;
       customerDto.plan = form.value.productName;
-      customerDto.promoCode = this.promoCode.map(item=>item.referralCode);     
+      customerDto.promoCode = this.verifiedPromocodes;    
       this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{
         var responseData  = response;
         var resultObject = responseData['data'];
@@ -354,7 +362,12 @@ viewFactSheet(){
   }
 
   delete(i:number){      
-        this.promoCode.splice(i,1) 
+    if(this.verifiedPromocodes){
+        this.verifiedPromocodes.splice(i,1);
+    }
+    else {
+      this.promoCode.splice(i,1)
+    }
 
   }
 

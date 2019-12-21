@@ -50,7 +50,9 @@
 
 
 .arrowright {
-      transform: rotate(90deg)
+      transform: rotate(-90deg);
+      color: #26408A !important;
+      background-color: #26408A !important;
   }
 
   .form-content-approve {
@@ -72,6 +74,14 @@
 }
 .secondary {
   color: green;
+}
+
+.btn-up-down-load {
+  padding: 0px;
+  border: none;
+  border-radius: 3px;
+  background-color: #d2232a;
+  margin-right: 15px;
 }
 
 

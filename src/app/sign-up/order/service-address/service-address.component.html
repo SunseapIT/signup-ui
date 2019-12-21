@@ -2,7 +2,12 @@
         <div class="form-content form-row">    
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="servicePostalCode">Postal code</label>
-                <input name="servicePostalCode" id="servicePostalCode" class="form-control" (blur)="validatePostalCode($event.target.value)" maxlength="6" [class.is-invalid]="servicePostalCode.invalid && (servicePostalCode.touched || form.submitted)" required [pattern]="config.validationRegex.postalCode" [(ngModel)]="parent.model.premise.servicePostalCode" #servicePostalCode="ngModel" numbersOnly/>
+                <input name="servicePostalCode" id="servicePostalCode" class="form-control" 
+                (blur)="validatePostalCode($event.target.value)" maxlength="6" 
+                [class.is-valid]="isPostalCodeValid() && parent.model.premise.servicePostalCode"
+                [class.is-invalid]="!isPostalCodeValid && (servicePostalCode.touched || form.submitted)"
+                 required [pattern]="config.validationRegex.postalCode" 
+                 [(ngModel)]="parent.model.premise.servicePostalCode" #servicePostalCode="ngModel" numbersOnly/>
     
                 <div *ngIf="servicePostalCode.invalid && (servicePostalCode.touched || form.submitted)" class="invalid-feedback">
                     <div *ngIf="servicePostalCode?.errors.required">

@@ -21,14 +21,20 @@
                              let i=index;" (click)="editCustomer(customerList)">
                         <td>{{customerList.fullName}}</td>
                         <td>{{customerList.spAccountNumber}}</td>
-                        <td>{{customerList.houseNumber}} &nbsp; {{customerList.levelUnit}} &nbsp; {{customerList.buildingName}} &nbsp; {{customerList.streetName}} &nbsp; {{customerList.servicePostalCode}}
+                        <td>{{customerList.houseNumber}} &nbsp; {{customerList.levelUnit}} &nbsp;
+                            {{customerList.buildingName}} &nbsp; {{customerList.streetName}} &nbsp;
+                            {{customerList.servicePostalCode}}
                         </td>
                         <td>{{customerList.sighnUpEndTimeStamp}}</td>
-                        <td [ngClass]=" !customerList.approved ? 'primary' : 'secondary'">Approval</td>
+                        <td *ngIf="customerList.approved"><i class="fa fa-check" style="color:#3AC76A;"
+                                aria-hidden="true"></i></td>
+                        <td *ngIf="!customerList.approved"><i class="fa fa-times" aria-hidden="true"></i>
+                        </td>
                     </tr>
                 </tbody>
             </table>
-            <pagination [totalItems]="totalItems" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="5"></pagination>
+            <pagination [totalItems]="totalItems" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"
+                [maxSize]="5"></pagination>
         </div>
     </div>
 </div>
@@ -39,9 +45,11 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <form #form="ngForm" (ngSubmit)="onSubmit(form)">
                     <div class="row">
-                        <div class="col-md-12 col-xl-12">
-                            <a class="lc-title text-decoration-none" data-toggle="collapse" (click)="arrowChange()" href="#planDetail" role="button" aria-expanded="false" aria-controls="family">
-                                <img id="close" width="12px" height="12px" [ngClass]="arrow?'arrowright':'down'"> &nbsp; &nbsp; Plan Details </a>
+                        <div class="col-md-12 col-xl-12 p-0">
+                            <a class="lc-title text-decoration-none" data-toggle="collapse" (click)="arrowChange(1)"
+                                href="#planDetail" role="button" aria-expanded="false" aria-controls="family">
+                                <img id="close" src="/assets/sign-up/images/icons/angle-down.png" width="25px"
+                                    height="25px" [ngClass]="arrowPlan?'arrowright':'down'">&nbsp; Plan Details </a>
                         </div>
                     </div>
                     <div class="collapse show mt-3" id="planDetail">
@@ -53,7 +61,10 @@
                                         <div *ngIf="!isPlanFlag" class="input-group">
                                             {{selectedPricingPlan}}
                                         </div>
-                                        <select name="productName" *ngIf="isPlanFlag" id="productName" class="form-control" [class.is-invalid]="productName.invalid && (productName.touched || form.submitted)" required [(ngModel)]="selectedPricingPlan" #productName="ngModel">
+                                        <select name="productName" *ngIf="isPlanFlag" id="productName"
+                                            class="form-control"
+                                            [class.is-invalid]="productName.invalid && (productName.touched || form.submitted)"
+                                            required [(ngModel)]="selectedPricingPlan" #productName="ngModel">
                                             <option value='' ng-selected="selected" disabled>Select your plan</option>
                                             <option *ngFor="let item of planList" [value]="item.planName">
                                                 {{ item.planName }}
@@ -62,7 +73,8 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-1 col-sm-1">
-                                    <i *ngIf="!isPlanFlag" class="fas fa-pencil-alt" (click)="isPlanFlag = !isPlanFlag"></i>
+                                    <i *ngIf="!isPlanFlag" class="fas fa-pencil-alt"
+                                        (click)="isPlanFlag = !isPlanFlag"></i>
                                     <i *ngIf="isPlanFlag" class="fa fa-check" (click)="isPlanFlag = !isPlanFlag"></i>
                                 </div>
                             </div>
@@ -73,7 +85,8 @@
                                         <div *ngIf="!spFlag" class="input-group">
                                             {{serviceNo}}
                                         </div>
-                                        <input *ngIf="spFlag" type="text" name="serviceNo" maxlength="10" numbersOnly [(ngModel)]="serviceNo">
+                                        <input *ngIf="spFlag" type="text" name="serviceNo" maxlength="10" numbersOnly
+                                            [(ngModel)]="serviceNo">
 
                                     </div>
                                 </div>
@@ -91,34 +104,41 @@
                                                 {{promoCode}}
                                             </textarea>
                                         </div>
-                                    
-                                        <div *ngFor="let promo of promoCode; let i=index">
+                                        <div *ngFor="let promo of promoCode; let i=index;trackBy:indexTracker">
 
-                                            <input *ngIf="isPromoCodeFlag" type="text"
-                                            [name]="'referralCode'+i" class="form-control"
-                                             [value]="promo" (blur)="editPromoCode($event,i)"/>
+                                            <input *ngIf="isPromoCodeFlag" type="text" [name]="'referralCode'+i"
+                                                class="form-control" [value]="promo" (blur)="editPromoCode($event,i)" />
 
 
-                                            <button *ngIf="isPromoCodeFlag" type="button"  class="btn input-button" (click)="verifyPromotionCode(i)">
+                                            <button *ngIf="isPromoCodeFlag" type="button" class="btn input-button"
+                                                (click)="verifyPromocode(promo)">
                                                 <span>Verify</span>
                                             </button>
-                                            <button type="button" (click)="delete(i)" *ngIf="i != '0' && isPromoCodeFlag" class="btn varify-button">
+                                            <button type="button" (click)="delete(i)"
+                                                *ngIf="i != '0' && isPromoCodeFlag" class="btn varify-button">
                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                             </button>
                                         </div>
+                                        <button type="button" class="btn btn-add" (click)="addPromoCode()"><b>Add
+                                                more</b></button>
                                     </div>
                                 </div>
                                 <div class="col-lg-1 col-sm-1">
-                                    <i *ngIf="!isPromoCodeFlag" class="fas fa-pencil-alt" (click)="isPromoCodeFlag = !isPromoCodeFlag"></i>
-                                    <i *ngIf="isPromoCodeFlag" class="fa fa-check" (click)="isPromoCodeFlag = !isPromoCodeFlag"></i>
+                                    <i *ngIf="!isPromoCodeFlag" class="fas fa-pencil-alt"
+                                        (click)="isPromoCodeFlag = !isPromoCodeFlag"></i>
+                                    <i *ngIf="isPromoCodeFlag" class="fa fa-check"
+                                        (click)="isPromoCodeFlag = !isPromoCodeFlag"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12 col-xl-12">
-                            <a class="lc-title text-decoration-none" data-toggle="collapse" (click)="arrowChange()" href="#personalDetail" role="button" aria-expanded="false" aria-controls="family">
-                                <img id="close" width="12px" height="12px" [ngClass]="arrow?'arrowright':'down'"> &nbsp; &nbsp; Personal Details </a>
+                            <a class="lc-title text-decoration-none" data-toggle="collapse" (click)="arrowChange(2)"
+                                href="#personalDetail" role="button" aria-expanded="false" aria-controls="family">
+                                <img id="close" src="/assets/sign-up/images/icons/angle-down.png" width="25px"
+                                    height="25px" [ngClass]="arrowPersonal?'arrowright':'down'">&nbsp; Personal Details
+                            </a>
                         </div>
                     </div>
                     <div class="collapse show mt-3" id="personalDetail">
@@ -151,8 +171,10 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12 col-xl-12">
-                            <a class="lc-title text-decoration-none" data-toggle="collapse" (click)="arrowChange()" href="#address" role="button" aria-expanded="false" aria-controls="family">
-                                <img id="close" width="12px" height="12px" [ngClass]="arrow?'arrowright':'down'"> &nbsp; &nbsp; Address </a>
+                            <a class="lc-title text-decoration-none" data-toggle="collapse" (click)="arrowChange(3)"
+                                href="#address" role="button" aria-expanded="false" aria-controls="family">
+                                <img id="close" src="/assets/sign-up/images/icons/angle-down.png" width="25px"
+                                    height="25px" [ngClass]="arrowAddress?'arrowright':'down'">&nbsp; Address </a>
                         </div>
                     </div>
                     <div class="collapse show mt-3" id="address">
@@ -164,12 +186,19 @@
                                         <div *ngIf="!isPostalFlag" class="input-group">
                                             {{servicePostalCode}}
                                         </div>
-                                        <input *ngIf="isPostalFlag" name="servicePostalCode" id="servicePostalCode" class="form-control" (blur)="validatePostalCode($event.target.value)" maxlength="6" [class.is-invalid]="servicePostalCode.invalid && (servicePostalCode.touched || form.submitted)" required [(ngModel)]="servicePostalCode" #servicePostalCoderef="ngModel" numbersOnly/>
+                                        <input *ngIf="isPostalFlag" name="servicePostalCode" id="servicePostalCode"
+                                            class="form-control" (blur)="validatePostalCode($event.target.value)"
+                                            maxlength="6"
+                                            [class.is-invalid]="isPostalCodeValid() && (servicePostalCode.touched || form.submitted)"
+                                            required [(ngModel)]="servicePostalCode" #servicePostalCoderef="ngModel"
+                                            numbersOnly />
                                     </div>
                                 </div>
                                 <div class="col-lg-1 col-sm-1">
-                                    <i *ngIf="!isPostalFlag" class="fas fa-pencil-alt" (click)="isPostalFlag = !isPostalFlag"></i>
-                                    <i *ngIf="isPostalFlag" class="fa fa-check" (click)="isPostalFlag = !isPostalFlag"></i>
+                                    <i *ngIf="!isPostalFlag" class="fas fa-pencil-alt"
+                                        (click)="isPostalFlag = !isPostalFlag"></i>
+                                    <i *ngIf="isPostalFlag" class="fa fa-check"
+                                        (click)="isPostalFlag = !isPostalFlag"></i>
                                 </div>
                             </div>
                             <div class="row mt-3">
@@ -180,7 +209,10 @@
                                         <div *ngIf="!isPostalFlag" class="input-group">
                                             {{houseNo}}
                                         </div>
-                                        <input name="houseNo" id="houseNo" *ngIf="isPostalFlag" class="form-control" [class.is-invalid]="houseNo.invalid && (houseNo.touched || form.submitted)" required [(ngModel)]="houseNo" #houseNoRef="ngModel" />
+                                        <input disabled name="houseNo" id="houseNo" *ngIf="isPostalFlag"
+                                            class="form-control"
+                                            [class.is-invalid]="houseNo.invalid && (houseNo.touched || form.submitted)"
+                                            required [(ngModel)]="houseNo" #houseNoRef="ngModel" />
                                     </div>
                                 </div>
                             </div>
@@ -191,7 +223,8 @@
                                         <div *ngIf="!isPostalFlag" class="input-group">
                                             {{level}}
                                         </div>
-                                        <input name="level" *ngIf="isPostalFlag" id="level" class="form-control" [(ngModel)]="level" #levelRef="ngModel" />
+                                        <input name="level" *ngIf="isPostalFlag" id="level" class="form-control"
+                                            [(ngModel)]="level" #levelRef="ngModel" />
                                     </div>
                                 </div>
                             </div>
@@ -202,7 +235,8 @@
                                         <div *ngIf="!isPostalFlag" class="input-group">
                                             {{unitNo}}
                                         </div>
-                                        <input name="level" *ngIf="isPostalFlag" class="form-control" [(ngModel)]="unitNo" #unitNoRef="ngModel" />
+                                        <input name="level" *ngIf="isPostalFlag" class="form-control"
+                                            [(ngModel)]="unitNo" #unitNoRef="ngModel" />
                                     </div>
                                 </div>
                             </div>
@@ -213,7 +247,10 @@
                                         <div *ngIf="!isPostalFlag" class="input-group">
                                             {{streetName}}
                                         </div>
-                                        <input *ngIf="isPostalFlag" name="streetName" id="streetName" class="form-control" [class.is-invalid]="streetName.invalid && (streetName.touched || form.submitted)" required [(ngModel)]="streetName" #streetNameRef="ngModel" />
+                                        <input *ngIf="isPostalFlag" disabled name="streetName" id="streetName"
+                                            class="form-control"
+                                            [class.is-invalid]="streetName.invalid && (streetName.touched || form.submitted)"
+                                            required [(ngModel)]="streetName" #streetNameRef="ngModel" />
                                     </div>
                                 </div>
                             </div>
@@ -224,7 +261,8 @@
                                         <div *ngIf="!isPostalFlag" class="input-group">
                                             {{buildingName}}
                                         </div>
-                                        <input *ngIf="isPostalFlag" name="buildingName" id="buildingName" class="form-control" placeholder="(Optional)" [(ngModel)]="buildingName" />
+                                        <input *ngIf="isPostalFlag" disabled name="buildingName" id="buildingName"
+                                            class="form-control" placeholder="(Optional)" [(ngModel)]="buildingName" />
                                     </div>
                                 </div>
                             </div>
@@ -234,22 +272,31 @@
                                     <div *ngIf="!isDwellingFlag" class="input-group">
                                         {{dwellingType }}
                                     </div>
-                                    <select name="dwellingType" id="dwellingType" *ngIf="isDwellingFlag" class="form-control" required (change)="onSelectDwellingType($event.target.value)" [(ngModel)]="dwellingType" #dwellingTypeRef="ngModel">
+                                    <select name="dwellingType" id="dwellingType" *ngIf="isDwellingFlag"
+                                        class="form-control" required
+                                        (change)="onSelectDwellingType($event.target.value)" [(ngModel)]="dwellingType"
+                                        #dwellingTypeRef="ngModel">
                                         <option [value]="null" disabled>Select your dwelling type</option>
-                                        <option *ngFor="let option of DWELLING_TYPE_OPTIONS | toArray" [value]="option.key">{{ option.value }}</option>
+                                        <option *ngFor="let option of DWELLING_TYPE_OPTIONS | toArray"
+                                            [value]="option.key">{{ option.value }}</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-1 col-sm-1">
-                                    <i *ngIf="!isDwellingFlag" class="fas fa-pencil-alt" (click)="isDwellingFlag = !isDwellingFlag"></i>
-                                    <i *ngIf="isDwellingFlag" class="fa fa-check" (click)="isDwellingFlag = !isDwellingFlag"></i>
+                                    <i *ngIf="!isDwellingFlag" class="fas fa-pencil-alt"
+                                        (click)="isDwellingFlag = !isDwellingFlag"></i>
+                                    <i *ngIf="isDwellingFlag" class="fa fa-check"
+                                        (click)="isDwellingFlag = !isDwellingFlag"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12 col-xl-12">
-                            <a class="lc-title text-decoration-none" data-toggle="collapse" (click)="arrowChange()" href="#upload-documents" role="button" aria-expanded="false" aria-controls="family">
-                                <img id="close" width="12px" height="12px" [ngClass]="arrow?'arrowright':'down'"> &nbsp; &nbsp; Uploaded Documents </a>
+                            <a class="lc-title text-decoration-none" data-toggle="collapse" (click)="arrowChange(4)"
+                                href="#upload-documents" role="button" aria-expanded="false" aria-controls="family">
+                                <img id="close" src="/assets/sign-up/images/icons/angle-down.png" width="25px"
+                                    height="25px" [ngClass]="arrowUpload?'arrowright':'down'">&nbsp; Uploaded Documents
+                            </a>
                         </div>
                     </div>
                     <div class="collapse show mt-3" id="upload-documents">
@@ -282,13 +329,15 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12 col-xl-12">
-                            <a class="lc-title text-decoration-none" data-toggle="collapse" (click)="arrowChange()" href="#plan-type" role="button" aria-expanded="false" aria-controls="family">
-                                <img id="close" width="12px" height="12px" [ngClass]="arrow?'arrowright':'down'"> &nbsp; &nbsp; Plan Type </a>
+                            <a class="lc-title text-decoration-none" data-toggle="collapse" (click)="arrowChange(5)"
+                                href="#plan-type" role="button" aria-expanded="false" aria-controls="family">
+                                <img id="close" src="/assets/sign-up/images/icons/angle-down.png" width="25px"
+                                    height="25px" [ngClass]="arrowPlanType?'arrowright':'down'">&nbsp; Plan Type </a>
                         </div>
                     </div>
                     <div class="collapse show mt-3" id="plan-type">
                         <div class="form-content-approve content-plan-detail">
-                          <div class="row mt-2">
+                            <div class="row mt-2">
                                 <div class="col-lg-4 col-sm-6">Approve:</div>
                                 <div class="col-lg-7 col-sm-6 font-weight-bold">
                                     <div class="card-text-right p-0">
@@ -296,7 +345,7 @@
                                     </div>
                                 </div>
                             </div>
-                             <div class="row mt-2">
+                            <div class="row mt-2">
                                 <div class="col-lg-4 col-sm-6">Clean Energy:</div>
                                 <div class="col-lg-7 col-sm-6 font-weight-bold">
                                     <div class="card-text-right p-0">
@@ -305,7 +354,7 @@
                                 </div>
 
                             </div>
-                              <div class="row mt-2">
+                            <div class="row mt-2">
                                 <div class="col-lg-4 col-sm-6">Discount:</div>
                                 <div class="col-lg-7 col-sm-6 font-weight-bold">
                                     <div class="card-text-right p-0">
@@ -315,7 +364,7 @@
                                 </div>
 
                             </div>
-                              <div class="row mt-2">
+                            <div class="row mt-2">
                                 <div class="col-lg-4 col-sm-6">Rate:</div>
                                 <div class="col-lg-7 col-sm-6 font-weight-bold">
                                     <div class="card-text-right p-0" (click)="getCustomerFile(authorization_fileName)">
@@ -324,7 +373,7 @@
                                 </div>
 
                             </div>
-                              <div class="row mt-2">
+                            <div class="row mt-2">
                                 <div class="col-lg-4 col-sm-6">Price Plan Rate Change: will change:</div>
                                 <div class="col-lg-7 col-sm-6 font-weight-bold">
                                     <div class="card-text-right p-0" (click)="getCustomerFile(authorization_fileName)">
@@ -332,23 +381,21 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     </div>
-                        </div>
-                          <div class="row mt-3">
+                    <div class="row mt-5">
                         <div class="col-md-12 col-xl-12">
-                            <a class="lc-title text-decoration-none"  role="button" aria-expanded="false" aria-controls="family">
-                                <img id="close" width="12px" height="12px" [ngClass]="arrow?'arrowright':'down'"> &nbsp; &nbsp; Final Approval Date </a>
+                            <a class="lc-title text-decoration-none ml-4" aria-expanded="false" aria-controls="family">
+                                &nbsp; Final Approval Date
+                            </a>
 
-                                <div class="col-xs-12 col-md-6 form-group">
-                            <input type="text" class="form-control" 
-                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY ', containerClass: 'theme-red' }" 
-                            [minDate]="min"
-                            bsDatepicker 
-                            readOnly
-                            [(bsValue)]="approvalDate">
+                            <div class="col-xs-12 col-md-6 form-group ml-3">&nbsp;
+                                <input type="text" class="form-control"
+                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY ', containerClass: 'theme-red' }"
+                                    [minDate]="approvalDate" bsDatepicker readOnly [(bsValue)]="approvalDate">
+                            </div>
                         </div>
-                        </div>
-                    </div>      
+                    </div>
 
                     <div class="row  mt-5 mb-5">
                         <div class="col-md-12 col-sm-12">

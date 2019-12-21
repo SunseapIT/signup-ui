@@ -9,7 +9,9 @@
         <div class="form-content form-row content-plan-detail">
             <div class="form-group col-12">
                 <label class="form-control-label" for="productName">Plan details</label>
-                <select name="productName" id="productName" class="form-control" [class.is-invalid]="productName.invalid && (productName.touched || form.submitted)" required [(ngModel)]="planName" (change)="onSelectPricingPlanChange($event)" #productName="ngModel">
+                <select name="productName" id="productName" class="form-control " 
+                [class.is-invalid]="productName.invalid && (productName.touched || form.submitted)" required [(ngModel)]="planName"
+                 (change)="onSelectPricingPlanChange($event)" #productName="ngModel">
                     <option value='' ng-selected="selected" disabled>Select your plan</option>
                     <option *ngFor="let item of planList" [value]="item.planName">
                         {{ item.planName }}
@@ -50,12 +52,11 @@
                     <input [name]="'referralCode'+i" class="form-control" (change)="isPromotionCodeVerifyFail = false"
                      [(ngModel)]="promo.referralCode" #referralCode="ngModel" />
     
-                    <button type="button" data-toggle="modal" data-target="#validateOTP" class="btn input-button" 
-                    (click)="verifyPromotionCode(i)">
+                    <button type="button" class="btn input-button" 
+                    (click)="verifyPromotionCode(i)" >
                         <span>Verify</span>
                     </button>
-                    <button type="button" (click)="delete(i)" *ngIf="i" data-toggle="modal"
-                     data-target="#validateOTP" class="btn varify-button">
+                    <button type="button" (click)="delete(i)" *ngIf="i"  class="btn varify-button">
                         <i class="fa fa-times" aria-hidden="true"></i>
                     </button>
                 </div>

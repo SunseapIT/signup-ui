@@ -31,8 +31,8 @@ export class AddPlanComponent {
   DocumentName:any;
   documents: { [name: string]: UploadDocument } = {};
   document: { name: DocumentName, file: File, fileName: string, uploadedId?: number };  
-  formData=new FormData();
-  model:any ={ planId : '', planName : '',  };
+  formData:any;
+  model:any ={ planId : '', planName : '', cleanEnergy : '', discount : '', planRate : '', beforeGst : '' , afterGst :'' };
   uploadSuccess: boolean;
   uploaded:any;
   file:any;
@@ -45,6 +45,8 @@ export class AddPlanComponent {
   fileName: string;
   myfile: any;
   fileType:any;
+  message
+  msgModal = {message : ''}
   constructor(private service:ApiServiceServiceService,
     private router : Router,
     private toastr: ToastrService) { }
@@ -56,15 +58,21 @@ export class AddPlanComponent {
 
   
   onSubmit(form:NgForm){ 
-     if(form.valid && this.fileType == "application/pdf"){
-      this.isLoader=true;
+    if(form.valid && this.fileType == "application/pdf"){
+    this.isLoader=true;
     this.uploadSuccess=false;
     var plandto = new Plandto()
     plandto.planName = this.model.planName;
-    plandto.planId =  this.model.planId;    
-  
-  this.service.multiPartPost_service(ApiServiceServiceService.apiList.addPlanUrl
-    +"?planName="+(btoa(this.model.planName))+"&planId="+this.model.planId,this.formData).subscribe
+    plandto.planId =  this.model.planId;  
+    plandto.discount = this.model.discount;
+    plandto.energy = this.model.cleanEnergy;
+    plandto.rate = this.model.beforeGst;
+    plandto.rateChange = this.model.planRate;
+    plandto.afterGst = this.model.afterGst;
+    let sendlbeFormData=new FormData();
+    sendlbeFormData.append("multipartFile",this.formData);
+    sendlbeFormData.append("planDto",JSON.stringify(plandto));
+  this.service.multiPartPost_service(ApiServiceServiceService.apiList.addPlanUrl,sendlbeFormData).subscribe
   (response=>{
     this.isLoader=false;
     let responseData = response;
@@ -84,7 +92,7 @@ export class AddPlanComponent {
         }
         
   })
-  form.resetForm();
+   form.resetForm();
  }
  else{
     this.toastr.error('', 'All the fields are mandatory.', {
@@ -93,12 +101,11 @@ export class AddPlanComponent {
    }
 }
 
-
 onFileSelected(event) { 
  this.myfile = event.target.files[0].name;
  this.fileType = event.target.files[0].type;
  if(this.fileType == "application/pdf"){
-  this.formData.append("multipartFile", event.target.files[0]);   
+  this.formData=event.target.files[0]; 
   this.uploadSuccess=true;  
  }
  else{
@@ -113,17 +120,20 @@ cancelUpload(event) {
   delete this.documents[event.documentName];
 }
 
-message
-msgModal = {message : ''}
+
 addMessage(){
    this.message = this.msgModal.message; 
 this.service.get_service(ApiServiceServiceService.apiList.messageUrl+"?message="+(btoa(this.message))).subscribe((response)=>{
+  this.toastr.success('', 'Message added successfully.',{
+    timeOut: 2000
+  })
 })
 }
 
 getAdminMessage(){
   this.service.get_service(ApiServiceServiceService.apiList.getMessageUrl).subscribe((response)=>{
     this.msgModal.message=response['data']
+   
     
   })    
 }
@@ -132,8 +142,45 @@ deleteMessage(){
   this.msgModal.message="";
   this.message = this.msgModal.message;
   this.service.get_service(ApiServiceServiceService.apiList.messageUrl+"?message="+(btoa(this.message))).subscribe((response)=>{
+    this.toastr.error('', 'Message deleted successfully.',{
+      timeOut: 2000
+    })
   })
 }
+
+
+selected(event){  
+  
+  let fileList : FileList = event.target.files;
+ 
+    const file: File = fileList[0];        
+      this.bill_data_file = file;
+      this.handleInputChange(file);     
+
+    
+}
+
+handleInputChange(files) {  
+  var file = files;
+  var reader = new FileReader();
+  reader.onloadend = this._handleReaderLoaded.bind(this);
+  reader.readAsDataURL(file);
+ 
+  
+}
+bill_data:string;
+spPastMonthBill:any;
+bill_data_file:any;
+_handleReaderLoaded(e) {
+  let reader = e.target;
+  var base64result = reader.result.substr(reader.result.indexOf(',') + 1);
+      this.bill_data = base64result;
+   
+  
+  
+
+}
+
 
 }
 

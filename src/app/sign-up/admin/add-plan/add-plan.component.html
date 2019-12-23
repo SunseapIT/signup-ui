@@ -15,10 +15,10 @@
                         <div class="tab-pane fade show active" id="addPlan" role="tabpanel" aria-labelledby="nav-home-tab">
                            
                             <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
-                                <div class="container">
+                                <div class="container p-5">
                                     
-                                    <div class="row mt-4">
-                                        <div class="form-group col-lg-6 offset-lg-3 col-xs-12">
+                                    <div class="row mt-3">
+                                        <div class="form-group col-lg-5 offset-lg-1 col-md-6 col-sm-12">
                                             <label class="form-control-label" for="planName">Plan Name</label>
                                             <input name="planName" 
                                             id="planName" 
@@ -28,18 +28,83 @@
                                             [(ngModel)]="model.planName" 
                                             #planName="ngModel" />                 
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-lg-6 offset-lg-3 col-xs-12">
+                                        <div class="form-group col-lg-5 col-md-6 col-sm-12">
                                             <label class="form-control-label" for="planId">Plan Code</label>
                                             <input name="planId" id="planId" class="form-control" 
                                             [class.is-invalid]="planId.invalid && (planId.touched || form.submitted)" 
                                             required 
-                                            [(ngModel)]="model.planId" #planId="ngModel" />                 
+                                            [(ngModel)]="model.planId" #planId="ngModel" />                   
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="form-group col-lg-6 offset-lg-3 col-xs-12">
+                                        <div class="form-group col-lg-5 col-md-6 offset-lg-1 col-sm-12">
+                                            <label class="form-control-label" for="cleanEnergy">Clean Energy</label>
+                                            <div class="input-group">
+                                            <input name="cleanEnergy" id="cleanEnergy" class="form-control" 
+                                            [class.is-invalid]="cleanEnergy.invalid && (cleanEnergy.touched || form.submitted)" 
+                                            required 
+                                            [(ngModel)]="model.cleanEnergy" #cleanEnergy="ngModel" />  
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">%</span>
+                                            </div>  
+                                            </div>             
+                                        </div>
+                                        <div class="form-group col-lg-5 col-md-6 col-sm-12">
+                                            <label class="form-control-label" for="discount">Discount</label>
+                                            <div class="input-group">
+                                            <input name="discount" id="discount" class="form-control" 
+                                            [class.is-invalid]="discount.invalid && (discount.touched || form.submitted)" 
+                                            required 
+                                            [(ngModel)]="model.discount" #discount="ngModel" />    
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">%</div>
+                                            </div>
+                                            
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="row">
+                                        <div class="form-group col-lg-5 col-md-6 offset-lg-1 col-sm-12">
+                                            <label class="form-control-label" for="beforeGst">Rate, Before GST</label>
+                                            <div class="input-group">
+                                            <input name="beforeGst" id="beforeGst" class="form-control" 
+                                            [class.is-invalid]="beforeGst.invalid && (beforeGst.touched || form.submitted)" 
+                                            required 
+                                            [(ngModel)]="model.beforeGst" #beforeGst="ngModel" />  
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    cents
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-5 col-md-6 col-sm-12">
+                                            <label class="form-control-label" for="afterGst">Rate, After GST</label>
+                                            <div class="input-group">
+                                            <input name="afterGst" id="afterGst" class="form-control" 
+                                            [class.is-invalid]="afterGst.invalid && (afterGst.touched || form.submitted)" 
+                                            required 
+                                            [(ngModel)]="model.afterGst" #afterGst="ngModel" />          
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">cents</div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-5 offset-lg-1 col-md-6 col-sm-12">
+                                            <label class="form-control-label" for="planRate">Price Plan Rate Change</label>
+                                            <input name="planRate" id="planRate" class="form-control" 
+                                            [class.is-invalid]="planRate.invalid && (planRate.touched || form.submitted)" 
+                                            required 
+                                            [(ngModel)]="model.planRate" #planRate="ngModel" />                 
+                                        </div>
+                                        <div class="form-group col-lg-5 col-md-6 col-xs-12">
                                             <label class="form-control-label" for="factSheet">Upload Fact Sheet</label>
                                             <input type="text" name="factSheet" class="form-control fileUpload" 
                                             [(ngModel)]="myfile" 
@@ -70,8 +135,8 @@
                                  <div class="form-group row col-lg-6 offset-lg-3 col-xs-12 mt-4">
                             <label for="comment"><strong>Message:</strong></label>
                             <textarea class="form-control" rows="5" id="comment" [(ngModel)]="msgModal.message" name="message" ></textarea>
-                            <button class="btn btn-success mt-3" (click)="addMessage()">add</button>
-                            <button class="btn btn-danger mt-3 ml-3" (click)="deleteMessage()">delete</button>
+                            <button class="btn btn-success mt-3" (click)="addMessage()">Add</button>
+                            <button class="btn btn-danger mt-3 ml-3" (click)="deleteMessage()">Delete</button>
                           </div>
                              </div>
                             </form>

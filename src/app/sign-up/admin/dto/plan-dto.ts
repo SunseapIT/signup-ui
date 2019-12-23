@@ -1,8 +1,20 @@
 export class Plandto{
 
-    planName:string;
+    planName:string='';
 
-    planId:string;
+    planId:string='';
+
+    discount:string='';
+
+    duration:string='';
     
-    // multipartFile: FormData;
+    energy:string='';
+  
+    rate:string='';
+
+    afterGst:string='';
+    
+    rateChange:string='';
+    
+    
 }

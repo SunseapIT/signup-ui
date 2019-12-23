@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md 6">
-        <h3>{{adminMessage}}</h3>
+        <h5 class="text-secondary">{{adminMessage}}</h5>
         </div>
     </div>
 </div>
@@ -26,7 +26,11 @@
             </div>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="serviceNo">SP Account No.</label>
-                <input name="serviceNo" id="serviceNo" pattern="^[1-9]\d{9}$|^[1-9]\d{9}$" class="form-control" placeholder="10 Digits" [class.is-invalid]="serviceNo.invalid && (serviceNo.touched || form.submitted)" required maxlength="10" blockCopyPaste numbersOnly [(ngModel)]="parent.model.premise.serviceNo" #serviceNo="ngModel">
+                <input name="serviceNo" id="serviceNo" 
+                pattern="^[1-9]\d{9}$|^[1-9]\d{9}$" class="form-control" placeholder="10 Digits" 
+                [class.is-invalid]="serviceNo.invalid && (serviceNo.touched || form.submitted)" 
+                required maxlength="10" blockCopyPaste 
+                numbersOnly [(ngModel)]="parent.model.premise.serviceNo" #serviceNo="ngModel">
                 <ng-template #serviceNoTooltip>
                     <img src='/assets/sign-up/images/content/SP_Account.jpg' alt="SP Account" includeVersion/>
                 </ng-template>
@@ -49,7 +53,7 @@
     
                 <div *ngFor="let promo of promoCode; let i=index">
     
-                    <input [name]="'referralCode'+i" class="form-control" (change)="isPromotionCodeVerifyFail = false"
+                    <input [name]="'referralCode'+i" class="form-control" trim="blur" (change)="isPromotionCodeVerifyFail = false"
                      [(ngModel)]="promo.referralCode" #referralCode="ngModel" />
     
                     <button type="button" class="btn input-button" 

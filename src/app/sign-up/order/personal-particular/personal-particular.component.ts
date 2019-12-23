@@ -139,7 +139,7 @@ export class PersonalParticularComponent implements OnInit {
     var customerDto = new CustomerDto();
     var objStr = localStorage.getItem("customerObj");
     customerDto = JSON.parse(objStr);
-    this.verifiedEmail = this.parent.model.email;
+    // this.verifiedEmail = this.parent.model.email;
     this.token = customerDto.token;
 
     this.service.post_service(ApiServiceServiceService.apiList.sendEmailOtp+"?token="+this.token+"&email="+this.verifiedEmail,null).subscribe((response)=>

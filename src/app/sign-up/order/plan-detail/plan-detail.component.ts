@@ -268,7 +268,7 @@ viewFactSheet(){
     let promocode = this.promoCode[index].referralCode; 
    
     if(this.verifiedPromocodes.length){
-      this.verified=false
+      this.verified=true;
      this.verifiedPromocodes.findIndex(item => item == promocode)
       if(this.verifiedPromocodes.findIndex(item => item == promocode) == -1){
         this.verifyPromocode(index,promocode);
@@ -282,10 +282,7 @@ viewFactSheet(){
     }
   }
 
-
-  
-
-  verifyPromocode(index,promocode){
+ verifyPromocode(index,promocode){
     var customerDto = new CustomerDto();
     this.verifiedPromocodes.push(promocode)
     this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl+"?promoCode="
@@ -305,7 +302,7 @@ viewFactSheet(){
   }
 
   onSubmit(form: NgForm) {
-   if (form.valid) {
+   if (form.valid && this.verifiedPromocodes) {
       this.parent.model.premise.startDate = moment(new Date()).add('days', 8).format(this.config.bootstrap.datePicker.dateInputFormat);
      this.localStorage.setItem(STORAGE_KEYS.IS_SP_ACCOUNT_HOLDER, this.parent.isSPAccountHolder).subscribe();
       const selectedPricingPlan = _.find(this.pricingPlanList, { name: this.parent.model.premise.productName });
@@ -326,11 +323,9 @@ viewFactSheet(){
         customerDto.token = token;
        localStorage.setItem("customerObj",JSON.stringify(customerDto));
         
-      })     
-  
+      })       
       this.parent.saveAndNext();
-      }
-    
+      }    
   }
 
   delayedPopover(pop) {
@@ -359,15 +354,14 @@ viewFactSheet(){
   addPromoCode(){
    this.promoCode.push({referralCode :''})   
    this.promotionMessage = ''; 
+   this.duplicatePromoCode=false;
   }
 
-  delete(i:number){      
-    if(this.verifiedPromocodes){
-        this.verifiedPromocodes.splice(i,1);
+  delete(i:number){    
+    if(this.verified){
+      this.verifiedPromocodes.splice(i,1);
     }
-    else {
-      this.promoCode.splice(i,1)
-    }
+    this.promoCode.splice(i,1)
 
   }
 

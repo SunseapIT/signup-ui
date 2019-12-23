@@ -14,7 +14,10 @@
     
                 <div class="form-group col-md-6">
                     <label class="form-control-label" for="lastName">Last name (as per ID)</label>
-                    <input name="lastName" id="lastName" class="form-control" [class.is-invalid]="lastName.invalid && (lastName.touched || form.submitted)" required [(ngModel)]="parent.model.lastName" #lastName="ngModel" blockCopyPaste/>
+                    <input name="lastName" id="lastName" trim="blur" 
+                    class="form-control" 
+                    [class.is-invalid]="lastName.invalid && (lastName.touched || form.submitted)" 
+                    required [(ngModel)]="parent.model.lastName" #lastName="ngModel" blockCopyPaste/>
     
                     <div *ngIf="lastName.invalid && (lastName.touched || form.submitted)" class="invalid-feedback">
                         <div *ngIf="lastName?.errors.required">
@@ -26,7 +29,7 @@
     
             <div *ngIf="[IdentificationType.EmploymentPass, IdentificationType.WorkPermit] | includes: parent.model.identificationType" class="form-group col-lg-6">
                 <label class="form-control-label" for="identificationExpiryDate">Expiry date</label>
-                <input name="identificationExpiryDate" id="identificationExpiryDate" class="form-control" [placeholder]="config.bootstrap.datePicker.dateInputFormat" [class.is-invalid]="identificationExpiryDate.invalid && (identificationExpiryDate.touched || form.submitted)" [required]="[IdentificationType.EmploymentPass, IdentificationType.WorkPermit] | includes: parent.model.identificationType" readonly bsDatepicker [bsConfig]="config.bootstrap.datePicker" [minDate]="minExpiryDate" #identificationExpiryDateDp="bsDatepicker" [ngModel]="parent.model.identificationExpiryDate" (bsValueChange)="onExpiryDateChange($event)" #identificationExpiryDate="ngModel">
+                <input name="identificationExpiryDate" trim="blur" id="identificationExpiryDate" class="form-control" [placeholder]="config.bootstrap.datePicker.dateInputFormat" [class.is-invalid]="identificationExpiryDate.invalid && (identificationExpiryDate.touched || form.submitted)" [required]="[IdentificationType.EmploymentPass, IdentificationType.WorkPermit] | includes: parent.model.identificationType" readonly bsDatepicker [bsConfig]="config.bootstrap.datePicker" [minDate]="minExpiryDate" #identificationExpiryDateDp="bsDatepicker" [ngModel]="parent.model.identificationExpiryDate" (bsValueChange)="onExpiryDateChange($event)" #identificationExpiryDate="ngModel">
                 <span class="input-icon" (click)="identificationExpiryDateDp.toggle()"><i class="far fa-calendar"></i></span>
     
                 <div *ngIf="identificationExpiryDate.invalid && (identificationExpiryDate.touched || form.submitted)" class="invalid-feedback">
@@ -39,8 +42,10 @@
             <div class="row">
                 <div class="form-group col-md-6 col-sm-12">
                     <label class="form-control-label" for="email">Email Address</label>
-                    <input name="email" id="email" class="form-control text-lowercase" [class.is-valid]="isEmailVerified() && parent.model.email" [class.is-invalid]="!isEmailVerified() && (email.touched || form.submitted)" [pattern]="config.validationRegex.email" [(ngModel)]="parent.model.email" required #email="ngModel" blockCopyPaste />
-                    <button type="button" class="btn input-button" [disabled]="isEmailVerified() || !parent.model.email || email.invalid" (click)="requestEmailOTP(true)"><span>Verify</span></button>
+                    <input name="email" id="email" trim="blur" class="form-control text-lowercase" 
+                    [class.is-valid]="isEmailVerified() && parent.model.email" [class.is-invalid]="!isEmailVerified() && (email.touched || form.submitted)" [pattern]="config.validationRegex.email" [(ngModel)]="parent.model.email" required #email="ngModel" blockCopyPaste />
+                    <button type="button" class="btn input-button"
+                     [disabled]="isEmailVerified() || !parent.model.email || email.invalid" (click)="requestEmailOTP(true)"><span>Verify</span></button>
     
                     <div *ngIf="email.invalid && (email.touched || form.submitted)" class="invalid-feedback">
                         <div *ngIf="email?.errors.required">
@@ -53,7 +58,7 @@
                 </div>
     
                 <div class="form-group col-md-6 col-sm-12">
-                    <label class="form-control-label" for="mobileNo">Mobile number</label>
+                    <label class="form-control-label" trim="blur" for="mobileNo">Mobile number</label>
                     <input name="mobileNo" id="mobileNo" class="form-control" [class.is-valid]="isMobileNoVerified() && parent.model.mobileNo" [class.is-invalid]="!isMobileNoVerified() && (mobileNo.touched || form.submitted)" [(ngModel)]="parent.model.mobileNo" #mobileNo="ngModel" pattern="^(8|9)\d{7}$" maxlength="8" blockCopyPaste numbersOnly />
                     <button type="button" class="btn input-button" [disabled]="isMobileNoVerified() || !parent.model.mobileNo || mobileNo.invalid" (click)="requestOTP()"><span>Verify</span></button>
     

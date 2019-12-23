@@ -52,6 +52,7 @@
                                     height="25px" [ngClass]="arrowPlan?'arrowright':'down'">&nbsp; Plan Details </a>
                         </div>
                     </div>
+                    {{selectedPricingPlan}}
                     <div class="collapse show mt-3" id="planDetail">
                         <div class="form-content-approve content-plan-detail">
                             <div class="row">
@@ -147,7 +148,7 @@
                                 <div class="col-lg-4 col-sm-6">Full name:</div>
                                 <div class="col-lg-8 col-sm-5 font-weight-bold">
                                     <div class="card-text-right p-0">
-                                        {{fullName}}&nbsp;{{lastName}}
+                                        {{fullName}}
                                     </div>
                                 </div>
                             </div>
@@ -350,6 +351,7 @@
                                 <div class="col-lg-7 col-sm-6 font-weight-bold">
                                     <div class="card-text-right p-0">
 
+                                        {{selectedPlanType.energy}}
                                     </div>
                                 </div>
 
@@ -358,17 +360,26 @@
                                 <div class="col-lg-4 col-sm-6">Discount:</div>
                                 <div class="col-lg-7 col-sm-6 font-weight-bold">
                                     <div class="card-text-right p-0">
-
-
+                                        {{selectedPlanType.discount}}
+                                        
                                     </div>
                                 </div>
 
                             </div>
                             <div class="row mt-2">
-                                <div class="col-lg-4 col-sm-6">Rate:</div>
+                                <div class="col-lg-4 col-sm-6">Rate, Before GST:</div>
                                 <div class="col-lg-7 col-sm-6 font-weight-bold">
                                     <div class="card-text-right p-0" (click)="getCustomerFile(authorization_fileName)">
+                                        {{selectedPlanType.rate}}
+                                    </div>
+                                </div>
 
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-lg-4 col-sm-6">Rate, After GST:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0" (click)="getCustomerFile(authorization_fileName)">
+                                        {{selectedPlanType.afterGst}}
                                     </div>
                                 </div>
 
@@ -377,7 +388,7 @@
                                 <div class="col-lg-4 col-sm-6">Price Plan Rate Change: will change:</div>
                                 <div class="col-lg-7 col-sm-6 font-weight-bold">
                                     <div class="card-text-right p-0" (click)="getCustomerFile(authorization_fileName)">
-
+                                        {{selectedPlanType.rateChange}}
                                     </div>
                                 </div>
                             </div>

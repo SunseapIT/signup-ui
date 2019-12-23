@@ -1,3 +1,4 @@
+import { Plandto } from './sign-up/admin/dto/plan-dto';
 import { environment } from '@env/base';
 
 import { map } from 'rxjs/operators';
@@ -119,7 +120,9 @@ get_service(url) {
     localStorageVariable = localStorage.getItem('Authorization');
     }
     let headerJson = {
+
     // 'Content-Type': 'application/json',
+    // 'Content-Type': 'multipart/form-data',
     'Authorization': localStorageVariable
 
     };

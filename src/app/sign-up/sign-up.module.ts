@@ -12,7 +12,7 @@ import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 import { environment } from '@env/environment';
 import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
-
+import { InputTrimModule } from 'ng2-trim-directive';
 import { SignUpRoutingModule } from './sign-up-routing.module';
 import { ORDER_COMPONENTS } from './order';
 import { SignUpComponent } from './sign-up.component';
@@ -45,6 +45,7 @@ import { PaginationModule } from 'ngx-pagination-bootstrap';
       preventDuplicates: true,
     }),
     PdfViewerModule,  
+    InputTrimModule,
 
   ],
   declarations: [

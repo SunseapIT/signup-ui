@@ -62,6 +62,7 @@ export class ApproveComponent implements OnInit {
   arrow:boolean;
   validLocations = {};
   pickedLocation: string = null;
+  selectedPlanIndex:number;
 
   spFlag:boolean;
   isPlanFlag:boolean;
@@ -76,6 +77,7 @@ export class ApproveComponent implements OnInit {
   promocodeStatus = false;
   customerDto = new CustomerDto();
   selectedPricingPlan:string;
+  selectedPricingPlanId:number;
   fullName:string;
   lastName:string;
   emailAddress:string;
@@ -137,6 +139,7 @@ export class ApproveComponent implements OnInit {
       if (this.dwellingType) {
         this.onSelectDwellingType(this.parent.model.premise.dwellingType);
       }
+    
     
   }
 
@@ -393,6 +396,25 @@ verifyPromocode(promocode){
      
     }
   })
+}
+
+get selectedPlanType(){
+  let planObject ;
+  console.log(this.selectedPricingPlan);
+  console.log(this.planList);
+  
+  if(this.selectedPricingPlan!=null &&this.planList!=null){
+    for (let index = 0; index < this.planList.length; index++) {
+      const element = this.planList[index];
+      if(element.planName == this.selectedPricingPlan){
+        this.selectedPlanIndex = index;
+        planObject = element;
+        break;
+      }
+      
+    }
+  }
+  return planObject;
 }
 
 

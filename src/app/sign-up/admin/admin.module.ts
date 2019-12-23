@@ -24,7 +24,6 @@ import { SuccessfullSignupComponent } from './audit/successfull-signup/successfu
 import { AbandonedSignupComponent } from './audit/abandoned-signup/abandoned-signup.component';
 import { DOTS_LOADER_COMPONENTS } from '../loader';
 import { ApproveComponent } from './approve/approve.component';
-import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import { ORDER_COMPONENTS } from '../order';
 import { SharedModule } from '@app/shared';
 import { DatepickerModule, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
@@ -45,7 +44,6 @@ import { DatepickerModule, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     OwlNativeDateTimeModule,
     NgxPaginationModule,
     SharedModule,
-    NgxDatatableModule,
     BsDatepickerModule.forRoot(),
     DatepickerModule.forRoot() ,
     PaginationModule.forRoot(),
@@ -61,13 +59,12 @@ import { DatepickerModule, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
      AbandonedSignupComponent,
      DOTS_LOADER_COMPONENTS,
      ApproveComponent
-    ],
-
-    
+    ],    
     providers: [
       AuthguardGuard,
       DatePipe,
       ORDER_COMPONENTS
       ]
 })
+
 export class AdminModule { }

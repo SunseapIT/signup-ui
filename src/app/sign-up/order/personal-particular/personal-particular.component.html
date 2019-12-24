@@ -43,9 +43,9 @@
                 <div class="form-group col-md-6 col-sm-12">
                     <label class="form-control-label" for="email">Email Address</label>
                     <input name="email" id="email" trim="blur" class="form-control text-lowercase" 
-                    [class.is-valid]="isEmailVerified() && parent.model.email" [class.is-invalid]="!isEmailVerified() && (email.touched || form.submitted)" [pattern]="config.validationRegex.email" [(ngModel)]="parent.model.email" required #email="ngModel" blockCopyPaste />
+                    [class.is-valid]="isOtpValidated && parent.model.email" [class.is-invalid]="!isOtpValidated && (email.touched || form.submitted)" [pattern]="config.validationRegex.email" [(ngModel)]="parent.model.email" required #email="ngModel" blockCopyPaste />
                     <button type="button" class="btn input-button"
-                     [disabled]="isEmailVerified() || !parent.model.email || email.invalid" (click)="requestEmailOTP(true)"><span>Verify</span></button>
+                     [disabled]="isOtpValidated || !parent.model.email || email.invalid" (click)="requestEmailOTP(true)"><span>Verify</span></button>
     
                     <div *ngIf="email.invalid && (email.touched || form.submitted)" class="invalid-feedback">
                         <div *ngIf="email?.errors.required">

@@ -108,7 +108,7 @@ export class PersonalParticularComponent implements OnInit {
   }
 
   onSubmit(form : NgForm) {
-   if (form.valid && this.isMobileNoVerified() && this.isEmailVerified()) {
+   if (form.valid && this.isMobileNoVerified() && this.isOtpValidated) {
       if (!_.includes([IdentificationType.EmploymentPass, IdentificationType.WorkPermit], this.parent.model.identificationType)) {
         this.parent.model.identificationExpiryDate = '';
       }
@@ -139,7 +139,7 @@ export class PersonalParticularComponent implements OnInit {
     var customerDto = new CustomerDto();
     var objStr = localStorage.getItem("customerObj");
     customerDto = JSON.parse(objStr);
-    // this.verifiedEmail = this.parent.model.email;
+    this.verifiedEmail = this.parent.model.email;
     this.token = customerDto.token;
 
     this.service.post_service(ApiServiceServiceService.apiList.sendEmailOtp+"?token="+this.token+"&email="+this.verifiedEmail,null).subscribe((response)=>
@@ -157,6 +157,7 @@ export class PersonalParticularComponent implements OnInit {
 
   }
 
+  isOtpValidated:boolean = false;
   validateEmailOTPModal(){
     var customerDto = new CustomerDto();
     var objStr = localStorage.getItem("customerObj");
@@ -168,6 +169,7 @@ export class PersonalParticularComponent implements OnInit {
     {
     var responseData = response;
     if(responseData['statusCode']==200){
+      this.isOtpValidated = true;
     $("#emailOTP").modal('hide');
     this.toster.success('', 'Email is verified successfully.',{
     timeOut : 3000
@@ -175,6 +177,7 @@ export class PersonalParticularComponent implements OnInit {
     }   
     else 
     {
+      this.isOtpValidated = false;
     this.toster.error('', 'You have entered an invalid OTP.',{
     timeOut : 3000
     });

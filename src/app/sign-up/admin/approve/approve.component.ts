@@ -312,7 +312,7 @@ getCustomerFile(name){
 }
 
 onSubmit(form:NgForm){
-   // this.isLoader=true;  
+   this.isLoader=true;  
    if(form.valid){
   var customerDto = new CustomerDto(); 
   customerDto.customerId = this.customerId ;
@@ -336,6 +336,30 @@ onSubmit(form:NgForm){
   customerDto.approvedTime = this.getTimeStamp(this.approvalDate);
   console.log('data for approval', customerDto);  
   this.service.post_service(ApiServiceServiceService.apiList.approveCustomerUrl, customerDto).subscribe((response)=>{
+
+    var responseData  = response;     
+    this.isLoader=false;
+      let statusCode = responseData['statusCode']
+      if(statusCode == 200){
+      this.isLoader=false;
+      this.toastr.success('','Customer approved successfully.', {
+        timeOut : 2000
+      }) 
+      $('#customer').modal('hide');
+      this.getCustomerForApproval();
+    }
+    else if(statusCode == 400){
+      this.isLoader = false; 
+      this.toastr.error('','Customer SP Account already exists.', {
+        timeOut : 2000
+      }) 
+      $('#customer').modal('hide');
+      this.getCustomerForApproval();
+    }
+  
+  
+  
+
    
 })
    }

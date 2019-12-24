@@ -17,7 +17,7 @@
                     <th>Status</th>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let customerList of approvalData | grdFilter: {fullName: searchTextSuccess, eamilAddress:searchTextSuccess};
+                    <tr *ngFor="let customerList of approvalData | grdFilter: {fullName: searchTextSuccess, spAccountNumber:searchTextSuccess};
                              let i=index;" (click)="editCustomer(customerList)">
                         <td>{{customerList.fullName}}</td>
                         <td>{{customerList.spAccountNumber}}</td>
@@ -52,7 +52,7 @@
                                     height="25px" [ngClass]="arrowPlan?'arrowright':'down'">&nbsp; Plan Details </a>
                         </div>
                     </div>
-                    {{selectedPricingPlan}}
+                
                     <div class="collapse show mt-3" id="planDetail">
                         <div class="form-content-approve content-plan-detail">
                             <div class="row">
@@ -338,19 +338,11 @@
                     </div>
                     <div class="collapse show mt-3" id="plan-type">
                         <div class="form-content-approve content-plan-detail">
-                            <div class="row mt-2">
-                                <div class="col-lg-4 col-sm-6">Approve:</div>
-                                <div class="col-lg-7 col-sm-6 font-weight-bold">
-                                    <div class="card-text-right p-0">
-                                        <!-- data -->
-                                    </div>
-                                </div>
-                            </div>
+                      
                             <div class="row mt-2">
                                 <div class="col-lg-4 col-sm-6">Clean Energy:</div>
                                 <div class="col-lg-7 col-sm-6 font-weight-bold">
                                     <div class="card-text-right p-0">
-
                                         {{selectedPlanType.energy}}
                                     </div>
                                 </div>
@@ -367,7 +359,7 @@
 
                             </div>
                             <div class="row mt-2">
-                                <div class="col-lg-4 col-sm-6">Rate, Before GST:</div>
+                                <div class="col-lg-4 col-sm-6">Rate (Before GST):</div>
                                 <div class="col-lg-7 col-sm-6 font-weight-bold">
                                     <div class="card-text-right p-0" (click)="getCustomerFile(authorization_fileName)">
                                         {{selectedPlanType.rate}}
@@ -376,7 +368,7 @@
 
                             </div>
                             <div class="row mt-2">
-                                <div class="col-lg-4 col-sm-6">Rate, After GST:</div>
+                                <div class="col-lg-4 col-sm-6">Rate (After GST):</div>
                                 <div class="col-lg-7 col-sm-6 font-weight-bold">
                                     <div class="card-text-right p-0" (click)="getCustomerFile(authorization_fileName)">
                                         {{selectedPlanType.afterGst}}

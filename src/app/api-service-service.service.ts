@@ -26,6 +26,7 @@ export class ApiServiceServiceService {
     removePlansUrl:environment.baseUrl+"/api/v1/admin/removePlan",
     encodeFileUrl : environment.baseUrl+"/api/v1/admin/encodedFile",
     messageUrl : environment.baseUrl+"/api/v1/admin/addNote",
+    searchCustomersUrl : environment.baseUrl+"/api/v1/admin/searchCustomers",
    
 
     //CUSTOMER    

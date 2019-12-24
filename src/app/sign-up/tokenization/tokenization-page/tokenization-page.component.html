@@ -26,13 +26,18 @@
                         <div class="row mt-3">
                             <div class="col-md-12 col-lg-8 col-sm-12 pr-0 form-group">
                                 <label for="cardNumber" class="card-font"><strong>Card Number</strong><span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="cardNumber" id="cardNumber" [class.is-invalid]="cardNumber.invalid && (cardNumber.touched || form.submitted)" pattern="^(4|5)\d{15}$" [(ngModel)]="modal.cardNumber" #cardNumber="ngModel" required maxlength="16" blockCopyPaste numbersOnly />
+                                <input type="text" class="form-control" name="cardNumber" id="cardNumber" 
+                                [class.is-invalid]="cardNumber.invalid && (cardNumber.touched || form.submitted)" 
+                                pattern="^(4|5|2)\d{15}$" 
+                                [(ngModel)]="modal.cardNumber" 
+                                #cardNumber="ngModel" required maxlength="16" 
+                                blockCopyPaste numbersOnly />
                                 <div *ngIf="cardNumber.invalid && (cardNumber.touched || form.submitted)" class="invalid-feedback">
                                             <div *ngIf="cardNumber.errors.required">
                                                 <i>Card number is required</i>
                                             </div>
                                         </div>
-                                <div *ngIf="cardNumber?.errors.pattern" class="invalid-feedback"><i>Enter valid card number</i></div>
+                                <div *ngIf="cardNumber.errors?.pattern" class="invalid-feedback"><i>Enter valid card number</i></div>
                             </div>
                         </div>
                         <div class="row mt-1 mb-3">

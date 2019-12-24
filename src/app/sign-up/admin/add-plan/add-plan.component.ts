@@ -74,10 +74,11 @@ export class AddPlanComponent {
     sendlbeFormData.append("planDto",JSON.stringify(plandto));
   this.service.multiPartPost_service(ApiServiceServiceService.apiList.addPlanUrl,sendlbeFormData).subscribe
   (response=>{
-    this.isLoader=false;
+   
     let responseData = response;
     let statusCode = responseData['statusCode']
     if(statusCode == 200){
+      this.isLoader=false;
 
          this.router.navigateByUrl('/admin-login/admin-dash/view-plan')
          this.toastr.success('', 'Plan added successfully', {
@@ -85,6 +86,7 @@ export class AddPlanComponent {
           });
         }
         else if(statusCode == 500 || statusCode == 400){
+          this.isLoader=false;
        
           this.toastr.error('',responseData['message'], {
             timeOut : 3000
@@ -142,7 +144,7 @@ deleteMessage(){
   this.msgModal.message="";
   this.message = this.msgModal.message;
   this.service.get_service(ApiServiceServiceService.apiList.messageUrl+"?message="+(btoa(this.message))).subscribe((response)=>{
-    this.toastr.error('', 'Message deleted successfully.',{
+    this.toastr.success('', 'Message deleted successfully.',{
       timeOut: 2000
     })
   })

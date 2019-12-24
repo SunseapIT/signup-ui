@@ -63,6 +63,14 @@ export class SuccessfullSignupComponent implements OnInit {
     })
  }
 
+ searchCustomer(name){
+
+  this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl="?fullName.contains="+name).subscribe((response)=>{
+    console.log('response search', response);
+    
+  })
+ }
+
   clearValue(){
     this.page = 0;
     this.dateTimeRange = [];

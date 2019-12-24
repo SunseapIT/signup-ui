@@ -90,9 +90,7 @@
                 disabled required                
                 #letterOfAuthorisationError="ngModel">
                 <div class="upload-btn-remove">
-                  <!-- <div *ngIf="letterOfAuthorisationUploaded" class="d-inline">
-                    <button type="button" class="btn" (click)="removeFile($event,3)"><i class="fa fa-times mr-2" aria-hidden="true"></i></button>
-                  </div> -->
+              
                 </div>
                 
                 <div class="upload-btn-wrapper">
@@ -104,10 +102,7 @@
                 <div class="text-secondary"><small><i>Please upload PDF format only. </i></small>             
               
                 </div>              
-<!-- 
-                <div class="text-secondary mr-2 font-italic mt-1">
-                  <small>  Please make sure that the SP account holder has given you the authorisation via this form.</small>
-                </div> -->
+
                   <ng-container class="valid-feedback mt-2" *ngIf="authorization">
                     <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
                 </ng-container>
@@ -116,14 +111,12 @@
               <div class="form-row">
               <div class="form-group col-lg-12 ">
                 <label class="form-control-label d-none d-lg-block">&nbsp;</label>
-                <div class="text-secondary"><small><i>Please upload PDF format only.  Please make sure that the SP 
+                <div class="text-secondary"><small><i>Please make sure that the SP 
                     account holder has given you the authorisation via this form.</i></small> 
                  
                   </div>     
               
-                <!-- <a href="/assets/sign-up/download/Authorisation_Letter.pdf" includeVersion download>
-                  <p><i>DOWNLOAD FORM</i></p>
-                </a> -->
+             
               </div>
               <div class="form-row">
               <div class="col-lg-12 ">

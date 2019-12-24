@@ -76,9 +76,10 @@ export class TokenizationPageComponent implements OnInit {
       paymentDto.sourceType = "CARD"
       this.service.post_service(ApiServiceServiceService.apiList.addCardDetailUrl+"?sp_account_no="+spAccountNumber, paymentDto).
       subscribe((response)=>{
-        this.isCardAdded=true;
+      
         var responseData  = response;   
         if(responseData['statusCode']==201){
+          this.isCardAdded=true;
           localStorage.removeItem("customerObj")
           localStorage.removeItem("Token")
           this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
@@ -104,7 +105,7 @@ export class TokenizationPageComponent implements OnInit {
     if(this.expYear == this.modal.expYear){
       if(this.monthIndex > -1 && this.monthIndex < this.expMonth){
         this.modal.expMonth = "";
-        this.toster.error('','Card is not valid 1', {
+        this.toster.error('','This card has been expired.', {
           timeOut : 3000
         })
 
@@ -112,7 +113,7 @@ export class TokenizationPageComponent implements OnInit {
       }
       if((this.modal.expMonth > this.expMonth) && (this.months.length <= (this.expMonth +3))){
         this.modal.expMonth = "";
-        this.toster.error('','Card is not valid 2', {
+        this.toster.error('','This card has been expired.', {
           timeOut : 3000
         })
       }
@@ -120,13 +121,14 @@ export class TokenizationPageComponent implements OnInit {
       if((this.expYear+1) == this.modal.expYear){
         if(this.monthIndex < 3){
           this.modal.expMonth = "";
-          this.toster.error('','Card is not valid 3', {
+          this.toster.error('','This card is invalid.', {
             timeOut : 3000
           })
         }
       }
     }
   }
+  
   cancel(){
     $('#cancel').modal('show');    
   }

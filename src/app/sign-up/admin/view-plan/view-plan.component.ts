@@ -61,7 +61,7 @@ export class ViewPlanComponent implements OnInit {
       var findIndex = this.planList.findIndex(plan =>plan.id === planBean.id);
       this.planList.splice(findIndex,1);
 
-      this.toastr.error('', 'Plan has been successfully removed.', {
+      this.toastr.success('', 'Plan has been successfully removed.', {
         timeOut: 2000
       }); 
 

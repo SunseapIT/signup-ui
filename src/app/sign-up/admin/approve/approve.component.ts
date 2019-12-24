@@ -101,6 +101,11 @@ export class ApproveComponent implements OnInit {
   postalCode:any;
   verifiedPromocodes = [];
   duplicatePromoCode:boolean;
+   arrowPlan:boolean;
+ arrowPersonal:boolean;
+ arrowAddress:boolean;
+ arrowUpload:boolean;
+ arrowPlanType:boolean;
 
    approvalDate:Date;
 
@@ -108,7 +113,7 @@ export class ApproveComponent implements OnInit {
 
   warningMessage = '';
    size = 10;
-   page:number = 1;
+   page:number = 0;
   customerId: any;
   myDateValue: Date;
  
@@ -138,18 +143,19 @@ export class ApproveComponent implements OnInit {
       .subscribe(newServiceAddress => newServiceAddress && (this.newServiceAddress = newServiceAddress));
       if (this.dwellingType) {
         this.onSelectDwellingType(this.parent.model.premise.dwellingType);
-      }
-    
-    
+      }  
   }
 
 
   getCustomerForApproval(){
     this.isLoader=true;
-    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl+"?size="+this.size+'&page='+(this.page-1)).subscribe((responseData:any)=>{
+    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl
+      +"?size="+this.size+'&page='+this.page).subscribe((responseData:any)=>{
      this.isLoader=false;
       var resultObject = responseData['data'];
       this.totalItems = resultObject.totalElements;
+     
+      
       var resultObject1 = resultObject['content'];
       this.approvalData = resultObject1;              
     })
@@ -218,11 +224,7 @@ export class ApproveComponent implements OnInit {
 }
  }
 
- arrowPlan:boolean;
- arrowPersonal:boolean;
- arrowAddress:boolean;
- arrowUpload:boolean;
- arrowPlanType:boolean;
+
 
  arrowChange(i){
   if(i == 1){

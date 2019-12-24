@@ -2,7 +2,7 @@
     <app-dots-loader *ngIf="isLoader"></app-dots-loader>
     <div class="row mb-4 mt-4">
       <div class="col-lg-4 text-left">
-          <input type="text" class="form-control searchbar" placeholder="Search..." [(ngModel)]="searchTextSuccess">
+          <input type="text" class="form-control searchbar" placeholder="Search..." (keyup)="searchCustomer($event)">
       </div>
       <div class="col-lg-5  p-0  text-right ">
           <input placeholder="Select a range..." 
@@ -35,7 +35,7 @@
                   <th>Final Timestamp</th>
               </thead>
               <tbody>
-                  <tr *ngFor="let customerList of successData | grdFilter: {fullName: searchTextSuccess, eamilAddress:searchTextSuccess}; let i=index;">
+                  <tr *ngFor="let customerList of successData ; let i=index;">
                       <td>{{customerList.fullName}}</td>
                       <td>{{customerList.eamilAddress}}</td>
                       <td>{{customerList.sighnUpStarTimeStamp}}</td>

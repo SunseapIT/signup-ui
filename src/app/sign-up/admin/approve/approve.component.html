@@ -21,7 +21,8 @@
                              let i=index;" (click)="editCustomer(customerList)">
                         <td>{{customerList.fullName}}</td>
                         <td>{{customerList.spAccountNumber}}</td>
-                        <td>{{customerList.houseNumber}} &nbsp; {{customerList.levelUnit}} &nbsp;
+                        <td>{{customerList.houseNumber}} &nbsp; {{customerList.level}} &nbsp;
+                            {{customerList.unitNo}} &nbsp;
                             {{customerList.buildingName}} &nbsp; {{customerList.streetName}} &nbsp;
                             {{customerList.servicePostalCode}}
                         </td>
@@ -51,8 +52,7 @@
                                 <img id="close" src="/assets/sign-up/images/icons/angle-down.png" width="25px"
                                     height="25px" [ngClass]="arrowPlan?'arrowright':'down'">&nbsp; Plan Details </a>
                         </div>
-                    </div>
-                
+                    </div>                
                     <div class="collapse show mt-3" id="planDetail">
                         <div class="form-content-approve content-plan-detail">
                             <div class="row">
@@ -238,7 +238,7 @@
                                         <div *ngIf="!isPostalFlag" class="input-group">
                                             {{unitNo}}
                                         </div>
-                                        <input name="level" *ngIf="isPostalFlag" class="form-control"
+                                        <input name="unitNo" *ngIf="isPostalFlag" class="form-control"
                                             [(ngModel)]="unitNo" #unitNoRef="ngModel" />
                                     </div>
                                 </div>
@@ -356,7 +356,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mt-3">
                                 <div class="col-lg-4 col-sm-6">Rate (Before GST):</div>
                                 <div class="col-lg-7 col-sm-6 font-weight-bold">
                                     <div class="card-text-right p-0">
@@ -364,7 +364,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mt-3">
                                 <div class="col-lg-4 col-sm-6">Rate (After GST):</div>
                                 <div class="col-lg-7 col-sm-6 font-weight-bold">
                                     <div class="card-text-right p-0">
@@ -372,16 +372,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-4 col-sm-6">Price Plan Rate Change: will change:</div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">Price Plan Rate Change will change:</div>
                                 <div class="col-lg-7 col-sm-6 font-weight-bold">
                                     <div class="card-text-right p-0">
                                         {{planType.rateChange}}
                                     </div>
                                 </div>
-                            </div>
-                      
-                       
+                            </div>                 
                         </div>
                     </div>
                     <div class="row mt-5">
@@ -389,7 +387,6 @@
                             <a class="lc-title text-decoration-none ml-4" aria-expanded="false" aria-controls="family">
                                 &nbsp; Final Approval Date
                             </a>
-
                             <div class="col-xs-12 col-md-6 form-group ml-3">&nbsp;
                                 <input type="text" class="form-control"
                                     [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY ', containerClass: 'theme-red' }"
@@ -397,7 +394,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row  mt-5 mb-5">
                         <div class="col-md-12 col-sm-12">
                             <button class="btn step-next mx-auto">

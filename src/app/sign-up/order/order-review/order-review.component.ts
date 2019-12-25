@@ -218,6 +218,7 @@ export class OrderReviewComponent implements OnInit {
     this.servicePostalCode= this.customerDto.postelCode;
     this.dwellingType = this.customerDto.dwelingType;
     this.serviceNo= this.customerDto.spAccountNumber;
+    
   }
 
   onSubmit(form:NgForm) {

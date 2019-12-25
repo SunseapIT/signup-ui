@@ -348,6 +348,7 @@ onSubmit(form:NgForm){
         timeOut : 2000
       }) 
       $('#customer').modal('hide');
+      this.getCustomerForApproval();
       
     }
     else if(statusCode == 400){

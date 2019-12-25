@@ -361,14 +361,12 @@ viewFactSheet(){
     if(this.verified){
       this.verifiedPromocodes.splice(i,1);
     }
-    this.promoCode.splice(i,1)
-
+    this.promoCode.splice(i,1);
   }
 
   getAdminMessage(){
     this.service.get_service(ApiServiceServiceService.apiList.getMessageUrl).subscribe((response)=>{
-      this.adminMessage=response['data']
-      
+      this.adminMessage=response['data'];      
     })    
   }
 }

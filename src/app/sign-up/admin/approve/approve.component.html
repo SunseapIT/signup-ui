@@ -1,11 +1,11 @@
 <!-- <div class="container"> -->
 <app-dots-loader *ngIf="isLoader"></app-dots-loader>
-<div class="row col-md-12 mb-4 mt-4">
+<div class="row col-md-12 mb-2 mt-2">
     <div class="col-lg-4 text-left">
         <input type="text" class="form-control searchbar" placeholder="Search..." [(ngModel)]="searchTextSuccess">
     </div>
 </div>
-<div class="row m-0">
+<div class="row m-0 pl-0 pr-0">
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="table-responsive">
             <table class="table table-striped">
@@ -65,7 +65,9 @@
                                         <select name="productName" *ngIf="isPlanFlag" id="productName"
                                             class="form-control"
                                             [class.is-invalid]="productName.invalid && (productName.touched || form.submitted)"
-                                            required [(ngModel)]="selectedPricingPlan" #productName="ngModel">
+                                            required [(ngModel)]="selectedPricingPlan" 
+                                            (change)="selectPlans($event)"
+                                            #productName="ngModel">
                                             <option value='' ng-selected="selected" disabled>Select your plan</option>
                                             <option *ngFor="let item of planList" [value]="item.planName">
                                                 {{ item.planName }}
@@ -318,7 +320,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mt-2">
+                            <div class="row mt-3">
                                 <div class="col-lg-4 col-sm-6">Letter of Authorisation:</div>
                                 <div class="col-lg-7 col-sm-6 font-weight-bold">
                                     <div class="card-text-right p-0" (click)="getCustomerFile(authorization_fileName)">
@@ -338,7 +340,46 @@
                     </div>
                     <div class="collapse show mt-3" id="plan-type">
                         <div class="form-content-approve content-plan-detail">
-                      
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-6">Clean Energy:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        {{planType.energy}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">Discount:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        {{planType.discount}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-6">Rate (Before GST):</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        {{planType.rate}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-6">Rate (After GST):</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        {{planType.afterGst}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-6">Price Plan Rate Change: will change:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        {{planType.rateChange}}
+                                    </div>
+                                </div>
+                            </div>
                       
                        
                         </div>

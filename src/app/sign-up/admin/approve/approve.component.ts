@@ -116,6 +116,7 @@ export class ApproveComponent implements OnInit {
    page:number = 0;
   customerId: any;
   myDateValue: Date;
+  planType =[];
  
 
   constructor(private service:ApiServiceServiceService,
@@ -150,7 +151,7 @@ export class ApproveComponent implements OnInit {
   getCustomerForApproval(){
     this.isLoader=true;
     this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl
-      +"?size="+this.size+'&page='+this.page).subscribe((responseData:any)=>{
+      +"?size="+this.size+'&page='+(this.page-1)).subscribe((responseData:any)=>{
      this.isLoader=false;
       var resultObject = responseData['data'];
       this.totalItems = resultObject.totalElements;
@@ -249,7 +250,7 @@ getPlans(){
   this.service.get_service(ApiServiceServiceService.apiList.customerViewPlanUrl).subscribe((response)=>{
     var responseData  = response;
     var resultObject = responseData['data'];
-    this.planList = resultObject;   
+    this.planList = resultObject;  
   })
 }
 
@@ -336,9 +337,7 @@ onSubmit(form:NgForm){
   customerDto.files.authorization_data = this.customerDto.files.authorization_data;
   customerDto.files.factSheet_data = this.customerDto.files.factSheet_data;
   customerDto.approvedTime = this.getTimeStamp(this.approvalDate);
-  console.log('data for approval', customerDto);  
   this.service.post_service(ApiServiceServiceService.apiList.approveCustomerUrl, customerDto).subscribe((response)=>{
-
     var responseData  = response;     
     this.isLoader=false;
       let statusCode = responseData['statusCode']
@@ -358,12 +357,7 @@ onSubmit(form:NgForm){
       }) 
       $('#customer').modal('hide');
      
-    }
-  
-  
-  
-
-   
+    }   
 })
    }
 }
@@ -386,10 +380,8 @@ indexTracker(index: number) {
 }
 
 verifyPromotionCode(index) {
-  let promocode = this.promoCode[index].referralCode; 
- 
+  let promocode = this.promoCode[index].referralCode;  
   if(this.verifiedPromocodes.length){
-
    this.verifiedPromocodes.findIndex(item => item == promocode)
     if(this.verifiedPromocodes.findIndex(item => item == promocode) == -1){
       this.verifyPromocode(promocode);
@@ -402,9 +394,6 @@ verifyPromotionCode(index) {
     this.duplicatePromoCode=false;
   }
 }
-
-
-
 
 verifyPromocode(promocode){  
   var customerDto = new CustomerDto();
@@ -425,26 +414,19 @@ verifyPromocode(promocode){
   })
 }
 
-get selectedPlanType(){
-  let planObject ;
-  console.log(this.selectedPricingPlan);
-  console.log(this.planList);
-  
-  if(this.selectedPricingPlan!=null &&this.planList!=null){
+selectPlans(event){
+  let selectedPlan = event.target.value;
+  if(selectedPlan !=null){
     for (let index = 0; index < this.planList.length; index++) {
       const element = this.planList[index];
-      if(element.planName == this.selectedPricingPlan){
+      if(element.planName == selectedPlan){
         this.selectedPlanIndex = index;
-        planObject = element;
+        this.planType = element;       
         break;
-      }
-      
+      }      
     }
   }
-  return planObject;
 }
-
-
 }
 
 

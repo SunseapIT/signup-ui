@@ -212,7 +212,7 @@ export class OrderReviewComponent implements OnInit {
     this.mobileNumber = this.customerDto.mobileNumber;
     this.houseNumber = this.customerDto.houseNo;
     this.level= this.customerDto.level;
-    // this.unitNo = CustomerDto.unitNo;
+    this.unitNo = CustomerDto.unitNo;
     this.streetName= this.customerDto.streetName;
     this.buildingName = this.customerDto.buildingName;
     this.servicePostalCode= this.customerDto.postelCode;

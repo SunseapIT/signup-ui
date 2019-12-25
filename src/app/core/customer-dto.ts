@@ -43,4 +43,6 @@ export class CustomerDto {
    sighnUpStarTimeStamp:string;
 
    sighnUpEndTimeStamp:string;
+
+   static unitNo: string;
 }

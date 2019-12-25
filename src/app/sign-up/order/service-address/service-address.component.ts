@@ -160,7 +160,7 @@ export class ServiceAddressComponent implements OnInit {
       customerDto.houseNo = form.value.houseNo;
       customerDto.streetName = form.value.streetName; 
       customerDto.unitNo = form.value.unitNo;
-      customerDto.level = form.value.lavel;
+      customerDto.level = form.value.level;
       localStorage.setItem("customerObj",JSON.stringify(customerDto))
       var timeStampDto = new TimeStampDto();
       timeStampDto.pageType = "ADDRESS_DETAILS",

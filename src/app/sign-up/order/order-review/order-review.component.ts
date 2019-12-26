@@ -217,24 +217,20 @@ export class OrderReviewComponent implements OnInit {
     this.buildingName = this.customerDto.buildingName;
     this.servicePostalCode= this.customerDto.postelCode;
     this.dwellingType = this.customerDto.dwelingType;
-    this.serviceNo= this.customerDto.spAccountNumber;
-    
-    console.log('this.unitNo',this.unitNo);
-    
-    
+    this.serviceNo= this.customerDto.spAccountNumber;    
   }
 
   onSubmit(form:NgForm) {
     this.isLoader=true;
     if (this.acknowledgePrivacy && this.acknowledgeConsent) {       
-    var customerDto = new CustomerDto();
     var objStr = localStorage.getItem("customerObj");
-    customerDto = JSON.parse(objStr);
-    customerDto.fullName = this.fullName; 
-    customerDto.lastName = this.lastName; 
-    customerDto.spAccountNumber = this.serviceNo;
-    localStorage.setItem("customerObj", JSON.stringify(customerDto));    
-    this.service.post_service(ApiServiceServiceService.apiList.saveCustomerurl,customerDto).subscribe((response)=>{
+    this.customerDto = JSON.parse(objStr);
+    this.customerDto.fullName = this.fullName; 
+    this.customerDto.lastName = this.lastName; 
+    this.customerDto.spAccountNumber = this.serviceNo;    
+
+    localStorage.setItem("customerObj", JSON.stringify(this.customerDto));    
+    this.service.post_service(ApiServiceServiceService.apiList.saveCustomerurl,this.customerDto).subscribe((response)=>{
     var responseData  = response;     
     this.isLoader=false;
       let statusCode = responseData['statusCode']

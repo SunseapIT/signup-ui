@@ -66,7 +66,7 @@
                                             class="form-control"
                                             [class.is-invalid]="productName.invalid && (productName.touched || form.submitted)"
                                             required [(ngModel)]="selectedPricingPlan" 
-                                            (change)="selectPlans($event)"
+                                            (change)="selectPlans($event.target.value)"
                                             #productName="ngModel">
                                             <option value='' ng-selected="selected" disabled>Select your plan</option>
                                             <option *ngFor="let item of planList" [value]="item.planName">

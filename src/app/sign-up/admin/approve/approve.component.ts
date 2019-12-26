@@ -181,6 +181,7 @@ export class ApproveComponent implements OnInit {
 
   
  editCustomer(customerList){
+   //this.selectPlans();
 
   let approved = customerList.approved
   if(approved ==true){
@@ -191,6 +192,8 @@ export class ApproveComponent implements OnInit {
   }
   else {
   this.selectedPricingPlan = customerList.plan;
+  //prepopulate selected value
+  this.selectPlans(this.selectedPricingPlan);
   this.promoCode = customerList.promoCode;
   this.fullName = customerList.fullName;
   this.lastName = customerList.lastName;
@@ -413,8 +416,8 @@ verifyPromocode(promocode){
   })
 }
 
-selectPlans(event){
-  let selectedPlan = event.target.value;
+selectPlans(value){
+  let selectedPlan =value;
   if(selectedPlan !=null){
     for (let index = 0; index < this.planList.length; index++) {
       const element = this.planList[index];

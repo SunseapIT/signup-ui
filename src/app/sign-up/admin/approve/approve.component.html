@@ -406,6 +406,282 @@
     </div>
 </div>
 
+
+<div class="modal right slideInRight" id="approved" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="model-cst modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <form>
+                    <div class="row">
+                        <div class="col-md-12 col-xl-12 p-0">
+                            <a class="lc-title text-decoration-none" data-toggle="collapse" (click)="arrowChange(1)"
+                                href="#planDetail" role="button" aria-expanded="false" aria-controls="family">
+                                <img id="close" src="/assets/sign-up/images/icons/angle-down.png" width="25px"
+                                    height="25px" [ngClass]="arrowPlan?'arrowright':'down'">&nbsp; Plan Details </a>
+                        </div>
+                    </div>                
+                    <div class="collapse show mt-3" id="planDetail">
+                        <div class="form-content-approve content-plan-detail">
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-6">Plan name:</div>
+                                <div class="col-lg-7 col-sm-5 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        <div class="input-group">
+                                            {{selectedPricingPlan}}
+                                        </div>
+                                     
+                                    </div>
+                                </div>
+  
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">SP account No:</div>
+                                <div class="col-lg-7 col-sm-5 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        <div *ngIf="!spFlag" class="input-group">
+                                            {{serviceNo}}
+                                        </div>
+                                    
+
+                                    </div>
+                                </div>
+                              
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">Promotion/Referral Code:</div>
+                                <div class="col-lg-7 col-sm-5 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        {{promoCode}}
+                                    </div>
+                                      </div>
+                                </div>
+                             </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12 col-xl-12">
+                            <a class="lc-title text-decoration-none" data-toggle="collapse" (click)="arrowChange(2)"
+                                href="#personalDetail" role="button" aria-expanded="false" aria-controls="family">
+                                <img id="close" src="/assets/sign-up/images/icons/angle-down.png" width="25px"
+                                    height="25px" [ngClass]="arrowPersonal?'arrowright':'down'">&nbsp; Personal Details
+                            </a>
+                        </div>
+                    </div>
+                    <div class="collapse show mt-3" id="personalDetail">
+                        <div class="form-content-approve content-plan-detail">
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-6">Full name:</div>
+                                <div class="col-lg-8 col-sm-5 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        {{fullName}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">Email:</div>
+                                <div class="col-lg-8 col-sm-5 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        {{emailAddress}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">Mobile:</div>
+                                <div class="col-lg-8 col-sm-5 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        {{mobileNumber}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12 col-xl-12">
+                            <a class="lc-title text-decoration-none" data-toggle="collapse" (click)="arrowChange(3)"
+                                href="#address" role="button" aria-expanded="false" aria-controls="family">
+                                <img id="close" src="/assets/sign-up/images/icons/angle-down.png" width="25px"
+                                    height="25px" [ngClass]="arrowAddress?'arrowright':'down'">&nbsp; Address </a>
+                        </div>
+                    </div>
+                    <div class="collapse show mt-3" id="address">
+                        <div class="form-content-approve content-plan-detail">
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-6">Postal code:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        <div class="input-group">
+                                            {{servicePostalCode}}
+                                        </div>
+                                     
+                                    </div>
+                                </div>
+                            
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">Block/House No.:</div>
+
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        <div  class="input-group">
+                                            {{houseNo}}
+                                        </div>
+                                 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">Level </div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        <div  class="input-group">
+                                            {{level}}
+                                        </div>
+                                     
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">Unit No.:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        <div class="input-group">
+                                            {{unitNo}}
+                                        </div>
+                                
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">Street name:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        <div class="input-group">
+                                            {{streetName}}
+                                        </div>
+                                     
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">Building name:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        <div *ngIf="!isPostalFlag" class="input-group">
+                                            {{buildingName}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">Dwelling type:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div  class="input-group">
+                                        {{dwellingType }}
+                                    </div>
+                                
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12 col-xl-12">
+                            <a class="lc-title text-decoration-none" data-toggle="collapse" (click)="arrowChange(4)"
+                                href="#upload-documents" role="button" aria-expanded="false" aria-controls="family">
+                                <img id="close" src="/assets/sign-up/images/icons/angle-down.png" width="25px"
+                                    height="25px" [ngClass]="arrowUpload?'arrowright':'down'">&nbsp; Uploaded Documents
+                            </a>
+                        </div>
+                    </div>
+                    <div class="collapse show mt-3" id="upload-documents">
+                        <div class="form-content-approve content-plan-detail">
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-6">SP past month bill:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0" (click)="getCustomerFile(bill_fileName)">
+                                        {{bill_fileName}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">New SP account opening letter:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0" (click)="getCustomerFile(opening_letter_fileName)">
+                                        {{opening_letter_fileName}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">Letter of Authorisation:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0" (click)="getCustomerFile(authorization_fileName)">
+                                        {{authorization_fileName}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12 col-xl-12">
+                            <a class="lc-title text-decoration-none" data-toggle="collapse" (click)="arrowChange(5)"
+                                href="#plan-type" role="button" aria-expanded="false" aria-controls="family">
+                                <img id="close" src="/assets/sign-up/images/icons/angle-down.png" width="25px"
+                                    height="25px" [ngClass]="arrowPlanType?'arrowright':'down'">&nbsp; Plan Type </a>
+                        </div>
+                    </div>
+                    <div class="collapse show mt-3" id="plan-type">
+                        <div class="form-content-approve content-plan-detail">
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-6">Clean Energy:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        {{planType.energy}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">Discount:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        {{planType.discount}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">Rate (Before GST):</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        {{planType.rate}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">Rate (After GST):</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        {{planType.afterGst}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-sm-6">Price Plan Rate Change will change:</div>
+                                <div class="col-lg-7 col-sm-6 font-weight-bold">
+                                    <div class="card-text-right p-0">
+                                        {{planType.rateChange}}
+                                    </div>
+                                </div>
+                            </div>                 
+                        </div>
+                    </div>
+           
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <div class="modal fade" id="myModal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">

@@ -107,6 +107,8 @@ export class ApproveComponent implements OnInit {
  arrowUpload:boolean;
  arrowPlanType:boolean;
 
+ approvedCustomerData=[];
+  
    approvalDate:Date;
 
   sighnUpEndTimeStamp:Date;
@@ -135,8 +137,6 @@ export class ApproveComponent implements OnInit {
   ngOnInit() {  
   
     this.approvalStatus = this.customerDto.approved
-    console.log(' this.approvalStatus', this.approvalStatus);
-    
     this.getCustomerForApproval();
     this.getPlans();
     this.postalCode=""
@@ -154,8 +154,7 @@ export class ApproveComponent implements OnInit {
       +"?size="+this.size+'&page='+(this.page-1)).subscribe((responseData:any)=>{
      this.isLoader=false;
       var resultObject = responseData['data'];
-      this.totalItems = resultObject.totalElements;
-      
+      this.totalItems = resultObject.totalElements;   
       var resultObject1 = resultObject['content'];
       this.approvalData = resultObject1;                    
     })
@@ -181,14 +180,10 @@ export class ApproveComponent implements OnInit {
 
   
  editCustomer(customerList){
-   //this.selectPlans();
-
   let approved = customerList.approved
   if(approved ==true){
-    $('#customer').modal('hide');
-    this.toastr.success('', 'Customer already approved.',{
-      timeOut: 2000
-    })
+    $('#approved').modal('show');
+   
   }
   else {
   this.selectedPricingPlan = customerList.plan;
@@ -339,8 +334,9 @@ onSubmit(form:NgForm){
   customerDto.files.authorization_data = this.customerDto.files.authorization_data;
   customerDto.files.factSheet_data = this.customerDto.files.factSheet_data;
   customerDto.approvedTime = this.getTimeStamp(this.approvalDate);
-  this.service.post_service(ApiServiceServiceService.apiList.approveCustomerUrl, customerDto).subscribe((response)=>{
-    var responseData  = response;     
+  this.service.post_service(ApiServiceServiceService.apiList.approveCustomerUrl, customerDto)
+  .subscribe((response)=>{
+    var responseData  = response;  
     this.isLoader=false;
       let statusCode = responseData['statusCode']
       if(statusCode == 200){

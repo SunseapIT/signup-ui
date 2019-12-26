@@ -31,6 +31,7 @@ export class ServiceAddressComponent implements OnInit {
   @ViewChild('pickUpModal') pickUpModal: any;
 
   DWELLING_TYPE_OPTIONS = DWELLING_TYPE_OPTIONS;
+  // DWELLING_TYPE_EVENT_NAMES must be the same position with DWELLING_TYPE_OPTIONS
   DWELLING_TYPE_EVENT_NAMES = [
     ORDER_GA_EVENT_NAMES.SELECT_HDB1,
     ORDER_GA_EVENT_NAMES.SELECT_HDB3,
@@ -118,9 +119,11 @@ export class ServiceAddressComponent implements OnInit {
   }
 
   isPostalCodeValid(code: string): boolean {
+    // Postal codes with the 2 first degits between 01 and 33 and after 1 May 2018 will be allowed
     if (moment().isSameOrAfter('2019-05-01') && _.inRange(+code.substring(0, 2), 1, 84)) {
       return _.inRange(+code.substring(0, 2), 1, 84);
     }
+    // Postal codes with the 2 first digits between 58 and 78 will be allowed
     return _.inRange(+code.substring(0, 2), 34, 84);
   }
 
@@ -148,8 +151,6 @@ export class ServiceAddressComponent implements OnInit {
         addressDto.houseNo = form.value.houseNo;
         addressDto.postalCode = form.value.servicePostalCode;
         addressDto.streetName = form.value.streetName;
-        addressDto.unitNo = form.value.unitNo;
-        addressDto.level = form.value.level
         
      var customerDto = new CustomerDto();
       var objStr = localStorage.getItem("customerObj");

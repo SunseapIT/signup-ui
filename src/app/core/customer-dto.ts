@@ -14,8 +14,6 @@ export class CustomerDto {
 
    plan:string;
     
-   postelCode:string;
-    
    fullName:string;
    
    lastName:string;
@@ -27,6 +25,8 @@ export class CustomerDto {
    spAccountNumber:string;
     
    promoCode : Array<string>; 
+   
+   postelCode:string;    
     
    buildingName:string;
     

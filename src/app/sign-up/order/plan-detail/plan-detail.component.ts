@@ -284,13 +284,14 @@ viewFactSheet(){
 
  verifyPromocode(index,promocode){
     var customerDto = new CustomerDto();
-    this.verifiedPromocodes.push(promocode)
+ 
     this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl+"?promoCode="
     +promocode,customerDto).subscribe((response: any) => {
-      var responseData = response;
+     var responseData = response;
       if(responseData['statusCode']==200){
         this.promocodeStatus = true;
         this.promotionMessage = response.data;
+        this.verifiedPromocodes.push(promocode)
         this.verified=true;
       }
       else{
@@ -360,8 +361,10 @@ viewFactSheet(){
   delete(i:number){    
     if(this.verified){
       this.verifiedPromocodes.splice(i,1);
+      this.duplicatePromoCode=false;
     }
     this.promoCode.splice(i,1);
+    this.duplicatePromoCode=false;
   }
 
   getAdminMessage(){
@@ -370,3 +373,4 @@ viewFactSheet(){
     })    
   }
 }
+

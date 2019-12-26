@@ -6,6 +6,7 @@ export const environment = {
   apiUrl: '',
   reCaptchaSiteKey: '',
   baseUrl: "http://18.139.224.201:8085"
-  // baseUrl :"http://67639891.ngrok.io"
+  // baseUrl :"http://e8b83f6e.ngrok.io"
+  
  
 };

@@ -65,7 +65,7 @@
                     </button>
                 </div>
                 <button type="button" class="btn btn-add" (click)="addPromoCode()"><b>Add more</b></button>
-                <div *ngIf="duplicatePromoCode" class="text-danger"><i>Promo/ Referral code already exists.</i></div>
+                <div *ngIf="duplicatePromoCode" class="text-danger"><i>Promo/ Referral code already exists.</i></div>{{duplicatePromoCode}}
                 <div *ngIf="promotionMessage != ''" [ngClass]="{'green-text':promocodeStatus,'red-text':!promocodeStatus}"><i>{{promotionMessage}}</i></div>
                
             </div>

@@ -34,7 +34,6 @@ export class ApiServiceServiceService {
     saveCustomerurl:environment.baseUrl+"/api/v1/customer/saveCustomer",
     verifyPromoUrl:environment.baseUrl+"/api/v1/customer/verifyPromoCode",
     verifyMobileUrl:environment.baseUrl+"/api/v1/customer/verifyMobile",
-    generateOtpUrl:environment.baseUrl+"/api/v1/customer/generateOtp",
     sendEmailOtp:environment.baseUrl+"/api/v1/customer/send-email-otp",
     customerViewPlanUrl:environment.baseUrl+"/api/v1/customer/getPlans",  
     getFactSheet:environment.baseUrl+"/api/v1/customer/getFactSheet",

@@ -20,8 +20,8 @@
                   </div>
 
                   <div class="upload-btn-wrapper">                    
-                      <label class="btnUpload" for="file">Upload</label>
-                      <input type="file" id="file" name="myfile" accept="application/pdf"  (change)="selected($event,1)" />
+                      <label class="btnUpload" for="file1">Upload</label>
+                      <input  #fileInput type="file" id="file1" (click)="fileInput.value = null"  name="myfile" accept="application/pdf"  (change)="selected($event,1)" />
                   </div>
                   <div class="text-secondary"><small><i>Please upload PDF format only.</i></small>            
                   </div>                  
@@ -45,8 +45,8 @@
                   <div *ngIf="newSpAccountOpeningLetterUploaded" class="d-inline"><button type="button" class="btn" (click)="removeFile($event,2)"><i class="fa fa-times mr-2" aria-hidden="true"></i></button></div>
                 </div>
                 <div class="upload-btn-wrapper">
-                    <label class="btnUpload" for="file">Upload</label>
-                    <input type="file" id="file" name="myfile"  accept="application/pdf" (change)="selected($event,2)" />
+                    <label class="btnUpload" for="file2">Upload</label>
+                    <input type="file" id="file2" #inputFile2 (click)="inputFile2.value = null" name="myfile"  accept="application/pdf" (change)="selected($event,2)" />
                 </div>
                 <ng-container class="valid-feedback" *ngIf="openingLetter">
                     <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
@@ -70,8 +70,8 @@
                      </div>
    
                      <div class="upload-btn-wrapper">                    
-                         <label class="btnUpload" for="file">Upload</label>
-                         <input type="file" id="file" name="myfile" accept="application/pdf"  (change)="selected($event,1)" />
+                         <label class="btnUpload" for="file2">Upload</label>
+                         <input type="file" id="file2" #inputFile11 (click)="inputFile11.value = null" name="myfile" accept="application/pdf"  (change)="selected($event,1)" />
                      </div>
                      <div class="text-secondary"><small><i>Please upload PDF format only.</i></small>            
                      </div>                  
@@ -96,8 +96,8 @@
                 <div class="upload-btn-wrapper">
                    
                    
-                    <label class="btnUpload" for="file">Upload</label>
-                    <input type="file" id="file" name="myfile1"  accept="application/pdf"  (change)="selected($event,3)" />
+                    <label class="btnUpload" for="file3">Upload</label>
+                    <input type="file" id="file3" #inputFille3 (click)="inputFille3.value = null" name="myfile1"  accept="application/pdf"  (change)="selected($event,3)" />
                 </div>
                 <div class="text-secondary"><small><i>Please upload PDF format only. </i></small>             
               

@@ -3,7 +3,14 @@
             <div class="row">
                 <div class="form-group col-md-6">
                     <label class="form-control-label" for="identificationName">First name (as per ID)</label>
-                    <input name="identificationName" id="identificationName" class="form-control" [class.is-invalid]="identificationName.invalid && (identificationName.touched || form.submitted)" required [(ngModel)]="parent.model.identificationName" #identificationName="ngModel" blockCopyPaste/>
+                    <input name="identificationName" 
+                    id="identificationName"
+                    trim="blur"
+                    class="form-control" 
+                    [class.is-invalid]="identificationName.invalid && (identificationName.touched || form.submitted)" 
+                    required [(ngModel)]="parent.model.identificationName" 
+                    #identificationName="ngModel" 
+                    blockCopyPaste/>
     
                     <div *ngIf="identificationName.invalid && (identificationName.touched || form.submitted)" class="invalid-feedback">
                         <div *ngIf="identificationName?.errors.required">

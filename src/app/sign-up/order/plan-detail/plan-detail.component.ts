@@ -283,8 +283,7 @@ viewFactSheet(){
   }
 
  verifyPromocode(index,promocode){
-    var customerDto = new CustomerDto();
- 
+    var customerDto = new CustomerDto(); 
     this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl+"?promoCode="
     +promocode,customerDto).subscribe((response: any) => {
      var responseData = response;
@@ -296,8 +295,7 @@ viewFactSheet(){
       }
       else{
         this.promocodeStatus = false;
-        this.promotionMessage = response.message;
-       
+        this.promotionMessage = response.message;      
       }
     })
   }
@@ -307,9 +305,7 @@ viewFactSheet(){
       this.parent.model.premise.startDate = moment(new Date()).add('days', 8).format(this.config.bootstrap.datePicker.dateInputFormat);
      this.localStorage.setItem(STORAGE_KEYS.IS_SP_ACCOUNT_HOLDER, this.parent.isSPAccountHolder).subscribe();
       const selectedPricingPlan = _.find(this.pricingPlanList, { name: this.parent.model.premise.productName });
-
       this.gtagService.sendEvent(ORDER_GA_EVENT_NAMES.ENTER_YOUR_DETAIL_1);
-
       var timeStampDto = new TimeStampDto();
        timeStampDto.pageType = "PALN_DETAILS"
       var customerDto = new CustomerDto();
@@ -362,9 +358,11 @@ viewFactSheet(){
     if(this.verified){
       this.verifiedPromocodes.splice(i,1);
       this.duplicatePromoCode=false;
+      this.promotionMessage='';
     }
     this.promoCode.splice(i,1);
     this.duplicatePromoCode=false;
+    this.promotionMessage='';
   }
 
   getAdminMessage(){

@@ -63,6 +63,7 @@ export class ApproveComponent implements OnInit {
   validLocations = {};
   pickedLocation: string = null;
   selectedPlanIndex:number;
+  verified : boolean;
 
   spFlag:boolean;
   isPlanFlag:boolean;
@@ -96,7 +97,7 @@ export class ApproveComponent implements OnInit {
   opening_letter_fileName:string;
   files=[];
   pdfSrc:any;
-  promoCode=[];
+  promoCode = [{referralCode:""}];
   approvalStatus:boolean;
   postalCode:any;
   verifiedPromocodes = [];
@@ -178,10 +179,42 @@ export class ApproveComponent implements OnInit {
     }
   }
 
-  
+  approvedDate:any;
  editCustomer(customerList){
   let approved = customerList.approved
   if(approved ==true){
+    this.selectedPricingPlan = customerList.plan;
+    //prepopulate selected value
+    this.selectPlans(this.selectedPricingPlan);
+    this.promoCode = customerList.promoCode;
+    this.fullName = customerList.fullName;
+    this.lastName = customerList.lastName;
+    this.emailAddress = customerList.eamilAddress;
+    this.mobileNumber = customerList.mobileNumber;
+    this.houseNo = customerList.houseNo;
+    this.level = customerList.level;
+    this.unitNo = customerList.unitNo;
+    this.streetName= customerList.streetName;
+    this.buildingName = customerList.buildingName;
+    this.servicePostalCode= customerList.postelCode;
+    this.dwellingType = customerList.dwelingType;
+    this.serviceNo= customerList.spAccountNumber;
+    this.customerId = customerList.customerId;
+    if(customerList.files){
+      this.bill_fileName= customerList.files.bill_fileName;
+      this.authorization_fileName= customerList.files.authorization_fileName;
+      this.opening_letter_fileName= customerList.files.opening_letter_fileName;
+    }
+    this.sighnUpEndTimeStamp = customerList.sighnUpEndTimeStamp.split('-');
+    let day = this.sighnUpEndTimeStamp[0];
+    let month = this.sighnUpEndTimeStamp[1]-1;
+    let year = this.sighnUpEndTimeStamp[2].toString().split(' ')[0];
+    let hours = this.sighnUpEndTimeStamp[2].toString().split(' ')[1].toString().split(':')[0];
+    let minutes = this.sighnUpEndTimeStamp[2].toString().split(' ')[1].toString().split(':')[1];
+    let seconds = this.sighnUpEndTimeStamp[2].toString().split(' ')[1].toString().split(':')[2];
+    this.approvalDate =  new Date(year, month, day, hours, minutes, seconds);
+    this.approvalDate.setDate(this.approvalDate.getDate() + 5);  
+
     $('#approved').modal('show');
    
   }
@@ -208,7 +241,6 @@ export class ApproveComponent implements OnInit {
     this.authorization_fileName= customerList.files.authorization_fileName;
     this.opening_letter_fileName= customerList.files.opening_letter_fileName;
   }
-
   this.sighnUpEndTimeStamp = customerList.sighnUpEndTimeStamp.split('-');
   let day = this.sighnUpEndTimeStamp[0];
   let month = this.sighnUpEndTimeStamp[1]-1;
@@ -219,6 +251,7 @@ export class ApproveComponent implements OnInit {
   this.approvalDate =  new Date(year, month, day, hours, minutes, seconds);
   this.approvalDate.setDate(this.approvalDate.getDate() + 5);  
    $('#customer').modal('show');
+
 }
  }
 
@@ -251,14 +284,6 @@ getPlans(){
   })
 }
 
-addPromoCode(){
-  this.promoCode.push("")   
-  this.promotionMessage = ''; 
- }
-
- delete(i:number){
-   this.promoCode.splice(i,1)
- }
 
  validatePostalCode(code: string) {
   if (_.size(code) > 1 && !this.isPostalCodeValid(code)) {
@@ -318,7 +343,7 @@ onSubmit(form:NgForm){
   customerDto.customerId = this.customerId ;
   customerDto.plan = this.selectedPricingPlan
   customerDto.spAccountNumber= this.serviceNo;
-  customerDto.promoCode = this.promoCode;
+  customerDto.promoCode = this.verifiedPromocodes;
   customerDto.fullName = this.fullName; 
   customerDto.lastName = this.lastName; 
   customerDto.eamilAddress = this.emailAddress;  
@@ -377,32 +402,53 @@ indexTracker(index: number) {
   return index;
 }
 
+addPromoCode(){
+    this.promoCode.push({referralCode :''})   
+    this.promotionMessage = ''; 
+    this.duplicatePromoCode=false;
+ }
+
+
+ delete(i:number){    
+  if(this.verified){
+    this.verifiedPromocodes.splice(i,1);
+    this.duplicatePromoCode=false;
+    this.promotionMessage='';
+  }
+  this.promoCode.splice(i,1);
+  this.duplicatePromoCode=false;
+  this.promotionMessage='';
+}
+
 verifyPromotionCode(index) {
-  let promocode = this.promoCode[index].referralCode;  
+  let promocode = this.promoCode[index].referralCode; 
+ 
   if(this.verifiedPromocodes.length){
+    this.verified=true;
    this.verifiedPromocodes.findIndex(item => item == promocode)
     if(this.verifiedPromocodes.findIndex(item => item == promocode) == -1){
-      this.verifyPromocode(promocode);
+      this.verifyPromocode(index,promocode);
       this.duplicatePromoCode=false;
     }else{
       this.duplicatePromoCode=true;
     }
   }else{
-    this.verifyPromocode(promocode);
+    this.verifyPromocode(index,promocode);
     this.duplicatePromoCode=false;
   }
 }
 
-verifyPromocode(promocode){  
+verifyPromocode(index,promocode){
   var customerDto = new CustomerDto();
-  // this.verifiedPromocodes.push(promocode)
+
   this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl+"?promoCode="
   +promocode,customerDto).subscribe((response: any) => {
-    var responseData = response;
+   var responseData = response;
     if(responseData['statusCode']==200){
       this.promocodeStatus = true;
       this.promotionMessage = response.data;
-    
+      this.verifiedPromocodes.push(promocode)
+      this.verified=true;
     }
     else{
       this.promocodeStatus = false;

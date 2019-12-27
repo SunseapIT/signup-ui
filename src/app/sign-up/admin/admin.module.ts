@@ -1,5 +1,4 @@
-
-
+import { InputTrimModule } from 'ng2-trim-directive';
 import { AuthguardGuard } from './../../authguard.guard';
 import { FormsModule } from '@angular/forms';
 import { AdminLoginRoutingModule } from './admin-login-routing.module';
@@ -44,6 +43,7 @@ import { DatepickerModule, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     OwlNativeDateTimeModule,
     NgxPaginationModule,
     SharedModule,
+    InputTrimModule,
     BsDatepickerModule.forRoot(),
     DatepickerModule.forRoot() ,
     PaginationModule.forRoot(),

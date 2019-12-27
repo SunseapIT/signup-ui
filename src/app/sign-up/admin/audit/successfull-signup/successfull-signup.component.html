@@ -2,7 +2,7 @@
     <app-dots-loader *ngIf="isLoader"></app-dots-loader>
     <div class="row mb-4 mt-4">
       <div class="col-lg-4 text-left">
-          <input type="text" class="form-control searchbar" placeholder="Search..." (keyup)="searchCustomer($event)">
+          <input type="text" class="form-control searchbar"  trim="blur" placeholder="Search..." (keyup)="searchCustomer($event)">
       </div>
       <div class="col-lg-5  p-0  text-right ">
           <input placeholder="Select a range..." 

@@ -142,7 +142,6 @@ export class PersonalParticularComponent implements OnInit {
     customerDto = JSON.parse(objStr);
     this.verifiedEmail = this.parent.model.email;
     this.token = customerDto.token;
-
     this.service.post_service(ApiServiceServiceService.apiList.sendEmailOtp+"?token="+this.token+"&email="+this.verifiedEmail,null)
     .subscribe((response)=>
     {
@@ -154,10 +153,8 @@ export class PersonalParticularComponent implements OnInit {
           timeOut : 3000
           });
           this.otp =''
-      }
-      
+      }      
     })
-
   }
 
  
@@ -182,8 +179,7 @@ export class PersonalParticularComponent implements OnInit {
     this.isEmailOtpValidated = false;
     this.toster.error('', 'You have entered an invalid OTP.',{
     timeOut : 3000
-    });
-    
+    });    
     }
     })
   }
@@ -240,6 +236,4 @@ export class PersonalParticularComponent implements OnInit {
     }
     })
   }
-
-
 }

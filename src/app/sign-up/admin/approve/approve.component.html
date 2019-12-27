@@ -40,6 +40,8 @@
         </div>
     </div>
 </div>
+
+
 <div class="modal right slideInRight" id="customer" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="model-cst modal-content">
@@ -103,26 +105,20 @@
                                 <div class="col-lg-4 col-sm-6">Promotion/Referral Code:</div>
                                 <div class="col-lg-7 col-sm-5 font-weight-bold">
                                     <div class="card-text-right p-0">
-                                        <!-- <div *ngIf="!isPromoCodeFlag" class="input-group">
-                                            <textarea rows="3" cols="30" [disabled]="'true'"> -->
+                                        <div *ngIf="!isPromoCodeFlag" class="input-group">
+                                            <textarea rows="3" cols="30" [disabled]="'true'">
                                                 {{promoCode}}
-                                            <!-- </textarea> -->
-                                        <!-- </div> -->
-                                        <!-- <div *ngFor="let promo of promoCode; let i=index;trackBy:indexTracker">
+                                            </textarea>
+                                        </div>
+                                        <div *ngFor="let promo of promoCodeList; let i=index;trackBy:indexTracker">
 
                                             <input [name]="'referralCode'+i"
                                             *ngIf="isPromoCodeFlag" 
                                              class="form-control" trim="blur" 
-                                             [(ngModel)]="promoCode[i]"
-                                             #referralCode="ngModel" /> -->
-<!-- 
-                                            <input 
-                                            *ngIf="isPromoCodeFlag" 
-                                            [name]="'referralCode'+i"
-                                            class="form-control" 
-                                            [value]="promo" 
-                                            (blur)="editPromoCode($event,i)" /> -->
-                                            <!-- <button *ngIf="isPromoCodeFlag" type="button" class="btn input-button"
+                                             [(ngModel)]="promo.referralCode"
+                                             #referralCode="ngModel" />
+
+                                            <button *ngIf="isPromoCodeFlag" type="button" class="btn input-button"
                                                 (click)="verifyPromotionCode(i)">
                                                 <span>Verify</span>
                                             </button>
@@ -132,19 +128,19 @@
                                             </button>
                                         </div>
                                         <button type="button" *ngIf="isPromoCodeFlag" class="btn btn-add" (click)="addPromoCode()"><b>Add
-                                                more</b></button> -->
-                                                <!-- <div *ngIf="duplicatePromoCode" class="text-danger"><i>Promo/ Referral code already exists.</i></div> -->
-                                                <!-- <div *ngIf="promotionMessage != ''" [ngClass]="{'green-text':promocodeStatus,'red-text':!promocodeStatus}"><i>{{promotionMessage}}</i></div> -->
+                                                more</b></button>
+                                                <div *ngIf="duplicatePromoCode" class="text-danger"><i>Promo/ Referral code already exists.</i></div>
+                                                <div *ngIf="promotionMessage != ''" [ngClass]="{'green-text':promocodeStatus,'red-text':!promocodeStatus}"><i>{{promotionMessage}}</i></div>
                                     </div>
                                     </div>
                             
                                
-                                <!-- <div class="col-lg-1 col-sm-1">
+                                <div class="col-lg-1 col-sm-1">
                                     <i *ngIf="!isPromoCodeFlag" class="fas fa-pencil-alt"
-                                        (click)="isPromoCodeFlag = !isPromoCodeFlag"></i>
+                                        (click)="editPromoCode(promoCode)"></i>
                                     <i *ngIf="isPromoCodeFlag" class="fa fa-check"
-                                        (click)="isPromoCodeFlag = !isPromoCodeFlag"></i>
-                                </div> -->
+                                        (click)="editPromoCode('')"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -421,7 +417,7 @@
 </div>
 
 
-<div class="modal right slideInRight" id="approved" tabindex="-1" role="dialog">
+<div class="modal right slideInRight" id="approved" tabindex="-1" role="dialog" style="margin-right: 0px !;">
     <div class="modal-dialog">
         <div class="model-cst modal-content">
             <div class="modal-body">

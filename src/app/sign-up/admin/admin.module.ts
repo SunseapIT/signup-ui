@@ -2,7 +2,7 @@ import { InputTrimModule } from 'ng2-trim-directive';
 import { AuthguardGuard } from './../../authguard.guard';
 import { FormsModule } from '@angular/forms';
 import { AdminLoginRoutingModule } from './admin-login-routing.module';
-import { NgModule } from '@angular/core';
+import { NgModule, TemplateRef } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { AddPlanComponent } from './add-plan/add-plan.component';
@@ -26,6 +26,8 @@ import { ApproveComponent } from './approve/approve.component';
 import { ORDER_COMPONENTS } from '../order';
 import { SharedModule } from '@app/shared';
 import { DatepickerModule, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 
 

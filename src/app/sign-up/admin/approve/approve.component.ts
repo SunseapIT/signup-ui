@@ -1,10 +1,11 @@
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { STORAGE_KEYS, ORDER_ROUTES, ORDER_GA_EVENT_NAMES } from './../../order/order.constant';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { CustomerDto } from './../../../core/customer-dto';
 import { OrderComponent } from './../../order/order.component';
 import { DatePipe } from '@angular/common';
 import { ApiServiceServiceService } from './../../../api-service-service.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { ModalService, UtilService, DWELLING_TYPE_OPTIONS, GoogleTagManagerService } from '@app/core';
 import * as _ from 'lodash';
 import * as moment from 'moment';
@@ -32,6 +33,9 @@ const POSTAL_CODE_REDIRECT_DELAY = 5000;
   styleUrls: ['./approve.component.scss']
 })
 export class ApproveComponent implements OnInit {
+
+  modalRef: BsModalRef | null;
+  modalRef2: BsModalRef;
 
    @ViewChild('warningModal') warningModal: any;
   @ViewChild('pickUpModal') pickUpModal: any;
@@ -97,7 +101,7 @@ export class ApproveComponent implements OnInit {
   opening_letter_fileName:string;
   files=[];
   pdfSrc:any;
-  promoCode = [{referralCode:""}];
+  promoCodeList:any[]=[];
   approvalStatus:boolean;
   postalCode:any;
   verifiedPromocodes = [];
@@ -130,6 +134,7 @@ export class ApproveComponent implements OnInit {
     private utilService: UtilService,
     private localStorage: LocalStorage,
     private router: Router,
+    private modalService: BsModalService,
     private gtagService: GoogleTagManagerService,
     private toastr : ToastrService) {
      
@@ -180,6 +185,7 @@ export class ApproveComponent implements OnInit {
   }
 
   approvedDate:any;
+  promoCode:any;
  editCustomer(customerList){
   let approved = customerList.approved
   if(approved ==true){
@@ -254,6 +260,11 @@ export class ApproveComponent implements OnInit {
 
 }
  }
+
+ openModal(template: TemplateRef<any>) {
+  this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
+}
+
 
 
 
@@ -394,8 +405,16 @@ downloadFactSheet(){
   downloadLink.click();
 }
 
-editPromoCode(event,i){
-  this.promoCode[i] = event.target.value;  
+editPromoCode(event){
+  this.isPromoCodeFlag = !this.isPromoCodeFlag;
+  this.promoCodeList=[];
+  if(event){
+    event.forEach(element => {
+      this.promoCodeList.push({
+        referralCode: element
+      });
+    });
+  }
 }
 
 indexTracker(index: number) {
@@ -403,7 +422,7 @@ indexTracker(index: number) {
 }
 
 addPromoCode(){
-    this.promoCode.push({referralCode :''})   
+    this.promoCodeList.push({referralCode :''})   
     this.promotionMessage = ''; 
     this.duplicatePromoCode=false;
  }
@@ -415,13 +434,13 @@ addPromoCode(){
     this.duplicatePromoCode=false;
     this.promotionMessage='';
   }
-  this.promoCode.splice(i,1);
+  this.promoCodeList.splice(i,1);
   this.duplicatePromoCode=false;
   this.promotionMessage='';
 }
 
 verifyPromotionCode(index) {
-  let promocode = this.promoCode[index].referralCode; 
+  let promocode = this.promoCodeList[index].referralCode; 
  
   if(this.verifiedPromocodes.length){
     this.verified=true;

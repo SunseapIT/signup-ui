@@ -295,7 +295,8 @@ viewFactSheet(){
       }
       else{
         this.promocodeStatus = false;
-        this.promotionMessage = response.message;      
+        this.promotionMessage = response.message;
+       
       }
     })
   }

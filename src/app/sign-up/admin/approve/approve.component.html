@@ -91,7 +91,8 @@
                                         <div *ngIf="!spFlag" class="input-group">
                                             {{serviceNo}}
                                         </div>
-                                        <input *ngIf="spFlag" type="text" name="serviceNo" maxlength="10" numbersOnly
+                                        <input *ngIf="spFlag" type="text" name="serviceNo" maxlength="10" 
+                                        pattern="(^[1-9]\d{9})|(^[1-9]{9}[-])$"
                                             [(ngModel)]="serviceNo">
 
                                     </div>
@@ -451,8 +452,7 @@
                                     <div class="card-text-right p-0">
                                         <div *ngIf="!spFlag" class="input-group">
                                             {{serviceNo}}
-                                        </div>
-                                    
+                                        </div>                                  
 
                                     </div>
                                 </div>

@@ -15,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BsLocaleService } from 'ngx-bootstrap'
 import { ThrowStmt } from '@angular/compiler';
 
+declare var require: any
 declare const $:any;
 
 
@@ -340,12 +341,14 @@ isPostalCodeValid(code: string): boolean {
 
 getCustomerFile(name){
   this.service.get_service(ApiServiceServiceService.apiList.encodeFileUrl
-    +"?fileName="+name).subscribe(response=>{  
-    var data = "data:application/pdf;base64," +response['data']
-    this.pdfSrc = data; 
+    +"?fileName="+name).subscribe((response:any)=>{  
+    var b64toBlob = require('b64-to-blob');
+    var file =  b64toBlob(response.data,'application/pdf');
+    var fileURL = URL.createObjectURL(file);
+    window.open(fileURL);
   })
-   $("#myModal").modal("show")
 }
+
 
 onSubmit(form:NgForm){
    this.isLoader=true;  
@@ -354,7 +357,7 @@ onSubmit(form:NgForm){
   customerDto.customerId = this.customerId ;
   customerDto.plan = this.selectedPricingPlan
   customerDto.spAccountNumber= this.serviceNo;
-  customerDto.promoCode = this.verifiedPromocodes;
+  customerDto.promoCode = this.promoCode;
   customerDto.fullName = this.fullName; 
   customerDto.lastName = this.lastName; 
   customerDto.eamilAddress = this.emailAddress;  
@@ -407,13 +410,23 @@ downloadFactSheet(){
 
 editPromoCode(event){
   this.isPromoCodeFlag = !this.isPromoCodeFlag;
-  this.promoCodeList=[];
   if(event){
+    this.promoCodeList=[];
     event.forEach(element => {
       this.promoCodeList.push({
         referralCode: element
       });
     });
+  }
+  else{
+   
+    this.promoCode=this.promoCode.concat(this.verifiedPromocodes);
+    console.log('this.promoCode approve',this.promoCode);  
+
+    this.duplicatePromoCode=false;
+    this.promotionMessage=''
+    
+
   }
 }
 
@@ -425,6 +438,7 @@ addPromoCode(){
     this.promoCodeList.push({referralCode :''})   
     this.promotionMessage = ''; 
     this.duplicatePromoCode=false;
+    this.promocodeStatus=false;
  }
 
 

@@ -125,6 +125,7 @@ export class ApproveComponent implements OnInit {
   customerId: any;
   myDateValue: Date;
   planType =[];
+  lastApproveDate: Date;
  
 
   constructor(private service:ApiServiceServiceService,
@@ -263,7 +264,9 @@ export class ApproveComponent implements OnInit {
   let minutes = this.sighnUpEndTimeStamp[2].toString().split(' ')[1].toString().split(':')[1];
   let seconds = this.sighnUpEndTimeStamp[2].toString().split(' ')[1].toString().split(':')[2];
   this.approvalDate =  new Date(year, month, day, hours, minutes, seconds);
-  this.approvalDate.setDate(this.approvalDate.getDate() + 5);  
+  this.lastApproveDate = new Date(year, month, day, hours, minutes, seconds);
+  this.lastApproveDate.setDate(this.lastApproveDate.getDate() + 5); 
+  this.approvalDate.setDate(this.approvalDate.getDate() + 5);
    $('#customer').modal('show');
 
 }
@@ -373,8 +376,6 @@ onSubmit(form:NgForm){
   customerDto.files.authorization_data = this.customerDto.files.authorization_data;
   customerDto.files.factSheet_data = this.customerDto.files.factSheet_data;
   customerDto.approvedTime = this.getTimeStamp(this.approvalDate);  
-  console.log('dto', customerDto);
-  
   this.service.post_service(ApiServiceServiceService.apiList.approveCustomerUrl, customerDto)
   .subscribe((response)=>{
     var responseData  = response;  
@@ -501,6 +502,13 @@ selectPlans(value){
       }      
     }
   }
+}
+keyPress(event: any) {
+  const pattern = /[0-9\-\ ]/;   
+  let inputChar = String.fromCharCode(event.charCode);
+      if (!pattern.test(inputChar) && event.charCode != '0') {
+          event.preventDefault();
+      }
 }
 }
 

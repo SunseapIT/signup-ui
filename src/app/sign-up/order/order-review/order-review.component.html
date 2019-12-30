@@ -69,11 +69,22 @@
          {{serviceNo}} 
         </div>
 
-        <input *ngIf="spFlag" type="text" 
-        name="serviceNo" 
+        <input *ngIf="spFlag" class="form-control" 
         maxlength="10"
-        numbersOnly
+        trim="blur" 
+        name="spAccount"
+        pattern="(^[1-9]\d{9})|(^[1-9]{9}[-])$"
+        (keypress)="keyPress($event)"
         [(ngModel)]="serviceNo">
+
+        <!-- <div *ngIf="spNumber.invalid && (spNumber.touched || form.submitted)" class="invalid-feedback">
+          <div *ngIf="spNumber?.errors.required">
+              <i>Your SP Account No. is required</i>
+          </div>
+          <div *ngIf="spNumber?.errors.pattern">
+              <i>Your SP Account No. is invalid</i>
+          </div>
+      </div> -->
        
       </div>
     </div>
@@ -108,8 +119,8 @@
           <div *ngIf="!nameFlag" class="input-group">
             {{fullName}}&nbsp;{{lastName}}
           </div>
-          <input *ngIf="nameFlag" type="text" name="fullName" [(ngModel)]="fullName">
-          <input *ngIf="nameFlag" type="text" name="lastName" [(ngModel)]="lastName">
+          <input *ngIf="nameFlag" type="text" name="fullName" [(ngModel)]="fullName" class="form-control">
+          <input *ngIf="nameFlag" type="text" name="lastName" [(ngModel)]="lastName" class="form-control">
         
       </div>
      

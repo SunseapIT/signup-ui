@@ -54,15 +54,12 @@ authorization = false;
   }
   
   onSubmit() {   
-    if(this.parent.isSPAccountHolder && this.spPastMonthBill || this.newSpAccountOpeningLetter){
-      
+    if(this.parent.isSPAccountHolder && this.spPastMonthBill || this.newSpAccountOpeningLetter){      
       this.saveDocuments()
-
     } 
     else if(!this.parent.isSPAccountHolder && this.letterOfAuthorisation && this.spPastMonthBill) {    
       this.saveDocuments()   
     } 
-
   else{
     this.toastr.error('', 'Please upload PDF file', {
       timeOut: 3000

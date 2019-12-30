@@ -109,14 +109,14 @@
             <label class="form-control-label" for="dwellingType">Dwelling type</label>
             <select name="dwellingType" 
             id="dwellingType" 
-            class="form-control" 
+            class="form-control select-font" 
             [class.is-invalid]="dwellingType.invalid && (dwellingType.touched || form.submitted)" 
             required 
             (change)="onSelectDwellingType($event.target.value)" 
             [(ngModel)]="parent.model.premise.dwellingType" 
             #dwellingType="ngModel">
                 <option [value]="null" disabled>Select your dwelling type</option>
-                <option *ngFor="let option of DWELLING_TYPE_OPTIONS | toArray" [value]="option.key">{{ option.value }}</option>
+                <option class="option-font" *ngFor="let option of DWELLING_TYPE_OPTIONS | toArray" [value]="option.key">{{ option.value }}</option>
             </select>
   
             <div *ngIf="dwellingType.invalid && (dwellingType.touched || form.submitted)" class="invalid-feedback">

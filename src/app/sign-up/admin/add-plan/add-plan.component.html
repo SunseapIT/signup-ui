@@ -56,9 +56,7 @@
                                             <label class="form-control-label" for="discount">Discount</label>
                                             <div class="input-group">
                                             <input name="discount" id="discount" class="form-control" 
-                                            trim="blur"
-                                            [class.is-invalid]="discount.invalid && (discount.touched || form.submitted)" 
-                                            required 
+                                            trim="blur"                                             
                                             [(ngModel)]="model.discount" #discount="ngModel" />    
                                             <div class="input-group-append">
                                                 <div class="input-group-text">%</div>
@@ -78,9 +76,7 @@
                                             trim="blur"
                                             [class.is-invalid]="beforeGst.invalid && (beforeGst.touched || form.submitted)" 
                                             required 
-                                            [(ngModel)]="model.beforeGst" #beforeGst="ngModel" />  
-                                          
-                                            
+                                            [(ngModel)]="model.beforeGst" #beforeGst="ngModel" />    
                                             
                                             
                                         </div>

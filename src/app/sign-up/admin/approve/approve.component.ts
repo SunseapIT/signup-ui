@@ -102,10 +102,10 @@ export class ApproveComponent implements OnInit {
   opening_letter_fileName:string;
   files=[];
   pdfSrc:any;
-  promoCodeList:any[]=[];
+   promoCodeList:any[]=[];
   approvalStatus:boolean;
   postalCode:any;
-  verifiedPromocodes = [];
+  verifiedPromocodes:any[]=[];
   duplicatePromoCode:boolean;
    arrowPlan:boolean;
  arrowPersonal:boolean;
@@ -230,6 +230,13 @@ export class ApproveComponent implements OnInit {
   //prepopulate selected value
   this.selectPlans(this.selectedPricingPlan);
   this.promoCode = customerList.promoCode;
+  this.verifiedPromocodes=null
+  if(customerList.promoCode == null){
+    this.verifiedPromocodes=[];
+  }
+  else{
+    this.verifiedPromocodes=customerList.promoCode;
+  }
   this.fullName = customerList.fullName;
   this.lastName = customerList.lastName;
   this.emailAddress = customerList.eamilAddress;
@@ -261,13 +268,6 @@ export class ApproveComponent implements OnInit {
 
 }
  }
-
- openModal(template: TemplateRef<any>) {
-  this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
-}
-
-
-
 
  arrowChange(i){
   if(i == 1){
@@ -336,8 +336,8 @@ isPostalCodeValid(code: string): boolean {
   if (moment().isSameOrAfter('2019-05-01') && _.inRange(+code.substring(0, 2), 1, 84)) {
     return _.inRange(+code.substring(0, 2), 1, 84);
   }
-  return _.inRange(+code.substring(0, 2), 34, 84);
-}
+  // Postal codes with the 2 first digits between 58 and 78 will be allowed
+  return _.inRange(+code.substring(0, 2), 34, 84);}
 
 getCustomerFile(name){
   this.service.get_service(ApiServiceServiceService.apiList.encodeFileUrl
@@ -351,13 +351,13 @@ getCustomerFile(name){
 
 
 onSubmit(form:NgForm){
-   this.isLoader=true;  
+  this.isLoader=true;  
    if(form.valid){
   var customerDto = new CustomerDto(); 
   customerDto.customerId = this.customerId ;
   customerDto.plan = this.selectedPricingPlan
   customerDto.spAccountNumber= this.serviceNo;
-  customerDto.promoCode = this.promoCode;
+  customerDto.promoCode = this.verifiedPromocodes;
   customerDto.fullName = this.fullName; 
   customerDto.lastName = this.lastName; 
   customerDto.eamilAddress = this.emailAddress;  
@@ -372,7 +372,9 @@ onSubmit(form:NgForm){
   customerDto.files.bill_data = this.customerDto.files.bill_data;
   customerDto.files.authorization_data = this.customerDto.files.authorization_data;
   customerDto.files.factSheet_data = this.customerDto.files.factSheet_data;
-  customerDto.approvedTime = this.getTimeStamp(this.approvalDate);
+  customerDto.approvedTime = this.getTimeStamp(this.approvalDate);  
+  console.log('dto', customerDto);
+  
   this.service.post_service(ApiServiceServiceService.apiList.approveCustomerUrl, customerDto)
   .subscribe((response)=>{
     var responseData  = response;  
@@ -387,11 +389,8 @@ onSubmit(form:NgForm){
       this.getCustomerForApproval();
       
     }
-    else if(statusCode == 400){
+    else /* if(statusCode == 400) */{
       this.isLoader = false; 
-      this.toastr.error('','Customer SP Account already exists.', {
-        timeOut : 2000
-      }) 
       $('#customer').modal('hide');
      
     }   
@@ -411,7 +410,9 @@ downloadFactSheet(){
 editPromoCode(event){
   this.isPromoCodeFlag = !this.isPromoCodeFlag;
   if(event){
+    this.promoCodeList=null
     this.promoCodeList=[];
+
     event.forEach(element => {
       this.promoCodeList.push({
         referralCode: element
@@ -419,10 +420,7 @@ editPromoCode(event){
     });
   }
   else{
-   
-    this.promoCode=this.promoCode.concat(this.verifiedPromocodes);
-    console.log('this.promoCode approve',this.promoCode);  
-
+     this.promoCode=this.verifiedPromocodes;
     this.duplicatePromoCode=false;
     this.promotionMessage=''
     
@@ -456,7 +454,7 @@ addPromoCode(){
 verifyPromotionCode(index) {
   let promocode = this.promoCodeList[index].referralCode; 
  
-  if(this.verifiedPromocodes.length){
+  if( this.verifiedPromocodes.length >0){
     this.verified=true;
    this.verifiedPromocodes.findIndex(item => item == promocode)
     if(this.verifiedPromocodes.findIndex(item => item == promocode) == -1){
@@ -473,7 +471,6 @@ verifyPromotionCode(index) {
 
 verifyPromocode(index,promocode){
   var customerDto = new CustomerDto();
-
   this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl+"?promoCode="
   +promocode,customerDto).subscribe((response: any) => {
    var responseData = response;
@@ -482,6 +479,7 @@ verifyPromocode(index,promocode){
       this.promotionMessage = response.data;
       this.verifiedPromocodes.push(promocode)
       this.verified=true;
+      this.duplicatePromoCode=false;
     }
     else{
       this.promocodeStatus = false;

@@ -9,11 +9,11 @@
         <div class="form-content form-row content-plan-detail">
             <div class="form-group col-12">
                 <label class="form-control-label" for="productName">Plan details</label>
-                <select name="productName" id="productName" class="form-control " 
+                <select name="productName" id="productName" class="form-control select-font"
                 [class.is-invalid]="productName.invalid && (productName.touched || form.submitted)" required [(ngModel)]="planName"
                  (change)="onSelectPricingPlanChange($event)" #productName="ngModel">
-                    <option value='' ng-selected="selected" disabled>Select your plan</option>
-                    <option *ngFor="let item of planList" [value]="item.planName">
+                    <option value='' ng-selected="selected" disabled >Select your plan</option>
+                    <option *ngFor="let item of planList" [value]="item.planName" class="option-font">
                         {{ item.planName }}
                     </option>
                 </select>

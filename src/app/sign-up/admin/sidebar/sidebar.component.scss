@@ -1,5 +1,5 @@
 .sidebar {
-    width: 200px;
+    width: 230px;
     background-color: #f1f1f1;
     height: 100vh;   
     
@@ -21,6 +21,27 @@
     background-color: #cb2b2b !important;
     color: white !important;
 }
+
+
+.lc-title {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 1.1em !important;
+  font-weight: 600 !important;
+  line-height: 18px !important;
+  color: rgb(0, 0, 0) !important;
+}
+
+.lc-title:hover{
+  background-color: #000;
+  color: white !important;
+}
+
+
+.arrowright {
+      transform: rotate(-90deg);
+      color: #26408A !important;
+      background-color: #26408A !important;
+  }
 
  
 @media screen and (max-width: 768px) {

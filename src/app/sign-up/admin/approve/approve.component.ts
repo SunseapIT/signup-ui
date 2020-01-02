@@ -222,7 +222,6 @@ export class ApproveComponent implements OnInit {
     let seconds = this.sighnUpEndTimeStamp[2].toString().split(' ')[1].toString().split(':')[2];
     this.approvalDate =  new Date(year, month, day, hours, minutes, seconds);
     this.approvalDate.setDate(this.approvalDate.getDate() + 5);  
-
     $('#approved').modal('show');
    
   }
@@ -270,7 +269,7 @@ export class ApproveComponent implements OnInit {
    $('#customer').modal('show');
 
 }
- }
+}
 
  arrowChange(i){
   if(i == 1){
@@ -380,6 +379,7 @@ onSubmit(form:NgForm){
   .subscribe((response)=>{
     var responseData  = response;  
     this.isLoader=false;
+    let msgCode = responseData['message'] 
       let statusCode = responseData['statusCode']
       if(statusCode == 200){
       this.isLoader=false;
@@ -390,11 +390,22 @@ onSubmit(form:NgForm){
       this.getCustomerForApproval();
       
     }
-    else /* if(statusCode == 400) */{
+    else if(statusCode == 400 && msgCode== 'installationIdentifier Consumer already exists with provided MSSL number.'){
       this.isLoader = false; 
+      this.toastr.error('','This SP account number already exists.', {
+        timeOut : 2000
+      }) 
       $('#customer').modal('hide');
      
     }   
+    else if(statusCode == 400 && msgCode== 'postalPoBox \"Postal PO Box\" is required when Postal Street is set.'){
+      this.isLoader = false; 
+      this.toastr.error('','This is an invalid service address.', {
+        timeOut : 2000
+      }) 
+      $('#customer').modal('hide');
+     
+    } 
 })
    }
 }

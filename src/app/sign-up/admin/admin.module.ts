@@ -28,6 +28,9 @@ import { SharedModule } from '@app/shared';
 import { DatepickerModule, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { PromoCodeComponent } from './promo-code/promo-code.component';
+import { AddPromocodeComponent } from './promo-code/add-promocode/add-promocode.component';
+import { ViewPromocodeComponent } from './promo-code/view-promocode/view-promocode.component';
 
 
 
@@ -60,7 +63,10 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
      SuccessfullSignupComponent,
      AbandonedSignupComponent,
      DOTS_LOADER_COMPONENTS,
-     ApproveComponent
+     ApproveComponent,
+     PromoCodeComponent,
+     AddPromocodeComponent,
+     ViewPromocodeComponent
     ],    
     providers: [
       AuthguardGuard,

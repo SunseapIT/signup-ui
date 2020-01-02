@@ -14,7 +14,6 @@ export class Plandto{
 
     afterGst:string='';
     
-    rateChange:string='';
-    
+    rateChange:string='';    
     
 }

@@ -29,12 +29,12 @@
           <div class="table-responsive table-responsive-md table-responsive-lg table-responsive-sm">
           <table class="table table-striped">
               <thead>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Email</th>
-                  <th>Plan Name</th>
-                  <th>SP Number</th>
-                  <th>Promo Code</th>
+                  <th (click)="sorting(firstName)">First Name</th>
+                  <th (click)="sorting(lastName)">Last Name</th>
+                  <th (click)="sorting(email)">Email</th>
+                  <th (click)="sorting(planName)">Plan Name</th>
+                  <th (click)="sorting(spAccount)">SP Number</th>
+                  <th (click)="sorting(promoCode)">Promo Code</th>
                   <th>Address</th>
                   <th>Initial Timestamp</th>
                   <th>Final Timestamp</th>
@@ -49,7 +49,7 @@
                       <td>{{customerList.promoCode}}</td>
                       <td>{{customerList.houseNumber}} &nbsp;
                         {{customerList.buildingName}} &nbsp; {{customerList.streetName}} &nbsp;
-                        {{customerList.servicePostalCode}}
+                        {{customerList.postelCode}}
                     </td>
                       <td>{{customerList.sighnUpStarTimeStamp}}</td>
                       <td>{{customerList.sighnUpEndTimeStamp}}</td>

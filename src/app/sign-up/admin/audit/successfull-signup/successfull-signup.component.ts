@@ -133,4 +133,11 @@ export class SuccessfullSignupComponent implements OnInit {
       }) 
    }   
  }
+
+
+ sorting(value){
+   if(value){
+     
+   }
+ }
 }

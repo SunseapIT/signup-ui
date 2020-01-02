@@ -14,5 +14,23 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
 
   }
+  
+  plan:boolean;
+  promo:boolean;
+  audit:boolean;
+ 
+  arrowChange(i){
+    if(i == 1){
+    this.plan=!this.plan;
+     }
+    else if(i == 2){
+    this.promo=!this.promo;
+     }
+    else  if(i == 3){
+      this.audit=!this.audit;
+     }
+   
+  
+  }
 
 }

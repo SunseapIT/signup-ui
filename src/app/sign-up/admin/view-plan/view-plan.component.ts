@@ -26,9 +26,7 @@ export class ViewPlanComponent implements OnInit {
  
 
   constructor(private service: ApiServiceServiceService, private toastr: ToastrService) {
-    // for (let i = 1; i <= 100; i++) {
-    //   this.planList.push(`item ${i}`);
-    // }
+    
   }
 
   ngOnInit() {

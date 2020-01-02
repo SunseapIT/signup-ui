@@ -222,13 +222,12 @@ export class OrderReviewComponent implements OnInit {
 
   onSubmit(form:NgForm) {
     this.isLoader=true;
-    if (this.acknowledgePrivacy && this.acknowledgeConsent) {       
+    if (this.acknowledgePrivacy && this.acknowledgeConsent && form.valid) {       
     var objStr = localStorage.getItem("customerObj");
     this.customerDto = JSON.parse(objStr);
     this.customerDto.fullName = this.fullName; 
     this.customerDto.lastName = this.lastName; 
-    this.customerDto.spAccountNumber = this.serviceNo;    
-
+    this.customerDto.spAccountNumber = this.serviceNo; 
     localStorage.setItem("customerObj", JSON.stringify(this.customerDto));    
     this.service.post_service(ApiServiceServiceService.apiList.saveCustomerurl,this.customerDto).subscribe((response)=>{
     var responseData  = response;     

@@ -12,55 +12,6 @@
     </div>
   </div>
 
-  <!-- <div class="row pb-2">
-    <div class="col-lg-6">DOT / Fixed rate:</div>
-    <div class="col-lg-6 font-weight-bold">
-      <span *ngIf="isDotPlan">
-        <ng-container *ngFor="let rate of selectedPricingPlan?.promotionTemplates; let last = last">
-          <ng-container>{{ (rate?.percentDiscount * 100).toFixed(2) }}</ng-container>
-          <ng-container *ngIf="!last"> / </ng-container>
-          <ng-container *ngIf="last"> % DOT </ng-container>
-        </ng-container>
-        <ng-container *ngFor="let promotion of selectedPricingPlan?.promotionTemplates; let first = first; let last = last">
-          <ng-container *ngIf="first && !last"> (first </ng-container>
-          <ng-container *ngIf="!first"> / next </ng-container>
-          <ng-container *ngIf="!(first && last)"> {{ promotion.defaultApplyingPeriod }} mths</ng-container>
-          <ng-container *ngIf="!first && last">)</ng-container>
-        </ng-container>
-      </span>
-
-      <span *ngIf="!isDotPlan">
-        <ng-container *ngFor="let rate of selectedPricingPlan?.promotionTemplates; let last = last">
-          <ng-container>{{(rate?.rateWithPromotionExcludingTax * 100).toFixed(2)}}</ng-container>
-          <ng-container *ngIf="!last"> / </ng-container>
-          <ng-container *ngIf="last"> cents/kWh FIXED </ng-container>
-        </ng-container>
-        <ng-container *ngFor="let promotion of selectedPricingPlan?.promotionTemplates; let first = first; let last = last">
-          <ng-container *ngIf="first && !last"> (first </ng-container>
-          <ng-container *ngIf="!first"> / next </ng-container>
-          <ng-container *ngIf="!(first && last)"> {{ promotion.defaultApplyingPeriod }} mths </ng-container>
-          <ng-container *ngIf="!first && last">) - Excluding GST</ng-container>
-          <ng-container *ngIf="first && last">- Excluding GST</ng-container>
-        </ng-container>
-      </span><br/>
-
-      <span *ngIf="!isDotPlan">
-        <ng-container *ngFor="let rate of selectedPricingPlan?.promotionTemplates; let last = last">
-          <ng-container>{{(rate?.rateWithPromotion * 100).toFixed(2) }}</ng-container>
-          <ng-container *ngIf="!last"> / </ng-container>
-          <ng-container *ngIf="last"> cents/kWh FIXED </ng-container>
-        </ng-container>
-        <ng-container *ngFor="let promotion of selectedPricingPlan?.promotionTemplates; let first = first; let last = last">
-          <ng-container *ngIf="first && !last"> (first </ng-container>
-          <ng-container *ngIf="!first"> / next </ng-container>
-          <ng-container *ngIf="!(first && last)"> {{ promotion.defaultApplyingPeriod }} mths </ng-container>
-          <ng-container *ngIf="!first && last">) - Including GST</ng-container>
-          <ng-container *ngIf="first && last">- Including GST</ng-container>
-        </ng-container>
-      </span>
-    </div>
-  </div> -->
-
   <div class="row">
     <div class="col-lg-6 col-sm-6">SP account No:</div>
     <div class="col-lg-5 col-sm-5 font-weight-bold">
@@ -72,19 +23,22 @@
         <input *ngIf="spFlag" class="form-control" 
         maxlength="10"
         trim="blur" 
-        name="spAccount"
+        name="spAccNumber"
         pattern="(^[1-9]\d{9})|(^[1-9]{9}[-])$"
         (keypress)="keyPress($event)"
-        [(ngModel)]="serviceNo">
+        [(ngModel)]="serviceNo"
+        required
+        #spNumber="ngModel"
+        [ngClass]="{ 'is-invalid': form.submitted && spNumber?.invalid }">
 
-        <!-- <div *ngIf="spNumber.invalid && (spNumber.touched || form.submitted)" class="invalid-feedback">
+        <div *ngIf="spNumber?.invalid && (spNumber?.touched || form.submitted)" class="invalid-feedback">
           <div *ngIf="spNumber?.errors.required">
               <i>Your SP Account No. is required</i>
           </div>
           <div *ngIf="spNumber?.errors.pattern">
               <i>Your SP Account No. is invalid</i>
           </div>
-      </div> -->
+      </div>
        
       </div>
     </div>
@@ -119,8 +73,33 @@
           <div *ngIf="!nameFlag" class="input-group">
             {{fullName}}&nbsp;{{lastName}}
           </div>
-          <input *ngIf="nameFlag" type="text" name="fullName" [(ngModel)]="fullName" class="form-control">
-          <input *ngIf="nameFlag" type="text" name="lastName" [(ngModel)]="lastName" class="form-control">
+          <input *ngIf="nameFlag" type="text" name="fullName" 
+          [(ngModel)]="fullName"
+          required
+          [ngClass]="{ 'is-invalid': form.submitted && fName?.invalid }" class="form-control" #fName="ngModel">
+          <div *ngIf="fName?.invalid && (fName?.touched || form.submitted)" class="invalid-feedback">
+            <div *ngIf="fName?.errors.required">
+                <i>Your SP Account No. is required</i>
+            </div>
+            <div *ngIf="fName?.errors.pattern">
+                <i>Your SP Account No. is invalid</i>
+            </div>
+        </div>
+
+
+          <input *ngIf="nameFlag" type="text" name="lastName"
+          [ngClass]="{ 'is-invalid': form.submitted && lName?.invalid }" 
+          [(ngModel)]="lastName"
+          required
+          class="form-control" #lName="ngModel">
+          <div *ngIf="lName?.invalid && (lName?.touched || form.submitted)" class="invalid-feedback">
+            <div *ngIf="lName?.errors.required">
+                <i>Your SP Account No. is required</i>
+            </div>
+            <div *ngIf="lName?.errors.pattern">
+                <i>Your SP Account No. is invalid</i>
+            </div>
+        </div>
         
       </div>
      
@@ -320,11 +299,4 @@
 </div>
 
 </form>
-<!--<div style="position: absolute; top: calc(100vh - 100px); right: 30px;">-->
-  <!--<div class="share-buttons d-flex justify-content-center pt-sm-4 mt-sm-1">-->
-    <!--<a (click)="scrollToBottom()" href="javascript:void(0)" class="btn rounded-circle btn-social"-->
-       <!--style="border: 1px solid green;" target="_top">-->
-      <!--<i class="fas fa-angle-double-down slide-effect"></i>-->
-    <!--</a>-->
-  <!--</div>-->
-<!--</div>-->
+

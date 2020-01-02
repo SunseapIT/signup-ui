@@ -1,3 +1,8 @@
+import { AddPromocodeComponent } from './promo-code/add-promocode/add-promocode.component';
+import { AbandonedSignupComponent } from './audit/abandoned-signup/abandoned-signup.component';
+import { SuccessfullSignupComponent } from './audit/successfull-signup/successfull-signup.component';
+import { ViewPromocodeComponent } from './promo-code/view-promocode/view-promocode.component';
+import { PromoCodeComponent } from './promo-code/promo-code.component';
 import { ApproveComponent } from './approve/approve.component';
 import { AuthguardGuard } from './../../authguard.guard';
 import { ViewPlanComponent } from './view-plan/view-plan.component';
@@ -18,8 +23,13 @@ const routes: Routes = [
       children:[
       {path: '' , component: AddPlanComponent},
       {path : 'view-plan', component : ViewPlanComponent},
-      {path: 'audit' , component: AuditComponent},
+      {path: 'successful' , component: SuccessfullSignupComponent},
+      {path: 'abandoned', component:AbandonedSignupComponent},
       {path: 'approve' , component: ApproveComponent},
+      {path: 'promo', component:AddPromocodeComponent},
+      {path: 'edit/:id', component : AddPromocodeComponent},
+      {path: 'view-promo', component:ViewPromocodeComponent}
+    
     ]  },
      
 

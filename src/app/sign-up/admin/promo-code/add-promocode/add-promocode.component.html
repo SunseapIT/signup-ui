@@ -1,0 +1,103 @@
+<app-dots-loader *ngIf="isLoader"></app-dots-loader>
+<form #form="ngForm" novalidate>
+  <div class="container p-5">
+      
+      <div class="row mt-3">
+          <div class="form-group col-lg-6 offset-lg-3 col-md-6 col-sm-12">
+              <label class="form-control-label" for="promoCode">Promo Code Name:</label>
+              <input name="code" 
+              trim="blur"
+              class="form-control" 
+              [class.is-invalid]="promoCode.invalid && (promoCode.touched || form.submitted)" 
+              required 
+              [(ngModel)]="responseData.promoCode" 
+              #promoCode="ngModel" />                 
+          </div>
+         
+      </div>
+      <div class="row">
+          <div class="form-group col-lg-3 offset-lg-3 col-md-3 col-sm-12">
+              <label class="form-control-label" for="validFromDate">Validate From:</label>
+              <br>
+              <input placeholder="Date Time Range From:"
+              [(ngModel)]="dateTimeRange"
+              class="form-control"
+              name="dateFrom"
+              [selectMode]="'rangeFrom'"
+             
+              [owlDateTimeTrigger]="dtRange2" [owlDateTime]="dtRange2">
+       <owl-date-time #dtRange2></owl-date-time>            
+          </div>
+          <div class="form-group col-lg-3 col-md-3 col-sm-12">
+            <label class="form-control-label" for="validFromDate">Validate To:</label><br>
+            <input placeholder="Date Time Range To:"
+            [(ngModel)]="dateTimeRange"
+            class="form-control"
+            name="dateTo"
+            [selectMode]="'rangeTo'"
+            
+            [owlDateTimeTrigger]="dtRange3" [owlDateTime]="dtRange3">
+     <owl-date-time #dtRange3></owl-date-time>           
+        </div>
+      </div>
+      <div class="row">
+          <div class="form-group col-lg-6 offset-lg-3 col-md-6 col-sm-12">
+              <label class="form-control-label" for="beforeGst">Number of User's:</label> 
+              <div class="custom-radio">
+                <label clearfix>
+                    <input class="custom-radio" type="radio" 
+                    name="promocodeUses"
+                    [value]="true"
+                    [(ngModel)]="responseData.infinity" >
+                    <span class="custom-span">No Limit</span>
+                </label>
+            </div>
+            <div class="custom-radio">
+              <label clearfix>
+                  <input class="custom-radio" type="radio" 
+                  name="promocodeUses"
+                  [value]='false'
+                  [(ngModel)]="responseData.infinity" 
+                    >
+                  <span class="custom-span">Number of Uses</span>
+                
+              </label>
+          </div>
+
+          <div *ngIf="!responseData.infinity">
+            <input class="form-control" name="noOfLimitedUsers" numbersOnly trim="blur"
+            [(ngModel)]="responseData.noOfLimitedUsers">
+          </div>
+        
+             </div>         
+      </div>
+
+     
+      <div class="col-12 pt-4 pb-4">
+        <button class="btn step-next mx-auto" type="submit"  *ngIf="btnvisibility" (click)="onSubmit(form)">Add</button>  
+        <button class="btn step-next mx-auto" type="submit" *ngIf="!btnvisibility" (click)="onUpdate()">Update</button>  
+       
+          <!-- <button class="btn step-next mx-auto" type="submit">
+              <span>Add</span>
+          </button> -->
+      </div>
+  </div>
+</form>
+
+
+  
+       
+           
+              
+                
+              
+                       
+                           
+                            
+                  
+              
+            
+        
+   
+  
+

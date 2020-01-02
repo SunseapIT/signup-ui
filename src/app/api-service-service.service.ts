@@ -27,6 +27,10 @@ export class ApiServiceServiceService {
     encodeFileUrl : environment.baseUrl+"/api/v1/admin/encodedFile",
     messageUrl : environment.baseUrl+"/api/v1/admin/addNote",
     searchCustomersUrl : environment.baseUrl+"/api/v1/admin/searchCustomers",
+    addPromoCodeUrl : environment.baseUrl+"/api/v1/admin/addPromocode",
+    getPromoCodeUrl : environment.baseUrl+"/api/v1/admin/getPromocode",
+    getPromoCodeById : environment.baseUrl+"/api/v1/admin/getPromocodeById",
+    deletePromoCodeUrl : environment.baseUrl+"/api/v1/admin/deletePromoCode",
    
 
     //CUSTOMER    
@@ -55,6 +59,11 @@ export class ApiServiceServiceService {
   }
 
   constructor(private http:HttpClient, private router : Router) { }
+
+  getPromoCodeById(id:number){
+    return this.http.get(this.getPromoCodeById + '/'+id);
+  }
+  
 
    //Get service
 get_service(url) {

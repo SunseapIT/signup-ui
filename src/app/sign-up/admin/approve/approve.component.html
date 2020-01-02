@@ -3,8 +3,7 @@
 <div class="row col-md-12 mb-2 mt-2">
     <div class="col-lg-4 text-left">
         <input type="text" class="form-control searchbar" placeholder="Search..."
-        trim="blur"
-        [(ngModel)]="searchTextSuccess">
+        trim="blur" (keyup)="searchCustomer($event)">
     </div>
 </div>
 <div class="row m-0 pl-0 pr-0">
@@ -12,10 +11,10 @@
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
-                    <th>Name</th>
-                    <th>SP Account Number</th>
-                    <th>Address</th>
-                    <th>Date of Sign Up</th>
+                    <th (click)="sorting('name')">Name</th>
+                    <th (click)="sorting('spAccount')">SP Account Number</th>
+                    <th (click)="sorting('address')">Address</th>
+                    <th (click)="sorting('finall')">Date of Sign Up</th>
                     <th>Status</th>
                 </thead>
                 <tbody>

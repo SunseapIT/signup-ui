@@ -521,6 +521,43 @@ keyPress(event: any) {
           event.preventDefault();
       }
 }
+
+sorting(value){
+  if(value == 'spAccount' ){
+    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=spAccountNumberDetails.spAccountNumber,asc").subscribe((response:any)=>{
+      this.approvalData = response.data.content;
+    
+      
+    })
+ }
+
+ 
+ else if(value == 'address'){
+   this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=addressData.buildingName,asc").subscribe((response:any)=>{
+     this.approvalData = response.data.content;
+     
+
+   })
+ }
+ else if(value == 'lastName'){
+   this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=lastName,asc").subscribe((response:any)=>{
+     this.approvalData = response.data.content;
+   })
+ }
+ else if(value == 'name'){
+   this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=fullName,asc").subscribe((response:any)=>{
+     this.approvalData = response.data.content;
+   })
+ }
+ 
+}
+
+searchCustomer(event){
+  let name = event.target.value;
+ this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?fullName.contains="+name).subscribe((response:any)=>{
+   this.approvalData = response.data.content;
+})
+}
 }
 
 

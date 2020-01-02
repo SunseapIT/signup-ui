@@ -43,6 +43,10 @@
       <div class="row">
           <div class="form-group col-lg-6 offset-lg-3 col-md-6 col-sm-12">
               <label class="form-control-label" for="beforeGst">Number of User's:</label> 
+          </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-lg-9 offset-lg-3 col-md-6 col-sm-12">
               <div class="custom-radio">
                 <label clearfix>
                     <input class="custom-radio" type="radio" 
@@ -52,6 +56,9 @@
                     <span class="custom-span">No Limit</span>
                 </label>
             </div>
+        </div></div>
+        <div class="row">
+          <div class="form-group col-lg-9 offset-lg-3 col-md-6 col-sm-12">
             <div class="custom-radio">
               <label clearfix>
                   <input class="custom-radio" type="radio" 
@@ -65,12 +72,12 @@
           </div>
 
           <div *ngIf="!responseData.infinity">
-            <input class="form-control" name="noOfLimitedUsers" numbersOnly trim="blur"
+            <input class="form-control usesBox" name="noOfLimitedUsers" numbersOnly trim="blur" 
             [(ngModel)]="responseData.noOfLimitedUsers">
           </div>
-        
+        </div>
              </div>         
-      </div>
+      
 
      
       <div class="col-12 pt-4 pb-4">

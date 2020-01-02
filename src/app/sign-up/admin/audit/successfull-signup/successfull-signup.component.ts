@@ -26,12 +26,28 @@ export class SuccessfullSignupComponent implements OnInit {
     quoteStrings: '"',
     decimalseparator: '.',
     showLabels: false,
-    headers: ['Name', 'Email Address', 'Initialstamp', 'Finalstamp'],
+    headers: ['First Name', 
+    'Last Name', 
+    'Email Address', 
+    'Plan Name',
+    'SP Account Number',
+    'Promo Code',
+    'Address',
+    'Initialstamp', 
+    'Finalstamp'],
     showTitle: true,
     title: '',
     useBom: false,
     removeNewLines: true,
-    keys: ['fullName', 'eamilAddress','sighnUpStarTimeStamp', 'sighnUpEndTimeStamp']
+    keys: ['fullName', 
+    'lastName',
+    'eamilAddress',
+    'plan',
+    'spAccountNumber',
+    'promoCode',
+    'buildingName',
+    'sighnUpStarTimeStamp', 
+    'sighnUpEndTimeStamp']
   };
   max = new Date();
   queryParams = "";
@@ -136,8 +152,52 @@ export class SuccessfullSignupComponent implements OnInit {
 
 
  sorting(value){
-   if(value){
-     
-   }
- }
+   if(value == 'spAccount' ){
+     this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=spAccountNumberDetails.spAccountNumber,asc").subscribe((response:any)=>{
+       this.successData = response.data.content;
+       this.csvDataSuccess = this.successData;      
+     })
+  }
+  else if(value == 'planName'){
+    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=plans.planName,asc").subscribe((response:any)=>{
+      this.successData = response.data.content;
+      this.csvDataSuccess = this.successData;
+    })
+  }
+  else if(value == 'email'){
+    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=eamilAddress,asc").subscribe((response:any)=>{
+      this.successData = response.data.content;
+      this.csvDataSuccess = this.successData;
+
+    })
+  }
+  else if(value == 'promoCode'){
+    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=customerPromoCodes.customerPromoCode,asc").subscribe((response:any)=>{
+      this.successData = response.data.content;
+      this.csvDataSuccess = this.successData;
+
+    })
+  }
+
+  else if(value == 'address'){
+    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=addressData.buildingName,asc").subscribe((response:any)=>{
+      this.successData = response.data.content;
+      this.csvDataSuccess = this.successData;
+
+    })
+  }
+  else if(value == 'lastName'){
+    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=lastName,asc").subscribe((response:any)=>{
+      this.successData = response.data.content;
+    })
+  }
+  else if(value == 'fullName'){
+    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=fullName,asc").subscribe((response:any)=>{
+      this.successData = response.data.content;
+      this.csvDataSuccess = this.successData;
+
+    })
+  }
+  
+}
 }

@@ -1702,3 +1702,29 @@ p{
   color:#000 !important;
   font-family:MyriadPro-regular !important;
 }
+
+
+.arrowright {
+  transform: rotate(-90deg);
+  color: #26408A !important;
+  background-color: #ffffff !important;
+}
+
+.arrow-down::after {
+    font-family: 'FontAwesome';
+    content: '\2193';
+    float: left;
+    color: #000;
+    font-weight: lighter;
+    transform: rotate(0deg);
+    // transition: all 0.2s ease-in;
+  }
+
+  .arrow-up::after {
+    font-family: 'FontAwesome';
+    content: '\2193';
+    float: left;
+    color: #000;
+    font-weight: lighter;
+    transform: rotate(-180deg);
+  }

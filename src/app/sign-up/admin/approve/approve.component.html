@@ -11,15 +11,15 @@
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
-                    <th (click)="sorting('name')">Name</th>
-                    <th (click)="sorting('spAccount')">SP Account Number</th>
-                    <th (click)="sorting('address')">Address</th>
-                    <th (click)="sorting('finall')">Date of Sign Up</th>
+                    <th id="name" class="arrow-down" (click)="sortingValue[0]= !sortingValue[0];sorting('name',sortingValue[0]); addClass($event)">Name</th>
+                    <th id="spAccount" class="arrow-down" (click)="sortingValue[1]= !sortingValue[1];sorting('spAccount',sortingValue[1]); addClass($event)">SP Account Number</th>
+                    <th id="address" class="arrow-down" (click)="sortingValue[2]= !sortingValue[2];sorting('address',sortingValue[2]); addClass($event)">Address</th>
+                    <th id="signedUp" class="arrow-down" (click)="sortingValue[3]= !sortingValue[3];sorting('final',sortingValue[3]); addClass($event)">Date of Sign Up</th>
                     <th>Status</th>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let customerList of approvalData | grdFilter: {fullName: searchTextSuccess, spAccountNumber:searchTextSuccess};
-                             let i=index;" (click)="editCustomer(customerList)">
+                    <tr [ngClass]="customerList.duplicate== 'EXISTING_CUSTOMER' ? 'text-danger' : ''" 
+                    *ngFor="let customerList of approvalData | grdFilter: {fullName: searchTextSuccess, spAccountNumber:searchTextSuccess};  let i=index;" (click)="editCustomer(customerList)">
                         <td>{{customerList.fullName}}</td>
                         <td>{{customerList.spAccountNumber}}</td>
                         <td>{{customerList.houseNumber}} &nbsp;

@@ -23,8 +23,10 @@
               [(ngModel)]="dateTimeRange"
               class="form-control"
               name="dateFrom"
-              [selectMode]="'rangeFrom'"
-             
+              [selectMode]="'rangeFrom'"     
+              #from="ngModel"   
+              required
+              [class.is-invalid]="from.invalid && (from.touched || form.submitted)"      
               [owlDateTimeTrigger]="dtRange2" [owlDateTime]="dtRange2">
        <owl-date-time #dtRange2></owl-date-time>            
           </div>
@@ -34,8 +36,10 @@
             [(ngModel)]="dateTimeRange"
             class="form-control"
             name="dateTo"
-            [selectMode]="'rangeTo'"
-            
+            [selectMode]="'rangeTo'" 
+            #to="ngModel"   
+            required
+            [class.is-invalid]="to.invalid && (to.touched || form.submitted)"             
             [owlDateTimeTrigger]="dtRange3" [owlDateTime]="dtRange3">
      <owl-date-time #dtRange3></owl-date-time>           
         </div>
@@ -52,7 +56,11 @@
                     <input class="custom-radio" type="radio" 
                     name="promocodeUses"
                     [value]="true"
-                    [(ngModel)]="responseData.infinity" >
+                    [(ngModel)]="responseData.infinity"
+                    #uses="ngModel"   
+                    required
+                    [class.is-invalid]="uses.invalid && (uses.touched || form.submitted)"
+                    >
                     <span class="custom-span">No Limit</span>
                 </label>
             </div>
@@ -65,6 +73,9 @@
                   name="promocodeUses"
                   [value]='false'
                   [(ngModel)]="responseData.infinity" 
+                  #uses="ngModel"   
+                  required
+                  [class.is-invalid]="uses.invalid && (uses.touched || form.submitted)"
                     >
                   <span class="custom-span">Number of Uses</span>
                 
@@ -82,11 +93,6 @@
      
       <div class="col-12 pt-4 pb-4">
         <button class="btn step-next mx-auto" type="submit"  *ngIf="btnvisibility" (click)="onSubmit(form)">Add</button>  
-        <button class="btn step-next mx-auto" type="submit" *ngIf="!btnvisibility" (click)="onUpdate()">Update</button>  
-       
-          <!-- <button class="btn step-next mx-auto" type="submit">
-              <span>Add</span>
-          </button> -->
       </div>
   </div>
 </form>

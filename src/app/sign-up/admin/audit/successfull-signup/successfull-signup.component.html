@@ -2,7 +2,8 @@
     <app-dots-loader *ngIf="isLoader"></app-dots-loader>
     <div class="row mb-4 mt-4">
       <div class="col-lg-4 text-left">
-          <input type="text" class="form-control searchbar"  trim="blur" placeholder="Search..." (keyup)="searchCustomer($event)">
+          <input type="text" class="form-control searchbar"  trim="blur" placeholder="Search..." 
+          (keyup)="searchCustomer($event)">
       </div>
       <div class="col-lg-5  p-0  text-right ">
           <input placeholder="Select a range..." 
@@ -29,15 +30,15 @@
           <div class="table-responsive table-responsive-md table-responsive-lg table-responsive-sm">
           <table class="table table-striped">
               <thead>
-                  <th (click)="sorting('firstName')">First Name</th>
-                  <th (click)="sorting('lastName')">Last Name</th>
-                  <th (click)="sorting('email')">Email</th>
-                  <th (click)="sorting('planName')">Plan Name</th>
-                  <th (click)="sorting('spAccount')">SP Number</th>
-                  <th (click)="sorting('promoCode')">Promo Code</th>
-                  <th (click)="sorting('address')">Address</th>
-                  <th (click)="sorting('initial')"> Initial Timestamp</th>
-                  <th (click)="sorting('final')">Final Timestamp</th>
+                  <th id="firs" class="arrow-down" (click)="sortingValue[0]=!sortingValue[0];sorting('firstName',sortingValue[0]); addClass($event)">First Name</th>
+                  <th id="last" class="arrow-down" (click)="sortingValue[1]=!sortingValue[1];sorting('lastName',sortingValue[1]); addClass($event)">Last Name</th>
+                  <th id="email" class="arrow-down" (click)="sortingValue[2]=!sortingValue[2];sorting('email',sortingValue[2]); addClass($event)">Email</th>
+                  <th id="plan" class="arrow-down" (click)="sortingValue[3]=!sortingValue[3];sorting('planName',sortingValue[3]); addClass($event)">Plan Name</th>
+                  <th id="spNumber" class="arrow-down" (click)="sortingValue[4]=!sortingValue[4];sorting('spAccount',sortingValue[4]); addClass($event)">SP Number</th>
+                  <th id="promocode" class="arrow-down" (click)="sortingValue[5]=!sortingValue[5];sorting('promoCode',sortingValue[5]); addClass($event)">Promo Code</th>
+                  <th id="address" class="arrow-down" (click)="sortingValue[6]=!sortingValue[6];sorting('address',sortingValue[6]); addClass($event)">Address</th>
+                  <th id="initialTime" class="arrow-down" (click)="sortingValue[7]=!sortingValue[7];sorting('initial',sortingValue[7]); addClass($event)"> Initial Timestamp</th>
+                  <th id="finalTime" class="arrow-down" (click)="sortingValue[8]=!sortingValue[8];sorting('final',sortingValue[8]); addClass($event)">Final Timestamp</th>
               </thead>
               <tbody>
                   <tr *ngFor="let customerList of successData ; let i=index;">

@@ -12,10 +12,11 @@ import * as moment from 'moment'
   styleUrls: ['./add-promocode.component.scss']
 })
 export class AddPromocodeComponent implements OnInit {
-  model:any ={ promoCode : '', dateFrom : '', dateTo : '', isInfinity : "true", noOfLimitedUsers : ''  };
+  model:any ={ promoCode : '', dateFrom : '', dateTo : '', infinity : "true", noOfLimitedUsers : ''  };
   public dateTimeRange:any;
   btnvisibility: boolean = true;  
   isLoader:boolean;
+  responseData:any={}
 
   constructor(private service : ApiServiceServiceService,
     private dateFormat:DatePipe,
@@ -23,10 +24,11 @@ export class AddPromocodeComponent implements OnInit {
     private activatedRoute : ActivatedRoute,
     private toastr:ToastrService) { }
 
-    responseData:any={}
+   
 
   ngOnInit() {
     this.getPromoCodeById();
+
     
   }
 
@@ -36,24 +38,16 @@ export class AddPromocodeComponent implements OnInit {
     console.log(id);
     let datefrom = new Date()
     
-  if(id){
+  if(id!=null){
    this.service.get_service(ApiServiceServiceService.apiList.getPromoCodeById+"?promoId="+id).subscribe((response:any)=>{
    
      let datefrom:any[]=[]
      datefrom.push(moment(response.data.dateFrom,"DD-MM-YYYY,h:mm:ss").format())
      datefrom.push(moment(response.data.dateTo,"DD-MM-YYYY,h:mm:ss").format())
      this.responseData = response.data
-     this.dateTimeRange = datefrom;    
-   //  this.dateTimeRange=momemt(response.data.dateFrom).format()
-     // this.model.promoCode = response.data.promoCode;
-
-     // this.model.dateFrom = response.data.dateFrom;
-     // this.model.noOfLimitedUsers = response.data.noOfLimitedUsers;    
-   })
-    
+     this.dateTimeRange = datefrom;
+   })    
   }
-
-
   }
 
 
@@ -62,19 +56,13 @@ getTimeStamp(time){
 }
 
   onSubmit(form: NgForm){
+    if(form.valid){
     this.responseData.dateFrom=this.getTimeStamp(this.dateTimeRange[0])
     this.responseData.dateTo=this.getTimeStamp(this.dateTimeRange[1])
     this.responseData.noOfLimitedUsers=this.responseData.infinity?null:this.responseData.noOfLimitedUsers
     console.log(this.responseData);
     if(form.valid){
       this.isLoader=true;
-      // var promocode = new Promocode()
-      // promocode.promoCode = this.model.promoCode;
-      // promocode.dateFrom = this.getTimeStamp(this.dateTimeRange[0]);
-      // promocode.dateTo = this.getTimeStamp(this.dateTimeRange[1])
-      // promocode.infinity = this.model.isInfinity;
-      // promocode.noOfLimitedUsers = this.model.noOfLimitedUsers;
-      // console.log('promocode added', promocode);
       this.service.post_service(ApiServiceServiceService.apiList.addPromoCodeUrl,this.responseData).subscribe((response)=>{
        let responseData = response;
         let statusCode = responseData['statusCode']
@@ -90,5 +78,11 @@ getTimeStamp(time){
       form.resetForm();      
   }
  }
+ else{
+  this.toastr.error('', 'Please fill the form.', {
+    timeOut: 2000
+    });
+ }
+}
 
 }

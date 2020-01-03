@@ -69,13 +69,15 @@ export class ApproveComponent implements OnInit {
   pickedLocation: string = null;
   selectedPlanIndex:number;
   verified : boolean;
+  sortParams="fullName"
+  sort = 'asc';
+  sortingValue=[true,true,true,true]
 
   spFlag:boolean;
   isPlanFlag:boolean;
   isPostalFlag:boolean;
   isDwellingFlag:boolean;
   isPromoCodeFlag:boolean;
-
   config = { validationRegex: null };
   newServiceAddress = { houseNo: '', level: '', unitNo: '', levelUnit: '', streetName: '', buildingName: '' };
 
@@ -159,7 +161,7 @@ export class ApproveComponent implements OnInit {
   getCustomerForApproval(){
     this.isLoader=true;
     this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl
-      +"?size="+this.size+'&page='+(this.page-1)).subscribe((responseData:any)=>{
+      +"?size="+this.size+'&page='+(this.page-1)+"&sort="+this.sortParams+','+this.sort).subscribe((responseData:any)=>{
      this.isLoader=false;
       var resultObject = responseData['data'];
       this.totalItems = resultObject.totalElements;   
@@ -522,9 +524,26 @@ keyPress(event: any) {
       }
 }
 
-sorting(value){
+
+sorting(value, format){
+
+  let pageNumber =0
+  if(this.page==0){
+    pageNumber=0
+  }else{
+    pageNumber=this.page-1;
+  }
+ 
+  this.sort="asc"
+  if(format) {
+   this.sort = "asc"
+  } else {
+   this.sort = "desc"
+  }
   if(value == 'spAccount' ){
-    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=spAccountNumberDetails.spAccountNumber,asc").subscribe((response:any)=>{
+    this.sortParams="spAccountNumberDetails.spAccountNumber";
+    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl+
+      "?sort=spAccountNumberDetails.spAccountNumber,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
       this.approvalData = response.data.content;
     
       
@@ -533,30 +552,46 @@ sorting(value){
 
  
  else if(value == 'address'){
-   this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=addressData.buildingName,asc").subscribe((response:any)=>{
+  this.sortParams = 'addressData.buildingName'
+   this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl
+    +"?sort=addressData.buildingName,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
      this.approvalData = response.data.content;
      
 
    })
  }
- else if(value == 'lastName'){
-   this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=lastName,asc").subscribe((response:any)=>{
-     this.approvalData = response.data.content;
-   })
- }
  else if(value == 'name'){
-   this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=fullName,asc").subscribe((response:any)=>{
+  this.sortParams ='fullName';
+   this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl+"?sort=fullName,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
      this.approvalData = response.data.content;
    })
  }
  
+else if(value == 'final'){
+  this.sortParams = 'TimestampRecords.signUp'
+  this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl+"?sort=TimestampRecords.signUp,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
+    this.approvalData = response.data.content;
+  })
+}
+
 }
 
 searchCustomer(event){
   let name = event.target.value;
- this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?fullName.contains="+name).subscribe((response:any)=>{
+ this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl+"?fullName.contains="+name).subscribe((response:any)=>{
    this.approvalData = response.data.content;
 })
+}
+
+addClass(event){
+  let elementId = document.getElementById(event.target.id);
+  if(event.target.className == "arrow-down"){
+    console.log(elementId);
+    elementId.classList.replace("arrow-down","arrow-up");
+  }else{
+    elementId.classList.replace("arrow-up","arrow-down");
+  }
+
 }
 }
 

@@ -1,6 +1,6 @@
 <app-dots-loader *ngIf="isLoader"></app-dots-loader>
 <div class="container">
-    <div class="row mb-4 mt-4">
+    <div class="row mb-3 mt-3">
         <div class="col-lg-6 text-left">       
             <input placeholder="Select a range..." 
             class="form-control searchbar" 
@@ -35,11 +35,11 @@
               </thead>
               <tbody>
                 <tr *ngFor="let abandonedList of abandonedData | grdFilter: {plan_Details: searchTextAbandoned}; let i=index">
-                  <td>{{ abandonedList.planDetails }}</td>
-                  <td>{{ abandonedList.personal_Details }}</td>
-                  <td>{{ abandonedList.address_Details }}</td>
-                  <td>{{ abandonedList.upload_Documents }}</td>
-                  <td>{{ abandonedList.review_order }}</td>
+                  <td class="pt-3 pb-2">{{ abandonedList.planDetails }}</td>
+                  <td class="pt-2 pb-2">{{ abandonedList.personal_Details }}</td>
+                  <td class="pt-2 pb-2">{{ abandonedList.address_Details }}</td>
+                  <td class="pt-2 pb-2">{{ abandonedList.upload_Documents }}</td>
+                  <td class="pt-2 pb-3">{{ abandonedList.review_order }}</td>
                 </tr>
               </tbody>
           </table>

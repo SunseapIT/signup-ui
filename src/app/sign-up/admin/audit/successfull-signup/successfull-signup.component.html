@@ -1,11 +1,12 @@
   <!-- <div class="container"> -->
     <app-dots-loader *ngIf="isLoader"></app-dots-loader>
-    <div class="row mb-4 mt-4">
-      <div class="col-lg-4 text-left">
+    <div class="container-fluid">
+    <div class="row mb-3 mt-3">
+      <div class="col-lg-4 col-md-4 col-sm-12 text-left">
           <input type="text" class="form-control searchbar"  trim="blur" placeholder="Search..." 
           (keyup)="searchCustomer($event)">
       </div>
-      <div class="col-lg-5  p-0  text-right ">
+      <div class="col-lg-5 col-md-5 col-sm-12  p-0  text-right ">
           <input placeholder="Select a range..." 
           class="form-control searchbar" 
           [(ngModel)]="dateTimeRange" 
@@ -21,15 +22,16 @@
             </div>
           <owl-date-time #dtRange1></owl-date-time>         
       </div>
-      <div class="col-lg-3 csv-div  mt-2 text-right">
+      <div class="col-lg-3 col-md-3 csv-div  mt-2 text-right">
           <angular2csv [data]="csvDataSuccess" type="button" class="download" filename="SuccessfulSignup.csv" [options]="options">Download</angular2csv>
       </div>
   </div>
   <div class="row m-0 pl-0 pr-0">
-      <div class="col-lg-12 col-md-12 col-sm-12 pl-0 pr-0">
-          <div class="table-responsive table-responsive-md table-responsive-lg table-responsive-sm">
+      <div class="col-lg-12 col-md-12  pl-0 pr-0">
+          <div class="table-responsive">
           <table class="table table-striped">
               <thead>
+                
                   <th id="firs" class="arrow-down" (click)="sortingValue[0]=!sortingValue[0];sorting('firstName',sortingValue[0]); addClass($event)">First Name</th>
                   <th id="last" class="arrow-down" (click)="sortingValue[1]=!sortingValue[1];sorting('lastName',sortingValue[1]); addClass($event)">Last Name</th>
                   <th id="email" class="arrow-down" (click)="sortingValue[2]=!sortingValue[2];sorting('email',sortingValue[2]); addClass($event)">Email</th>
@@ -39,7 +41,8 @@
                   <th id="address" class="arrow-down" (click)="sortingValue[6]=!sortingValue[6];sorting('address',sortingValue[6]); addClass($event)">Address</th>
                   <th id="initialTime" class="arrow-down" (click)="sortingValue[7]=!sortingValue[7];sorting('initial',sortingValue[7]); addClass($event)"> Initial Timestamp</th>
                   <th id="finalTime" class="arrow-down" (click)="sortingValue[8]=!sortingValue[8];sorting('final',sortingValue[8]); addClass($event)">Final Timestamp</th>
-              </thead>
+              
+                </thead>
               <tbody>
                   <tr *ngFor="let customerList of successData ; let i=index;">
                       <td>{{customerList.fullName}}</td>
@@ -62,5 +65,6 @@
         </div>
           
     </div>
+  </div>
   </div>
  

@@ -1564,6 +1564,14 @@ p{
   margin: 100px auto;
 }
 
+// .table {
+//   width: 100%;
+//   margin-bottom: 1rem;
+//   color: #212529;
+//   table-layout: fixed;
+//   // overflow-wrap: break-word;
+
+// }
 .table th, .table td {
   padding: 0.9rem;
   font-size: 1em;
@@ -1591,6 +1599,14 @@ p{
     vertical-align: top;
     border-top: 1px solid #dee2e6;
   }   
+  .table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    table-layout: fixed;
+    overflow-wrap: break-word;
+  
+  }
    }
 
 .remove-time{
@@ -1611,11 +1627,50 @@ p{
    .content{
     margin-bottom: 5px;
   }
+  .table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    table-layout: fixed;
+    // overflow-wrap: break-word;
+    tbody {
+      display:block;
+      max-height:620px;
+      overflow:auto;
+      overflow-wrap: break-word;
+  }
+  
+  thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+  }
+  
+  }
     }
   @media (min-width: 767px) and (max-width: 768px){
     .sidebar{
      height: 100vh !important;
     }
+    .table {
+      width: 100%;
+      margin-bottom: 1rem;
+      color: #212529;
+      table-layout: fixed;
+
+  tbody {
+    display:block;
+    max-height:620px;
+    overflow:auto;
+    overflow-wrap: break-word;
+}
+
+thead, tbody tr {
+  display:table;
+  width:100%;
+  table-layout:fixed;
+}
+    } 
       
        }
   @media (max-width: 1280px){
@@ -1625,6 +1680,41 @@ p{
       .content{
         margin-bottom: 5px;
       }
+      .table {
+        width: 100%;
+        margin-bottom: 1rem;
+        color: #212529;
+        table-layout: fixed;
+        // overflow-wrap: break-word;
+        tbody {
+          display:block;
+          max-height:550px;
+          overflow:auto;
+          overflow-wrap: break-word;
+      }
+      
+      thead, tbody tr {
+        display:table;
+        width:100%;
+        table-layout:fixed;
+      }
+      
+      }
+
+
+  tbody {
+    display:block;
+    max-height:620px;
+    overflow:auto;
+    // overflow-wrap: break-word;
+}
+
+thead, tbody tr {
+  display:table;
+  width:100%;
+  table-layout:fixed;
+}
+  
   }
 
 .hide{
@@ -1635,6 +1725,21 @@ p{
   .card-box{
     width: 140px;;
     }
+
+
+  tbody {
+    display:block;
+    max-height:620px;
+    overflow:auto;
+    // overflow-wrap: break-word;
+}
+
+thead, tbody tr {
+  display:table;
+  width:100%;
+  table-layout:fixed;
+}
+  
    
 }
 
@@ -1717,7 +1822,7 @@ p{
     color: #000;
     font-weight: lighter;
     transform: rotate(0deg);
-    // transition: all 0.2s ease-in;
+    position : absolute;
   }
 
   .arrow-up::after {
@@ -1727,4 +1832,19 @@ p{
     color: #000;
     font-weight: lighter;
     transform: rotate(-180deg);
+    position : absolute;
   }
+
+//   tbody {
+//     display:block;
+//     max-height:620px;
+//     overflow:auto;
+//     // overflow-wrap: break-word;
+// }
+
+// thead, tbody tr {
+//   display:table;
+//   width:100%;
+//   table-layout:fixed;
+// }
+  

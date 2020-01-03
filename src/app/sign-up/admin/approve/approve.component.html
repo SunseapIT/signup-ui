@@ -1,6 +1,6 @@
 <!-- <div class="container"> -->
 <app-dots-loader *ngIf="isLoader"></app-dots-loader>
-<div class="row col-md-12 mb-2 mt-2">
+<div class="row col-md-12 col-sm-12 mb-3 mt-3">
     <div class="col-lg-4 text-left">
         <input type="text" class="form-control searchbar" placeholder="Search..."
         trim="blur" (keyup)="searchCustomer($event)">
@@ -28,9 +28,9 @@
                             {{customerList.postelCode}}
                         </td>
                         <td>{{customerList.sighnUpEndTimeStamp}}</td>
-                        <td *ngIf="customerList.approved"><i class="fa fa-check" style="color:#3AC76A;"
+                        <td class="ml-3" *ngIf="customerList.approved"><i class="fa fa-check" style="color:#3AC76A;"
                                 aria-hidden="true"></i></td>
-                        <td *ngIf="!customerList.approved"><i class="fa fa-times" aria-hidden="true"></i>
+                        <td  class="ml-3" *ngIf="!customerList.approved"><i class="fa fa-times" aria-hidden="true"></i>
                         </td>
                     </tr>
                 </tbody>

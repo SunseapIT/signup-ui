@@ -48,6 +48,7 @@ import { ViewPromocodeComponent } from './promo-code/view-promocode/view-promoco
     OwlNativeDateTimeModule,
     NgxPaginationModule,
     SharedModule,
+ 
     InputTrimModule,
     BsDatepickerModule.forRoot(),
     DatepickerModule.forRoot() ,

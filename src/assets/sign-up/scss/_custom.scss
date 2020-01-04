@@ -1817,34 +1817,27 @@ thead, tbody tr {
 
 .arrow-down::after {
     font-family: 'FontAwesome';
-    content: '\2193';
-    float: left;
-    color: #000;
-    font-weight: lighter;
-    transform: rotate(0deg);
+    content: '\279C';
+    margin-left: 5px;
+    color: #ffffff;
+    font-weight: bold;
+    transform: rotate(90deg);
     position : absolute;
   }
 
   .arrow-up::after {
     font-family: 'FontAwesome';
-    content: '\2193';
-    float: left;
-    color: #000;
-    font-weight: lighter;
-    transform: rotate(-180deg);
+    content: '\279C';
+    color: #ffffff;
+    margin-left: 5px;
+    font-weight: bold;
+    transform: rotate(270deg);
     position : absolute;
   }
 
-//   tbody {
-//     display:block;
-//     max-height:620px;
-//     overflow:auto;
-//     // overflow-wrap: break-word;
-// }
-
-// thead, tbody tr {
-//   display:table;
-//   width:100%;
-//   table-layout:fixed;
-// }
-  
+  .table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+    background-color: #d2232a;
+    color: #ffffff;
+}

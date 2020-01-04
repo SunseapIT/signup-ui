@@ -16,10 +16,24 @@
   .sidebar a:hover:not(.active) {
     background-color: #000;
     color: white;
-}
+    border-radius: 0 25px 25px 0;
+    // transition: background 0.5s linear 0s, color 0.5s linear 0s;
+    }
   a.active{
     background-color: #cb2b2b !important;
     color: white !important;
+    border-radius: 0 25px 25px 0;
+}
+
+.menu-toggle[data-toggle].collapsed:after {
+  content: "▾";
+  float: right;
+  padding-right: 10px;
+}
+.menu-toggle[data-toggle]:not(.collapsed):after {
+  content: "▴";
+  float: right;
+  padding-right: 10px;
 }
 
 
@@ -66,3 +80,4 @@ header#header div.content-header {
 }
 
 }
+

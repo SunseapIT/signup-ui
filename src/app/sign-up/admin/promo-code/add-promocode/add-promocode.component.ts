@@ -13,8 +13,7 @@ import * as moment from 'moment'
 })
 export class AddPromocodeComponent implements OnInit {
   model:any ={ promoCode : '', dateFrom : '', dateTo : '', infinity : "true", noOfLimitedUsers : ''  };
-  public dateTimeRange:any;
-  btnvisibility: boolean = true;  
+  public dateTimeRange:any; 
   isLoader:boolean;
   responseData:any={}
 
@@ -27,20 +26,14 @@ export class AddPromocodeComponent implements OnInit {
    
 
   ngOnInit() {
-    this.getPromoCodeById();
-
-    
+    this.getPromoCodeById();    
   }
 
 
   getPromoCodeById(){
-    let id = this.activatedRoute.snapshot.params['id'];
-    console.log(id);
-    let datefrom = new Date()
-    
-  if(id!=null){
-   this.service.get_service(ApiServiceServiceService.apiList.getPromoCodeById+"?promoId="+id).subscribe((response:any)=>{
-   
+    let id = this.activatedRoute.snapshot.params['id'];  
+   if(id!=null){
+   this.service.get_service(ApiServiceServiceService.apiList.getPromoCodeById+"?promoId="+id).subscribe((response:any)=>{   
      let datefrom:any[]=[]
      datefrom.push(moment(response.data.dateFrom,"DD-MM-YYYY,h:mm:ss").format())
      datefrom.push(moment(response.data.dateTo,"DD-MM-YYYY,h:mm:ss").format())
@@ -59,8 +52,7 @@ getTimeStamp(time){
     if(form.valid){
     this.responseData.dateFrom=this.getTimeStamp(this.dateTimeRange[0])
     this.responseData.dateTo=this.getTimeStamp(this.dateTimeRange[1])
-    this.responseData.noOfLimitedUsers=this.responseData.infinity?null:this.responseData.noOfLimitedUsers
-    console.log(this.responseData);
+    this.responseData.noOfLimitedUsers=this.responseData.infinity?null:this.responseData.noOfLimitedUsers;
     if(form.valid){
       this.isLoader=true;
       this.service.post_service(ApiServiceServiceService.apiList.addPromoCodeUrl,this.responseData).subscribe((response)=>{
@@ -68,7 +60,6 @@ getTimeStamp(time){
         let statusCode = responseData['statusCode']
         if(statusCode == 200){
         this.isLoader=false;
-
         this.router.navigateByUrl('/admin-login/admin-dash/view-promo')
         this.toastr.success('', 'Promo Code added successfully', {
          timeOut: 2000

@@ -1,13 +1,14 @@
 <div class="sidebar" id="menu-sidebar">
-
+    <div id="accordion">
   <div class="row">
+
       <div class="col-md-12 col-xl-12 pl-0">
           <a class="menu-toggle" data-toggle="collapse" data-target="#plan" role="button"
           aria-expanded="true" aria-controls="family">
               &nbsp; <strong>PLAN DETAIL</strong></a>
       </div>
   </div>
-  <div id="plan"  class="collapse show">
+  <div id="plan"  class="collapse" data-parent="#accordion">
       <a class="menus" [routerLinkActive]="['active']" routerLink="../admin-dash" [routerLinkActiveOptions]="{exact:
         true}"><i class="fa fa-plus"  ></i>&nbsp; Add Plan</a>
       <a class="menus" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:
@@ -20,7 +21,7 @@
             &nbsp; <strong>PROMO CODE</strong></a>
       </div>
   </div>
-  <div id="promo"  class="collapse show">
+  <div id="promo"  class="collapse" data-parent="#accordion"> 
       <a class="menus" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:
     true}" routerLink="../admin-dash/promo"><i class="fa fa-plus" aria-hidden="true" ></i>&nbsp; Add Promo Code</a>
       <a class="menus" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:
@@ -34,7 +35,7 @@
        &nbsp; <strong>AUDIT LOG</strong></a>
       </div>
   </div>
-  <div id="audit"  class="collapse show">
+  <div id="audit"  class="collapse" data-parent="#accordion">
       <a class="menus" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:
 true}" routerLink="../admin-dash/successful"><i class="fa fa-sign-in" aria-hidden="true" ></i>&nbsp; Successful Sign-Up</a>
       <a class="menus" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:
@@ -52,6 +53,7 @@ true}" routerLink="../admin-dash/successful"><i class="fa fa-sign-in" aria-hidde
   <div id="approve"  class="collapse show">
       <a class="menus" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:
   true}" routerLink="../admin-dash/approve"><i class="fa fa-check" aria-hidden="true" ></i>&nbsp; Approve</a>
+  </div>
   </div>
 
 </div>

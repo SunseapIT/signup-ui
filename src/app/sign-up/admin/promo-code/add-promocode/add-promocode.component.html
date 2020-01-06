@@ -59,7 +59,7 @@
                     [(ngModel)]="responseData.infinity"
                     #uses="ngModel"   
                     required
-                    [class.is-invalid]="uses.invalid && (uses.touched || form.submitted)"
+                    [class.is-invalid]="uses.invalid && form.submitted"
                     >
                     <span class="custom-span">No Limit</span>
                 </label>
@@ -75,7 +75,7 @@
                   [(ngModel)]="responseData.infinity" 
                   #uses="ngModel"   
                   required
-                  [class.is-invalid]="uses.invalid && (uses.touched || form.submitted)"
+                  [class.is-invalid]="uses.invalid && form.submitted"
                     >
                   <span class="custom-span">Number of Uses</span>
                 
@@ -87,12 +87,9 @@
             [(ngModel)]="responseData.noOfLimitedUsers">
           </div>
         </div>
-             </div>         
-      
-
-     
-      <div class="col-12 pt-4 pb-4">
-        <button class="btn step-next mx-auto" type="submit"  *ngIf="btnvisibility" (click)="onSubmit(form)">Add</button>  
+             </div>   
+        <div class="col-12 pt-4 pb-4">
+        <button class="btn step-next mx-auto" type="submit"  (click)="onSubmit(form)">Add</button>  
       </div>
   </div>
 </form>

@@ -1,3 +1,5 @@
+
+import { CustomerRemark } from './../../../core/services/customer-remark-dto';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { STORAGE_KEYS, ORDER_ROUTES, ORDER_GA_EVENT_NAMES } from './../../order/order.constant';
 import { LocalStorage } from '@ngx-pwa/local-storage';
@@ -103,6 +105,7 @@ export class ApproveComponent implements OnInit {
   authorization_fileName:string;
   opening_letter_fileName:string;
   files=[];
+  remarks:string;
   pdfSrc:any;
    promoCodeList:any[]=[];
   approvalStatus:boolean;
@@ -210,6 +213,7 @@ export class ApproveComponent implements OnInit {
     this.dwellingType = customerList.dwelingType;
     this.serviceNo= customerList.spAccountNumber;
     this.customerId = customerList.customerId;
+    this.remarks = customerList.remarks
     if(customerList.files){
       this.bill_fileName= customerList.files.bill_fileName;
       this.authorization_fileName= customerList.files.authorization_fileName;
@@ -252,6 +256,7 @@ export class ApproveComponent implements OnInit {
   this.dwellingType = customerList.dwelingType;
   this.serviceNo= customerList.spAccountNumber;
   this.customerId = customerList.customerId;
+  this.remarks = customerList.remarks
   if(customerList.files){
     this.bill_fileName= customerList.files.bill_fileName;
     this.authorization_fileName= customerList.files.authorization_fileName;
@@ -573,6 +578,12 @@ else if(value == 'final'){
     this.approvalData = response.data.content;
   })
 }
+else if(value == 'status'){
+  this.sortParams = 'isApproved'
+  this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl+"?sort=isApproved,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
+    this.approvalData = response.data.content;
+  })
+}
 
 }
 
@@ -586,11 +597,30 @@ searchCustomer(event){
 addClass(event){
   let elementId = document.getElementById(event.target.id);
   if(event.target.className == "arrow-down"){
-    console.log(elementId);
     elementId.classList.replace("arrow-down","arrow-up");
   }else{
     elementId.classList.replace("arrow-up","arrow-down");
   }
+}
+
+addRemark(form:NgForm){
+
+   this.customerDto 
+   var customerRemark = new CustomerRemark();
+   customerRemark.customerId = this.customerId;
+   customerRemark.remarks = form.form.value.remarks; 
+   this.service.post_service(ApiServiceServiceService.apiList.customerRemark,customerRemark).subscribe((response)=>{ 
+
+    this.toastr.success('','Added remarks/comments successfully.', {
+      timeOut : 2000
+    }) 
+
+    $('#customer').modal('hide');
+    this.getCustomerForApproval();
+     
+   })
+   form.resetForm()
+  
 
 }
 }

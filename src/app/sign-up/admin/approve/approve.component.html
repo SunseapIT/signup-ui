@@ -1,5 +1,6 @@
-<!-- <div class="container"> -->
 <app-dots-loader *ngIf="isLoader"></app-dots-loader>
+<div class="container">
+
 <div class="row col-md-12 col-sm-12 mb-3 mt-3">
     <div class="col-lg-4 text-left">
         <input type="text" class="form-control searchbar" placeholder="Search..."
@@ -15,23 +16,24 @@
                     <th id="spAccount" class="arrow-down" (click)="sortingValue[1]= !sortingValue[1];sorting('spAccount',sortingValue[1]); addClass($event)">SP Account Number</th>
                     <th id="address" class="arrow-down" (click)="sortingValue[2]= !sortingValue[2];sorting('address',sortingValue[2]); addClass($event)">Address</th>
                     <th id="signedUp" class="arrow-down" (click)="sortingValue[3]= !sortingValue[3];sorting('final',sortingValue[3]); addClass($event)">Date of Sign Up</th>
-                    <th>Status</th>
+                    <th style="width: 100px;" id="status" class="arrow-down" (click)="sortingValue[4]= !sortingValue[4];sorting('status',sortingValue[4]); addClass($event)">Status</th>
+                    <th >Record</th>
                 </thead>
                 <tbody>
                     <tr [ngClass]="customerList.duplicate== 'EXISTING_CUSTOMER' ? 'text-danger' : ''" 
                     *ngFor="let customerList of approvalData | grdFilter: {fullName: searchTextSuccess, spAccountNumber:searchTextSuccess};  let i=index;" (click)="editCustomer(customerList)">
                         <td>{{customerList.fullName}}</td>
                         <td>{{customerList.spAccountNumber}}</td>
-                        <td>{{customerList.houseNumber}} &nbsp;
-                            {{customerList.buildingName}} &nbsp; 
+                        <td class="text-left">{{customerList.houseNumber}}{{customerList.buildingName}} &nbsp; 
                             {{customerList.streetName}} &nbsp;
                             {{customerList.postelCode}}
                         </td>
                         <td>{{customerList.sighnUpEndTimeStamp}}</td>
-                        <td class="ml-3" *ngIf="customerList.approved"><i class="fa fa-check" style="color:#3AC76A;"
+                        <td class="ml-5 text-center" style="width: 100px;" *ngIf="customerList.approved"><i class="fa fa-check" style="color:#3AC76A;"
                                 aria-hidden="true"></i></td>
-                        <td  class="ml-3" *ngIf="!customerList.approved"><i class="fa fa-times" aria-hidden="true"></i>
+                        <td  class="ml-5 text-center" style="width: 100px;" *ngIf="!customerList.approved"><i class="fa fa-times" aria-hidden="true"></i>
                         </td>
+                        <td>{{customerList.newUserMessage}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -422,7 +424,7 @@
                             </div>                 
                         </div>
                     </div>
-                    <div class="row mt-5">
+                    <div class="row mt-3">
                         <div class="col-md-12 col-xl-12">
                             <a class="lc-title text-decoration-none ml-4" aria-expanded="false" aria-controls="family">
                                 &nbsp; Final Approval Date
@@ -433,6 +435,20 @@
                                     [minDate]="lastApproveDate" bsDatepicker readOnly [(bsValue)]="approvalDate">
                             </div>
                         </div>
+                    </div>
+                    <div class="row mt-3">
+                        <form #f=ngForm>
+                        <div class="col-md-12 col-xl-12">
+                            <a class="lc-title text-decoration-none ml-4" aria-expanded="false" aria-controls="family">
+                                &nbsp; Comments/Remarks
+                            </a>
+                            <div class="col-xs-12 col-md-6 form-group ml-3">&nbsp;
+                            <textarea rows="4" cols="30" name="remarks" [(ngModel)]="remarks">                               
+                            </textarea>
+                            <button class="btn btn-success" type="submit" (click)="addRemark(f)">Add</button>
+                            </div>
+                        </div>
+                        </form>
                     </div>
                     <div class="row  mt-5 mb-5">
                         <div class="col-md-12 col-sm-12">
@@ -447,7 +463,7 @@
     </div>
 </div>
 
-
+ <!-- Approved Customer -->
 <div class="modal right slideInRight" id="approved" tabindex="-1" role="dialog" style="margin-right: 0px !;">
     <div class="modal-dialog">
         <div class="model-cst modal-content">
@@ -480,7 +496,7 @@
                                 <div class="col-lg-4 col-sm-6">SP account No:</div>
                                 <div class="col-lg-7 col-sm-5 font-weight-bold">
                                     <div class="card-text-right p-0">
-                                        <div *ngIf="!spFlag" class="input-group">
+                                        <div  class="input-group">
                                             {{serviceNo}}
                                         </div>                                  
 
@@ -606,7 +622,7 @@
                                 <div class="col-lg-4 col-sm-6">Building name:</div>
                                 <div class="col-lg-7 col-sm-6 font-weight-bold">
                                     <div class="card-text-right p-0">
-                                        <div *ngIf="!isPostalFlag" class="input-group">
+                                        <div class="input-group">
                                             {{buildingName}}
                                         </div>
                                     </div>
@@ -722,8 +738,17 @@
                             </div>
                         </div>
                     </div> 
+                    <div class="row mt-5">
+                        <div class="col-lg-4 col-sm-6">Remark/Comments:</div>
+                        <div class="col-lg-7 col-sm-6 font-weight-bold">
+                            <div class="card-text-right p-0">
+                                {{remarks}}
+                            </div>
+                        </div>
+                    </div> 
                 </form>
             </div>
         </div>
     </div>
+</div>
 </div>

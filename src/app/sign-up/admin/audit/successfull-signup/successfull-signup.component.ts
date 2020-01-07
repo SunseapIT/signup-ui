@@ -19,7 +19,6 @@ export class SuccessfullSignupComponent implements OnInit {
   page:number;
   currentPage=1;
   isLoader:boolean=false;
-
   csvDataSuccess=[]
   options = {
     fieldSeparator: ',',

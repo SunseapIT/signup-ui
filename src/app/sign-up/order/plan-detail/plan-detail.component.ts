@@ -1,12 +1,9 @@
 import { ApiServiceServiceService } from './../../../api-service-service.service';
 import { Component, OnInit, Host, ViewChild, HostListener, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-
 import * as moment from 'moment';
 import * as _ from 'lodash';
-
 import { LocalStorage } from '@ngx-pwa/local-storage';
-
 import { OrderComponent } from '../order.component';
 import { STORAGE_KEYS, ORDER_GA_EVENT_NAMES } from '../order.constant';
 import {

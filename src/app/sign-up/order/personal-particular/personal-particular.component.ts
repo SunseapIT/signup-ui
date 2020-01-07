@@ -131,7 +131,6 @@ export class PersonalParticularComponent implements OnInit {
       form.resetForm();
     }
   }
-
  
   requestEmailOTP(verifyEmail){
     this.verificationProgress = 'pending';

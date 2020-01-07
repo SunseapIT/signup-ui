@@ -40,8 +40,10 @@ export class CustomerDto {
     
    streetName:string;
    
+   country : string;
+
    sighnUpStarTimeStamp:string;
 
    sighnUpEndTimeStamp:string;
-
+   
 }

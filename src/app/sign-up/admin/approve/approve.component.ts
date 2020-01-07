@@ -110,6 +110,7 @@ export class ApproveComponent implements OnInit {
    promoCodeList:any[]=[];
   approvalStatus:boolean;
   postalCode:any;
+  country:string;
   verifiedPromocodes:any[]=[];
   duplicatePromoCode:boolean;
    arrowPlan:boolean;
@@ -213,7 +214,8 @@ export class ApproveComponent implements OnInit {
     this.dwellingType = customerList.dwelingType;
     this.serviceNo= customerList.spAccountNumber;
     this.customerId = customerList.customerId;
-    this.remarks = customerList.remarks
+    this.remarks = customerList.remarks;
+    this.country= customerList.country;
     if(customerList.files){
       this.bill_fileName= customerList.files.bill_fileName;
       this.authorization_fileName= customerList.files.authorization_fileName;
@@ -256,7 +258,8 @@ export class ApproveComponent implements OnInit {
   this.dwellingType = customerList.dwelingType;
   this.serviceNo= customerList.spAccountNumber;
   this.customerId = customerList.customerId;
-  this.remarks = customerList.remarks
+  this.remarks = customerList.remarks;
+  this.country= customerList.country;
   if(customerList.files){
     this.bill_fileName= customerList.files.bill_fileName;
     this.authorization_fileName= customerList.files.authorization_fileName;

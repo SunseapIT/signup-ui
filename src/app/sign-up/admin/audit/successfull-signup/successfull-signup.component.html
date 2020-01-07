@@ -52,14 +52,13 @@
                       <td>{{customerList.spAccountNumber}}</td>
                       <td>{{customerList.promoCode}}</td>
                       <td>{{customerList.houseNumber}} &nbsp;
-                        {{customerList.buildingName}} &nbsp; {{customerList.streetName}} &nbsp;
+                        {{customerList.buildingName}} &nbsp; {{customerList.streetName}} &nbsp;{{customerList.country}}
                         {{customerList.postelCode}}
                     </td>
                       <td>{{customerList.sighnUpStarTimeStamp}}</td>
                       <td>{{customerList.sighnUpEndTimeStamp}}</td>
                   </tr>
               </tbody>
-
           </table>
           <pagination [totalItems]="totalItems" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="5"></pagination>
         </div>

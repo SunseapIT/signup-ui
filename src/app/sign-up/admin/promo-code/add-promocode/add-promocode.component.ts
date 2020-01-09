@@ -2,9 +2,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { ApiServiceServiceService } from '@app/api-service-service.service';
-import { Promocode } from './../../dto/promo-dto';
 import { Component, OnInit } from '@angular/core';
-import { NgModel, NgForm } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import * as moment from 'moment'
 @Component({
   selector: 'app-add-promocode',

@@ -262,8 +262,7 @@ viewFactSheet(){
   }
 
   verifyPromotionCode(index) {
-    let promocode = this.promoCode[index].referralCode; 
-   
+    let promocode = this.promoCode[index].referralCode.toLowerCase();   
     if(this.verifiedPromocodes.length){
       this.verified=true;
      this.verifiedPromocodes.findIndex(item => item == promocode)

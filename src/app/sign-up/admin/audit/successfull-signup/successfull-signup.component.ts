@@ -11,7 +11,9 @@ export class SuccessfullSignupComponent implements OnInit {
 
   public dateTimeRange: Date[];
   
-  
+  sort="asc"
+  sortParam='fullName'
+  sortingValue=[true,true,true,true,true,true,true,true,true]
   successData =[];
   p:number=1;
   searchTextSuccess : string;
@@ -147,9 +149,7 @@ export class SuccessfullSignupComponent implements OnInit {
       }) 
    }   
  }
-  sort="asc"
-  sortParam='fullName'
-sortingValue=[true,true,true,true,true,true,true,true,true]
+ 
  sorting(value, format){  
    let pageNumber =0
    if(this.page==0){

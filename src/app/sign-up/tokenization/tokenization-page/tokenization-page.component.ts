@@ -1,5 +1,4 @@
 import { ToastrService } from 'ngx-toastr';
-import { HttpParams } from '@angular/common/http';
 import { PaymentDto } from './../../../core/services/token-dto';
 import { CustomerDto } from '@app/core/customer-dto';
 import { ApiServiceServiceService } from '@app/api-service-service.service';
@@ -102,24 +101,35 @@ export class TokenizationPageComponent implements OnInit {
  
   onSelectYear(event){
     this.monthIndex = this.months.findIndex(item => item.monthId == this.modal.expMonth);
-    if(this.expYear == this.modal.expYear){
+    if(this.expYear == Number(this.modal.expYear)){
       if(this.monthIndex > -1 && this.monthIndex < this.expMonth){
+        console.log('First If Block');
+        
         this.modal.expMonth = "";
-        this.toster.error('','This card has been expired.', {
+        this.toster.error('','This card has been expired 1.', {
           timeOut : 3000
         })
 
         
       }
-      if((this.modal.expMonth > this.expMonth) && (this.months.length <= (this.expMonth +3))){
+      if((Number(this.modal.expMonth) > this.expMonth+1) && (this.months.length <= (this.expMonth +3))){
+        console.log('Second If Block');
         this.modal.expMonth = "";
-        this.toster.error('','This card has been expired.', {
+        this.toster.error('','This card has been expired 2.', {
           timeOut : 3000
         })
-      }
-    }else{
-      if((this.expYear+1) == this.modal.expYear){
-        if(this.monthIndex < 3){
+       }
+     // else{
+      //   this.modal.expMonth = "";
+      //   this.toster.error('','This card has been expired 3.', {
+      //     timeOut : 3000
+      //   })
+      // }
+    }
+    else{
+      if(this.expYear == this.modal.expYear){
+        console.log('Third If Block');
+        if(this.monthIndex +3 ){
           this.modal.expMonth = "";
           this.toster.error('','This card is invalid.', {
             timeOut : 3000

@@ -17,6 +17,15 @@ export class ViewPromocodeComponent implements OnInit {
   promoCodeData =[];
   public dateTimeRange: Date[];
   isLoader:boolean;
+  searchText:any;
+  promoCode:string;
+  dateFrom:string;
+  dateTo:string;
+  noOfLimitedUsers:any;
+  isInfinity:boolean= true;
+  page:number;
+  currentPage:number = 1;
+  totalItems:any;
 
   constructor(private service : ApiServiceServiceService,
     private toastr : ToastrService,
@@ -38,24 +47,8 @@ export class ViewPromocodeComponent implements OnInit {
     })
   }
 
-  promoCode:string;
-  dateFrom:string;
-  dateTo:string;
-  noOfLimitedUsers:any;
-  isInfinity:boolean= true;
-  page:number;
-  currentPage:number = 1;
-  totalItems:any;
-
-
   edit(id:number){
-    this.router.navigate(['admin-login/admin-dash/edit',id])
-    // $('#editPromoCode').modal('show')
-    // this.promoCode = promoData.promoCode;
-    // this.dateFrom = promoData.dateFrom;
-    // this.dateTo = promoData.dateTo;
-    // this.noOfLimitedUsers = promoData.noOfLimitedUsers;
-    // this.isInfinity = promoData.infinity;
+    this.router.navigate(['admin-login/admin-dash/edit',id]);
   }
 
   pageChanged(event: any): void {
@@ -67,7 +60,6 @@ export class ViewPromocodeComponent implements OnInit {
 
 
   delete(id){    
-   
     this.service.get_service(ApiServiceServiceService.apiList.deletePromoCodeUrl+"?promoId="+id).subscribe((response)=>{
       var responseData  = response;
       var resultObject = responseData['data'];
@@ -75,7 +67,6 @@ export class ViewPromocodeComponent implements OnInit {
       promoCode = resultObject;
       var findIndex = this.promoCodeData.findIndex(promoCodeId =>promoCodeId.id === promoCode.id);
       this.promoCodeData.splice(findIndex,1);
-
       this.toastr.success('', 'Promo Code has been successfully removed.', {
         timeOut: 2000
       }); 

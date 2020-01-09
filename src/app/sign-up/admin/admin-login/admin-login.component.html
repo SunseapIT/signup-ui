@@ -24,10 +24,14 @@
 
                   <div class="row">
                       <div class="form-group  col-lg-6 offset-lg-3">
-                          <label class="form-control-label" for="username">Username</label>
-                          <input type="text" name="username" class="form-control" [(ngModel)]="model.username" #username="ngModel" [class.is-invalid]="username.invalid && (username.touched || form.submitted)" required>
-                          <div *ngIf="username.invalid && (username.touched || form.submitted)" class="invalid-feedback">
-                              <div *ngIf="username?.errors.required">
+                          <label class="form-control-label" for="userId">Username</label>
+                          <input type="text" name="userId" class="form-control" 
+                          [(ngModel)]="model.userId" 
+                          #userId="ngModel" 
+                          [class.is-invalid]="userId.invalid && (userId.touched || form.submitted)" 
+                          required>
+                          <div *ngIf="userId.invalid && (userId.touched || form.submitted)" class="invalid-feedback">
+                              <div *ngIf="userId?.errors.required">
                                   <i>Username is required</i>
                               </div>
                           </div>
@@ -36,7 +40,11 @@
                   <div class="row">
                       <div class="form-group col-lg-6 offset-lg-3">
                           <label class="form-control-label" for="password">Password</label>
-                          <input type="password" name="password" class="form-control" [(ngModel)]="model.password" #password="ngModel" [class.is-invalid]="password.invalid && (password.touched || form.submitted)" required>
+                          <input type="password" name="password" class="form-control" 
+                          [(ngModel)]="model.password" 
+                          #password="ngModel" 
+                          [class.is-invalid]="password.invalid && (password.touched || form.submitted)" 
+                          required>
                           <div *ngIf="password.invalid && (password.touched || form.submitted)" class="invalid-feedback">
                               <div *ngIf="password?.errors.required">
                                   <i>Password is required</i>

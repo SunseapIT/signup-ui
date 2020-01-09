@@ -14,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AdminLoginComponent implements OnInit {
  
-  model: any = {};
+  model: any = { userId : '' , password : ''};
  constructor(private router:Router,
     private apiService :ApiServiceServiceService,
     private toastr: ToastrService) { }
@@ -26,26 +26,23 @@ export class AdminLoginComponent implements OnInit {
   onSubmit(form: NgForm) {        
     if(form.valid){
     var loginBean = new LoginBean();
-    loginBean.userId = form.value.username;
-    loginBean.password = form.value.password;
+     loginBean = this.model
     this.apiService.post_service(ApiServiceServiceService.apiList.adminLogin,loginBean).subscribe((response)=>{
       var responseData = response;
       if(responseData['statusCode']==200){
         var resultObject = responseData['data']
         var token = resultObject['token'];
         localStorage.setItem("Authorization",token);
-        this.router.navigateByUrl('/admin-login/admin-dash')
-     
-      }
-     
-      
+        this.router.navigateByUrl('/admin-login/admin-dash');    
+      }      
     },error =>{
       this.toastr.error("", error.message)
     })
   }
   }
 
-   home(){
+
+home(){
      this.router.navigateByUrl(ORDER_ROUTES.PLAN_DETAIL);
    }
 }

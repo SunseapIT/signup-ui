@@ -1,13 +1,13 @@
 
 import { CustomerRemark } from './../../../core/services/customer-remark-dto';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { STORAGE_KEYS, ORDER_ROUTES, ORDER_GA_EVENT_NAMES } from './../../order/order.constant';
+import { STORAGE_KEYS, ORDER_GA_EVENT_NAMES } from './../../order/order.constant';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { CustomerDto } from './../../../core/customer-dto';
 import { OrderComponent } from './../../order/order.component';
 import { DatePipe } from '@angular/common';
 import { ApiServiceServiceService } from './../../../api-service-service.service';
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalService, UtilService, DWELLING_TYPE_OPTIONS, GoogleTagManagerService } from '@app/core';
 import * as _ from 'lodash';
 import * as moment from 'moment';
@@ -15,8 +15,6 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BsLocaleService } from 'ngx-bootstrap'
-import { ThrowStmt } from '@angular/compiler';
-
 declare var require: any
 declare const $:any;
 
@@ -57,16 +55,12 @@ export class ApproveComponent implements OnInit {
   
   planList=[];
   approvalData =[];
-  p:number=1;
   searchTextSuccess : string;
   totalItems:any;
   currentPage: number=1;
   isLoader:boolean=false;
-  openButtonFlag = false;
-  showAddFlag=false;
   public i:number=0;
   promotionMessage = '';
-  arrow:boolean;
   validLocations = {};
   pickedLocation: string = null;
   selectedPlanIndex:number;
@@ -82,7 +76,6 @@ export class ApproveComponent implements OnInit {
   isPromoCodeFlag:boolean;
   config = { validationRegex: null };
   newServiceAddress = { houseNo: '', level: '', unitNo: '', levelUnit: '', streetName: '', buildingName: '' };
-
 
   promocodeStatus = false;
   customerDto = new CustomerDto();
@@ -118,6 +111,9 @@ export class ApproveComponent implements OnInit {
  arrowAddress:boolean;
  arrowUpload:boolean;
  arrowPlanType:boolean;
+ approvedDate:any;
+ promoCode:any;
+ finalApproved = {}
 
  approvedCustomerData=[];
   
@@ -149,7 +145,6 @@ export class ApproveComponent implements OnInit {
   }
 
   ngOnInit() {  
-  
     this.approvalStatus = this.customerDto.approved
     this.getCustomerForApproval();
     this.getPlans();
@@ -192,14 +187,19 @@ export class ApproveComponent implements OnInit {
     }
   }
 
-  approvedDate:any;
-  promoCode:any;
- editCustomer(customerList){
-  let approved = customerList.approved
-  if(approved ==true){
+  approvedCustomer(customerList){
     this.selectedPricingPlan = customerList.plan;
     //prepopulate selected value
     this.selectPlans(this.selectedPricingPlan);
+    this.promoCode = customerList.promoCode;
+    this.verifiedPromocodes=null
+    if(customerList.promoCode == null){
+      this.verifiedPromocodes=[];
+    }
+    else{
+      this.verifiedPromocodes=customerList.promoCode;
+    }
+
     this.promoCode = customerList.promoCode;
     this.fullName = customerList.fullName;
     this.lastName = customerList.lastName;
@@ -230,54 +230,18 @@ export class ApproveComponent implements OnInit {
     let seconds = this.sighnUpEndTimeStamp[2].toString().split(' ')[1].toString().split(':')[2];
     this.approvalDate =  new Date(year, month, day, hours, minutes, seconds);
     this.approvalDate.setDate(this.approvalDate.getDate() + 5);  
-    $('#approved').modal('show');
-   
+  }
+
+ 
+ editCustomer(customerList){
+  let approved = customerList.approved
+  if(approved ==true){
+    this.approvedCustomer(customerList)   
+    $('#approved').modal('show');   
   }
   else {
-  this.selectedPricingPlan = customerList.plan;
-  //prepopulate selected value
-  this.selectPlans(this.selectedPricingPlan);
-  this.promoCode = customerList.promoCode;
-  this.verifiedPromocodes=null
-  if(customerList.promoCode == null){
-    this.verifiedPromocodes=[];
-  }
-  else{
-    this.verifiedPromocodes=customerList.promoCode;
-  }
-  this.fullName = customerList.fullName;
-  this.lastName = customerList.lastName;
-  this.emailAddress = customerList.eamilAddress;
-  this.mobileNumber = customerList.mobileNumber;
-  this.houseNo = customerList.houseNo;
-  this.level = customerList.level;
-  this.unitNo = customerList.unitNo;
-  this.streetName= customerList.streetName;
-  this.buildingName = customerList.buildingName;
-  this.servicePostalCode= customerList.postelCode;
-  this.dwellingType = customerList.dwelingType;
-  this.serviceNo= customerList.spAccountNumber;
-  this.customerId = customerList.customerId;
-  this.remarks = customerList.remarks;
-  this.country= customerList.country;
-  if(customerList.files){
-    this.bill_fileName= customerList.files.bill_fileName;
-    this.authorization_fileName= customerList.files.authorization_fileName;
-    this.opening_letter_fileName= customerList.files.opening_letter_fileName;
-  }
-  this.sighnUpEndTimeStamp = customerList.sighnUpEndTimeStamp.split('-');
-  let day = this.sighnUpEndTimeStamp[0];
-  let month = this.sighnUpEndTimeStamp[1]-1;
-  let year = this.sighnUpEndTimeStamp[2].toString().split(' ')[0];
-  let hours = this.sighnUpEndTimeStamp[2].toString().split(' ')[1].toString().split(':')[0];
-  let minutes = this.sighnUpEndTimeStamp[2].toString().split(' ')[1].toString().split(':')[1];
-  let seconds = this.sighnUpEndTimeStamp[2].toString().split(' ')[1].toString().split(':')[2];
-  this.approvalDate =  new Date(year, month, day, hours, minutes, seconds);
-  this.lastApproveDate = new Date(year, month, day, hours, minutes, seconds);
-  this.lastApproveDate.setDate(this.lastApproveDate.getDate() + 5); 
-  this.approvalDate.setDate(this.approvalDate.getDate() + 5);
+  this.approvedCustomer(customerList)
    $('#customer').modal('show');
-
 }
 }
 
@@ -430,6 +394,10 @@ downloadFactSheet(){
 }
 
 editPromoCode(event){
+  console.log('code',event)
+
+  // console.log('codeeeeeee target',event.target.value);
+  
   this.isPromoCodeFlag = !this.isPromoCodeFlag;
   if(event){
     this.promoCodeList=null
@@ -474,7 +442,7 @@ addPromoCode(){
 }
 
 verifyPromotionCode(index) {
-  let promocode = this.promoCodeList[index].referralCode; 
+  let promocode = this.promoCodeList[index].referralCode.toLowerCase(); 
  
   if( this.verifiedPromocodes.length >0){
     this.verified=true;
@@ -524,6 +492,7 @@ selectPlans(value){
     }
   }
 }
+
 keyPress(event: any) {
   const pattern = /[0-9\-\ ]/;   
   let inputChar = String.fromCharCode(event.charCode);
@@ -534,14 +503,12 @@ keyPress(event: any) {
 
 
 sorting(value, format){
-
   let pageNumber =0
   if(this.page==0){
     pageNumber=0
   }else{
     pageNumber=this.page-1;
-  }
- 
+  } 
   this.sort="asc"
   if(format) {
    this.sort = "asc"
@@ -552,9 +519,7 @@ sorting(value, format){
     this.sortParams="spAccountNumberDetails.spAccountNumber";
     this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl+
       "?sort=spAccountNumberDetails.spAccountNumber,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
-      this.approvalData = response.data.content;
-    
-      
+      this.approvalData = response.data.content;     
     })
  }
 
@@ -564,17 +529,14 @@ sorting(value, format){
    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl
     +"?sort=addressData.buildingName,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
      this.approvalData = response.data.content;
-     
-
-   })
+    })
  }
  else if(value == 'name'){
   this.sortParams ='fullName';
    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl+"?sort=fullName,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
      this.approvalData = response.data.content;
    })
- }
- 
+ } 
 else if(value == 'final'){
   this.sortParams = 'TimestampRecords.signUp'
   this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl+"?sort=TimestampRecords.signUp,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
@@ -587,7 +549,6 @@ else if(value == 'status'){
     this.approvalData = response.data.content;
   })
 }
-
 }
 
 searchCustomer(event){
@@ -607,13 +568,11 @@ addClass(event){
 }
 
 addRemark(form:NgForm){
-
    this.customerDto 
    var customerRemark = new CustomerRemark();
    customerRemark.customerId = this.customerId;
    customerRemark.remarks = form.form.value.remarks; 
-   this.service.post_service(ApiServiceServiceService.apiList.customerRemark,customerRemark).subscribe((response)=>{ 
-
+   this.service.post_service(ApiServiceServiceService.apiList.customerRemark,customerRemark).subscribe((response)=>{
     this.toastr.success('','Added remarks/comments successfully.', {
       timeOut : 2000
     }) 
@@ -623,8 +582,6 @@ addRemark(form:NgForm){
      
    })
    form.resetForm()
-  
-
 }
 }
 

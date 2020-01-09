@@ -50,8 +50,9 @@
                             <div class="col-xl-3 col-md-5 col-sm-6 col-lg-3 pr-0 text-left form-group">
                                 <label for="expMonth" class="card-font"><strong>Expiry Month</strong><span class="text-danger">*</span></label>
                                 <select name="expMonth" [(ngModel)]="modal.expMonth" 
-                                [class.is-invalid]="expMonth.invalid && (expMonth.touched || form.submitted)" 
-                                #expMonth="ngModel" (change)="onSelectMonth($event)" required 
+                                [class.is-invalid]="!isCardValid && (expMonth.touched || form.submitted)" 
+                                #expMonth="ngModel" (change)="cardValidation($event)"
+                                [class.is.valid]="isCardValid" required 
                                 class="form-control card-box">
                                     <!-- <option value='' ng-selected="selected">MM</option> -->
                                     <option value="{{month.monthId}}" *ngFor="let month of months">{{ month.name }}</option>
@@ -64,8 +65,9 @@
                             <div class="col-xl-3 col-md-5 col-sm-6 col-lg-3 pr-0 form-group text-left">
                                 <label for="expYear" class="card-font"><strong>Expiry Year</strong><span class="text-danger">*</span></label>
                                 <select name="expYear" [(ngModel)]="modal.expYear" 
-                                [class.is-invalid]="expYear.invalid && (expYear.touched || form.submitted)" 
-                                #expYear="ngModel" (change)="onSelectYear($event)" 
+                                [class.is-invalid]="!isCardValid && (expYear.touched || form.submitted)" 
+                                [class.is.valid]="isCardValid"
+                                #expYear="ngModel" (change)="cardValidation($event)" 
                                 required class="form-control card-box">
                                     <!-- <option value="2019" ng-selected="selected">2019</option> -->
                                     <option *ngFor="let year of years" [value]="year">{{ year }}</option>
@@ -74,6 +76,8 @@
                                 <div *ngIf="expYear.invalid && (expYear.touched || form.submitted)" class="invalid-feedback">
                                     <div *ngIf="expYear?.errors.required"><i>Select year</i></div>
                                 </div>
+                              
+                                
                             </div>
                         </div>
                         <div class="row">

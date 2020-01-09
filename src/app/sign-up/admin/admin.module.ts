@@ -1,3 +1,4 @@
+import { DotsLoaderComponent } from './dots-loader/dots-loader.component';
 import { InputTrimModule } from 'ng2-trim-directive';
 import { AuthguardGuard } from './../../authguard.guard';
 import { FormsModule } from '@angular/forms';
@@ -21,7 +22,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SidebarComponent } from './sidebar/sidebar.component'
 import { SuccessfullSignupComponent } from './audit/successfull-signup/successfull-signup.component';
 import { AbandonedSignupComponent } from './audit/abandoned-signup/abandoned-signup.component';
-import { DOTS_LOADER_COMPONENTS } from '../loader';
+
 import { ApproveComponent } from './approve/approve.component';
 import { ORDER_COMPONENTS } from '../order';
 import { SharedModule } from '@app/shared';
@@ -63,11 +64,12 @@ import { ViewPromocodeComponent } from './promo-code/view-promocode/view-promoco
      SidebarComponent,
      SuccessfullSignupComponent,
      AbandonedSignupComponent,
-     DOTS_LOADER_COMPONENTS,
+    
      ApproveComponent,
      PromoCodeComponent,
      AddPromocodeComponent,
-     ViewPromocodeComponent
+     ViewPromocodeComponent,
+     DotsLoaderComponent
     ],    
     providers: [
       AuthguardGuard,

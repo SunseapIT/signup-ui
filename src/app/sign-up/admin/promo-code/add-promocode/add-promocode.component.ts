@@ -36,8 +36,8 @@ export class AddPromocodeComponent implements OnInit {
    if(id!=null){
    this.service.get_service(ApiServiceServiceService.apiList.getPromoCodeById+"?promoId="+id).subscribe((response:any)=>{   
      let datefrom:any[]=[]
-     datefrom.push(moment(response.data.dateFrom,"DD-MM-YYYY,h:mm:ss").format())
-     datefrom.push(moment(response.data.dateTo,"DD-MM-YYYY,h:mm:ss").format())
+     datefrom.push(moment(response.data.dateFrom,"DD-MM-YYYY,H:mm:ss").format())
+     datefrom.push(moment(response.data.dateTo,"DD-MM-YYYY,H:mm:ss").format())
      this.responseData = response.data
      this.dateTimeRange = datefrom;
    })    
@@ -46,7 +46,7 @@ export class AddPromocodeComponent implements OnInit {
 
 
 getTimeStamp(time){
-  return this.dateFormat.transform(time,"dd-MM-yyyy hh:mm:ss");
+  return this.dateFormat.transform(time,"dd-MM-yyyy H:mm:ss");
 }
 
   onSubmit(form: NgForm){   

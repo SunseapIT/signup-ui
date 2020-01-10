@@ -382,6 +382,14 @@ onSubmit(form:NgForm){
       $('#customer').modal('hide');
      
     } 
+    else{
+
+      this.isLoader = false; 
+      this.toastr.error('',msgCode, {
+        timeOut : 2000
+      }) 
+      $('#customer').modal('hide');     
+    }     
 })
    }
 }

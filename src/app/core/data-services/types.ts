@@ -36,30 +36,36 @@ export const IDENTIFICATION_TYPE_OPTIONS: { [key: string]: string } = {
 };
 
 export enum DwellingType {
-  Hdb1Or2Room = 'HDB 1 / 2 room',
-  Hdb3Room = 'HDB 3 room',
-  Hdb4Room = 'HDB 4 room',
-  Hdb5RoomExecApt = 'HDB 5 room / Executive',
-  Condo = 'Condo',
-  Terrace = 'Terrace',
-  SemiDetached = 'Semi Detach',
   Bungalow = 'Bungalow',
+  Condo = 'Condominium',
+  Hdb1Room = 'HDB 1 Room',
+  Hdb2Room = 'HDB 2 Room',
+  Hdb3Room = 'HDB 3 Room',
+  Hdb4Room = 'HDB 4 Room',
+  Hdb5RoomExecApt = 'HDB 5 Room', 
+  // NonResidential = 'Non-Residential',
+  Terrace = 'Terrace',
+  SemiDetached = 'Semi-Detached',
+ 
 }
 
 export const DWELLING_TYPE_OPTIONS: { [key: string]: string } = {
-  [DwellingType.Hdb1Or2Room]: 'HDB 1/2 Room',
+  [DwellingType.Hdb1Room]: 'HDB 1 Room',
+  [DwellingType.Hdb2Room]: 'HDB 2 Room',
   [DwellingType.Hdb3Room]: 'HDB 3 Room',
   [DwellingType.Hdb4Room]: 'HDB 4 Room',
-  [DwellingType.Hdb5RoomExecApt]: 'HDB 5 Room / Exec Apt',
-  [DwellingType.Condo]: 'Condo',
-  [DwellingType.Terrace]: 'Landed - Terrace',
-  [DwellingType.SemiDetached]: 'Landed - Semi-detached',
-  [DwellingType.Bungalow]: 'Landed - Bungalow',
+  [DwellingType.Hdb5RoomExecApt]: 'HDB 5 Room',
+  [DwellingType.Condo]: 'Condominium',
+  [DwellingType.Terrace]: 'Terrace',
+  [DwellingType.SemiDetached]: 'Semi-Detached',
+  [DwellingType.Bungalow]: 'Bungalow',
+  // [DwellingType.NonResidential]: 'Non-Residential'
 };
 
 // early charge based on dwelling type
 export const ETC_FEE_OPTIONS: { [key: string]: number } = {
-  [DwellingType.Hdb1Or2Room]: 15,
+  [DwellingType.Hdb1Room]: 15,
+  [DwellingType.Hdb2Room]: 15,
   [DwellingType.Hdb3Room]: 20,
   [DwellingType.Hdb4Room]: 25,
   [DwellingType.Hdb5RoomExecApt]: 30,

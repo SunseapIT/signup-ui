@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 
 import { CustomerRemark } from './../../../core/services/customer-remark-dto';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -53,6 +54,7 @@ export class ApproveComponent implements OnInit {
     ORDER_GA_EVENT_NAMES.SELECT_BUNGALOW,
   ];
   
+  dwellingValue: '';
   planList=[];
   approvalData =[];
   searchTextSuccess : string;
@@ -187,6 +189,16 @@ export class ApproveComponent implements OnInit {
     }
   }
 
+  updateDwelling(){
+    this.isDwellingFlag = !this.isDwellingFlag;
+    let doptions = JSON.parse(JSON.stringify(DWELLING_TYPE_OPTIONS));
+    Object.keys(doptions).forEach(key => {
+      if(key.toLowerCase() == this.dwellingType.toLowerCase()){
+        this.dwellingType = doptions[key];
+      }
+    });
+  }
+
   approvedCustomer(customerList){
     this.selectedPricingPlan = customerList.plan;
     //prepopulate selected value
@@ -211,7 +223,12 @@ export class ApproveComponent implements OnInit {
     this.streetName= customerList.streetName;
     this.buildingName = customerList.buildingName;
     this.servicePostalCode= customerList.postelCode;
-    this.dwellingType = customerList.dwelingType;
+    let doptions = JSON.parse(JSON.stringify(DWELLING_TYPE_OPTIONS));
+    Object.keys(doptions).forEach(key => {
+      if(key.toLowerCase() == customerList.dwelingType.toLowerCase()){
+        this.dwellingType = doptions[key];
+      }
+    });
     this.serviceNo= customerList.spAccountNumber;
     this.customerId = customerList.customerId;
     this.remarks = customerList.remarks;
@@ -346,6 +363,12 @@ onSubmit(form:NgForm){
   customerDto.streetName = this.streetName;
   customerDto.unitNo = this.unitNo;
   customerDto.buildingName = this.buildingName;
+  let doptions = JSON.parse(JSON.stringify(DWELLING_TYPE_OPTIONS));
+  Object.keys(doptions).forEach(key => {
+    if(doptions[key].toLowerCase() == this.dwellingType.toLowerCase()){
+      this.dwellingType = key;
+    }
+  });
   customerDto.dwelingType = this.dwellingType;
   customerDto.files.bill_data = this.customerDto.files.bill_data;
   customerDto.files.authorization_data = this.customerDto.files.authorization_data;

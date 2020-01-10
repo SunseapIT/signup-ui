@@ -21,7 +21,8 @@
                 </thead>
                 <tbody>
                     <tr [ngClass]="customerList.duplicate== 'EXISTING_CUSTOMER' ? 'text-danger' : ''" 
-                    *ngFor="let customerList of approvalData | grdFilter: {fullName: searchTextSuccess, spAccountNumber:searchTextSuccess};  let i=index;" (click)="editCustomer(customerList)">
+                    *ngFor="let customerList of approvalData | grdFilter: {fullName: searchTextSuccess, spAccountNumber:searchTextSuccess};  let i=index;" 
+                    (click)="editCustomer(customerList)">
                         <td>{{customerList.fullName}} &nbsp;{{customerList.lastName}}</td>
                         <td>{{customerList.spAccountNumber}}</td>
                         <td class="text-left">{{customerList.houseNumber}}{{customerList.buildingName}} &nbsp; 
@@ -330,7 +331,7 @@
                                     <i *ngIf="!isDwellingFlag" class="fas fa-pencil-alt"
                                         (click)="isDwellingFlag = !isDwellingFlag"></i>
                                     <i *ngIf="isDwellingFlag" class="fa fa-check"
-                                        (click)="isDwellingFlag = !isDwellingFlag"></i>
+                                        (click)="updateDwelling()"></i>
                                 </div>
                             </div>
                         </div>

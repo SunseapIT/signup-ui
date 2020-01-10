@@ -15,6 +15,8 @@ export class AddPromocodeComponent implements OnInit {
   public dateTimeRange:any; 
   isLoader:boolean;
   responseData:any={}
+  min = new Date();
+  hour12Timer:boolean= false
 
   constructor(private service : ApiServiceServiceService,
     private dateFormat:DatePipe,
@@ -47,14 +49,18 @@ getTimeStamp(time){
   return this.dateFormat.transform(time,"dd-MM-yyyy hh:mm:ss");
 }
 
-  onSubmit(form: NgForm){
+  onSubmit(form: NgForm){   
     if(form.valid){
+      this.isLoader=true;
     this.responseData.dateFrom=this.getTimeStamp(this.dateTimeRange[0])
     this.responseData.dateTo=this.getTimeStamp(this.dateTimeRange[1])
     this.responseData.noOfLimitedUsers=this.responseData.infinity?null:this.responseData.noOfLimitedUsers;
     if(form.valid){
       this.isLoader=true;
       this.service.post_service(ApiServiceServiceService.apiList.addPromoCodeUrl,this.responseData).subscribe((response)=>{
+
+        console.log('date response data',this.responseData);
+        
        let responseData = response;
         let statusCode = responseData['statusCode']
         if(statusCode == 200){

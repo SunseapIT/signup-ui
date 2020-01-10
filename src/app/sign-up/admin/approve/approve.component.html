@@ -429,12 +429,13 @@
                             <a class="lc-title text-decoration-none ml-4" aria-expanded="false" aria-controls="family">
                                 &nbsp; Final Approval Date
                             </a>
+                        </div>
                             <div class="col-xs-12 col-md-6 form-group ml-3">&nbsp;
-                                <input type="text" class="form-control"
-                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY ', containerClass: 'theme-red' }"
+                                <input  class="form-control"
+                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-red' }"
                                     [minDate]="lastApproveDate" bsDatepicker readOnly [(bsValue)]="approvalDate">
                             </div>
-                        </div>
+                       
                     </div>
                     <div class="row mt-3">
                         <form #f=ngForm>

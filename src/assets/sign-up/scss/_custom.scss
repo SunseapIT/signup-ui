@@ -1842,3 +1842,13 @@ thead, tbody tr {
     background-color: #d2232a;
     color: #ffffff;
 }
+
+ .fa-pencil-alt:hover {
+   cursor: pointer;  
+}
+ .fa-trash:hover{
+    cursor: pointer;
+}
+.bs-datepicker{
+  position: absolute !important;
+}

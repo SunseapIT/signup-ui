@@ -56,7 +56,10 @@
     
                 <div *ngFor="let promo of promoCode; let i=index">
     
-                    <input [name]="'referralCode'+i" class="form-control" trim="blur" (change)="isPromotionCodeVerifyFail = false"
+                    <input [name]="'referralCode'+i" 
+                    class="form-control" trim="blur" 
+                    placeholder="Enter promotion/referral code"
+                    (change)="isPromotionCodeVerifyFail = false"
                      [(ngModel)]="promo.referralCode" #referralCode="ngModel" />
     
                     <button type="button" class="btn input-button" 

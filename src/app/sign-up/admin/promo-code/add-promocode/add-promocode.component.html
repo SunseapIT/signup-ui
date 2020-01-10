@@ -24,7 +24,9 @@
               class="form-control"
               name="dateFrom"
               [selectMode]="'rangeFrom'"     
-              #from="ngModel"   
+              #from="ngModel"
+              hour12Timer
+              [min]="min"   
               required
               [class.is-invalid]="from.invalid && (from.touched || form.submitted)"      
               [owlDateTimeTrigger]="dtRange2" [owlDateTime]="dtRange2">
@@ -36,6 +38,7 @@
             [(ngModel)]="dateTimeRange"
             class="form-control"
             name="dateTo"
+            hour12Timer
             [selectMode]="'rangeTo'" 
             #to="ngModel"   
             required

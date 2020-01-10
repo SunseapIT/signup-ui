@@ -236,11 +236,13 @@ export class ApproveComponent implements OnInit {
  editCustomer(customerList){
   let approved = customerList.approved
   if(approved ==true){
-    this.approvedCustomer(customerList)   
+    this.approvedCustomer(customerList)  
+    this.lastApproveDate = this.approvalDate 
     $('#approved').modal('show');   
   }
   else {
   this.approvedCustomer(customerList)
+  this.lastApproveDate = this.approvalDate
    $('#customer').modal('show');
 }
 }

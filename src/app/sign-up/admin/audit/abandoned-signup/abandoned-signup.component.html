@@ -10,12 +10,12 @@
             [owlDateTime]="dtRange1" 
             [max]="max"
             (ngModelChange)="getAbandonedSignUp()">
-            <div *ngIf="!isDateTimeSelected">
+            
                 <button type="button" class="btn remove-time" (click)="clearValue()">
                       <i class="fa fa-times mr-2" aria-hidden="true"></i>
                 </button>
   
-            </div>
+          
             <owl-date-time #dtRange1></owl-date-time>
         </div>
         <div class="col-lg-6 csv-div  mt-2 text-right">

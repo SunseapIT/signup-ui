@@ -68,7 +68,8 @@
                                         <div *ngIf="!isPlanFlag" class="input-group">
                                             {{selectedPricingPlan}}
                                         </div>
-                                        <select name="productName" *ngIf="isPlanFlag" id="productName"
+                                        <div *ngIf="isPlanFlag">
+                                        <select name="productName"  id="productName"
                                             class="form-control"
                                             [class.is-invalid]="productName?.invalid && (productName?.touched || form.submitted)"
                                             required 
@@ -85,6 +86,7 @@
                                                 <i>Plan details is required</i>
                                             </div>
                                         </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-1 col-sm-1">
@@ -100,18 +102,25 @@
                                         <div *ngIf="!spFlag" class="input-group">
                                             {{serviceNo}}
                                         </div>
-                                        <input *ngIf="spFlag" class="form-control" 
+                                        <div *ngIf="spFlag">
+                                        <input  class="form-control" 
                                         type="text" 
                                         name="serviceNumber" 
-                                        maxlength="10" 
+                                        maxlength="10"
                                         (keypress)="keyPress($event)" 
                                         pattern="(^[1-9]\d{9})|(^[1-9]{9}[-])$"
                                         required
                                         [class.is-invalid]="serviceError?.invalid && (serviceError?.touched || form.submitted)"
                                             [(ngModel)]="serviceNo" #serviceError="ngModel">
-                                            <div *ngIf="serviceError?.errors.pattern">
-                                                <i>Your SP Account No. is invalid</i>
+                                            <div *ngIf="serviceError.invalid && (serviceError.touched || form.submitted)" class="invalid-feedback">
+                                                <div *ngIf="serviceError?.errors.required">
+                                                    <i>Your SP Account No. is required</i>
+                                                </div>
+                                                <div *ngIf="serviceError?.errors.pattern">
+                                                    <i>Your SP Account No. is invalid</i>
+                                                </div>
                                             </div>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -217,7 +226,8 @@
                                         <div *ngIf="!isPostalFlag" class="input-group">
                                             {{servicePostalCode}}
                                         </div>
-                                        <input *ngIf="isPostalFlag" name="servicePostalCode"
+                                        <div *ngIf="isPostalFlag">
+                                        <input  name="servicePostalCode"
                                             class="form-control" (blur)="validatePostalCode($event.target.value)"
                                             maxlength="6"
                                             [class.is-invalid]="servicePostalCoderef?.invalid && (servicePostalCoderef?.touched || form.submitted)"
@@ -231,6 +241,7 @@
                                                     <i>Postal code is invalid</i>
                                                 </div>
                                             </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-1 col-sm-1">
@@ -319,13 +330,13 @@
                                         <option [value]="null" disabled>Select your dwelling type</option>
                                         <option class="option-font" *ngFor="let option of DWELLING_TYPE_OPTIONS | toArray"
                                             [value]="option.key">{{ option.value }}</option>
+                                            
+                                                                                <div *ngIf="dwellingTypeRef?.invalid && (dwellingTypeRef?.touched || form.submitted)" class="invalid-feedback">
+                                                                                    <div *ngIf="dwellingTypeRef?.errors.required">
+                                                                                        <i>Dwelling Type is required</i>
+                                                                                    </div>
+                                                                                </div>
                                     </select>
-
-                                    <div *ngIf="dwellingTypeRef?.invalid && (dwellingTypeRef?.touched || form.submitted)" class="invalid-feedback">
-                                        <div *ngIf="dwellingTypeRef?.errors.required">
-                                            <i>Dwelling Type is required</i>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="col-lg-1 col-sm-1">
                                     <i *ngIf="!isDwellingFlag" class="fas fa-pencil-alt"

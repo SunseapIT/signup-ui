@@ -1,4 +1,4 @@
-import { LOADER_COMPONENTS } from './loader/index';
+
 
 import { PAYMENT_COMPONENTS } from './tokenization/index';
 import { NgModule } from '@angular/core';
@@ -52,7 +52,7 @@ import { PaginationModule } from 'ngx-pagination-bootstrap';
     SignUpComponent, 
     ORDER_COMPONENTS,
     PAYMENT_COMPONENTS,
-    LOADER_COMPONENTS,
+   
    
    ],
   providers: [

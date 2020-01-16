@@ -312,8 +312,8 @@ viewFactSheet(){
         var timeStampDto = new TimeStampDto();
          timeStampDto.pageType = "PALN_DETAILS"
         var customerDto = new CustomerDto();
-        customerDto.spAccountNumber = form.value.serviceNo;
-        customerDto.plan = form.value.productName;
+        customerDto.spAccountNumber = this.parent.model.premise.serviceNo;
+        customerDto.plan = form.value.planName;
         customerDto.promoCode = this.verifiedPromocodes;    
         this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{
           var responseData  = response;

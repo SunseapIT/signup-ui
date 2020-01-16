@@ -42,9 +42,7 @@ export class ViewPromocodeComponent implements OnInit {
        var responseData = response.data;
        this.totalItems = responseData.totalElements;
        var resultData = responseData['content']
-       this.promoCodeData = resultData;
-       console.log('date check',this.promoCodeData);
-       
+       this.promoCodeData = resultData;       
        this.isLoader=false;       
     })
   }

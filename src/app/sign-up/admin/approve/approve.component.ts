@@ -81,6 +81,7 @@ export class ApproveComponent implements OnInit {
 
   promocodeStatus = false;
   customerDto = new CustomerDto();
+
   selectedPricingPlan:string;
   selectedPricingPlanId:number;
   fullName:string;
@@ -128,7 +129,7 @@ export class ApproveComponent implements OnInit {
    page:number = 0;
   customerId: any;
   myDateValue: Date;
-  planType =[];
+  planType = {energy : '', discount : '', rate : '', afterGst : '', rateChange : ''};
   lastApproveDate: Date;
  
 
@@ -157,7 +158,6 @@ export class ApproveComponent implements OnInit {
         this.onSelectDwellingType(this.parent.model.premise.dwellingType);
       }  
   }
-
 
   getCustomerForApproval(){
     this.isLoader=true;
@@ -346,7 +346,7 @@ getCustomerFile(name){
 
 
 onSubmit(form:NgForm){
-  this.isLoader=true;  
+  // this.isLoader=true;  
    if(form.valid){
   var customerDto = new CustomerDto(); 
   customerDto.customerId = this.customerId ;
@@ -374,46 +374,54 @@ onSubmit(form:NgForm){
   customerDto.files.authorization_data = this.customerDto.files.authorization_data;
   customerDto.files.factSheet_data = this.customerDto.files.factSheet_data;
   customerDto.approvedTime = this.getTimeStamp(this.approvalDate);  
-  this.service.post_service(ApiServiceServiceService.apiList.approveCustomerUrl, customerDto)
-  .subscribe((response)=>{
-    var responseData  = response;  
-    this.isLoader=false;
-    let msgCode = responseData['message'] 
-      let statusCode = responseData['statusCode']
-      if(statusCode == 200){
-      this.isLoader=false;
-      this.toastr.success('','Customer approved successfully.', {
-        timeOut : 2000
-      }) 
-      $('#customer').modal('hide');
-      this.getCustomerForApproval();
+  console.log('apppppppppppp', customerDto);
+  
+  // this.service.post_service(ApiServiceServiceService.apiList.approveCustomerUrl, customerDto)
+  // .subscribe((response)=>{
+  //   var responseData  = response;  
+  //   this.isLoader=false;
+  //   let msgCode = responseData['message'] 
+  //     let statusCode = responseData['statusCode']
+  //     if(statusCode == 200){
+  //     this.isLoader=false;
+  //     this.toastr.success('','Customer approved successfully.', {
+  //       timeOut : 2000
+  //     }) 
+  //     $('#customer').modal('hide');
+  //     this.getCustomerForApproval();
       
-    }
-    else if(statusCode == 400 && msgCode== 'installationIdentifier Consumer already exists with provided MSSL number.'){
-      this.isLoader = false; 
-      this.toastr.error('','This SP account number already exists.', {
-        timeOut : 2000
-      }) 
-      $('#customer').modal('hide');
+  //   }
+  //   else if(statusCode == 400 && msgCode== 'installationIdentifier Consumer already exists with provided MSSL number.'){
+  //     this.isLoader = false; 
+  //     this.toastr.error('','This SP account number already exists.', {
+  //       timeOut : 2000
+  //     }) 
+  //     $('#customer').modal('hide');
      
-    }   
-    else if(statusCode == 400 && msgCode== 'postalPoBox \"Postal PO Box\" is required when Postal Street is set.'){
-      this.isLoader = false; 
-      this.toastr.error('','This is an invalid service address.', {
-        timeOut : 2000
-      }) 
-      $('#customer').modal('hide');
+  //   }   
+  //   else if(statusCode == 400 && msgCode== 'postalPoBox \"Postal PO Box\" is required when Postal Street is set.'){
+  //     this.isLoader = false; 
+  //     this.toastr.error('','This is an invalid service address.', {
+  //       timeOut : 2000
+  //     }) 
+  //     $('#customer').modal('hide');
      
-    } 
-    else{
+//     } 
+//     else{
 
-      this.isLoader = false; 
-      this.toastr.error('',msgCode, {
-        timeOut : 2000
-      }) 
-      $('#customer').modal('hide');     
-    }     
-})
+//       this.isLoader = false; 
+//       this.toastr.error('',msgCode, {
+//         timeOut : 2000
+//       }) 
+//       $('#customer').modal('hide');     
+//     }     
+// })
+   }
+   else{
+    this.toastr.error('','Enter the correct details.', {
+      timeOut : 2000
+    }) 
+
    }
 }
 
@@ -426,11 +434,7 @@ downloadFactSheet(){
   downloadLink.click();
 }
 
-editPromoCode(event){
-  console.log('code',event)
-
-  // console.log('codeeeeeee target',event.target.value);
-  
+editPromoCode(event){  
   this.isPromoCodeFlag = !this.isPromoCodeFlag;
   if(event){
     this.promoCodeList=null

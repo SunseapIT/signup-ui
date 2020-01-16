@@ -229,6 +229,7 @@ export class OrderReviewComponent implements OnInit {
     this.customerDto.lastName = this.lastName; 
     this.customerDto.spAccountNumber = this.serviceNo; 
     localStorage.setItem("customerObj", JSON.stringify(this.customerDto));    
+     
     this.service.post_service(ApiServiceServiceService.apiList.saveCustomerurl,this.customerDto).subscribe((response)=>{
     var responseData  = response;     
     this.isLoader=false;

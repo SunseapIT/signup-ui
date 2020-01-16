@@ -10,7 +10,8 @@
             <div class="form-group col-12">
                 <label class="form-control-label" for="productName">Plan details</label>
                 <select name="productName" id="productName" class="form-control select-font"
-                [class.is-invalid]="productName.invalid && (productName.touched || form.submitted)" required [(ngModel)]="planName"
+                [class.is-invalid]="productName.invalid && (productName.touched || form.submitted)" required 
+                [(ngModel)]="planName"
                  (change)="onSelectPricingPlanChange($event)" #productName="ngModel">
                     <option value='' ng-selected="selected" disabled >Select your plan</option>
                     <option *ngFor="let item of planList" [value]="item.planName" class="option-font">
@@ -27,7 +28,6 @@
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="serviceNo">SP Account No.</label>
                 <input name="serviceNo" id="serviceNo" 
-                
                 trim="blur" 
                 pattern="(^[1-9]\d{9})|(^[1-9]{9}[-])$"
                 (keypress)="keyPress($event)" 

@@ -86,6 +86,7 @@ export class Order extends BaseModel {
   mobileNo: string = null;
   confirmEmailValue:string=null;
   email: string = null;
+  lastName: string=null;
   customerType: CustomerType = null;
   identificationName: string = null;
   identificationNo: string = null;

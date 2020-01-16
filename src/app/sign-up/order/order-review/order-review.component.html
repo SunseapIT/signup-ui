@@ -19,8 +19,8 @@
         <div *ngIf="!spFlag" class="input-group">
          {{serviceNo}} 
         </div>
-
-        <input *ngIf="spFlag" class="form-control" 
+<div *ngIf="spFlag">
+        <input  class="form-control" 
         maxlength="10"
         trim="blur" 
         name="spAccNumber"
@@ -39,6 +39,7 @@
               <i>Your SP Account No. is invalid</i>
           </div>
       </div>
+    </div>
        
       </div>
     </div>
@@ -73,34 +74,30 @@
           <div *ngIf="!nameFlag" class="input-group">
             {{fullName}}&nbsp;{{lastName}}
           </div>
-          <input *ngIf="nameFlag" type="text" name="fullName" 
+          <div *ngIf="nameFlag">
+          <input  type="text" name="fullName" 
           [(ngModel)]="fullName"
           required
           [ngClass]="{ 'is-invalid': form.submitted && fName?.invalid }" class="form-control" #fName="ngModel">
           <div *ngIf="fName?.invalid && (fName?.touched || form.submitted)" class="invalid-feedback">
             <div *ngIf="fName?.errors.required">
-                <i>Your SP Account No. is required</i>
-            </div>
-            <div *ngIf="fName?.errors.pattern">
-                <i>Your SP Account No. is invalid</i>
-            </div>
+                <i>Enter First Name</i>
+            </div>           
         </div>
-
-
-          <input *ngIf="nameFlag" type="text" name="lastName"
+      </div>
+<div *ngIf="nameFlag">
+          <input  type="text" name="lastName"
           [ngClass]="{ 'is-invalid': form.submitted && lName?.invalid }" 
           [(ngModel)]="lastName"
           required
           class="form-control" #lName="ngModel">
           <div *ngIf="lName?.invalid && (lName?.touched || form.submitted)" class="invalid-feedback">
             <div *ngIf="lName?.errors.required">
-                <i>Your SP Account No. is required</i>
+                <i>Enter Last Name</i>
             </div>
-            <div *ngIf="lName?.errors.pattern">
-                <i>Your SP Account No. is invalid</i>
-            </div>
+          
         </div>
-        
+      </div>
       </div>
      
       </div>

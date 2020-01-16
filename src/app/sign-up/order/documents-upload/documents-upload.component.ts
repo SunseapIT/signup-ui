@@ -53,7 +53,7 @@ authorization = false;
     
   }
   
-  onSubmit() {   
+  onSubmit(form:NgForm) {   
     if(this.parent.isSPAccountHolder && this.spPastMonthBill || this.newSpAccountOpeningLetter){      
       this.saveDocuments()
     } 

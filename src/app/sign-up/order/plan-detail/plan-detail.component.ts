@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { ApiServiceServiceService } from './../../../api-service-service.service';
 import { Component, OnInit, Host, ViewChild, HostListener, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -81,6 +82,7 @@ export class PlanDetailComponent implements OnInit {
     private gtagService: GoogleTagManagerService,
     configService: ConfigService,
     private service:ApiServiceServiceService,
+    private toster:ToastrService
   ) {
     this.config.bootstrap = configService.get('bootstrap');
     this.config.dateTimeFormat = configService.get('dateTimeFormat');
@@ -297,28 +299,40 @@ viewFactSheet(){
   }
 
   onSubmit(form: NgForm) {
-   if (form.valid && this.verifiedPromocodes) {
-      this.parent.model.premise.startDate = moment(new Date()).add('days', 8).format(this.config.bootstrap.datePicker.dateInputFormat);
-     this.localStorage.setItem(STORAGE_KEYS.IS_SP_ACCOUNT_HOLDER, this.parent.isSPAccountHolder).subscribe();
-      const selectedPricingPlan = _.find(this.pricingPlanList, { name: this.parent.model.premise.productName });
-      this.gtagService.sendEvent(ORDER_GA_EVENT_NAMES.ENTER_YOUR_DETAIL_1);
-      var timeStampDto = new TimeStampDto();
-       timeStampDto.pageType = "PALN_DETAILS"
-      var customerDto = new CustomerDto();
-      customerDto.spAccountNumber = form.value.serviceNo;
-      customerDto.plan = form.value.productName;
-      customerDto.promoCode = this.verifiedPromocodes;    
-      this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{
-        var responseData  = response;
-        var resultObject = responseData['data'];
-        var token = resultObject['token'];
-        localStorage.setItem("Token",token);
-        customerDto.token = token;
-       localStorage.setItem("customerObj",JSON.stringify(customerDto));
-        
-      })       
-      this.parent.saveAndNext();
-      }    
+  
+    this.service.get_service(ApiServiceServiceService.apiList.getSpAccountUrl+"?spAccount="+this.parent.model.premise.serviceNo).subscribe((response:any)=>{
+      let responseData = response;
+      let statusCode = responseData['statusCode']
+      if(statusCode == 200){
+      if (form.valid && this.verifiedPromocodes) {
+        this.parent.model.premise.startDate = moment(new Date()).add('days', 8).format(this.config.bootstrap.datePicker.dateInputFormat);
+       this.localStorage.setItem(STORAGE_KEYS.IS_SP_ACCOUNT_HOLDER, this.parent.isSPAccountHolder).subscribe();
+        const selectedPricingPlan = _.find(this.pricingPlanList, { name: this.parent.model.premise.productName });
+        this.gtagService.sendEvent(ORDER_GA_EVENT_NAMES.ENTER_YOUR_DETAIL_1);
+        var timeStampDto = new TimeStampDto();
+         timeStampDto.pageType = "PALN_DETAILS"
+        var customerDto = new CustomerDto();
+        customerDto.spAccountNumber = form.value.serviceNo;
+        customerDto.plan = form.value.productName;
+        customerDto.promoCode = this.verifiedPromocodes;    
+        this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{
+          var responseData  = response;
+          var resultObject = responseData['data'];
+          var token = resultObject['token'];
+          localStorage.setItem("Token",token);
+          customerDto.token = token;
+         localStorage.setItem("customerObj",JSON.stringify(customerDto));
+          
+        })       
+        this.parent.saveAndNext();
+        }  
+      }
+      else{
+        this.toster.error('',responseData['message'], {
+          timeOut : 3000
+        }) 
+      }      
+    })    
   }
 
   delayedPopover(pop) {

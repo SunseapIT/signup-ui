@@ -374,48 +374,48 @@ onSubmit(form:NgForm){
   customerDto.files.authorization_data = this.customerDto.files.authorization_data;
   customerDto.files.factSheet_data = this.customerDto.files.factSheet_data;
   customerDto.approvedTime = this.getTimeStamp(this.approvalDate);  
-  console.log('apppppppppppp', customerDto);
   
-  // this.service.post_service(ApiServiceServiceService.apiList.approveCustomerUrl, customerDto)
-  // .subscribe((response)=>{
-  //   var responseData  = response;  
-  //   this.isLoader=false;
-  //   let msgCode = responseData['message'] 
-  //     let statusCode = responseData['statusCode']
-  //     if(statusCode == 200){
-  //     this.isLoader=false;
-  //     this.toastr.success('','Customer approved successfully.', {
-  //       timeOut : 2000
-  //     }) 
-  //     $('#customer').modal('hide');
-  //     this.getCustomerForApproval();
+  
+  this.service.post_service(ApiServiceServiceService.apiList.approveCustomerUrl, customerDto)
+  .subscribe((response)=>{
+    var responseData  = response;  
+    this.isLoader=false;
+    let msgCode = responseData['message'] 
+      let statusCode = responseData['statusCode']
+      if(statusCode == 200){
+      this.isLoader=false;
+      this.toastr.success('','Customer approved successfully.', {
+        timeOut : 2000
+      }) 
+      $('#customer').modal('hide');
+      this.getCustomerForApproval();
       
-  //   }
-  //   else if(statusCode == 400 && msgCode== 'installationIdentifier Consumer already exists with provided MSSL number.'){
-  //     this.isLoader = false; 
-  //     this.toastr.error('','This SP account number already exists.', {
-  //       timeOut : 2000
-  //     }) 
-  //     $('#customer').modal('hide');
+    }
+    else if(statusCode == 400 && msgCode== 'installationIdentifier Consumer already exists with provided MSSL number.'){
+      this.isLoader = false; 
+      this.toastr.error('','This SP account number already exists.', {
+        timeOut : 2000
+      }) 
+      $('#customer').modal('hide');
      
-  //   }   
-  //   else if(statusCode == 400 && msgCode== 'postalPoBox \"Postal PO Box\" is required when Postal Street is set.'){
-  //     this.isLoader = false; 
-  //     this.toastr.error('','This is an invalid service address.', {
-  //       timeOut : 2000
-  //     }) 
-  //     $('#customer').modal('hide');
+    }   
+    else if(statusCode == 400 && msgCode== 'postalPoBox \"Postal PO Box\" is required when Postal Street is set.'){
+      this.isLoader = false; 
+      this.toastr.error('','This is an invalid service address.', {
+        timeOut : 2000
+      }) 
+      $('#customer').modal('hide');
      
-//     } 
-//     else{
+    } 
+    else{
 
-//       this.isLoader = false; 
-//       this.toastr.error('',msgCode, {
-//         timeOut : 2000
-//       }) 
-//       $('#customer').modal('hide');     
-//     }     
-// })
+      this.isLoader = false; 
+      this.toastr.error('',msgCode, {
+        timeOut : 2000
+      }) 
+      $('#customer').modal('hide');     
+    }     
+})
    }
    else{
     this.toastr.error('','Enter the correct details.', {

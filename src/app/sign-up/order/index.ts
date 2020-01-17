@@ -1,3 +1,4 @@
+
 import { CircleLoaderComponent } from './circle-loader/circle-loader.component';
 import { OrderComponent } from './order.component';
 import { DocumentsUploadComponent } from './documents-upload/documents-upload.component';
@@ -26,6 +27,7 @@ export {
   PageNotFoundComponent,
   CircleLoaderComponent,
   ORDER_ROUTES,
+
 };
 
 export const ORDER_COMPONENTS = [
@@ -40,5 +42,6 @@ export const ORDER_COMPONENTS = [
   ServiceAddressComponent, 
   DocumentUploadInputComponent, 
   PageNotFoundComponent,
-  CircleLoaderComponent
+  CircleLoaderComponent,
+ 
 ];

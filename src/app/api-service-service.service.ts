@@ -49,6 +49,7 @@ export class ApiServiceServiceService {
     sendMobileOtp:environment.baseUrl+"/api/v1/customer/generateOtp",   
     getMessageUrl : environment.baseUrl+"/api/v1/customer/getNote",
     getSpAccountUrl : environment.baseUrl+"/api/v1/customer/getSpAccount",
+    getCustomerSpAccountUrl : environment.baseUrl+"/api/v1/customer/getCustomerSpAccount",
 
     
     //LOGIN

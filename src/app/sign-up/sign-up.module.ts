@@ -1,5 +1,3 @@
-
-
 import { PAYMENT_COMPONENTS } from './tokenization/index';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -52,6 +50,7 @@ import { PaginationModule } from 'ngx-pagination-bootstrap';
     SignUpComponent, 
     ORDER_COMPONENTS,
     PAYMENT_COMPONENTS,
+  
    
    
    ],

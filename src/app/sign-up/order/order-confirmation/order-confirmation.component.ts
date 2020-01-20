@@ -16,7 +16,7 @@ export class OrderConfirmationComponent {
   constructor(private router : Router) { }
 
   goToPayment(){
-    this.router.navigateByUrl(PAYMENT_ROUTES.CARD_DETAIL);
+    this.router.navigateByUrl(ORDER_ROUTES.PAYMENT);
 
   }
 }

@@ -26,7 +26,8 @@
               [selectMode]="'rangeFrom'"     
               #from="ngModel"
               hour12Timer
-              [min]="min"   
+              [min]="min"  
+              [readonly]="true"  
               required
               [class.is-invalid]="from.invalid && (from.touched || form.submitted)"      
               [owlDateTimeTrigger]="dtRange2" [owlDateTime]="dtRange2">
@@ -40,7 +41,8 @@
             name="dateTo"
             hour12Timer
             [selectMode]="'rangeTo'" 
-            #to="ngModel"   
+            #to="ngModel" 
+            [readonly]="true"   
             required
             [class.is-invalid]="to.invalid && (to.touched || form.submitted)"             
             [owlDateTimeTrigger]="dtRange3" [owlDateTime]="dtRange3">
@@ -86,7 +88,8 @@
           </div>
 
           <div *ngIf="!responseData.infinity">
-            <input class="form-control usesBox" name="noOfLimitedUsers" numbersOnly trim="blur" 
+            <input class="form-control usesBox"
+           (keypress)="keyPress($event)" name="noOfLimitedUsers" numbersOnly trim="blur" 
             [(ngModel)]="responseData.noOfLimitedUsers">
           </div>
         </div>

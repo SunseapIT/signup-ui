@@ -1,3 +1,4 @@
+import { TokenizationPageComponent } from './../tokenization/tokenization-page/tokenization-page.component';
 
 import { CircleLoaderComponent } from './circle-loader/circle-loader.component';
 import { OrderComponent } from './order.component';
@@ -26,6 +27,7 @@ export {
   ServiceAddressComponent, 
   PageNotFoundComponent,
   CircleLoaderComponent,
+  TokenizationPageComponent,
   ORDER_ROUTES,
 
 };
@@ -35,6 +37,7 @@ export const ORDER_COMPONENTS = [
   DocumentsUploadComponent, 
   EmaFactSheetComponent, 
   OrderConfirmationComponent,
+  TokenizationPageComponent,
   OrderReviewComponent, 
   PaymentModeComponent,
   PersonalParticularComponent, 

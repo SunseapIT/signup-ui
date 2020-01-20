@@ -80,4 +80,14 @@ getTimeStamp(time){
     });
  }
 }
+
+keyPress(event: any) {
+  const pattern = /^((?!(0))[0-9])$/;   
+  let inputChar = String.fromCharCode(event.charCode);
+      if (!pattern.test(inputChar) && event.charCode != '0') {
+          event.preventDefault();
+      }
 }
+}
+
+// ^((?!(0))[0-9]{9})$

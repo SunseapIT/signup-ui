@@ -245,14 +245,14 @@ getPlans(){
  
   
 viewFactSheet(){
-  this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet+"?planName="+(btoa(this.planName))).subscribe(response=>{
+  this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet+
+    "?planName="+(btoa(this.planName))).subscribe(response=>{
     var data = "data:application/pdf;base64," +response['data']
     this.pdfSrc = data;
-    $("#myModal").modal("show")
-   
+    $("#myModal").modal("show")   
   })
 }
-    
+
   onSelectPricingPlanChange(event) {
     let selectData = event.target.value;
     if(selectData) {

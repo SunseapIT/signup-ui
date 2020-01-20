@@ -42,7 +42,7 @@ const routes: Routes = [
     ]
   },
   { path: ORDER_ROUTES.ORDER_CONFIRMATION, component: OrderConfirmationComponent },
-  { path: PAYMENT_ROUTES.CARD_DETAIL, component : TokenizationPageComponent},
+  { path: ORDER_ROUTES.PAYMENT, component : TokenizationPageComponent},
   { path: PAYMENT_ROUTES.TEST, component : TestComponent},
 
   { path : 'admin-login', loadChildren : 'app/sign-up/admin/admin.module#AdminModule'},

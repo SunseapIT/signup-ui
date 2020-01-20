@@ -9,6 +9,7 @@
             [owlDateTimeTrigger]="dtRange1" 
             [owlDateTime]="dtRange1" 
             [max]="max"
+            [readonly]="true" 
             (ngModelChange)="getAbandonedSignUp()">
             
                 <button type="button" class="btn remove-time" (click)="clearValue()">
@@ -16,7 +17,7 @@
                 </button>
   
           
-            <owl-date-time #dtRange1></owl-date-time>
+            <owl-date-time  #dtRange1></owl-date-time>
         </div>
         <div class="col-lg-6 csv-div  mt-2 text-right">
             <angular2csv [data]="csvData" type="button" class="download" filename="AbandonedData.csv" [options]="options">Download</angular2csv>

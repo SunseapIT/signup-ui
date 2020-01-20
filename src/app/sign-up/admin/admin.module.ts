@@ -1,3 +1,4 @@
+
 import { DotsLoaderComponent } from './dots-loader/dots-loader.component';
 import { InputTrimModule } from 'ng2-trim-directive';
 import { AuthguardGuard } from './../../authguard.guard';
@@ -16,7 +17,8 @@ import { TabsModule } from 'ngx-bootstrap/tabs'
 import { PaginationModule } from 'ngx-bootstrap/pagination'
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { FileUploadModule } from 'ng2-file-upload';
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { OwlDateTimeModule, OwlNativeDateTimeModule, DateTimeAdapter, OWL_DATE_TIME_LOCALE, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
+import { OwlMomentDateTimeModule, MomentDateTimeAdapter } from "ng-pick-datetime-moment"
 import { GrdFilterPipe } from './filter';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SidebarComponent } from './sidebar/sidebar.component'
@@ -32,6 +34,15 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PromoCodeComponent } from './promo-code/promo-code.component';
 import { AddPromocodeComponent } from './promo-code/add-promocode/add-promocode.component';
 import { ViewPromocodeComponent } from './promo-code/view-promocode/view-promocode.component';
+export const MY_CUSTOM_FORMATS = {
+  datePickerInput: 'DD/MM/YYYY HH:mm',
+  monthYearLabel: 'MMM YYYY',
+  timePickerInput: 'hh:mm A',
+  parseInput: 'DD/MM/YYYY hh:mm A',
+  fullPickerInput: 'DD/MM/YYYY hh:mm A',
+  dateA11yLabel: 'L',
+  monthYearA11yLabel: 'MM YYYY',
+  };
 
 
 
@@ -47,9 +58,9 @@ import { ViewPromocodeComponent } from './promo-code/view-promocode/view-promoco
     FileUploadModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    OwlMomentDateTimeModule,
     NgxPaginationModule,
-    SharedModule,
- 
+    SharedModule, 
     InputTrimModule,
     BsDatepickerModule.forRoot(),
     DatepickerModule.forRoot() ,
@@ -74,7 +85,10 @@ import { ViewPromocodeComponent } from './promo-code/view-promocode/view-promoco
     providers: [
       AuthguardGuard,
       DatePipe,
-      ORDER_COMPONENTS
+      ORDER_COMPONENTS,
+      { provide: DateTimeAdapter, useClass: MomentDateTimeAdapter, deps: [OWL_DATE_TIME_LOCALE] },
+{ provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS },
+{ provide: OWL_DATE_TIME_LOCALE, useValue: 'en-nz' }
       ]
 })
 

@@ -19,7 +19,8 @@ export class SuccessfullSignupComponent implements OnInit {
   searchTextSuccess : string;
   totalItems:any;
   page:number;
-  currentPage=1;
+  searchedData;
+  currentPage:number=1;
   isLoader:boolean=false;
   csvDataSuccess=[]
   options = {
@@ -70,7 +71,7 @@ export class SuccessfullSignupComponent implements OnInit {
   getAllSuccessSignupUsers(val){
     this.isLoader=true;
     this.buildQueryParams();
-    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"/?"+this.queryParams+"?sort="+this.sortParam+','+this.sort).subscribe((responseData:any)=>{
+    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"/?"+this.queryParams+"&sort="+this.sortParam+','+this.sort).subscribe((responseData:any)=>{
      this.isLoader=false;
       var resultObject = responseData['data'];
       this.totalItems = resultObject.totalElements;
@@ -80,7 +81,7 @@ export class SuccessfullSignupComponent implements OnInit {
     })
  }
 
- searchedData;
+
  searchCustomer(event){
    let name = event.target.value;
   this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?fullName.contains="+name).subscribe((response:any)=>{

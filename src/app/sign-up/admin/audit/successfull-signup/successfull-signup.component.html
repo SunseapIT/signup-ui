@@ -14,6 +14,7 @@
           [owlDateTimeTrigger]="dtRange1" 
           [owlDateTime]="dtRange1" 
           [max]="max"
+          [readonly]="true" 
           (ngModelChange)="getSuccessfulSignUp()">
                 <button type="button" class="btn remove-time" (click)="clearValue()">
                       <i class="fa fa-times mr-2" aria-hidden="true"></i>
@@ -50,8 +51,7 @@
                       <td>{{customerList.plan}}</td>
                       <td>{{customerList.spAccountNumber}}</td>
                       <td>{{customerList.promoCode}}</td>
-                      <td>{{customerList.houseNumber}} &nbsp;
-                        {{customerList.buildingName}} &nbsp; {{customerList.streetName}} &nbsp;{{customerList.country}}
+                      <td>{{customerList.buildingName}} &nbsp;{{customerList.streetName}} &nbsp;{{customerList.country}}
                         {{customerList.postelCode}}
                     </td>
                       <td>{{customerList.sighnUpStarTimeStamp}}</td>

@@ -57,10 +57,7 @@ getTimeStamp(time){
     this.responseData.noOfLimitedUsers=this.responseData.infinity?null:this.responseData.noOfLimitedUsers;
     if(form.valid){
       this.isLoader=true;
-      this.service.post_service(ApiServiceServiceService.apiList.addPromoCodeUrl,this.responseData).subscribe((response)=>{
-
-        console.log('date response data',this.responseData);
-        
+      this.service.post_service(ApiServiceServiceService.apiList.addPromoCodeUrl,this.responseData).subscribe((response)=>{        
        let responseData = response;
         let statusCode = responseData['statusCode']
         if(statusCode == 200){
@@ -81,13 +78,6 @@ getTimeStamp(time){
  }
 }
 
-keyPress(event: any) {
-  const pattern = /^((?!(0))[0-9])$/;   
-  let inputChar = String.fromCharCode(event.charCode);
-      if (!pattern.test(inputChar) && event.charCode != '0') {
-          event.preventDefault();
-      }
-}
 }
 
 // ^((?!(0))[0-9]{9})$

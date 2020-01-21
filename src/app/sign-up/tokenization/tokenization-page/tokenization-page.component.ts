@@ -74,10 +74,9 @@ export class TokenizationPageComponent implements OnInit {
       paymentDto.cardNumber = form.value.cardNumber;
       paymentDto.expiryMonth = form.value.expMonth;
       paymentDto.expiryYear = form.value.expYear;
-      paymentDto.sourceType = "CARD"
+      paymentDto.sourceType = "CARD"       
       this.service.post_service(ApiServiceServiceService.apiList.addCardDetailUrl+"?sp_account_no="+spAccountNumber, paymentDto).
-      subscribe((response)=>{
-      
+      subscribe((response)=>{      
         var responseData  = response;   
         if(responseData['statusCode']==201){
           this.isCardAdded=true;
@@ -109,42 +108,6 @@ export class TokenizationPageComponent implements OnInit {
                timeOut : 3000
             })      
     }
-    // if(this.expYear == Number(this.modal.expYear)){
-    //   if(this.monthIndex > -1 && this.monthIndex < this.expMonth){
-    //     console.log('First If Block');
-        
-    //     this.modal.expMonth = "";
-    //     this.toster.error('','This card has been expired 1.', {
-    //       timeOut : 3000
-    //     })
-
-        
-    //   }
-    //   if((Number(this.modal.expMonth) > this.expMonth+1) && (this.months.length <= (this.expMonth +3))){
-    //     console.log('Second If Block');
-    //     this.modal.expMonth = "";
-    //     this.toster.error('','This card has been expired 2.', {
-    //       timeOut : 3000
-    //     })
-    //    }
-    //  else{
-    //     this.modal.expMonth = "";
-    //     this.toster.error('','This card has been expired 3.', {
-    //       timeOut : 3000
-    //     })
-    //   }
-    // }
-    // else{
-    //   if(this.expYear == this.modal.expYear){
-    //     console.log('Third If Block');
-    //     if(this.monthIndex <3 ){
-    //       this.modal.expMonth = "";
-    //       this.toster.error('','This card is invalid.', {
-    //         timeOut : 3000
-    //       })
-    //     }
-    //   }
-    // }
   }
   
   cancel(){

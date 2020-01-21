@@ -20,6 +20,8 @@ export class SuccessfullSignupComponent implements OnInit {
   totalItems:any;
   page:number;
   searchedData;
+  hour12Timer:boolean= false;
+  searched :any = [];
   currentPage:number=1;
   isLoader:boolean=false;
   csvDataSuccess=[]
@@ -84,8 +86,12 @@ export class SuccessfullSignupComponent implements OnInit {
 
  searchCustomer(event){
    let name = event.target.value;
-  this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?fullName.contains="+name).subscribe((response:any)=>{
-    this.successData = response.data.content;
+  this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?fullName.contains="+name).subscribe((responseData:any)=>{
+    var resultObject = responseData['data'];
+    this.totalItems = resultObject.totalElements;
+    var resultObject1 = resultObject['content'];
+    this.successData = resultObject1;  
+    this.searched = this.successData      
     this.csvDataSuccess = this.successData;
     
   })
@@ -123,7 +129,8 @@ export class SuccessfullSignupComponent implements OnInit {
   }
   pageChanged(event: any): void {
     this.page = event.page;
-    this.getFilteredList();   
+    this.getFilteredList();  
+    this.searched; 
   }
 
   resetFilters(){
@@ -233,11 +240,9 @@ export class SuccessfullSignupComponent implements OnInit {
   }  
  } 
 
-
 addClass(event){
   let elementId = document.getElementById(event.target.id);
   if(event.target.className == "arrow-down"){
-    console.log(elementId);
     elementId.classList.replace("arrow-down","arrow-up");
   }else{
     elementId.classList.replace("arrow-up","arrow-down");

@@ -28,7 +28,7 @@
                                 <label for="cardNumber" class="card-font"><strong>Card Number</strong><span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" name="cardNumber" id="cardNumber" 
                                 [class.is-invalid]="cardNumber.invalid && (cardNumber.touched || form.submitted)" 
-                                pattern="^(4|5|2)\d{15}$" 
+                                pattern="^(4|5|2)\d{15}|^(34|37)\d{13}$" 
                                 [(ngModel)]="modal.cardNumber" 
                                 #cardNumber="ngModel" required maxlength="16" 
                                 blockCopyPaste numbersOnly />

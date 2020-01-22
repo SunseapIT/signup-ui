@@ -53,10 +53,7 @@ export class TestComponent implements OnInit {
     for(let i=0; i<10; i++){
       this.years.push(this.expYear +i);    
   }
-}
-
-
-  
+}  
   getUserDetail(){
     let id = this.activatedRoute.snapshot.params['spAccount']; 
    this.activatedRoute.queryParamMap.subscribe(params => {

@@ -19,7 +19,7 @@ export class TokenizationPageComponent implements OnInit {
   constructor(private service: ApiServiceServiceService,
     private router : Router,
     private toster : ToastrService) { }
-  modal:any={}
+  modal:any={};
   customerDetail=[];
   currentMonth:any;
   customerObj:CustomerDto;
@@ -64,8 +64,7 @@ export class TokenizationPageComponent implements OnInit {
     }
 
   onSubmit(form:NgForm){       
-    if(form.valid && this.isCardValid){   
-   
+    if(form.valid && this.isCardValid){    
     var customerDto = new CustomerDto();
      var objStr = localStorage.getItem("customerObj");
      customerDto = JSON.parse(objStr); 
@@ -76,9 +75,11 @@ export class TokenizationPageComponent implements OnInit {
       paymentDto.expiryYear = form.value.expYear;
       paymentDto.sourceType = "CARD"       
       this.service.post_service(ApiServiceServiceService.apiList.addCardDetailUrl+"?sp_account_no="+spAccountNumber, paymentDto).
-      subscribe((response)=>{      
-        var responseData  = response;   
-        if(responseData['statusCode']==201){
+      subscribe((response)=>{  
+        var responseData  = response;  
+        
+        let statusCode = responseData['statusCode'];       
+        if( statusCode==201){
           this.isCardAdded=true;
           localStorage.removeItem("customerObj")
           localStorage.removeItem("Token")
@@ -86,11 +87,17 @@ export class TokenizationPageComponent implements OnInit {
           form.resetForm()
     
         }
+        else if(statusCode == 500 || statusCode == 400){         
+          this.toster.error('',"Invalid card number.", {
+            timeOut : 3000
+          }) 
+        }
         else{
           this.toster.error('',responseData['message'], {
             timeOut : 3000
           })
-        }        
+        }
+              
       })   
     }
   }

@@ -1,4 +1,4 @@
-import { HttpParams } from '@angular/common/http';
+
 import { ToastrService } from 'ngx-toastr';
 import { ApiServiceServiceService } from './../../../api-service-service.service';
 import { NgForm } from '@angular/forms';
@@ -20,10 +20,9 @@ export class TestComponent implements OnInit {
     private activatedRoute : ActivatedRoute,
     private router : Router,
     private toster : ToastrService) { }
+    
   modal:any={}
-  customerDetail=[];
-  currentMonth:any;
-  customerObj:CustomerDto;
+  customerDto:CustomerDto;
   isCardAdded:boolean=false;
   userName:any;
   isCardValid:boolean=false;
@@ -31,6 +30,7 @@ export class TestComponent implements OnInit {
   expYear:any;
   expMonth:any;
   monthIndex:number;
+  spAccountNumber:any;
   routeData={};
   months = [ 
   {monthId : "01", name :"Jan"},
@@ -46,75 +46,58 @@ export class TestComponent implements OnInit {
   {monthId : "11", name :"Nov"},
   {monthId : "12", name :"Dec"},
   ]
-
-  ngOnInit() {
-    var customerDto = new CustomerDto();
-    var objStr = localStorage.getItem("customerObj");
-    customerDto = JSON.parse(objStr);  
-
-   let id = this.activatedRoute.snapshot.params['spAccount']; 
-   this.activatedRoute.queryParamMap.subscribe(params => {
-    this.routeData =params['params'].id;
-    console.log(this.routeData,"routeData");
-  });
-   
-    this.service.get_service(ApiServiceServiceService.apiList.getCustomerSpAccountUrl+"?spAccount="+this.routeData).subscribe((response:any)=>{
-      let customerData = response.data;
-
-      this.userName = 
-      this.userName = customerData.fullName.concat(" ").concat(customerData.lastName);
-
-    })
- 
-
-    
+  ngOnInit() {     
     this.getUserDetail();
     this.expYear = new Date().getFullYear();
     this.expMonth = new Date().getMonth();
     for(let i=0; i<10; i++){
-      this.years.push(this.expYear +i);
-    
+      this.years.push(this.expYear +i);    
   }
 }
 
 
   
   getUserDetail(){
-    //  var customerDto = new CustomerDto();
-    //  var objStr = localStorage.getItem("customerObj");
-    //  customerDto = JSON.parse(objStr); 
-    //  this.userName = customerDto.fullName.concat(" ").concat(customerDto.lastName);
+    let id = this.activatedRoute.snapshot.params['spAccount']; 
+   this.activatedRoute.queryParamMap.subscribe(params => {
+    this.routeData =params['params'].id;
+  });   
+    this.service.get_service(ApiServiceServiceService.apiList.getCustomerSpAccountUrl+"?spAccount="+this.routeData).subscribe((response:any)=>{
+      let customerData = response.data;
+      this.spAccountNumber = customerData.spAccountNumber   
+      this.userName = customerData.fullName.concat(" ").concat(customerData.lastName);
+
+    })
     }
 
   onSubmit(form:NgForm){       
-    if(form.valid && this.isCardValid){   
-   
-    var customerDto = new CustomerDto();
-     var objStr = localStorage.getItem("customerObj");
-     customerDto = JSON.parse(objStr); 
-     var spAccountNumber = customerDto.spAccountNumber;
+    if(form.valid && this.isCardValid){          
      var paymentDto = new PaymentDto()
       paymentDto.cardNumber = form.value.cardNumber;
       paymentDto.expiryMonth = form.value.expMonth;
       paymentDto.expiryYear = form.value.expYear;
-      paymentDto.sourceType = "CARD"
-      this.service.post_service(ApiServiceServiceService.apiList.addCardDetailUrl+"?sp_account_no="+spAccountNumber, paymentDto).
+      paymentDto.sourceType = "CARD"      
+      this.service.post_service(ApiServiceServiceService.apiList.addCardDetailUrl+"?sp_account_no="+this.spAccountNumber, paymentDto).
       subscribe((response)=>{
-      
-        var responseData  = response;   
-        if(responseData['statusCode']==201){
+        var responseData  = response;  
+        let statusCode = responseData['statusCode'];       
+        if( statusCode==201){
           this.isCardAdded=true;
-          localStorage.removeItem("customerObj")
-          localStorage.removeItem("Token")
           this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
           form.resetForm()
     
+        }
+        else if(statusCode == 500 || statusCode == 400){         
+          this.toster.error('',"Invalid card number.", {
+            timeOut : 3000
+          }) 
         }
         else{
           this.toster.error('',responseData['message'], {
             timeOut : 3000
           })
-        }        
+        }
+              
       })   
     }
   }

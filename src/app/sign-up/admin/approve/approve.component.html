@@ -23,7 +23,7 @@
                     <tr [ngClass]="customerList.duplicate== 'EXISTING_CUSTOMER' ? 'text-danger' : ''" 
                     *ngFor="let customerList of approvalData | grdFilter: {fullName: searchTextSuccess, spAccountNumber:searchTextSuccess};  let i=index;" 
                     (click)="editCustomer(customerList)">
-                        <td>{{customerList.fullName}} &nbsp;{{customerList.lastName}}</td>
+                        <td>{{customerList.fullName}}&nbsp;{{customerList.lastName}}</td>
                         <td>{{customerList.spAccountNumber}}</td>
                         <td class="text-left">{{customerList.houseNumber}}{{customerList.buildingName}} &nbsp; 
                             {{customerList.streetName}} &nbsp;{{customerList.country}}
@@ -187,7 +187,7 @@
                                 <div class="col-lg-4 col-sm-6">Full name:</div>
                                 <div class="col-lg-8 col-sm-5 font-weight-bold">
                                     <div class="card-text-right p-0">
-                                        {{fullName}}
+                                        {{fullName}}&nbsp;{{lastName}}
                                     </div>
                                 </div>
                             </div>
@@ -542,7 +542,7 @@
                                 <div class="col-lg-4 col-sm-6">Full name:</div>
                                 <div class="col-lg-8 col-sm-5 font-weight-bold">
                                     <div class="card-text-right p-0">
-                                        {{fullName}}
+                                        {{fullName}}&nbsp;{{lastName}}
                                     </div>
                                 </div>
                             </div>

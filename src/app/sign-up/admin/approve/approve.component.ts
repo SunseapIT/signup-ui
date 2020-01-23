@@ -167,7 +167,7 @@ export class ApproveComponent implements OnInit {
       var resultObject = responseData['data'];
       this.totalItems = resultObject.totalElements;   
       var resultObject1 = resultObject['content'];
-      this.approvalData = resultObject1;                    
+      this.approvalData = resultObject1;                          
     })
  }
 

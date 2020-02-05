@@ -20,7 +20,7 @@ export class TestComponent implements OnInit {
     private activatedRoute : ActivatedRoute,
     private router : Router,
     private toster : ToastrService) { }
-    
+
   modal:any={}
   customerDto:CustomerDto;
   isCardAdded:boolean=false;
@@ -32,7 +32,7 @@ export class TestComponent implements OnInit {
   monthIndex:number;
   spAccountNumber:any;
   routeData={};
-  months = [ 
+  months = [
   {monthId : "01", name :"Jan"},
   {monthId : "02", name :"Feb"},
   {monthId : "03", name :"March"},
@@ -46,62 +46,63 @@ export class TestComponent implements OnInit {
   {monthId : "11", name :"Nov"},
   {monthId : "12", name :"Dec"},
   ]
-  ngOnInit() {     
+  ngOnInit() {
     this.getUserDetail();
     this.expYear = new Date().getFullYear();
     this.expMonth = new Date().getMonth();
     for(let i=0; i<10; i++){
-      this.years.push(this.expYear +i);    
+      this.years.push(this.expYear +i);
   }
-}  
+}
   getUserDetail(){
-    let id = this.activatedRoute.snapshot.params['spAccount']; 
+    let id = this.activatedRoute.snapshot.params['spAccount'];
    this.activatedRoute.queryParamMap.subscribe(params => {
     this.routeData =params['params'].id;
-  });   
+  });
     this.service.get_service(ApiServiceServiceService.apiList.getCustomerSpAccountUrl+"?spAccount="+this.routeData).subscribe((response:any)=>{
       let customerData = response.data;
-      this.spAccountNumber = customerData.spAccountNumber   
+      this.spAccountNumber = customerData.spAccountNumber
       this.userName = customerData.fullName.concat(" ").concat(customerData.lastName);
 
     })
     }
 
-  onSubmit(form:NgForm){       
-    if(form.valid && this.isCardValid){          
+  onSubmit(form:NgForm){
+    if(form.valid && this.isCardValid){
      var paymentDto = new PaymentDto()
       paymentDto.cardNumber = form.value.cardNumber;
       paymentDto.expiryMonth = form.value.expMonth;
       paymentDto.expiryYear = form.value.expYear;
-      paymentDto.sourceType = "CARD"      
+      paymentDto.sourceType = "CARD"
       this.service.post_service(ApiServiceServiceService.apiList.addCardDetailUrl+"?sp_account_no="+this.spAccountNumber, paymentDto).
       subscribe((response)=>{
-        var responseData  = response;  
-        let statusCode = responseData['statusCode'];       
+        var responseBody = response['body'];
+      var responseMessage = responseBody['message'];
+      let statusCode = responseBody['statusCode']
         if( statusCode==201){
           this.isCardAdded=true;
           this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
           form.resetForm()
-    
+
         }
-        else if(statusCode == 500 || statusCode == 400){         
+        else if(statusCode == 500 || statusCode == 400){
           this.toster.error('',"Invalid card number.", {
-            timeOut : 3000
-          }) 
-        }
-        else{
-          this.toster.error('',responseData['message'], {
             timeOut : 3000
           })
         }
-              
-      })   
+        else{
+          this.toster.error('',responseMessage, {
+            timeOut : 3000
+          })
+        }
+
+      })
     }
   }
 
- 
+
   cardValidation(event){
-    this.isCardValid = true;   
+    this.isCardValid = true;
     this.monthIndex = this.months.findIndex(item => item.monthId == this.modal.expMonth);
     let beforeDate = new Date(this.expYear, this.expMonth+3, 1).getTime();
     let currentDate = new Date().getTime();
@@ -110,12 +111,12 @@ export class TestComponent implements OnInit {
       this.isCardValid = false;
       this.toster.error('','This card has been expired.', {
                timeOut : 3000
-            })      
+            })
     }
   }
-  
+
   cancel(){
-    $('#cancel').modal('show');    
+    $('#cancel').modal('show');
   }
   no(){
     $('#cancel').modal('hide')

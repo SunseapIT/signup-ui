@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./admin-login.component.scss']
 })
 export class AdminLoginComponent implements OnInit {
- 
+
   model: any = { userId : '' , password : ''};
  constructor(private router:Router,
     private apiService :ApiServiceServiceService,
@@ -23,18 +23,19 @@ export class AdminLoginComponent implements OnInit {
   }
 
 
-  onSubmit(form: NgForm) {        
+  onSubmit(form: NgForm) {
     if(form.valid){
     var loginBean = new LoginBean();
      loginBean = this.model
     this.apiService.post_service(ApiServiceServiceService.apiList.adminLogin,loginBean).subscribe((response)=>{
-      var responseData = response;
-      if(responseData['statusCode']==200){
-        var resultObject = responseData['data']
+      var responseBody = response['body'];
+      var responseData = responseBody['data'];
+      if(responseBody['statusCode']==200){
+        var resultObject = responseData
         var token = resultObject['token'];
         localStorage.setItem("Authorization",token);
-        this.router.navigateByUrl('/admin-login/admin-dash');    
-      }      
+        this.router.navigateByUrl('/admin-login/admin-dash');
+      }
     },error =>{
       this.toastr.error("", error.message)
     })

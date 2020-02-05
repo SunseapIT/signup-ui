@@ -90,6 +90,8 @@ export class ServiceAddressComponent implements OnInit {
     } else {
       if (_.size(code) === 6) {
         this.utilService.requestAddresses(code).subscribe(rs => {
+          console.log('rs',rs);
+
           switch (rs.meta.count) {
             case 0:
               this.serviceAddress.buildingName = null;
@@ -151,32 +153,32 @@ export class ServiceAddressComponent implements OnInit {
         addressDto.houseNo = form.value.houseNo;
         addressDto.postalCode = form.value.servicePostalCode;
         addressDto.streetName = form.value.streetName;
-        
-     var customerDto = new CustomerDto();
-      var objStr = localStorage.getItem("customerObj");
+
+      let customerDto = new CustomerDto();
+      let objStr = localStorage.getItem("customerObj");
       customerDto = JSON.parse(objStr);
       customerDto.postelCode = form.value.servicePostalCode;
       customerDto.buildingName = form.value.buildingName;
       customerDto.dwelingType = form.value.dwellingType;
       customerDto.houseNo = form.value.houseNo;
-      customerDto.streetName = form.value.streetName; 
+      customerDto.streetName = form.value.streetName;
       customerDto.unitNo = form.value.unitNo;
       customerDto.level = form.value.level;
       localStorage.setItem("customerObj",JSON.stringify(customerDto))
-      var timeStampDto = new TimeStampDto();
+      let timeStampDto = new TimeStampDto();
       timeStampDto.pageType = "ADDRESS_DETAILS",
       timeStampDto.token = localStorage.getItem("Token");
       this.service.post_service(ApiServiceServiceService.apiList.addAddressUrl,addressDto).subscribe((response)=>{
-      var responseData  = response;
-      var status = responseData['statusCode'];
+      let responseData  = response;
+      let status = responseData['statusCode'];
       if(status == 200){
-        this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{        
-      
+        this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{
+
        })
         }
-      })   
-      parent.saveAndNext(); 
-      form.resetForm(); 
-    } 
+      })
+      parent.saveAndNext();
+      form.resetForm();
+    }
   }
 }

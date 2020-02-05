@@ -12,7 +12,7 @@ import * as moment from 'moment'
 })
 export class AddPromocodeComponent implements OnInit {
   model:any ={ promoCode : '', dateFrom : '', dateTo : '', infinity : "true", noOfLimitedUsers : ''  };
-  public dateTimeRange:any; 
+  public dateTimeRange:any;
   isLoader:boolean;
   responseData:any={}
   min = new Date();
@@ -24,23 +24,26 @@ export class AddPromocodeComponent implements OnInit {
     private activatedRoute : ActivatedRoute,
     private toastr:ToastrService) { }
 
-   
+
 
   ngOnInit() {
-    this.getPromoCodeById();    
+    this.getPromoCodeById();
   }
 
 
   getPromoCodeById(){
-    let id = this.activatedRoute.snapshot.params['id'];  
+    let id = this.activatedRoute.snapshot.params['id'];
    if(id!=null){
-   this.service.get_service(ApiServiceServiceService.apiList.getPromoCodeById+"?promoId="+id).subscribe((response:any)=>{   
+   this.service.get_service(ApiServiceServiceService.apiList.getPromoCodeById+"?promoId="+id).subscribe((response:any)=>{
+    var responseBody = response['body'];
+    var responseData = responseBody['data'];
+    var responseContent = responseData['content'];
      let datefrom:any[]=[]
-     datefrom.push(moment(response.data.dateFrom,"DD-MM-YYYY,H:mm:ss").format())
-     datefrom.push(moment(response.data.dateTo,"DD-MM-YYYY,H:mm:ss").format())
-     this.responseData = response.data
+     datefrom.push(moment(responseData.dateFrom,"DD-MM-YYYY,H:mm:ss").format())
+     datefrom.push(moment(responseData.dateTo,"DD-MM-YYYY,H:mm:ss").format())
+     this.responseData = responseData
      this.dateTimeRange = datefrom;
-   })    
+   })
   }
   }
 
@@ -49,7 +52,7 @@ getTimeStamp(time){
   return this.dateFormat.transform(time,"dd-MM-yyyy H:mm:ss");
 }
 
-  onSubmit(form: NgForm){   
+  onSubmit(form: NgForm){
     if(form.valid){
       this.isLoader=true;
     this.responseData.dateFrom=this.getTimeStamp(this.dateTimeRange[0])
@@ -57,18 +60,19 @@ getTimeStamp(time){
     this.responseData.noOfLimitedUsers=this.responseData.infinity?null:this.responseData.noOfLimitedUsers;
     if(form.valid){
       this.isLoader=true;
-      this.service.post_service(ApiServiceServiceService.apiList.addPromoCodeUrl,this.responseData).subscribe((response)=>{        
-       let responseData = response;
-        let statusCode = responseData['statusCode']
+      this.service.post_service(ApiServiceServiceService.apiList.addPromoCodeUrl,this.responseData).subscribe((response)=>{
+        var responseBody = response['body'];
+        var responseData = responseBody['data'];
+        let statusCode = responseBody['statusCode']
         if(statusCode == 200){
         this.isLoader=false;
         this.router.navigateByUrl('/admin-login/admin-dash/view-promo')
         this.toastr.success('', 'Promo Code added successfully', {
          timeOut: 2000
          });
-       }         
+       }
       })
-      form.resetForm();      
+      form.resetForm();
   }
  }
  else{
@@ -77,7 +81,4 @@ getTimeStamp(time){
     });
  }
 }
-
 }
-
-// ^((?!(0))[0-9]{9})$

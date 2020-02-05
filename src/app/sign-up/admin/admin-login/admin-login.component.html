@@ -18,8 +18,7 @@
       </div>
 
       <div class="col-lg-8">
-
-          <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
+          <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate autocomplete="off">
               <div class="logindiv">
 
                   <div class="row">
@@ -29,6 +28,7 @@
                           [(ngModel)]="model.userId" 
                           #userId="ngModel" 
                           [class.is-invalid]="userId.invalid && (userId.touched || form.submitted)" 
+                          blockCopyPaste 
                           required>
                           <div *ngIf="userId.invalid && (userId.touched || form.submitted)" class="invalid-feedback">
                               <div *ngIf="userId?.errors.required">
@@ -44,6 +44,7 @@
                           [(ngModel)]="model.password" 
                           #password="ngModel" 
                           [class.is-invalid]="password.invalid && (password.touched || form.submitted)" 
+                          blockCopyPaste
                           required>
                           <div *ngIf="password.invalid && (password.touched || form.submitted)" class="invalid-feedback">
                               <div *ngIf="password?.errors.required">

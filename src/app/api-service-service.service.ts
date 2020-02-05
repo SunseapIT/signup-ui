@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -15,7 +16,7 @@ export class ApiServiceServiceService {
 
   public static apiList = {
 
-    //ADMIN 
+    //ADMIN
     approveCustomerUrl : environment.baseUrl+"/api/v1/admin/approveCustomer",
     addPlanUrl:environment.baseUrl+"/api/v1/admin/addPlan",
     viewPlanUrl: environment.baseUrl+"/api/v1/admin/getPlans",
@@ -32,154 +33,63 @@ export class ApiServiceServiceService {
     getPromoCodeById : environment.baseUrl+"/api/v1/admin/getPromocodeById",
     deletePromoCodeUrl : environment.baseUrl+"/api/v1/admin/deletePromoCode",
     customerRemark : environment.baseUrl+"/api/v1/admin/remarksForUser",
-   
 
-    //CUSTOMER    
-    addAddressUrl:environment.baseUrl+"/api/v1/customer/addAddress",
-    saveCustomerurl:environment.baseUrl+"/api/v1/customer/saveCustomer",
-    verifyPromoUrl:environment.baseUrl+"/api/v1/customer/verifyPromoCode",
-    verifyMobileUrl:environment.baseUrl+"/api/v1/customer/verifyMobile",
-    sendEmailOtp:environment.baseUrl+"/api/v1/customer/send-email-otp",
-    customerViewPlanUrl:environment.baseUrl+"/api/v1/customer/getPlans",  
-    getFactSheet:environment.baseUrl+"/api/v1/customer/getFactSheet",
-    getTimestampUrl: environment.baseUrl+"/api/v1/customer/timestamps",   
+
+    //CUSTOMER
+    addAddressUrl: environment.baseUrl+'/api/v1/customer/addAddress',
+    saveCustomerurl: environment.baseUrl+"/api/v1/customer/saveCustomer",
+    verifyPromoUrl: environment.baseUrl+"/api/v1/customer/verifyPromoCode",
+    verifyMobileUrl: environment.baseUrl+"/api/v1/customer/verifyMobile",
+    sendEmailOtp: environment.baseUrl+"/api/v1/customer/send-email-otp",
+    customerViewPlanUrl: environment.baseUrl+"/api/v1/customer/getPlans",
+    getFactSheet: environment.baseUrl+"/api/v1/customer/getFactSheet",
+    getTimestampUrl: environment.baseUrl+"/api/v1/customer/timestamps",
     getCustomerFactsheetUrl : environment.baseUrl+"/api/v1/customer/getUpdatedFactSheet",
     getEmailOtp: environment.baseUrl+"/api/v1/customer/validate-email-otp",
-    dateTimeRangePicker : environment.baseUrl+"/api/v1/customer/search",    
-    sendMobileOtp:environment.baseUrl+"/api/v1/customer/generateOtp",   
+    dateTimeRangePicker : environment.baseUrl+"/api/v1/customer/search",
+    sendMobileOtp: environment.baseUrl+"/api/v1/customer/generateOtp",
     getMessageUrl : environment.baseUrl+"/api/v1/customer/getNote",
     getSpAccountUrl : environment.baseUrl+"/api/v1/customer/getSpAccount",
     getCustomerSpAccountUrl : environment.baseUrl+"/api/v1/customer/getCustomerSpAccount",
 
-    
-    //LOGIN
-    adminLogin:environment.baseUrl+"/api/v1/user/login",
+    // LOGIN
+    adminLogin: environment.baseUrl+"/api/v1/user/login",
 
-   
-    //TIMESTAMP API
+    // TIMESTAMP API
     updateTimeUrl:environment.baseUrl+"/api/v1/customer/updateTime",
     addCardDetailUrl:environment.baseUrl+"/api/v1/tokens/tokenize",
   }
 
   constructor(private http:HttpClient, private router : Router) { }
 
-  getPromoCodeById(id:number){
-    return this.http.get(this.getPromoCodeById + '/'+id);
-  }
-  
+  getPromoCodeById(id:number) :Observable<any>{
+     return this.http.get<any>(this.getPromoCodeById + '/'+id);
+    }
 
-   //Get service
-get_service(url) {
-  var localStorageVariable = '';
-  if (localStorage.getItem('Authorization')) {
-  localStorageVariable = localStorage.getItem('Authorization');
-  }
-  let headerJson = {
-  'Content-Type': 'application/json',
-  'Authorization': localStorageVariable
-};
-  const httpOptions = {
-  headers: new HttpHeaders(headerJson)
-  };
-
-  return this.http.get(url, httpOptions).pipe(map((response) => {
-  return response;
-  }));
-  
+   // Get service
+  get_service(url): Observable<any> {
+   return this.http.get<any>(url, { observe: 'response' });
   }
 
-  getFactSheetGet_service(url) {
-    var localStorageVariable = '';
-    if (localStorage.getItem('Authorization')) {
-    localStorageVariable = localStorage.getItem('Authorization');
-    }
-    let headerJson = {
-    'Content-Type': 'application/json',
-    // 'Authorization': localStorageVariable
-  };
-    const httpOptions = {
-    headers: new HttpHeaders(headerJson)
-    };
-  
-    return this.http.get(url, httpOptions).pipe(map((response) => {
-    return response;
-    }));
-    
+  getFactSheetGet_service(url) :Observable<any> {
+    return this.http.get<any>(url, { observe: 'response' });
     }
 
-  post_service(url, data) {
-    var localStorageVariable = '';
-    if (localStorage.getItem('Authorization')) {
-    localStorageVariable = localStorage.getItem('Authorization');
-    }
-    let headerJson = {
-    'Content-Type': 'application/json',
-    'Authorization': localStorageVariable
-
-    };
-    const httpOptions = {
-    headers: new HttpHeaders(headerJson)
-    };
-    return this.http.post(url, data, httpOptions).pipe(map((response) => {
-    return response;
-    }));
+  post_service(url, data): Observable<any> {
+    return this.http.post<any>(url, data, { observe: 'response' });
   }
 
-
-  multiPartPost_service(url, data) {
-    var localStorageVariable = '';
-    if (localStorage.getItem('Authorization')) {
-    localStorageVariable = localStorage.getItem('Authorization');
-    }
-    let headerJson = {
-
-    // 'Content-Type': 'application/json',
-    // 'Content-Type': 'multipart/form-data',
-    'Authorization': localStorageVariable
-
-    };
-    const httpOptions = {
-    headers: new HttpHeaders(headerJson)
-    };
-    return this.http.post(url, data, httpOptions).pipe(map((response) => {
-    return response;
-    }));
-  }
-
-
-  get_authentiaction(url) {
-    var localStorageVariable = '';
-    if (localStorage.getItem('Authorization')) {
-    localStorageVariable = localStorage.getItem('Authorization');
-    }
-    let headerJson = {
-    'Content-Type': 'application/json',
-    'Authorization': localStorageVariable
-
-   };
-    const httpOptions = {
-    headers: new HttpHeaders(headerJson)
-    };
-    
-    return this.http.get(ApiServiceServiceService.apiList['loginAdmin']+url, httpOptions).pipe(map((response) => {
-    return response;
-    }));
-    
-    }
-
-
-   get_Token() {
+  get_Token() {
   return localStorage.getItem('Authorization');
   }
   login(): boolean {
   if (this.get_Token() != null) {
   return true;
-  }
-  else {
+  }  else {
   this.router.navigate(['/']);
   return false;
   }
-  }    
+  }
 
-  
+
 }

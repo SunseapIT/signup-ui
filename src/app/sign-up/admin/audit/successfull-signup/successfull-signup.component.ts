@@ -10,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class SuccessfullSignupComponent implements OnInit {
 
   public dateTimeRange: Date[];
-  
+
   sort="asc"
   sortParam='fullName'
   sortingValue=[true,true,true,true,true,true,true,true,true]
@@ -30,27 +30,27 @@ export class SuccessfullSignupComponent implements OnInit {
     quoteStrings: '"',
     decimalseparator: '.',
     showLabels: false,
-    headers: ['First Name', 
-    'Last Name', 
-    'Email Address', 
+    headers: ['First Name',
+    'Last Name',
+    'Email Address',
     'Plan Name',
     'SP Account Number',
     'Promo Code',
     'Address',
-    'Initialstamp', 
+    'Initialstamp',
     'Finalstamp'],
     showTitle: true,
     title: '',
     useBom: false,
     removeNewLines: true,
-    keys: ['fullName', 
+    keys: ['fullName',
     'lastName',
     'eamilAddress',
     'plan',
     'spAccountNumber',
     'promoCode',
     'buildingName',
-    'sighnUpStarTimeStamp', 
+    'sighnUpStarTimeStamp',
     'sighnUpEndTimeStamp']
   };
   max = new Date();
@@ -73,12 +73,14 @@ export class SuccessfullSignupComponent implements OnInit {
   getAllSuccessSignupUsers(val){
     this.isLoader=true;
     this.buildQueryParams();
-    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"/?"+this.queryParams+"&sort="+this.sortParam+','+this.sort).subscribe((responseData:any)=>{
+    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"/?"+this.queryParams+"&sort="+this.sortParam+','+this.sort)
+    .subscribe((response:any)=>{
      this.isLoader=false;
-      var resultObject = responseData['data'];
-      this.totalItems = resultObject.totalElements;
-      var resultObject1 = resultObject['content'];
-      this.successData = resultObject1;        
+      var responseBody = response['body'];
+      var responseData = responseBody['data'];
+      this.totalItems = responseData.totalElements;
+      var responseContent = responseData['content'];
+      this.successData = responseContent;
       this.csvFormatSuccessSignup(val);
     })
  }
@@ -86,14 +88,15 @@ export class SuccessfullSignupComponent implements OnInit {
 
  searchCustomer(event){
    let name = event.target.value;
-  this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?fullName.contains="+name).subscribe((responseData:any)=>{
-    var resultObject = responseData['data'];
-    this.totalItems = resultObject.totalElements;
-    var resultObject1 = resultObject['content'];
-    this.successData = resultObject1;  
-    this.searched = this.successData      
+  this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?fullName.contains="+name).subscribe((response:any)=>{
+    var responseBody = response['body'];
+    var responseData = responseBody['data'];
+    this.totalItems = responseData.totalElements;
+    var responseContent = responseData['content'];
+    this.successData = responseContent;
+    this.searched = this.successData
     this.csvDataSuccess = this.successData;
-    
+
   })
  }
 
@@ -107,13 +110,13 @@ export class SuccessfullSignupComponent implements OnInit {
     this.filters['fromTimestamp'] =this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[0]) : null;
     this.filters['toTimestamp'] =this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[1]) : null;
     this.filters['page']= this.page ? this.page-1 : 0;
-    this.getAllSuccessSignupUsers(null);  
+    this.getAllSuccessSignupUsers(null);
   }
   getSuccessfulSignUp(){
     this.filters['fromTimestamp'] =this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[0]) : null;
     this.filters['toTimestamp'] =this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[1]) : null;
     this.filters['page'] = 0;
-    this.getAllSuccessSignupUsers("datetime");  
+    this.getAllSuccessSignupUsers("datetime");
   }
   buildQueryParams() {
     let finalQuery = '';
@@ -129,8 +132,8 @@ export class SuccessfullSignupComponent implements OnInit {
   }
   pageChanged(event: any): void {
     this.page = event.page;
-    this.getFilteredList();  
-    this.searched; 
+    this.getFilteredList();
+    this.searched;
   }
 
   resetFilters(){
@@ -142,30 +145,37 @@ export class SuccessfullSignupComponent implements OnInit {
     }
   }
 
- csvFormatSuccessSignup(value){  
+ csvFormatSuccessSignup(value){
    if(value == 'datetime'){
-    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?size="+this.totalItems+'&fromTimestamp='+this.getTimeStamp(this.dateTimeRange[0])+'&toTimestamp='+this.getTimeStamp(this.dateTimeRange[1])).subscribe((response:any)=>
+    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?size="+this.totalItems+'&fromTimestamp='+this.getTimeStamp(this.dateTimeRange[0])
+    +'&toTimestamp='+this.getTimeStamp(this.dateTimeRange[1])).subscribe((response:any)=>
       {
-        var requestObj = response.data.content;
-        this.csvDataSuccess= requestObj;     
-      }) 
+        var responseBody = response['body'];
+      var responseData = responseBody['data'];
+      this.totalItems = responseData.totalElements;
+      var responseContent = responseData['content'];
+        this.csvDataSuccess= responseContent;
+      })
    }else{
     this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?size="+this.totalItems).subscribe((response:any)=>
       {
-        var requestObj = response.data.content;
-        this.csvDataSuccess= requestObj;     
-      }) 
-   }   
+        var responseBody = response['body'];
+      var responseData = responseBody['data'];
+      this.totalItems = responseData.totalElements;
+      var responseContent = responseData['content'];
+        this.csvDataSuccess= responseContent;
+      })
+   }
  }
- 
- sorting(value, format){  
+
+ sorting(value, format){
    let pageNumber =0
    if(this.page==0){
      pageNumber=0
    }else{
      pageNumber=this.page-1;
    }
-  
+
    if(format) {
     this.sort = "asc"
    } else {
@@ -173,22 +183,36 @@ export class SuccessfullSignupComponent implements OnInit {
    }
    if(value == 'spAccount'){
     this.sortParam="spAccountNumberDetails.spAccountNumber";
-     this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=spAccountNumberDetails.spAccountNumber,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
-       this.successData = response.data.content;
-       this.csvDataSuccess = this.successData;      
+     this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=spAccountNumberDetails.spAccountNumber,"
+     +this.sort+'&page='+pageNumber).subscribe((response:any)=>{
+      var responseBody = response['body'];
+      var responseData = responseBody['data'];
+      this.totalItems = responseData.totalElements;
+      var responseContent = responseData['content'];
+       this.successData = responseContent;
+       this.csvDataSuccess = this.successData;
      })
   }
   else if(value == 'planName'){
     this.sortParam ='plans.planName';
-    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=plans.planName,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
-      this.successData = response.data.content;
+    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=plans.planName,"+this.sort+'&page='+pageNumber)
+    .subscribe((response:any)=>{
+      var responseBody = response['body'];
+      var responseData = responseBody['data'];
+      this.totalItems = responseData.totalElements;
+      var responseContent = responseData['content'];
+      this.successData = responseContent;
       this.csvDataSuccess = this.successData;
     })
   }
   else if(value == 'email'){
     this.sortParam='eamilAddress';
     this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=eamilAddress,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
-      this.successData = response.data.content;
+      var responseBody = response['body'];
+      var responseData = responseBody['data'];
+      this.totalItems = responseData.totalElements;
+      var responseContent = responseData['content'];
+      this.successData = responseContent;
       this.csvDataSuccess = this.successData;
 
     })
@@ -196,7 +220,11 @@ export class SuccessfullSignupComponent implements OnInit {
   else if(value == 'promoCode'){
     this.sortParam = 'customerPromoCodes.customerPromoCode';
     this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=customerPromoCodes.customerPromoCode,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
-      this.successData = response.data.content;
+      var responseBody = response['body'];
+      var responseData = responseBody['data'];
+      this.totalItems = responseData.totalElements;
+      var responseContent = responseData['content'];
+      this.successData = responseContent;
       this.csvDataSuccess = this.successData;
 
     })
@@ -205,7 +233,11 @@ export class SuccessfullSignupComponent implements OnInit {
   else if(value == 'address'){
     this.sortParam = 'addressData.buildingName'
     this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=addressData.buildingName,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
-      this.successData = response.data.content;
+      var responseBody = response['body'];
+      var responseData = responseBody['data'];
+      this.totalItems = responseData.totalElements;
+      var responseContent = responseData['content'];
+      this.successData = responseContent;
       this.csvDataSuccess = this.successData;
 
     })
@@ -213,32 +245,49 @@ export class SuccessfullSignupComponent implements OnInit {
   else if(value == 'lastName'){
     this.sortParam = 'lastName';
     this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=lastName,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
-      this.successData = response.data.content;
-      // this.getAllSuccessSignupUsers(null);  
+      var responseBody = response['body'];
+      var responseData = responseBody['data'];
+      this.totalItems = responseData.totalElements;
+      var responseContent = responseData['content'];
+      this.successData = responseContent;
+      this.csvDataSuccess = this.successData
     })
   }
   else if(value == 'firstName'){
     this.sortParam ='fullName';
     this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=fullName,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
-      this.successData = response.data.content;
+      var responseBody = response['body'];
+      var responseData = responseBody['data'];
+      this.totalItems = responseData.totalElements;
+      var responseContent = responseData['content'];
+      this.successData = responseContent;
       this.csvDataSuccess = this.successData;
 
     })
-  }  
+  }
   else if(value == 'initial'){
     this.sortParam='TimestampRecords.planDetails'
     this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=TimestampRecords.planDetails,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
-      this.successData = response.data.content;
+      var responseBody = response['body'];
+      var responseData = responseBody['data'];
+      this.totalItems = responseData.totalElements;
+      var responseContent = responseData['content'];
+      this.successData = responseContent;
+      this.csvDataSuccess = this.successData;
     })
   }
   else if(value == 'final'){
     this.sortParam = 'TimestampRecords.signUp';
     this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl+"?sort=TimestampRecords.signUp,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
-      this.successData = response.data.content;
+      var responseBody = response['body'];
+      var responseData = responseBody['data'];
+      this.totalItems = responseData.totalElements;
+      var responseContent = responseData['content'];
+      this.successData = responseContent;
       this.csvDataSuccess = this.successData;
     })
-  }  
- } 
+  }
+ }
 
 addClass(event){
   let elementId = document.getElementById(event.target.id);

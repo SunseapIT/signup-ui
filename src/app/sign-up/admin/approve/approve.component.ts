@@ -53,7 +53,7 @@ export class ApproveComponent implements OnInit {
     ORDER_GA_EVENT_NAMES.SELECT_SEMI,
     ORDER_GA_EVENT_NAMES.SELECT_BUNGALOW,
   ];
-  
+
   dwellingValue: '';
   planList=[];
   approvalData =[];
@@ -119,7 +119,7 @@ export class ApproveComponent implements OnInit {
  finalApproved = {}
 
  approvedCustomerData=[];
-  
+
    approvalDate:Date;
 
   sighnUpEndTimeStamp:Date;
@@ -131,7 +131,7 @@ export class ApproveComponent implements OnInit {
   myDateValue: Date;
   planType = {energy : '', discount : '', rate : '', afterGst : '', rateChange : ''};
   lastApproveDate: Date;
- 
+
 
   constructor(private service:ApiServiceServiceService,
     public parent: OrderComponent,
@@ -144,10 +144,10 @@ export class ApproveComponent implements OnInit {
     private modalService: BsModalService,
     private gtagService: GoogleTagManagerService,
     private toastr : ToastrService) {
-     
+
   }
 
-  ngOnInit() {  
+  ngOnInit() {
     this.approvalStatus = this.customerDto.approved
     this.getCustomerForApproval();
     this.getPlans();
@@ -156,7 +156,7 @@ export class ApproveComponent implements OnInit {
       .subscribe(newServiceAddress => newServiceAddress && (this.newServiceAddress = newServiceAddress));
       if (this.dwellingType) {
         this.onSelectDwellingType(this.parent.model.premise.dwellingType);
-      }  
+      }
   }
 
   getCustomerForApproval(){
@@ -164,11 +164,14 @@ export class ApproveComponent implements OnInit {
     this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl
       +"?size="+this.size+'&page='+(this.page-1)+"&sort="+this.sortParams+','+this.sort).subscribe((responseData:any)=>{
      this.isLoader=false;
-      var resultObject = responseData['data'];
-      this.totalItems = resultObject.totalElements;   
-      var resultObject1 = resultObject['content'];
-      this.approvalData = resultObject1;                          
+      var resultObject = responseData['body'];
+      var result= resultObject['data'];
+      this.totalItems = result.totalElements;
+      var resultObject1 = result['content'];
+      this.approvalData = resultObject1;
     })
+
+
  }
 
  getTimeStamp(time){
@@ -246,16 +249,16 @@ export class ApproveComponent implements OnInit {
     let minutes = this.sighnUpEndTimeStamp[2].toString().split(' ')[1].toString().split(':')[1];
     let seconds = this.sighnUpEndTimeStamp[2].toString().split(' ')[1].toString().split(':')[2];
     this.approvalDate =  new Date(year, month, day, hours, minutes, seconds);
-    this.approvalDate.setDate(this.approvalDate.getDate() + 5);  
+    this.approvalDate.setDate(this.approvalDate.getDate() + 5);
   }
 
- 
+
  editCustomer(customerList){
   let approved = customerList.approved
   if(approved ==true){
-    this.approvedCustomer(customerList)  
-    this.lastApproveDate = this.approvalDate 
-    $('#approved').modal('show');   
+    this.approvedCustomer(customerList)
+    this.lastApproveDate = this.approvalDate
+    $('#approved').modal('show');
   }
   else {
   this.approvedCustomer(customerList)
@@ -285,9 +288,9 @@ export class ApproveComponent implements OnInit {
 
 getPlans(){
   this.service.get_service(ApiServiceServiceService.apiList.customerViewPlanUrl).subscribe((response)=>{
-    var responseData  = response;
-    var resultObject = responseData['data'];
-    this.planList = resultObject;  
+    var responseBody = response['body'];
+    var responseData= responseBody['data']; 
+    this.planList = responseData;
   })
 }
 
@@ -336,7 +339,7 @@ isPostalCodeValid(code: string): boolean {
 
 getCustomerFile(name){
   this.service.get_service(ApiServiceServiceService.apiList.encodeFileUrl
-    +"?fileName="+name).subscribe((response:any)=>{  
+    +"?fileName="+name).subscribe((response:any)=>{
     var b64toBlob = require('b64-to-blob');
     var file =  b64toBlob(response.data,'application/pdf');
     var fileURL = URL.createObjectURL(file);
@@ -346,16 +349,16 @@ getCustomerFile(name){
 
 
 onSubmit(form:NgForm){
-  // this.isLoader=true;  
+  // this.isLoader=true;
    if(form.valid){
-  var customerDto = new CustomerDto(); 
+  var customerDto = new CustomerDto();
   customerDto.customerId = this.customerId ;
   customerDto.plan = this.selectedPricingPlan
   customerDto.spAccountNumber= this.serviceNo;
   customerDto.promoCode = this.verifiedPromocodes;
-  customerDto.fullName = this.fullName; 
-  customerDto.lastName = this.lastName; 
-  customerDto.eamilAddress = this.emailAddress;  
+  customerDto.fullName = this.fullName;
+  customerDto.lastName = this.lastName;
+  customerDto.eamilAddress = this.emailAddress;
   customerDto.mobileNumber = this.mobileNumber
   customerDto.postelCode = this.servicePostalCode;
   customerDto.houseNo = this.houseNo;
@@ -373,54 +376,54 @@ onSubmit(form:NgForm){
   customerDto.files.bill_data = this.customerDto.files.bill_data;
   customerDto.files.authorization_data = this.customerDto.files.authorization_data;
   customerDto.files.factSheet_data = this.customerDto.files.factSheet_data;
-  customerDto.approvedTime = this.getTimeStamp(this.approvalDate);  
-  
-  
+  customerDto.approvedTime = this.getTimeStamp(this.approvalDate);
+
+
   this.service.post_service(ApiServiceServiceService.apiList.approveCustomerUrl, customerDto)
   .subscribe((response)=>{
-    var responseData  = response;  
+    var responseData  = response;
     this.isLoader=false;
-    let msgCode = responseData['message'] 
+    let msgCode = responseData['message']
       let statusCode = responseData['statusCode']
       if(statusCode == 200){
       this.isLoader=false;
       this.toastr.success('','Customer approved successfully.', {
         timeOut : 2000
-      }) 
+      })
       $('#customer').modal('hide');
       this.getCustomerForApproval();
-      
+
     }
     else if(statusCode == 400 && msgCode== 'installationIdentifier Consumer already exists with provided MSSL number.'){
-      this.isLoader = false; 
+      this.isLoader = false;
       this.toastr.error('','This SP account number already exists.', {
         timeOut : 2000
-      }) 
+      })
       $('#customer').modal('hide');
-     
-    }   
+
+    }
     else if(statusCode == 400 && msgCode== 'postalPoBox \"Postal PO Box\" is required when Postal Street is set.'){
-      this.isLoader = false; 
+      this.isLoader = false;
       this.toastr.error('','This is an invalid service address.', {
         timeOut : 2000
-      }) 
+      })
       $('#customer').modal('hide');
-     
-    } 
+
+    }
     else{
 
-      this.isLoader = false; 
+      this.isLoader = false;
       this.toastr.error('',msgCode, {
         timeOut : 2000
-      }) 
-      $('#customer').modal('hide');     
-    }     
+      })
+      $('#customer').modal('hide');
+    }
 })
    }
    else{
     this.toastr.error('','Enter the correct details.', {
       timeOut : 2000
-    }) 
+    })
 
    }
 }
@@ -434,7 +437,7 @@ downloadFactSheet(){
   downloadLink.click();
 }
 
-editPromoCode(event){  
+editPromoCode(event){
   this.isPromoCodeFlag = !this.isPromoCodeFlag;
   if(event){
     this.promoCodeList=null
@@ -450,7 +453,7 @@ editPromoCode(event){
      this.promoCode=this.verifiedPromocodes;
     this.duplicatePromoCode=false;
     this.promotionMessage=''
-    
+
 
   }
 }
@@ -460,14 +463,14 @@ indexTracker(index: number) {
 }
 
 addPromoCode(){
-    this.promoCodeList.push({referralCode :''})   
-    this.promotionMessage = ''; 
+    this.promoCodeList.push({referralCode :''})
+    this.promotionMessage = '';
     this.duplicatePromoCode=false;
     this.promocodeStatus=false;
  }
 
 
- delete(i:number){    
+ delete(i:number){
   if(this.verified){
     this.verifiedPromocodes.splice(i,1);
     this.duplicatePromoCode=false;
@@ -479,8 +482,8 @@ addPromoCode(){
 }
 
 verifyPromotionCode(index) {
-  let promocode = this.promoCodeList[index].referralCode.toLowerCase(); 
- 
+  let promocode = this.promoCodeList[index].referralCode.toLowerCase();
+
   if( this.verifiedPromocodes.length >0){
     this.verified=true;
    this.verifiedPromocodes.findIndex(item => item == promocode)
@@ -511,7 +514,7 @@ verifyPromocode(index,promocode){
     else{
       this.promocodeStatus = false;
       this.promotionMessage = response.message;
-     
+
     }
   })
 }
@@ -519,19 +522,19 @@ verifyPromocode(index,promocode){
 selectPlans(value){
   let selectedPlan =value;
   if(selectedPlan !=null){
-    for (let index = 0; index < this.planList.length; index++) {
+    for (let index = 0; index <= this.planList.length; index++) {
       const element = this.planList[index];
       if(element.planName == selectedPlan){
         this.selectedPlanIndex = index;
-        this.planType = element;       
+        this.planType = element;
         break;
-      }      
+      }
     }
   }
 }
 
 keyPress(event: any) {
-  const pattern = /[0-9\-\ ]/;   
+  const pattern = /[0-9\-\ ]/;
   let inputChar = String.fromCharCode(event.charCode);
       if (!pattern.test(inputChar) && event.charCode != '0') {
           event.preventDefault();
@@ -545,7 +548,7 @@ sorting(value, format){
     pageNumber=0
   }else{
     pageNumber=this.page-1;
-  } 
+  }
   this.sort="asc"
   if(format) {
    this.sort = "asc"
@@ -556,11 +559,11 @@ sorting(value, format){
     this.sortParams="spAccountNumberDetails.spAccountNumber";
     this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl+
       "?sort=spAccountNumberDetails.spAccountNumber,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
-      this.approvalData = response.data.content;     
+      this.approvalData = response.data.content;
     })
  }
 
- 
+
  else if(value == 'address'){
   this.sortParams = 'addressData.buildingName'
    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl
@@ -573,7 +576,7 @@ sorting(value, format){
    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl+"?sort=fullName,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
      this.approvalData = response.data.content;
    })
- } 
+ }
 else if(value == 'final'){
   this.sortParams = 'TimestampRecords.signUp'
   this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl+"?sort=TimestampRecords.signUp,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
@@ -605,18 +608,18 @@ addClass(event){
 }
 
 addRemark(form:NgForm){
-   this.customerDto 
+   this.customerDto
    var customerRemark = new CustomerRemark();
    customerRemark.customerId = this.customerId;
-   customerRemark.remarks = form.form.value.remarks; 
+   customerRemark.remarks = form.form.value.remarks;
    this.service.post_service(ApiServiceServiceService.apiList.customerRemark,customerRemark).subscribe((response)=>{
     this.toastr.success('','Added remarks/comments successfully.', {
       timeOut : 2000
-    }) 
+    })
 
     $('#customer').modal('hide');
     this.getCustomerForApproval();
-     
+
    })
    form.resetForm()
 }

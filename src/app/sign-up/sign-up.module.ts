@@ -6,7 +6,6 @@ import { BsDatepickerModule, PopoverModule, TooltipModule } from 'ngx-bootstrap'
 import { FileUploadModule } from 'ng2-file-upload';
 import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
-
 import { environment } from '@env/environment';
 import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
@@ -19,22 +18,19 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PaginationModule } from 'ngx-pagination-bootstrap';
 
-
-
-
 @NgModule({
   imports: [
-    BrowserAnimationsModule, 
-    BsDatepickerModule.forRoot(), 
-    TooltipModule.forRoot(), 
-    FileUploadModule, 
+    BrowserAnimationsModule,
+    BsDatepickerModule.forRoot(),
+    TooltipModule.forRoot(),
+    FileUploadModule,
     RecaptchaModule.forRoot(),
-    PopoverModule.forRoot(), 
-    RecaptchaFormsModule, 
-    SignUpRoutingModule, 
+    PopoverModule.forRoot(),
+    RecaptchaFormsModule,
+    SignUpRoutingModule,
     NgxPaginationModule,
     PaginationModule,
-    CoreModule, 
+    CoreModule,
     SharedModule,
     Angular2CsvModule,
     ToastrModule.forRoot({
@@ -42,23 +38,20 @@ import { PaginationModule } from 'ngx-pagination-bootstrap';
       positionClass: 'toast-top-center',
       preventDuplicates: true,
     }),
-    PdfViewerModule,  
+    PdfViewerModule,
     InputTrimModule,
 
   ],
   declarations: [
-    SignUpComponent, 
+    SignUpComponent,
     ORDER_COMPONENTS,
     PAYMENT_COMPONENTS,
-  
-   
-   
    ],
   providers: [
     {
       provide: RECAPTCHA_SETTINGS,
       useValue: { siteKey: environment.reCaptchaSiteKey, size: 'invisible' } as RecaptchaSettings,
-    },
+    }
   ],
   bootstrap: [ SignUpComponent ]
 })
@@ -66,3 +59,4 @@ export class SignUpModule {
   constructor() {
   }
 }
+

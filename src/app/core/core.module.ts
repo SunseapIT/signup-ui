@@ -1,3 +1,4 @@
+import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -16,6 +17,7 @@ import { CORE_SERVICES } from './services';
   declarations: [],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
     CORE_DATA_SERVICES, CORE_SERVICES
   ]
 })

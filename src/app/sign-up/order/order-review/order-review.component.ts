@@ -70,7 +70,7 @@ export class OrderReviewComponent implements OnInit {
 
   acknowledgeConsent: false;
   acknowledgePrivacy:false;
-  
+
   checked = true;
   isDotPlan = false;
   reviewMapInput = {};
@@ -217,44 +217,45 @@ export class OrderReviewComponent implements OnInit {
     this.buildingName = this.customerDto.buildingName;
     this.servicePostalCode= this.customerDto.postelCode;
     this.dwellingType = this.customerDto.dwelingType;
-    this.serviceNo= this.customerDto.spAccountNumber;    
+    this.serviceNo= this.customerDto.spAccountNumber;
   }
 
   onSubmit(form:NgForm) {
     this.isLoader=true;
-    if (this.acknowledgePrivacy && this.acknowledgeConsent && form.valid) {       
-    var objStr = localStorage.getItem("customerObj");
+    if (this.acknowledgePrivacy && this.acknowledgeConsent && form.valid) {
+    let objStr = localStorage.getItem("customerObj");
     this.customerDto = JSON.parse(objStr);
-    this.customerDto.fullName = this.fullName; 
-    this.customerDto.lastName = this.lastName; 
-    this.customerDto.spAccountNumber = this.serviceNo; 
-    localStorage.setItem("customerObj", JSON.stringify(this.customerDto));    
-     
+    this.customerDto.fullName = this.fullName;
+    this.customerDto.lastName = this.lastName;
+    this.customerDto.spAccountNumber = this.serviceNo;
+    localStorage.setItem("customerObj", JSON.stringify(this.customerDto));
     this.service.post_service(ApiServiceServiceService.apiList.saveCustomerurl,this.customerDto).subscribe((response)=>{
-    var responseData  = response;     
+      let responseBody = response['body'];
+      let responseData = responseBody['data'];
+      let responseMessage =responseBody['body']
     this.isLoader=false;
-      let statusCode = responseData['statusCode']
+      let statusCode = responseBody['statusCode']
       if(statusCode == 200){
       this.isLoader=false;
        this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
     }
     else if(statusCode == 500 || statusCode == 400){
-      this.isLoader = false; 
-      this.toster.error('',responseData['message'], {
-        timeOut : 3000
-      }) 
-    }
-    else{
-      this.toster.error('',responseData['message'], {
+      this.isLoader = false;
+      this.toster.error('',responseMessage, {
         timeOut : 3000
       })
     }
-  
+    else{
+      this.toster.error('',responseMessage, {
+        timeOut : 3000
+      })
+    }
+
   })
 }
 }
 keyPress(event: any) {
-  const pattern = /[0-9\-\ ]/;   
+  const pattern = /[0-9\-\ ]/;
   let inputChar = String.fromCharCode(event.charCode);
       if (!pattern.test(inputChar) && event.charCode != '0') {
           event.preventDefault();

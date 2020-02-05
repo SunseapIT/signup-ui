@@ -33,17 +33,18 @@ export class ViewPromocodeComponent implements OnInit {
 
   ngOnInit() {
     this.getPromoCode(0);
- 
+
   }
 
   getPromoCode(page){
     this.isLoader=true
     this.service.get_service(ApiServiceServiceService.apiList.getPromoCodeUrl+"?page="+page).subscribe((response:any)=>{
-       var responseData = response.data;
-       this.totalItems = responseData.totalElements;
-       var resultData = responseData['content']
-       this.promoCodeData = resultData;       
-       this.isLoader=false;       
+      var responseBody = response['body'];
+      var responseData = responseBody['data'];
+      this.totalItems = responseData.totalElements;
+      var responseContent = responseData['content'];
+       this.promoCodeData = responseContent;
+       this.isLoader=false;
     })
   }
 
@@ -59,7 +60,8 @@ export class ViewPromocodeComponent implements OnInit {
 
 
 
-  delete(id){    
+  delete(id){
+
     this.service.get_service(ApiServiceServiceService.apiList.deletePromoCodeUrl+"?promoId="+id).subscribe((response)=>{
       var responseData  = response;
       var resultObject = responseData['data'];
@@ -69,10 +71,10 @@ export class ViewPromocodeComponent implements OnInit {
       this.promoCodeData.splice(findIndex,1);
       this.toastr.success('', 'Promo Code has been successfully removed.', {
         timeOut: 2000
-      }); 
+      });
 
       this.getPromoCode(0);
     })
   }
-  
+
 }

@@ -1,35 +1,36 @@
-
 .content {
-  
-  display: block;
-  margin-top: 110px;
-  padding: 10px;
-  background-color: #909090;
-  padding: 10px;
-  background-color: #fff;
- // margin: 0 auto;
-  margin-top: 18px;
-  margin-left: 45px;
-
-  border-radius: 5px;
-}
-.row{
-  margin: 0;
+    display: block;
+    margin-top: 110px;
+    padding: 10px;
+    background-color: #909090;
+    padding: 10px;
+    background-color: #fff;
+    margin-top: 18px;
+    margin-left: 41px;
+    height: 100%;
+    position: relative;
+    top: 130px;
+    margin-right: 20px;
 }
 
-.bg_img{
-  background-image: url('/assets/sign-up/images/background/BG.png');
-  // width: 100vh;
-  width: 100%;
-  background-size: cover; 
-  height: 100%;
-  
+.row {
+    margin: 0;
 }
+
+.bg_img {
+    background-image: url('/assets/sign-up/images/background/BG.png');
+    // width: 100vh;
+    height: 100%;
+    position: fixed;
+    z-index: -17;
+    width: 100%;
+}
+
 header#header div.content-header {
-padding-left: 0%;
-padding-right: 5%;
+    padding-left: 0%;
+    padding-right: 5%;
 }
 
-.btn-admin{
-float: right;
+.btn-admin {
+    float: right;
 }

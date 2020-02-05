@@ -20,7 +20,7 @@
                     <th >Record</th>
                 </thead>
                 <tbody>
-                    <tr [ngClass]="customerList.duplicate== 'EXISTING_CUSTOMER' ? 'text-danger' : ''" 
+                    <tr [ngClass]="customerList.duplicate == 'EXISTING_CUSTOMER' ? 'text-danger' : ''" 
                     *ngFor="let customerList of approvalData | grdFilter: {fullName: searchTextSuccess, spAccountNumber:searchTextSuccess};  let i=index;" 
                     (click)="editCustomer(customerList)">
                         <td>{{customerList.fullName}}&nbsp;{{customerList.lastName}}</td>

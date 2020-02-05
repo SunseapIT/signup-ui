@@ -54,7 +54,7 @@ export class PlanDetailComponent implements OnInit {
     thirdOverlay: false,
     successOverlay: false,
     failedOverlay: false,
-    submitSuccessOverlay: false   
+    submitSuccessOverlay: false
   };
   listPricePlanByRefOrProCode = LIST_PRICE_PLAN_BY_REF_OR_PRO_CODE;
   inputSubmissionAllowedClickOn = ['postalCodeVerification', 'submissionForm', 'submissionSuccess'];
@@ -207,7 +207,7 @@ export class PlanDetailComponent implements OnInit {
     setTimeout(() => {
     this.parent.model.premise.productName = null;
     },100);
-    this.verifiedPromotionCode = (this.parent.model.referralCode || '');  
+    this.verifiedPromotionCode = (this.parent.model.referralCode || '');
     this.pricingPlanService.fetchAll().subscribe(collection => {
       if (!this.parent.isAdvisoryAgreed) {
         setTimeout(() => {
@@ -216,7 +216,7 @@ export class PlanDetailComponent implements OnInit {
         }, 1000);
       }
       this.parent.model.premise.serviceNo='';
-      this.pricingPlanList = collection.items;      
+      this.pricingPlanList = collection.items;
       const pricingPlan = _.get(this.activateRoute.snapshot.queryParams, 'plan');
       if (pricingPlan) {
         const index = _.findIndex(this.pricingPlanList, plan => _.isEqual(plan.prefillUrl, pricingPlan));
@@ -237,19 +237,21 @@ export class PlanDetailComponent implements OnInit {
 
 getPlans(){
   this.service.get_service(ApiServiceServiceService.apiList.customerViewPlanUrl).subscribe((response)=>{
-    var responseData  = response;
-    var resultObject = responseData['data'];
-    this.planList = resultObject;   
+    var responseBody = response['body'];
+    var responseData = responseBody['data'];
+    this.planList = responseData;
   })
 }
- 
-  
+
+
 viewFactSheet(){
   this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet+
     "?planName="+(btoa(this.planName))).subscribe(response=>{
-    var data = "data:application/pdf;base64," +response['data']
+      var responseBody = response['body'];
+      var responseData = responseBody['data'];      
+    var data = "data:application/pdf;base64," +responseData
     this.pdfSrc = data;
-    $("#myModal").modal("show")   
+    $("#myModal").modal("show")
   })
 }
 
@@ -258,13 +260,13 @@ viewFactSheet(){
     if(selectData) {
       this.openButtonFlag = true;
     }
-    else { 
+    else {
       this.openButtonFlag = false;
-    }   
+    }
   }
 
   verifyPromotionCode(index) {
-    let promocode = this.promoCode[index].referralCode.toLowerCase();   
+    let promocode = this.promoCode[index].referralCode.toLowerCase();
     if(this.verifiedPromocodes.length){
       this.verified=true;
      this.verifiedPromocodes.findIndex(item => item == promocode)
@@ -281,28 +283,32 @@ viewFactSheet(){
   }
 
  verifyPromocode(index,promocode){
-    var customerDto = new CustomerDto(); 
+    var customerDto = new CustomerDto();
     this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl+"?promoCode="
     +promocode,customerDto).subscribe((response: any) => {
-     var responseData = response;
-      if(responseData['statusCode']==200){
+      var responseBody = response['body'];
+      var responseData = responseBody['data'];
+      var responseMessage = responseBody['message'];
+      let statusCode = responseBody['statusCode']
+      if(statusCode==200){
         this.promocodeStatus = true;
-        this.promotionMessage = response.data;
+        this.promotionMessage = responseData;
         this.verifiedPromocodes.push(promocode)
         this.verified=true;
       }
       else{
         this.promocodeStatus = false;
-        this.promotionMessage = response.message;       
+        this.promotionMessage = responseMessage;        
       }
     })
   }
 
   onSubmit(form: NgForm) {
-  
-    this.service.get_service(ApiServiceServiceService.apiList.getSpAccountUrl+"?spAccount="+this.parent.model.premise.serviceNo).subscribe((response:any)=>{
-      let responseData = response;
-      let statusCode = responseData['statusCode']
+    this.service.get_service(ApiServiceServiceService.apiList.getSpAccountUrl+"?spAccount="+this.parent.model.premise.serviceNo)
+    .subscribe((response:any)=>{
+      var responseBody = response['body'];
+      var responseMessage = responseBody['message'];
+      let statusCode = responseBody['statusCode']
       if(statusCode == 200){
       if (form.valid && this.verifiedPromocodes) {
         this.parent.model.premise.startDate = moment(new Date()).add('days', 8).format(this.config.bootstrap.datePicker.dateInputFormat);
@@ -314,25 +320,26 @@ viewFactSheet(){
         var customerDto = new CustomerDto();
         customerDto.spAccountNumber = form.value.serviceNo;
         customerDto.plan = form.value.productName;
-        customerDto.promoCode = this.verifiedPromocodes;    
+        customerDto.promoCode = this.verifiedPromocodes;
         this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{
-          var responseData  = response;
-          var resultObject = responseData['data'];
-          var token = resultObject['token'];
-          localStorage.setItem("Token",token);
-          customerDto.token = token;
+          console.log('plan response',response);
+          let responseBody = response['body']
+          let responseData = responseBody['data']
+          let responseToken = responseData['token'];      
+          localStorage.setItem("Token",responseToken);
+          customerDto.token = responseToken;
          localStorage.setItem("customerObj",JSON.stringify(customerDto));
-          
-        })       
+
+        })
         this.parent.saveAndNext();
-        }  
+        }
       }
       else{
-        this.toster.error('',responseData['message'], {
+        this.toster.error('',responseMessage, {
           timeOut : 3000
-        }) 
-      }      
-    })    
+        })
+      }
+    })
   }
 
   delayedPopover(pop) {
@@ -359,12 +366,12 @@ viewFactSheet(){
   }
 
   addPromoCode(){
-   this.promoCode.push({referralCode :''})   
-   this.promotionMessage = ''; 
+   this.promoCode.push({referralCode :''})
+   this.promotionMessage = '';
    this.duplicatePromoCode=false;
   }
 
-  delete(i:number){    
+  delete(i:number){
     if(this.verified){
       this.verifiedPromocodes.splice(i,1);
       this.duplicatePromoCode=false;
@@ -377,12 +384,14 @@ viewFactSheet(){
 
   getAdminMessage(){
     this.service.get_service(ApiServiceServiceService.apiList.getMessageUrl).subscribe((response)=>{
-      this.adminMessage=response['data'];      
-    })    
+      var responseBody = response['body'];
+      var responseData = responseBody['data'];
+      this.adminMessage= responseData
+    })
   }
 
   keyPress(event: any) {
-    const pattern = /[0-9\-\ ]/;   
+    const pattern = /[0-9\-\ ]/;
     let inputChar = String.fromCharCode(event.charCode);
         if (!pattern.test(inputChar) && event.charCode != '0') {
             event.preventDefault();

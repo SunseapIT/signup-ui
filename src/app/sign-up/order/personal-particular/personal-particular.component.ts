@@ -49,7 +49,7 @@ export class PersonalParticularComponent implements OnInit {
   };
 
   verificationProgress: 'pending' | 'doing' | 'success' | 'fail' = 'pending';
-  
+
   verificationFailCount = 0;
 
   errorMessage = '';
@@ -96,7 +96,7 @@ export class PersonalParticularComponent implements OnInit {
     }
   }
 
- 
+
   isMobileNoVerified() {
     return  (this.verifiedMobileNo === this.parent.model.mobileNo)
   }
@@ -124,14 +124,14 @@ export class PersonalParticularComponent implements OnInit {
       localStorage.setItem("customerObj",JSON.stringify(customerDto))
       var timeStampDto = new TimeStampDto();
       timeStampDto.pageType = "PERSONAL_DETAILS",
-      timeStampDto.token = localStorage.getItem("Token")     
-      this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{        
-      })      
+      timeStampDto.token = localStorage.getItem("Token")
+      this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{
+      })
       this.parent.saveAndNext();
       form.resetForm();
-    }
-  }
- 
+     }
+   }
+
   requestEmailOTP(verifyEmail){
     this.verificationProgress = 'pending';
     this.errorMessage = '';
@@ -145,18 +145,18 @@ export class PersonalParticularComponent implements OnInit {
     .subscribe((response)=>
     {
       if(verifyEmail){
-        $('#emailOTP').modal('show');   
+        $('#emailOTP').modal('show');
       }
       else{
         this.toster.success('', 'OTP has been resent to email address.',{
           timeOut : 3000
           });
           this.otp =''
-      }      
+      }
     })
   }
 
- 
+
   validateEmailOTPModal(){
     var customerDto = new CustomerDto();
     var objStr = localStorage.getItem("customerObj");
@@ -165,25 +165,26 @@ export class PersonalParticularComponent implements OnInit {
     var email = this.parent.model.email;
     this.service.get_service(ApiServiceServiceService.apiList.getEmailOtp+"?token="+token+"&email="+email+"&otp="+this.otp).subscribe((response)=>
     {
-    var responseData = response;
-    if(responseData['statusCode']==200){
+      var responseBody = response['body'];
+      let statusCode = responseBody['statusCode']
+    if(statusCode==200){
       this.isEmailOtpValidated = true;
     $("#emailOTP").modal('hide');
     this.toster.success('', 'Email is verified successfully.',{
     timeOut : 3000
     });
-    }   
-    else 
+    }
+    else
     {
     this.isEmailOtpValidated = false;
     this.toster.error('', 'You have entered an invalid OTP.',{
     timeOut : 3000
-    });    
+    });
     }
     })
   }
-   
-  
+
+
   requestMobileOTP (verifyMobile){
     this.verificationProgress = 'pending';
     this.errorMessage = '';
@@ -191,7 +192,7 @@ export class PersonalParticularComponent implements OnInit {
     var customerDto = new CustomerDto();
     var objStr = localStorage.getItem("customerObj");
     customerDto = JSON.parse(objStr);
-    this.token = customerDto.token;   
+    this.token = customerDto.token;
     this.verifiedMobileNo = this.parent.model.mobileNo;
     this.service.post_service(ApiServiceServiceService.apiList.sendMobileOtp+"?token="+this.token+
     "&mobileNumber="+this.verifiedMobileNo,null)
@@ -208,7 +209,7 @@ export class PersonalParticularComponent implements OnInit {
     })
     }
 
-    //Validate mobile OTP 
+    //Validate mobile OTP
     validateMobileOTPModal(){
       var customerDto = new CustomerDto();
       var objStr = localStorage.getItem("customerObj");
@@ -218,15 +219,16 @@ export class PersonalParticularComponent implements OnInit {
     this.service.post_service(ApiServiceServiceService.apiList.verifyMobileUrl+"?mobileNumber="
     +mobileNumber+"&otp="+this.otpMobile+"&token="+token,null).subscribe((response)=>
     {
-    var responseData = response;
-    if(responseData['statusCode']==200){
+      var responseBody = response['body'];
+      let statusCode = responseBody['statusCode']
+    if(statusCode ==200){
       this.isMobileOtpValidate = true;
     $("#mobileOTP").modal('hide');
     this.toster.success('', 'Mobile number is verified successfully.',{
     timeOut : 3000
     });
-    }   
-    else 
+    }
+    else
     {
       this.isMobileOtpValidate = false;
     this.toster.error('', 'You have entered an invalid OTP',{

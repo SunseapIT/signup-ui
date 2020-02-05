@@ -35,8 +35,8 @@ export class AddPlanComponent {
   ngOnInit() {
     this.getAdminMessage();
   }
-  
-  onSubmit(form:NgForm){ 
+
+  onSubmit(form:NgForm){
     if(form.valid && this.fileType == "application/pdf"){
     this.isLoader=true;
     this.uploadSuccess=false;
@@ -45,10 +45,11 @@ export class AddPlanComponent {
     let sendlbeFormData=new FormData();
     sendlbeFormData.append("multipartFile",this.formData);
     sendlbeFormData.append("planDto",JSON.stringify(plandto));
-  this.service.multiPartPost_service(ApiServiceServiceService.apiList.addPlanUrl,sendlbeFormData).subscribe
-  (response=>{   
-    let responseData = response;
-    let statusCode = responseData['statusCode']
+  this.service.post_service(ApiServiceServiceService.apiList.addPlanUrl,sendlbeFormData).subscribe
+  (response=>{
+    var responseBody = response['body'];
+    var responseMessage = responseBody['message'];
+    let statusCode = responseBody['statusCode']
     if(statusCode == 200){
       this.isLoader=false;
          this.router.navigateByUrl('/admin-login/admin-dash/view-plan')
@@ -58,11 +59,11 @@ export class AddPlanComponent {
         }
         else if(statusCode == 500 || statusCode == 400){
           this.isLoader=false;
-       
-          this.toastr.error('',responseData['message'], {
+
+          this.toastr.error('',responseMessage, {
             timeOut : 3000
-          }) 
-        }        
+          })
+        }
   })
    form.resetForm();
  }
@@ -73,12 +74,12 @@ export class AddPlanComponent {
    }
 }
 
-onFileSelected(event) { 
+onFileSelected(event) {
  this.myfile = event.target.files[0].name;
  this.fileType = event.target.files[0].type;
  if(this.fileType == "application/pdf"){
-  this.formData=event.target.files[0]; 
-  this.uploadSuccess=true;  
+  this.formData=event.target.files[0];
+  this.uploadSuccess=true;
  }
  else{
   this.toastr.error('', 'Upload PDF file',{
@@ -89,7 +90,7 @@ onFileSelected(event) {
 
 
 addMessage(){
-   this.message = this.msgModal.message; 
+   this.message = this.msgModal.message;
 this.service.get_service(ApiServiceServiceService.apiList.messageUrl+"?message="+(btoa(this.message))).subscribe((response)=>{
   this.toastr.success('', 'Message added successfully.',{
     timeOut: 2000
@@ -99,8 +100,8 @@ this.service.get_service(ApiServiceServiceService.apiList.messageUrl+"?message="
 
 getAdminMessage(){
   this.service.get_service(ApiServiceServiceService.apiList.getMessageUrl).subscribe((response)=>{
-    this.msgModal.message=response['data'];   
-  })    
+    this.msgModal.message=response['data'];
+  })
 }
 
 deleteMessage(){
@@ -114,18 +115,18 @@ deleteMessage(){
 }
 
 
-selected(event){  
-    let fileList : FileList = event.target.files; 
-    const file: File = fileList[0];        
+selected(event){
+    let fileList : FileList = event.target.files;
+    const file: File = fileList[0];
       this.bill_data_file = file;
-      this.handleInputChange(file);  
+      this.handleInputChange(file);
 }
 
-handleInputChange(files) {  
+handleInputChange(files) {
   var file = files;
   var reader = new FileReader();
   reader.onloadend = this._handleReaderLoaded.bind(this);
-  reader.readAsDataURL(file);  
+  reader.readAsDataURL(file);
 }
 
 _handleReaderLoaded(e) {

@@ -26,14 +26,9 @@
             </div>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="serviceNo">SP Account No.</label>
-                <input name="serviceNo" id="serviceNo" 
-                trim="blur" 
-                pattern="(^[1-9]\d{9})|(^[1-9]{9}[-])$"
-                (keypress)="keyPress($event)" 
-                 class="form-control" placeholder="10 Digits" 
-                [class.is-invalid]="serviceNo.invalid && (serviceNo.touched || form.submitted)" 
-                required maxlength="10" blockCopyPaste 
-                [(ngModel)]="parent.model.premise.serviceNo" #serviceNo="ngModel">
+                <input name="serviceNo" id="serviceNo" trim="blur" pattern="(^[1-9]\d{9})|(^[1-9]{9}[-])$" (keypress)="keyPress($event)" 
+                 class="form-control" placeholder="10 Digits" [class.is-invalid]="serviceNo.invalid && (serviceNo.touched || form.submitted)" 
+                required maxlength="10" blockCopyPaste [(ngModel)]="parent.model.premise.serviceNo" #serviceNo="ngModel" autocomplete="off" />
                 <ng-template #serviceNoTooltip>
                     <img src='/assets/sign-up/images/content/SP_Account.jpg' alt="SP Account" includeVersion/>
                 </ng-template>
@@ -60,7 +55,7 @@
                     class="form-control" trim="blur" 
                     placeholder="Enter promotion/referral code"
                     (change)="isPromotionCodeVerifyFail = false"
-                     [(ngModel)]="promo.referralCode" #referralCode="ngModel" />
+                     [(ngModel)]="promo.referralCode" #referralCode="ngModel"  autocomplete="off"/>
     
                     <button type="button" class="btn input-button" 
                     (click)="verifyPromotionCode(i)" >

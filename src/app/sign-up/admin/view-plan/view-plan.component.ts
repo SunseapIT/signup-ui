@@ -23,31 +23,31 @@ export class ViewPlanComponent implements OnInit {
   totalItems:any;
   page:number;
   currentPage:number = 1;
- 
+
 
   constructor(private service: ApiServiceServiceService, private toastr: ToastrService) {
-    
+
   }
 
   ngOnInit() {
     this.getPlanList(0);
-    
+
   }
 
   getPlanList(page){
     this.isLoader=true;
-
     this.service.get_service(ApiServiceServiceService.apiList.viewPlanUrl+"?page="+page).subscribe((response:any)=>{
       this.isLoader=false;
-      var resultObject = response.data;
-      this.totalItems = resultObject.totalElements;
-      var resultObject1 = resultObject['content'];
-      this.planList = resultObject1;  
-      
-    });  
+      var responseBody = response['body'];
+      var responseData = responseBody['data'];
+      this.totalItems = responseData.totalElements;
+      var responseContent = responseData['content'];
+      this.planList = responseContent;
+
+    });
   }
-  
-  delete(id){    
+
+  delete(id){
     var data;
     let queryParams = new HttpParams();
     queryParams = queryParams.append("planId",id);
@@ -61,23 +61,26 @@ export class ViewPlanComponent implements OnInit {
 
       this.toastr.success('', 'Plan has been successfully removed.', {
         timeOut: 2000
-      }); 
+      });
 
       this.getPlanList(0);
     })
   }
-  
- 
+
+
 viewFactSheet(name){
   this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet
     +"?planName="+(btoa(name))).subscribe(response=>{
-    var data = "data:application/pdf;base64," +response['data']
+      var responseBody = response['body'];
+      var responseData = responseBody['data'];
+      
+    var data = "data:application/pdf;base64," +responseData
     this.pdfSrc = data;
-    
+
   })
   $("#myModal").modal("show")
 }
-  
+
 pageChanged(event: any): void {
   this.page = event.page-1;
   this.getPlanList(this.page);

@@ -30,7 +30,7 @@ export class TokenizationPageComponent implements OnInit {
   expYear:any;
   expMonth:any;
   monthIndex:number;
-  months = [ 
+  months = [
   {monthId : "01", name :"Jan"},
   {monthId : "02", name :"Feb"},
   {monthId : "03", name :"March"},
@@ -55,56 +55,56 @@ export class TokenizationPageComponent implements OnInit {
   }
 
 
-  
+
   getUserDetail(){
      var customerDto = new CustomerDto();
      var objStr = localStorage.getItem("customerObj");
-     customerDto = JSON.parse(objStr); 
+     customerDto = JSON.parse(objStr);
      this.userName = customerDto.fullName.concat(" ").concat(customerDto.lastName);
     }
 
-  onSubmit(form:NgForm){       
-    if(form.valid && this.isCardValid){    
+  onSubmit(form:NgForm){
+    if(form.valid && this.isCardValid){
     var customerDto = new CustomerDto();
      var objStr = localStorage.getItem("customerObj");
-     customerDto = JSON.parse(objStr); 
+     customerDto = JSON.parse(objStr);
      var spAccountNumber = customerDto.spAccountNumber;
      var paymentDto = new PaymentDto()
       paymentDto.cardNumber = form.value.cardNumber;
       paymentDto.expiryMonth = form.value.expMonth;
       paymentDto.expiryYear = form.value.expYear;
-      paymentDto.sourceType = "CARD"       
+      paymentDto.sourceType = "CARD"
       this.service.post_service(ApiServiceServiceService.apiList.addCardDetailUrl+"?sp_account_no="+spAccountNumber, paymentDto).
-      subscribe((response)=>{  
-        var responseData  = response;  
-        
-        let statusCode = responseData['statusCode'];       
+      subscribe((response)=>{
+        var responseBody = response['body'];
+      var responseMessage = responseBody['message'];
+      let statusCode = responseBody['statusCode']
         if( statusCode==201){
           this.isCardAdded=true;
           localStorage.removeItem("customerObj")
           localStorage.removeItem("Token")
           this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
           form.resetForm()
-    
+
         }
-        else if(statusCode == 500 || statusCode == 400){         
+        else if(statusCode == 500 || statusCode == 400){
           this.toster.error('',"Invalid card number.", {
-            timeOut : 3000
-          }) 
-        }
-        else{
-          this.toster.error('',responseData['message'], {
             timeOut : 3000
           })
         }
-              
-      })   
+        else{
+          this.toster.error('',responseMessage, {
+            timeOut : 3000
+          })
+        }
+
+      })
     }
   }
 
- 
+
   cardValidation(event){
-    this.isCardValid = true;   
+    this.isCardValid = true;
     this.monthIndex = this.months.findIndex(item => item.monthId == this.modal.expMonth);
     let beforeDate = new Date(this.expYear, this.expMonth+3, 1).getTime();
     let currentDate = new Date().getTime();
@@ -113,12 +113,12 @@ export class TokenizationPageComponent implements OnInit {
       this.isCardValid = false;
       this.toster.error('','This card has been expired.', {
                timeOut : 3000
-            })      
+            })
     }
   }
-  
+
   cancel(){
-    $('#cancel').modal('show');    
+    $('#cancel').modal('show');
   }
   no(){
     $('#cancel').modal('hide')

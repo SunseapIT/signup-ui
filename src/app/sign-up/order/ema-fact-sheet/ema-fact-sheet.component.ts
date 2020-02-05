@@ -1,7 +1,7 @@
 import { TimeStampDto } from './../../admin/dto/time-stamp-dto';
 
 import { CustomerDto } from './../../../core/customer-dto';
-import { Component, OnInit, Host } from '@angular/core';
+import { Component, OnInit, Host, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { LocalStorage } from '@ngx-pwa/local-storage';
@@ -37,12 +37,11 @@ export class EmaFactSheetComponent implements OnInit {
     private router: Router,
     private toster: ToastrService,
     private service:ApiServiceServiceService,
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.customerObj =  JSON.parse(localStorage.getItem("customerObj"));
     this.getPlanFactSheet(this.customerObj.plan);
-
   }
 
   onAckFactsheetClick() {
@@ -82,8 +81,10 @@ export class EmaFactSheetComponent implements OnInit {
     this.isLoader=true;
     this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet+"?planName="+(btoa(planName))).subscribe(response=>{
       this.isLoader = false;
-      this.pdf = response['data'];
-      var data = "data:application/pdf;base64," +response['data']
+      var responseBody = response['body'];
+      var responseData = responseBody['data'];   
+      this.pdf = responseData;
+      var data = "data:application/pdf;base64," +responseData
       this.pdfSrc = data;   
       })    
   }

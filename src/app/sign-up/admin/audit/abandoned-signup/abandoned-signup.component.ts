@@ -49,14 +49,15 @@ export class AbandonedSignupComponent implements OnInit {
     this.isLoader=true;
     this.buildQueryParams();
     this.service.get_service(ApiServiceServiceService.apiList.searchTimestampsByDateRangeUrl+"/?"+this.queryParams).
-    subscribe((responseData:any)=>{
-      this.isLoader=false; 
-      var resultObject = responseData['data'];       
-       this.totalItems = resultObject.totalElements; 
-       var resultObject1 = resultObject['content'];
-       this.abandonedData = resultObject1;   
+    subscribe((response:any)=>{
+      this.isLoader=false;
+      var responseBody = response['body'];
+      var responseData = responseBody['data'];
+      this.totalItems = responseData.totalElements;
+      var responseContent = responseData['content'];
+       this.abandonedData = responseContent;
        this.csvFormat(value);
-    })  
+    })
   }
 
   clearValue(){
@@ -70,14 +71,14 @@ export class AbandonedSignupComponent implements OnInit {
     this.filters['fromTimestamp'] =this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[0]) : null;
     this.filters['toTimestamp'] =this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[1]) : null;
     this.filters['page']= this.page ? this.page-1 : 0;
-    this.getAllSignupUsers(null);  
+    this.getAllSignupUsers(null);
   }
 
   getAbandonedSignUp(){
     this.filters['fromTimestamp'] =this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[0]) : null;
     this.filters['toTimestamp'] =this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[1]) : null;
     this.filters['page'] = 0;
-    this.getAllSignupUsers("datetime");  
+    this.getAllSignupUsers("datetime");
   }
 
   buildQueryParams() {
@@ -110,23 +111,29 @@ export class AbandonedSignupComponent implements OnInit {
   }
 
 
-  csvFormat(value){   
+  csvFormat(value){
     if(value == "datetime"){
       this.service.get_service(ApiServiceServiceService.apiList.searchTimestampsByDateRangeUrl+"?size="+
       this.totalItems+"&sort=planDetails,desc"+"&fromTimestamp="+this.getTimeStamp(this.dateTimeRange[0])+'&toTimestamp='
       +this.getTimeStamp(this.dateTimeRange[1])).subscribe((response:any)=>
          {
-         var requestObj = response.data.content;
-         this.csvData= requestObj;    
-         
+          var responseBody = response['body'];
+      var responseData = responseBody['data'];
+      this.totalItems = responseData.totalElements;
+      var responseContent = responseData['content'];
+         this.csvData= responseContent;
+
          })
   }else{
       this.service.get_service(ApiServiceServiceService.apiList.searchTimestampsByDateRangeUrl+"?size="+this.totalItems+
       "&sort=planDetails,desc").subscribe((response:any)=>
     {
-     var requestObj = response.data.content;
-     this.csvData= requestObj;    
-      
+      var responseBody = response['body'];
+      var responseData = responseBody['data'];
+      this.totalItems = responseData.totalElements;
+      var responseContent = responseData['content'];
+     this.csvData= responseContent;
+
     })
     }
   }

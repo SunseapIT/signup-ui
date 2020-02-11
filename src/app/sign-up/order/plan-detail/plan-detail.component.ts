@@ -208,13 +208,16 @@ export class PlanDetailComponent implements OnInit {
     this.parent.model.premise.productName = null;
     },100);
     this.verifiedPromotionCode = (this.parent.model.referralCode || '');
-    this.pricingPlanService.fetchAll().subscribe(collection => {
-      if (!this.parent.isAdvisoryAgreed) {
-        setTimeout(() => {
-          this.modal.open(this.advisory, 'lg', { class: 'mt-5 pt-5 ml-2 mr-2 ml-md-5 mr-md-5 unselect modal-mg-3rem',
+    this.modal.open(this.advisory, 'lg', { class: 'mt-5 pt-5 ml-2 mr-2 ml-md-5 mr-md-5 unselect modal-mg-3rem',
             ignoreBackdropClick: true });
+    this.pricingPlanService.fetchAll().subscribe(collection => {
+      // if (!this.parent.isAdvisoryAgreed) {
+        setTimeout(() => {
+          this.advisory.show();
+          // this.modal.open(this.advisory, 'lg', { class: 'mt-5 pt-5 ml-2 mr-2 ml-md-5 mr-md-5 unselect modal-mg-3rem',
+          //   ignoreBackdropClick: true });
         }, 1000);
-      }
+      // }
       this.parent.model.premise.serviceNo='';
       this.pricingPlanList = collection.items;
       const pricingPlan = _.get(this.activateRoute.snapshot.queryParams, 'plan');

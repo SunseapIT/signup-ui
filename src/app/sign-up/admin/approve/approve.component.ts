@@ -340,8 +340,10 @@ isPostalCodeValid(code: string): boolean {
 getCustomerFile(name){
   this.service.get_service(ApiServiceServiceService.apiList.encodeFileUrl
     +"?fileName="+name).subscribe((response:any)=>{
+      var responseBody = response['body'];
+    var responseData= responseBody['data']; 
     var b64toBlob = require('b64-to-blob');
-    var file =  b64toBlob(response.data,'application/pdf');
+    var file =  b64toBlob(responseData,'application/pdf');
     var fileURL = URL.createObjectURL(file);
     window.open(fileURL);
   })
@@ -381,10 +383,16 @@ onSubmit(form:NgForm){
 
   this.service.post_service(ApiServiceServiceService.apiList.approveCustomerUrl, customerDto)
   .subscribe((response)=>{
+
+
+    var responseBody = response['body'];
+    var responseData= responseBody['data'];
+    var responseMsg = responseData['message']  
+    var statusCode = responseData['statusCode']
     var responseData  = response;
     this.isLoader=false;
-    let msgCode = responseData['message']
-      let statusCode = responseData['statusCode']
+   
+    
       if(statusCode == 200){
       this.isLoader=false;
       this.toastr.success('','Customer approved successfully.', {
@@ -394,7 +402,7 @@ onSubmit(form:NgForm){
       this.getCustomerForApproval();
 
     }
-    else if(statusCode == 400 && msgCode== 'installationIdentifier Consumer already exists with provided MSSL number.'){
+    else if(statusCode == 400 && responseMsg== 'installationIdentifier Consumer already exists with provided MSSL number.'){
       this.isLoader = false;
       this.toastr.error('','This SP account number already exists.', {
         timeOut : 2000
@@ -402,7 +410,7 @@ onSubmit(form:NgForm){
       $('#customer').modal('hide');
 
     }
-    else if(statusCode == 400 && msgCode== 'postalPoBox \"Postal PO Box\" is required when Postal Street is set.'){
+    else if(statusCode == 400 && responseMsg== 'postalPoBox \"Postal PO Box\" is required when Postal Street is set.'){
       this.isLoader = false;
       this.toastr.error('','This is an invalid service address.', {
         timeOut : 2000
@@ -413,7 +421,7 @@ onSubmit(form:NgForm){
     else{
 
       this.isLoader = false;
-      this.toastr.error('',msgCode, {
+      this.toastr.error('',responseMsg, {
         timeOut : 2000
       })
       $('#customer').modal('hide');
@@ -503,17 +511,20 @@ verifyPromocode(index,promocode){
   var customerDto = new CustomerDto();
   this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl+"?promoCode="
   +promocode,customerDto).subscribe((response: any) => {
-   var responseData = response;
-    if(responseData['statusCode']==200){
+    var responseBody = response['body'];
+      var responseData = responseBody['data'];
+      var responseMessage = responseBody['message'];
+      let statusCode = responseBody['statusCode']
+    if(statusCode==200){
       this.promocodeStatus = true;
-      this.promotionMessage = response.data;
+      this.promotionMessage = responseData;
       this.verifiedPromocodes.push(promocode)
       this.verified=true;
       this.duplicatePromoCode=false;
     }
     else{
       this.promocodeStatus = false;
-      this.promotionMessage = response.message;
+      this.promotionMessage = responseMessage;
 
     }
   })
@@ -559,7 +570,10 @@ sorting(value, format){
     this.sortParams="spAccountNumberDetails.spAccountNumber";
     this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl+
       "?sort=spAccountNumberDetails.spAccountNumber,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
-      this.approvalData = response.data.content;
+        var responseBody = response['body'];
+        var responseData= responseBody['data'];
+        var responseContent = responseData['content'];
+      this.approvalData = responseContent;
     })
  }
 
@@ -568,25 +582,37 @@ sorting(value, format){
   this.sortParams = 'addressData.buildingName'
    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl
     +"?sort=addressData.buildingName,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
-     this.approvalData = response.data.content;
+      var responseBody = response['body'];
+      var responseData= responseBody['data'];
+      var responseContent = responseData['content'];
+    this.approvalData = responseContent;
     })
  }
  else if(value == 'name'){
   this.sortParams ='fullName';
    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl+"?sort=fullName,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
-     this.approvalData = response.data.content;
+    var responseBody = response['body'];
+        var responseData= responseBody['data'];
+        var responseContent = responseData['content'];
+      this.approvalData = responseContent;
    })
  }
 else if(value == 'final'){
   this.sortParams = 'TimestampRecords.signUp'
   this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl+"?sort=TimestampRecords.signUp,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
-    this.approvalData = response.data.content;
+    var responseBody = response['body'];
+    var responseData= responseBody['data'];
+    var responseContent = responseData['content'];
+  this.approvalData = responseContent;
   })
 }
 else if(value == 'status'){
   this.sortParams = 'isApproved'
   this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl+"?sort=isApproved,"+this.sort+'&page='+pageNumber).subscribe((response:any)=>{
-    this.approvalData = response.data.content;
+    var responseBody = response['body'];
+    var responseData= responseBody['data'];
+    var responseContent = responseData['content'];
+  this.approvalData = responseContent;
   })
 }
 }
@@ -594,7 +620,10 @@ else if(value == 'status'){
 searchCustomer(event){
   let name = event.target.value;
  this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl+"?fullName.contains="+name).subscribe((response:any)=>{
-   this.approvalData = response.data.content;
+  var responseBody = response['body'];
+  var responseData= responseBody['data'];
+  var responseContent = responseData['content'];
+this.approvalData = responseContent;
 })
 }
 

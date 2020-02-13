@@ -1,7 +1,7 @@
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ApiServiceServiceService } from './../../../api-service-service.service';
-import {Component, ElementRef, Host, OnInit, ViewChild} from '@angular/core';
+import { Component, ElementRef, Host, OnInit, ViewChild } from '@angular/core';
 
 import { LocalStorage } from '@ngx-pwa/local-storage';
 
@@ -31,7 +31,7 @@ const IDENTIFICATION_EXPIRY_DATE_CONFIG = {
 @Component({
   selector: 'app-order-review',
   templateUrl: './order-review.component.html',
-  styleUrls: [ './order-review.component.scss' ]
+  styleUrls: ['./order-review.component.scss']
 })
 export class OrderReviewComponent implements OnInit {
 
@@ -43,33 +43,33 @@ export class OrderReviewComponent implements OnInit {
   // @ViewChild('reviewForm') reviewForm: ElementRef;
 
   validation = {};
-  spFlag=false;
-  nameFlag=false;
+  spFlag = false;
+  nameFlag = false;
 
 
   serviceAddress = { houseNo: '', level: '', unitNo: '', levelUnit: '', streetName: '', buildingName: '' };
   rebateAmount: number = null;
 
-  selectedPricingPlan:string;
-  fullName:string;
-  lastName:string;
-  emailAddress:string;
-  mobileNumber:string;
-  houseNumber:string;
-  level:string;
-  unitNo:string;
-  streetName:string;
-  buildingName:string;
-  servicePostalCode:string;
-  dwellingType:string;
-  serviceNo:string;
-  isLoader:boolean=false;
+  selectedPricingPlan: string;
+  fullName: string;
+  lastName: string;
+  emailAddress: string;
+  mobileNumber: string;
+  houseNumber: string;
+  level: string;
+  unitNo: string;
+  streetName: string;
+  buildingName: string;
+  servicePostalCode: string;
+  dwellingType: string;
+  serviceNo: string;
+  isLoader: boolean = false;
 
-  model={};
+  model = {};
 
 
   acknowledgeConsent: false;
-  acknowledgePrivacy:false;
+  acknowledgePrivacy: false;
 
   checked = true;
   isDotPlan = false;
@@ -81,9 +81,9 @@ export class OrderReviewComponent implements OnInit {
   warningMessage = '';
   minExpiryDate = moment(new Date()).add(IDENTIFICATION_EXPIRY_DATE_CONFIG.minMonthsFromToday, 'month').toDate();
   nationName = 'singapore';
-   customerDto = new CustomerDto();
+  customerDto = new CustomerDto();
 
-   userFullName:any;
+  userFullName: any;
 
 
   constructor(
@@ -92,9 +92,9 @@ export class OrderReviewComponent implements OnInit {
     private localStorage: LocalStorage,
     private configService: ConfigService,
     private gtagService: GoogleTagManagerService,
-    private router:Router,
-    private service:ApiServiceServiceService,
-    private toster :ToastrService
+    private router: Router,
+    private service: ApiServiceServiceService,
+    private toster: ToastrService
   ) {
     this.config.bootstrap = configService.get('bootstrap');
     const validationRegex = configService.get('validationRegex');
@@ -114,7 +114,7 @@ export class OrderReviewComponent implements OnInit {
   }
 
   ngOnInit() {
-   this.getCustomerDetail();
+    this.getCustomerDetail();
   }
 
   validate(fieldName: string, input: HTMLInputElement) {
@@ -127,9 +127,9 @@ export class OrderReviewComponent implements OnInit {
       }
       if (fieldName === 'servicePostalCode'
         && (!moment().isSameOrAfter('2019-05-01') && !_.inRange(+input.value.substring(0, 2), 34, 84)
-        || (moment().isSameOrAfter('2019-05-01') && !_.inRange(+input.value.substring(0, 2), 1, 84)))) {
+          || (moment().isSameOrAfter('2019-05-01') && !_.inRange(+input.value.substring(0, 2), 1, 84)))) {
         this.warningMessage = POSTAL_CODE_WARNING;
-        this.modal.open(this.warningModal, 'md', {ignoreBackdropClick: false});
+        this.modal.open(this.warningModal, 'md', { ignoreBackdropClick: false });
         return;
       }
     }
@@ -152,33 +152,33 @@ export class OrderReviewComponent implements OnInit {
   }
 
   cancelUpdateReview(fieldName: string, input: any) {
-    input.value = this.parent.model[ fieldName ];
-    this.reviewMapInput[ fieldName ] = false;
+    input.value = this.parent.model[fieldName];
+    this.reviewMapInput[fieldName] = false;
   }
 
   cancelUpdateService(fieldName: string, input: any) {
-    input.value = this.serviceAddress[ fieldName ];
-    this.serviceAddressMapInput[ fieldName ] = false;
+    input.value = this.serviceAddress[fieldName];
+    this.serviceAddressMapInput[fieldName] = false;
   }
 
   cancelUpdatePremise(fieldName: string, input: any) {
-    input.value = this.parent.model.premise[ fieldName ];
-    this.premiseMapInput[ fieldName ] = false;
+    input.value = this.parent.model.premise[fieldName];
+    this.premiseMapInput[fieldName] = false;
   }
 
   updateReview(fieldName: string, input: any) {
-    this.parent.model[ fieldName ] = input.value;
-    this.reviewMapInput[ fieldName ] = false;
+    this.parent.model[fieldName] = input.value;
+    this.reviewMapInput[fieldName] = false;
   }
 
   updateService(fieldName: string, input: any) {
-    this.serviceAddress[ fieldName ] = input.value;
-    this.serviceAddressMapInput[ fieldName ] = false;
+    this.serviceAddress[fieldName] = input.value;
+    this.serviceAddressMapInput[fieldName] = false;
   }
 
   updatePremise(fieldName: string, input: HTMLInputElement) {
-    this.parent.model.premise[ fieldName ] = input.value;
-    this.premiseMapInput[ fieldName ] = false;
+    this.parent.model.premise[fieldName] = input.value;
+    this.premiseMapInput[fieldName] = false;
   }
 
   onInputChanged(event: any, fieldName: string, input: any) {
@@ -188,21 +188,21 @@ export class OrderReviewComponent implements OnInit {
   }
 
   editService(fieldName: string, input: any) {
-    this.serviceAddressMapInput[ fieldName ] = true;
+    this.serviceAddressMapInput[fieldName] = true;
     input.focus();
   }
 
   editPremise(fieldName: string, input: any) {
-    this.premiseMapInput[ fieldName ] = true;
+    this.premiseMapInput[fieldName] = true;
     input.focus();
   }
 
   editReview(fieldName: string, input: any) {
-    this.reviewMapInput[ fieldName ] = true;
+    this.reviewMapInput[fieldName] = true;
     input.focus();
   }
 
-  getCustomerDetail(){
+  getCustomerDetail() {
     var objStr = localStorage.getItem("customerObj");
     this.customerDto = JSON.parse(objStr);
     this.selectedPricingPlan = this.customerDto.plan;
@@ -211,56 +211,51 @@ export class OrderReviewComponent implements OnInit {
     this.emailAddress = this.customerDto.eamilAddress;
     this.mobileNumber = this.customerDto.mobileNumber;
     this.houseNumber = this.customerDto.houseNo;
-    this.level= this.customerDto.level;
+    this.level = this.customerDto.level;
     this.unitNo = this.customerDto.unitNo;
-    this.streetName= this.customerDto.streetName;
+    this.streetName = this.customerDto.streetName;
     this.buildingName = this.customerDto.buildingName;
-    this.servicePostalCode= this.customerDto.postelCode;
+    this.servicePostalCode = this.customerDto.postelCode;
     this.dwellingType = this.customerDto.dwelingType;
-    this.serviceNo= this.customerDto.spAccountNumber;
+    this.serviceNo = this.customerDto.spAccountNumber;
   }
 
-  onSubmit(form:NgForm) {
-    this.isLoader=true;
+  onSubmit(form: NgForm) {
+    this.isLoader = true;
     if (this.acknowledgePrivacy && this.acknowledgeConsent && form.valid) {
-    let objStr = localStorage.getItem("customerObj");
-    this.customerDto = JSON.parse(objStr);
-    this.customerDto.fullName = this.fullName;
-    this.customerDto.lastName = this.lastName;
-    this.customerDto.spAccountNumber = this.serviceNo;
-    localStorage.setItem("customerObj", JSON.stringify(this.customerDto));
-    this.service.post_service(ApiServiceServiceService.apiList.saveCustomerurl,this.customerDto).subscribe((response)=>{
-      let responseBody = response['body'];
-      let responseData = responseBody['data'];
-      let responseMessage =responseBody['body']
-    this.isLoader=false;
-      let statusCode = responseBody['statusCode']
-      if(statusCode == 200){
-      this.isLoader=false;
-       this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
-    }
-    else if(statusCode == 500 || statusCode == 400){
-      this.isLoader = false;
-      this.toster.error('',responseMessage, {
-        timeOut : 3000
-      })
-    }
-    else{
-      this.toster.error('',responseMessage, {
-        timeOut : 3000
-      })
-    }
+      let objStr = localStorage.getItem("customerObj");
+      this.customerDto = JSON.parse(objStr);
+      this.customerDto.fullName = this.fullName;
+      this.customerDto.lastName = this.lastName;
+      this.customerDto.spAccountNumber = this.serviceNo;
+      localStorage.setItem("customerObj", JSON.stringify(this.customerDto));
+      this.service.post_service(ApiServiceServiceService.apiList.saveCustomerurl, this.customerDto).subscribe((response) => {
+        if (response.body.data) {
+          let responseBody = response['body'];
+          let responseData = responseBody['data'];
+          let responseMessage = responseBody['body']
+          this.isLoader = false;
+          let statusCode = responseBody['statusCode']
+          if (statusCode == 200) {
+            this.isLoader = false;
+            this.router.navigateByUrl(ORDER_ROUTES.ORDER_CONFIRMATION);
+          }
+        }
+        else {
+          this.toster.error('', response.body.message)
+          this.isLoader = false
 
-  })
-}
-}
-keyPress(event: any) {
-  const pattern = /[0-9\-\ ]/;
-  let inputChar = String.fromCharCode(event.charCode);
-      if (!pattern.test(inputChar) && event.charCode != '0') {
-          event.preventDefault();
-      }
-}
+        }
+      })
+    }
+  }
+  keyPress(event: any) {
+    const pattern = /[0-9\-\ ]/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (!pattern.test(inputChar) && event.charCode != '0') {
+      event.preventDefault();
+    }
+  }
 }
 
 

@@ -8,6 +8,7 @@ import { ModalModule } from 'ngx-bootstrap';
 import { RequestInterceptor } from './interceptors/request.interceptor';
 import { CORE_DATA_SERVICES } from './data-services';
 import { CORE_SERVICES } from './services';
+import { ErrorHandlerInterceptor } from './interceptors/errorHandler.interceptor';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { CORE_SERVICES } from './services';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerInterceptor, multi: true },
     CORE_DATA_SERVICES, CORE_SERVICES
   ]
 })

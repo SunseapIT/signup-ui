@@ -21,10 +21,10 @@ import { NgForm } from '@angular/forms';
 import { PlanBean } from '@app/core/plan-bean';
 import { TimeStampDto } from '@app/sign-up/admin/dto/time-stamp-dto';
 import { CustomerDto } from '@app/core/customer-dto';
-declare var $:any;
+declare var $: any;
 const LIST_PRICE_PLAN_BY_REF_OR_PRO_CODE = {
-  '50XMAS18': [ 'SUNSEAP-ONE_DOT_12MTHS', 'SUNSEAP-ONE_DOT_24MTHS', 'SUNSEAP-50_DOT', 'SUNSEAP-100_DOT', 'SUNSEAP-ONE_FIX_12MTHS',
-    'SUNSEAP-ONE_FIX_24MTHS', 'SUNSEAP-50_FIX', 'SUNSEAP-100_FIX' ]
+  '50XMAS18': ['SUNSEAP-ONE_DOT_12MTHS', 'SUNSEAP-ONE_DOT_24MTHS', 'SUNSEAP-50_DOT', 'SUNSEAP-100_DOT', 'SUNSEAP-ONE_FIX_12MTHS',
+    'SUNSEAP-ONE_FIX_24MTHS', 'SUNSEAP-50_FIX', 'SUNSEAP-100_FIX']
 };
 
 @Component({
@@ -32,7 +32,7 @@ const LIST_PRICE_PLAN_BY_REF_OR_PRO_CODE = {
   templateUrl: './plan-detail.component.html',
 })
 export class PlanDetailComponent implements OnInit {
-  planName:string = '';
+  planName: string = '';
   @ViewChild('advisory') advisory: any;
   @ViewChild('postalCodeOverlay') postalCodeOverlay: any;
   @ViewChildren('popover') popover: any;
@@ -41,7 +41,7 @@ export class PlanDetailComponent implements OnInit {
 
   pricingPlanList: PricingPlan[];
   openButtonFlag = false;
-  showAddFlag=false;
+  showAddFlag = false;
   rebateAmount = 0;
   promotionPercent = 0;
   promotionMessage = '';
@@ -59,19 +59,19 @@ export class PlanDetailComponent implements OnInit {
   listPricePlanByRefOrProCode = LIST_PRICE_PLAN_BY_REF_OR_PRO_CODE;
   inputSubmissionAllowedClickOn = ['postalCodeVerification', 'submissionForm', 'submissionSuccess'];
   potentialCustomer: PotentialCustomer = null;
-  planList:Array<PlanBean>;
-  plans:Array<string>;
+  planList: Array<PlanBean>;
+  plans: Array<string>;
   promocodeStatus = false;
-  promoCode = [{referralCode:""}];
-  public i:number=0;
+  promoCode = [{ referralCode: "" }];
+  public i: number = 0;
   pdfSrc: any;
   verifiedPromocodes = [];
-  adminMessage:any;
-  duplicatePromoCode:boolean;
-  verified : boolean;
+  adminMessage: any;
+  duplicatePromoCode: boolean;
+  verified: boolean;
 
 
- constructor(
+  constructor(
     @Host() public parent: OrderComponent,
     public modal: ModalService,
     private activateRoute: ActivatedRoute,
@@ -81,8 +81,8 @@ export class PlanDetailComponent implements OnInit {
     private utilService: UtilService,
     private gtagService: GoogleTagManagerService,
     configService: ConfigService,
-    private service:ApiServiceServiceService,
-    private toster:ToastrService
+    private service: ApiServiceServiceService,
+    private toster: ToastrService
   ) {
     this.config.bootstrap = configService.get('bootstrap');
     this.config.dateTimeFormat = configService.get('dateTimeFormat');
@@ -205,20 +205,21 @@ export class PlanDetailComponent implements OnInit {
 
   ngOnInit() {
     setTimeout(() => {
-    this.parent.model.premise.productName = null;
-    },100);
+      this.parent.model.premise.productName = null;
+    }, 100);
     this.verifiedPromotionCode = (this.parent.model.referralCode || '');
-    this.modal.open(this.advisory, 'lg', { class: 'mt-5 pt-5 ml-2 mr-2 ml-md-5 mr-md-5 unselect modal-mg-3rem',
-            ignoreBackdropClick: true });
+
     this.pricingPlanService.fetchAll().subscribe(collection => {
-      // if (!this.parent.isAdvisoryAgreed) {
+      if (!this.parent.isAdvisoryAgreed) {
         setTimeout(() => {
-          this.advisory.show();
-          // this.modal.open(this.advisory, 'lg', { class: 'mt-5 pt-5 ml-2 mr-2 ml-md-5 mr-md-5 unselect modal-mg-3rem',
-          //   ignoreBackdropClick: true });
+          //  this.advisory.show();
+          this.modal.open(this.advisory, 'lg', {
+            class: 'mt-5 pt-5 ml-2 mr-2 ml-md-5 mr-md-5 unselect modal-mg-3rem',
+            ignoreBackdropClick: true
+          });
         }, 1000);
-      // }
-      this.parent.model.premise.serviceNo='';
+      }
+      this.parent.model.premise.serviceNo = '';
       this.pricingPlanList = collection.items;
       const pricingPlan = _.get(this.activateRoute.snapshot.queryParams, 'plan');
       if (pricingPlan) {
@@ -233,34 +234,34 @@ export class PlanDetailComponent implements OnInit {
           this.gtagService.sendEvent(this.parent.model.premise.productName);
         }
       }
-  })
-  this.getPlans();
-  this.getAdminMessage();
-}
+    })
+    this.getPlans();
+    this.getAdminMessage();
+  }
 
-getPlans(){
-  this.service.get_service(ApiServiceServiceService.apiList.customerViewPlanUrl).subscribe((response)=>{
-    var responseBody = response['body'];
-    var responseData = responseBody['data'];
-    this.planList = responseData;
-  })
-}
-
-
-viewFactSheet(){
-  this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet+
-    "?planName="+(btoa(this.planName))).subscribe(response=>{
+  getPlans() {
+    this.service.get_service(ApiServiceServiceService.apiList.customerViewPlanUrl).subscribe((response) => {
       var responseBody = response['body'];
-      var responseData = responseBody['data'];      
-    var data = "data:application/pdf;base64," +responseData
-    this.pdfSrc = data;
-    $("#myModal").modal("show")
-  })
-}
+      var responseData = responseBody['data'];
+      this.planList = responseData;
+    })
+  }
+
+
+  viewFactSheet() {
+    this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet +
+      "?planName=" + (btoa(this.planName))).subscribe(response => {
+        var responseBody = response['body'];
+        var responseData = responseBody['data'];
+        var data = "data:application/pdf;base64," + responseData
+        this.pdfSrc = data;
+        $("#myModal").modal("show")
+      })
+  }
 
   onSelectPricingPlanChange(event) {
     let selectData = event.target.value;
-    if(selectData) {
+    if (selectData) {
       this.openButtonFlag = true;
     }
     else {
@@ -270,79 +271,79 @@ viewFactSheet(){
 
   verifyPromotionCode(index) {
     let promocode = this.promoCode[index].referralCode.toLowerCase();
-    if(this.verifiedPromocodes.length){
-      this.verified=true;
-     this.verifiedPromocodes.findIndex(item => item == promocode)
-      if(this.verifiedPromocodes.findIndex(item => item == promocode) == -1){
-        this.verifyPromocode(index,promocode);
-        this.duplicatePromoCode=false;
-      }else{
-        this.duplicatePromoCode=true;
+    if (this.verifiedPromocodes.length) {
+      this.verified = true;
+      this.verifiedPromocodes.findIndex(item => item == promocode)
+      if (this.verifiedPromocodes.findIndex(item => item == promocode) == -1) {
+        this.verifyPromocode(index, promocode);
+        this.duplicatePromoCode = false;
+      } else {
+        this.duplicatePromoCode = true;
       }
-    }else{
-      this.verifyPromocode(index,promocode);
-      this.duplicatePromoCode=false;
+    } else {
+      this.verifyPromocode(index, promocode);
+      this.duplicatePromoCode = false;
     }
   }
 
- verifyPromocode(index,promocode){
+  verifyPromocode(index, promocode) {
     var customerDto = new CustomerDto();
-    this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl+"?promoCode="
-    +promocode,customerDto).subscribe((response: any) => {
-      var responseBody = response['body'];
-      var responseData = responseBody['data'];
-      var responseMessage = responseBody['message'];
-      let statusCode = responseBody['statusCode']
-      if(statusCode==200){
-        this.promocodeStatus = true;
-        this.promotionMessage = responseData;
-        this.verifiedPromocodes.push(promocode)
-        this.verified=true;
-      }
-      else{
-        this.promocodeStatus = false;
-        this.promotionMessage = responseMessage;        
-      }
-    })
+    this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl + "?promoCode="
+      + promocode, customerDto).subscribe((response: any) => {
+        var responseBody = response['body'];
+        var responseData = responseBody['data'];
+        var responseMessage = responseBody['message'];
+        let statusCode = responseBody['statusCode']
+        if (statusCode == 200) {
+          this.promocodeStatus = true;
+          this.promotionMessage = responseData;
+          this.verifiedPromocodes.push(promocode)
+          this.verified = true;
+        }
+        else {
+          this.promocodeStatus = false;
+          this.promotionMessage = responseMessage;
+        }
+      })
   }
 
   onSubmit(form: NgForm) {
-    this.service.get_service(ApiServiceServiceService.apiList.getSpAccountUrl+"?spAccount="+this.parent.model.premise.serviceNo)
-    .subscribe((response:any)=>{
-      var responseBody = response['body'];
-      var responseMessage = responseBody['message'];
-      let statusCode = responseBody['statusCode']
-      if(statusCode == 200){
-      if (form.valid && this.verifiedPromocodes) {
-        this.parent.model.premise.startDate = moment(new Date()).add('days', 8).format(this.config.bootstrap.datePicker.dateInputFormat);
-       this.localStorage.setItem(STORAGE_KEYS.IS_SP_ACCOUNT_HOLDER, this.parent.isSPAccountHolder).subscribe();
-        const selectedPricingPlan = _.find(this.pricingPlanList, { name: this.parent.model.premise.productName });
-        this.gtagService.sendEvent(ORDER_GA_EVENT_NAMES.ENTER_YOUR_DETAIL_1);
-        var timeStampDto = new TimeStampDto();
-         timeStampDto.pageType = "PALN_DETAILS"
-        var customerDto = new CustomerDto();
-        customerDto.spAccountNumber = form.value.serviceNo;
-        customerDto.plan = form.value.productName;
-        customerDto.promoCode = this.verifiedPromocodes;
-        this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{
-          console.log('plan response',response);
-          let responseBody = response['body']
-          let responseData = responseBody['data']
-          let responseToken = responseData['token'];      
-          localStorage.setItem("Token",responseToken);
-          customerDto.token = responseToken;
-         localStorage.setItem("customerObj",JSON.stringify(customerDto));
+    this.service.get_service(ApiServiceServiceService.apiList.getSpAccountUrl + "?spAccount=" + this.parent.model.premise.serviceNo)
+      .subscribe((response: any) => {
+        var responseBody = response['body'];
+        var responseMessage = responseBody['message'];
+        let statusCode = responseBody['statusCode']
+        if (statusCode == 200) {
+          if (form.valid && this.verifiedPromocodes) {
+            this.parent.model.premise.startDate = moment(new Date()).add('days', 8).format(this.config.bootstrap.datePicker.dateInputFormat);
+            this.localStorage.setItem(STORAGE_KEYS.IS_SP_ACCOUNT_HOLDER, this.parent.isSPAccountHolder).subscribe();
+            const selectedPricingPlan = _.find(this.pricingPlanList, { name: this.parent.model.premise.productName });
+            this.gtagService.sendEvent(ORDER_GA_EVENT_NAMES.ENTER_YOUR_DETAIL_1);
+            var timeStampDto = new TimeStampDto();
+            timeStampDto.pageType = "PALN_DETAILS"
+            var customerDto = new CustomerDto();
+            customerDto.spAccountNumber = form.value.serviceNo;
+            customerDto.plan = form.value.productName;
+            customerDto.promoCode = this.verifiedPromocodes;
+            this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl, timeStampDto).subscribe((response) => {
+              console.log('plan response', response);
+              let responseBody = response['body']
+              let responseData = responseBody['data']
+              let responseToken = responseData['token'];
+              localStorage.setItem("Token", responseToken);
+              customerDto.token = responseToken;
+              localStorage.setItem("customerObj", JSON.stringify(customerDto));
 
-        })
-        this.parent.saveAndNext();
+            })
+            this.parent.saveAndNext();
+          }
         }
-      }
-      else{
-        this.toster.error('',responseMessage, {
-          timeOut : 3000
-        })
-      }
-    })
+        else {
+          this.toster.error('', responseMessage, {
+            timeOut: 3000
+          })
+        }
+      })
   }
 
   delayedPopover(pop) {
@@ -368,37 +369,37 @@ viewFactSheet(){
     this.modal.hide();
   }
 
-  addPromoCode(){
-   this.promoCode.push({referralCode :''})
-   this.promotionMessage = '';
-   this.duplicatePromoCode=false;
+  addPromoCode() {
+    this.promoCode.push({ referralCode: '' })
+    this.promotionMessage = '';
+    this.duplicatePromoCode = false;
   }
 
-  delete(i:number){
-    if(this.verified){
-      this.verifiedPromocodes.splice(i,1);
-      this.duplicatePromoCode=false;
-      this.promotionMessage='';
+  delete(i: number) {
+    if (this.verified) {
+      this.verifiedPromocodes.splice(i, 1);
+      this.duplicatePromoCode = false;
+      this.promotionMessage = '';
     }
-    this.promoCode.splice(i,1);
-    this.duplicatePromoCode=false;
-    this.promotionMessage='';
+    this.promoCode.splice(i, 1);
+    this.duplicatePromoCode = false;
+    this.promotionMessage = '';
   }
 
-  getAdminMessage(){
-    this.service.get_service(ApiServiceServiceService.apiList.getMessageUrl).subscribe((response)=>{
+  getAdminMessage() {
+    this.service.get_service(ApiServiceServiceService.apiList.getMessageUrl).subscribe((response) => {
       var responseBody = response['body'];
       var responseData = responseBody['data'];
-      this.adminMessage= responseData
+      this.adminMessage = responseData
     })
   }
 
   keyPress(event: any) {
     const pattern = /[0-9\-\ ]/;
     let inputChar = String.fromCharCode(event.charCode);
-        if (!pattern.test(inputChar) && event.charCode != '0') {
-            event.preventDefault();
-        }
+    if (!pattern.test(inputChar) && event.charCode != '0') {
+      event.preventDefault();
+    }
   }
 }
 

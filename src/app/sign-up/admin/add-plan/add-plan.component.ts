@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 import { Plandto } from '../dto/plan-dto';
 import { Router } from '@angular/router';
 
-declare const $:any;
+declare const $: any;
 
 
 @Component({
@@ -15,125 +15,125 @@ declare const $:any;
   styleUrls: ['./add-plan.component.scss']
 })
 export class AddPlanComponent {
-  formData:any;
-  model:any ={ planId : '', planName : '', energy : '', discount : '', rateChange : '', rate : '' , afterGst :'' };
+  formData: any;
+  model: any = { planId: '', planName: '', energy: '', discount: '', rateChange: '', rate: '', afterGst: '' };
   uploadSuccess: boolean;
-  file:any;
-  isLoader:boolean;
-  bill_data:string;
-  spPastMonthBill:any;
-  bill_data_file:any;
+  file: any;
+  isLoader: boolean;
+  bill_data: string;
+  spPastMonthBill: any;
+  bill_data_file: any;
   fileName: string;
   myfile: any;
-  fileType:any;
+  fileType: any;
   message
-  msgModal = {message : ''}
-  constructor(private service:ApiServiceServiceService,
-    private router : Router,
+  msgModal = { message: '' }
+  constructor(private service: ApiServiceServiceService,
+    private router: Router,
     private toastr: ToastrService) { }
 
   ngOnInit() {
     this.getAdminMessage();
   }
 
-  onSubmit(form:NgForm){
-    if(form.valid && this.fileType == "application/pdf"){
-    this.isLoader=true;
-    this.uploadSuccess=false;
-    var plandto = new Plandto()
-    plandto = this.model
-    let sendlbeFormData=new FormData();
-    sendlbeFormData.append("multipartFile",this.formData);
-    sendlbeFormData.append("planDto",JSON.stringify(plandto));
-  this.service.post_service(ApiServiceServiceService.apiList.addPlanUrl,sendlbeFormData).subscribe
-  (response=>{
-    var responseBody = response['body'];
-    var responseMessage = responseBody['message'];
-    let statusCode = responseBody['statusCode']
-    if(statusCode == 200){
-      this.isLoader=false;
-         this.router.navigateByUrl('/admin-login/admin-dash/view-plan')
-         this.toastr.success('', 'Plan added successfully', {
-          timeOut: 2000
-          });
-        }
-        else if(statusCode == 500 || statusCode == 400){
-          this.isLoader=false;
+  onSubmit(form: NgForm) {
+    if (form.valid && this.fileType == "application/pdf") {
+      this.isLoader = true;
+      this.uploadSuccess = false;
+      var plandto = new Plandto()
+      plandto = this.model
+      let sendlbeFormData = new FormData();
+      sendlbeFormData.append("multipartFile", this.formData);
+      sendlbeFormData.append("planDto", JSON.stringify(plandto));
+      this.service.post_service(ApiServiceServiceService.apiList.addPlanUrl, sendlbeFormData).subscribe
+        (response => {
+          var responseBody = response['body'];
+          var responseMessage = responseBody['message'];
+          let statusCode = responseBody['statusCode']
+          if (statusCode == 200) {
+            this.isLoader = false;
+            this.router.navigateByUrl('/admin-login/admin-dash/view-plan')
+            this.toastr.success('', 'Plan added successfully', {
+              timeOut: 2000
+            });
+          }
+          else if (statusCode == 500 || statusCode == 400) {
+            this.isLoader = false;
 
-          this.toastr.error('',responseMessage, {
-            timeOut : 3000
-          })
-        }
-  })
-   form.resetForm();
- }
- else{
-    this.toastr.error('', 'All the fields are mandatory.', {
-      timeOut: 3000
-    });
-   }
-}
+            this.toastr.error('', responseMessage, {
+              timeOut: 3000
+            })
+          }
+        })
+      form.resetForm();
+    }
+    else {
+      this.toastr.error('', 'All the fields are mandatory.', {
+        timeOut: 3000
+      });
+    }
+  }
 
-onFileSelected(event) {
- this.myfile = event.target.files[0].name;
- this.fileType = event.target.files[0].type;
- if(this.fileType == "application/pdf"){
-  this.formData=event.target.files[0];
-  this.uploadSuccess=true;
- }
- else{
-  this.toastr.error('', 'Upload PDF file',{
-    timeOut: 2000
-  })
- }
-}
+  onFileSelected(event) {
+    this.myfile = event.target.files[0].name;
+    this.fileType = event.target.files[0].type;
+    if (this.fileType == "application/pdf") {
+      this.formData = event.target.files[0];
+      this.uploadSuccess = true;
+    }
+    else {
+      this.toastr.error('', 'Upload PDF file', {
+        timeOut: 2000
+      })
+    }
+  }
 
 
-addMessage(){
-   this.message = this.msgModal.message;
-this.service.get_service(ApiServiceServiceService.apiList.messageUrl+"?message="+(btoa(this.message))).subscribe((response)=>{
-  this.toastr.success('', 'Message added successfully.',{
-    timeOut: 2000
-  })
-})
-}
-
-getAdminMessage(){
-  this.service.get_service(ApiServiceServiceService.apiList.getMessageUrl).subscribe((response)=>{
-    this.msgModal.message=response['data'];
-  })
-}
-
-deleteMessage(){
-  this.msgModal.message="";
-  this.message = this.msgModal.message;
-  this.service.get_service(ApiServiceServiceService.apiList.messageUrl+"?message="+(btoa(this.message))).subscribe((response)=>{
-    this.toastr.success('', 'Message deleted successfully.',{
-      timeOut: 2000
+  addMessage() {
+    this.message = this.msgModal.message;
+    this.service.get_service(ApiServiceServiceService.apiList.messageUrl + "?message=" + (btoa(this.message))).subscribe((response) => {
+      this.toastr.success('', 'Message added successfully.', {
+        timeOut: 2000
+      })
     })
-  })
-}
+  }
+
+  getAdminMessage() {
+    this.service.get_service(ApiServiceServiceService.apiList.getMessageUrl).subscribe((response) => {
+      this.msgModal.message = response['data'];
+    })
+  }
+
+  deleteMessage() {
+    this.msgModal.message = "";
+    this.message = this.msgModal.message;
+    this.service.get_service(ApiServiceServiceService.apiList.messageUrl + "?message=" + (btoa(this.message))).subscribe((response) => {
+      this.toastr.error('', 'Message deleted successfully.', {
+        timeOut: 2000
+      })
+    })
+  }
 
 
-selected(event){
-    let fileList : FileList = event.target.files;
+  selected(event) {
+    let fileList: FileList = event.target.files;
     const file: File = fileList[0];
-      this.bill_data_file = file;
-      this.handleInputChange(file);
-}
+    this.bill_data_file = file;
+    this.handleInputChange(file);
+  }
 
-handleInputChange(files) {
-  var file = files;
-  var reader = new FileReader();
-  reader.onloadend = this._handleReaderLoaded.bind(this);
-  reader.readAsDataURL(file);
-}
+  handleInputChange(files) {
+    var file = files;
+    var reader = new FileReader();
+    reader.onloadend = this._handleReaderLoaded.bind(this);
+    reader.readAsDataURL(file);
+  }
 
-_handleReaderLoaded(e) {
-  let reader = e.target;
-  var base64result = reader.result.substr(reader.result.indexOf(',') + 1);
-      this.bill_data = base64result;
-}
+  _handleReaderLoaded(e) {
+    let reader = e.target;
+    var base64result = reader.result.substr(reader.result.indexOf(',') + 1);
+    this.bill_data = base64result;
+  }
 
 
 }

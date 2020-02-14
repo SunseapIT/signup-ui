@@ -29,9 +29,10 @@ environment.reCaptchaSiteKey = '6LeHSHMUAAAAAIGKdTE4YljD-t1DHJabr45RMQEP'; // st
 
 
 
-export { environment 
+export {
+    environment
 
-    
+
 };
 
 

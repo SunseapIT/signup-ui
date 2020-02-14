@@ -326,7 +326,6 @@ export class PlanDetailComponent implements OnInit {
             customerDto.plan = form.value.productName;
             customerDto.promoCode = this.verifiedPromocodes;
             this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl, timeStampDto).subscribe((response) => {
-              console.log('plan response', response);
               let responseBody = response['body']
               let responseData = responseBody['data']
               let responseToken = responseData['token'];

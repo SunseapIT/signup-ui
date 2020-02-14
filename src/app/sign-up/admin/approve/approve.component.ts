@@ -170,8 +170,6 @@ export class ApproveComponent implements OnInit {
         var resultObject1 = result['content'];
         this.approvalData = resultObject1;
       })
-
-
   }
 
   getTimeStamp(time) {
@@ -228,7 +226,7 @@ export class ApproveComponent implements OnInit {
     this.servicePostalCode = customerList.postelCode;
     let doptions = JSON.parse(JSON.stringify(DWELLING_TYPE_OPTIONS));
     Object.keys(doptions).forEach(key => {
-      if (key.toLowerCase() == customerList.dwelingType.toLowerCase()) {
+      if (customerList.dwelingType != null && key.toLowerCase() == customerList.dwelingType.toLowerCase()) {
         this.dwellingType = doptions[key];
       }
     });
@@ -388,8 +386,8 @@ export class ApproveComponent implements OnInit {
           var responseBody = response['body'];
           var responseData = responseBody['data'];
           var responseMsg = responseBody['message'];
-          var statusCode = responseData['statusCode']
-          var responseData = response;
+          var statusCode = responseBody['statusCode'];
+
           this.isLoader = false;
           if (statusCode == 200) {
             this.isLoader = false;

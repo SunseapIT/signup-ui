@@ -17,9 +17,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
                 (event: HttpEvent<any>) => { },
                 (err: any) => {
                     if (err instanceof HttpErrorResponse) {
-                        this.toastr.error('', 'Internal Server Error', {
-                            timeOut: 2000
-                        })
+
                     }
                 }
             )

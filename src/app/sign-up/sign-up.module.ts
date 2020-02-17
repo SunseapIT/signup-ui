@@ -34,7 +34,7 @@ import { PaginationModule } from 'ngx-pagination-bootstrap';
     SharedModule,
     Angular2CsvModule,
     ToastrModule.forRoot({
-      timeOut: 2000,
+      timeOut: 5000,
       positionClass: 'toast-top-center',
       preventDuplicates: true,
     }),
@@ -46,14 +46,14 @@ import { PaginationModule } from 'ngx-pagination-bootstrap';
     SignUpComponent,
     ORDER_COMPONENTS,
     PAYMENT_COMPONENTS,
-   ],
+  ],
   providers: [
     {
       provide: RECAPTCHA_SETTINGS,
       useValue: { siteKey: environment.reCaptchaSiteKey, size: 'invisible' } as RecaptchaSettings,
     }
   ],
-  bootstrap: [ SignUpComponent ]
+  bootstrap: [SignUpComponent]
 })
 export class SignUpModule {
   constructor() {

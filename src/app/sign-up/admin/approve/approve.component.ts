@@ -348,9 +348,17 @@ export class ApproveComponent implements OnInit {
       })
   }
 
+  // spno
+  // update(value) {
+  //   this.spno = value
+  //   console.log('spppp blur', this.spno);
+  //   this.spFlag = false;
+
+
+  // }
 
   onSubmit(form: NgForm) {
-    // this.isLoader=true;
+    this.isLoader = true;
     if (form.valid) {
       var customerDto = new CustomerDto();
       customerDto.customerId = this.customerId;
@@ -382,47 +390,34 @@ export class ApproveComponent implements OnInit {
 
       this.service.post_service(ApiServiceServiceService.apiList.approveCustomerUrl, customerDto)
         .subscribe((response) => {
-
           var responseBody = response['body'];
           var responseData = responseBody['data'];
           var responseMsg = responseBody['message'];
           var statusCode = responseBody['statusCode'];
-
           this.isLoader = false;
           if (statusCode == 200) {
             this.isLoader = false;
             this.toastr.success('', 'Customer approved successfully.', {
-              timeOut: 2000
             })
             $('#customer').modal('hide');
             this.getCustomerForApproval();
-
           }
           else if (statusCode == 400 && responseMsg == 'installationIdentifier Consumer already exists with provided MSSL number.') {
             this.isLoader = false;
-            this.toastr.error('', 'This SP account number already exists.', {
-              timeOut: 2000
-            })
+            this.toastr.error('', 'This SP account number already exists.')
             $('#customer').modal('hide');
-
           }
           else if (statusCode == 400 && responseMsg == 'postalPoBox \"Postal PO Box\" is required when Postal Street is set.') {
             this.isLoader = false;
-            this.toastr.error('', 'This is an invalid service address.', {
-              timeOut: 2000
-            })
+            this.toastr.error('', 'This is an invalid service address.')
           } else {
-            this.toastr.error('', response.body.message)
+            this.toastr.error('', response.body.message, { timeOut: 5000 })
           }
-
         }
-
         )
     }
     else {
-      this.toastr.error('', 'Enter the correct details.', {
-        timeOut: 2000
-      })
+      this.toastr.error('', 'Enter the correct details.')
 
     }
   }
@@ -441,7 +436,6 @@ export class ApproveComponent implements OnInit {
     if (event) {
       this.promoCodeList = null
       this.promoCodeList = [];
-
       event.forEach(element => {
         this.promoCodeList.push({
           referralCode: element
@@ -633,13 +627,9 @@ export class ApproveComponent implements OnInit {
     customerRemark.customerId = this.customerId;
     customerRemark.remarks = form.form.value.remarks;
     this.service.post_service(ApiServiceServiceService.apiList.customerRemark, customerRemark).subscribe((response) => {
-      this.toastr.success('', 'Added remarks/comments successfully.', {
-        timeOut: 2000
-      })
-
+      this.toastr.success('', 'Added remarks/comments successfully.')
       $('#customer').modal('hide');
       this.getCustomerForApproval();
-
     })
     form.resetForm()
   }

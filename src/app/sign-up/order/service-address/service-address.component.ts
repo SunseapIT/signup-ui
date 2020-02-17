@@ -58,16 +58,16 @@ export class ServiceAddressComponent implements OnInit {
     public modal: ModalService,
     configService: ConfigService,
     private utilService: UtilService,
-    private service:ApiServiceServiceService
+    private service: ApiServiceServiceService
   ) {
     this.config.validationRegex = configService.get('validationRegex');
   }
 
-  postalCode:any;
+  postalCode: any;
 
   ngOnInit() {
 
-  this.postalCode=""
+    this.postalCode = ""
     this.localStorage.getItem(STORAGE_KEYS.SERVICE_ADDRESS)
       .subscribe(serviceAddress => serviceAddress && (this.serviceAddress = serviceAddress));
 
@@ -79,7 +79,7 @@ export class ServiceAddressComponent implements OnInit {
   prefillAddress() {
     const { building, blockNo, roadName } = this.validLocations[this.pickedLocation];
     this.serviceAddress.buildingName = _.upperCase(building) === 'NIL' ? null : building;
-    this.serviceAddress.houseNo =  _.upperCase(blockNo) === 'NIL' ? null : blockNo;
+    this.serviceAddress.houseNo = _.upperCase(blockNo) === 'NIL' ? null : blockNo;
     this.serviceAddress.streetName = _.upperCase(roadName) === 'NIL' ? null : roadName;
   }
 
@@ -90,7 +90,6 @@ export class ServiceAddressComponent implements OnInit {
     } else {
       if (_.size(code) === 6) {
         this.utilService.requestAddresses(code).subscribe(rs => {
-          console.log('rs',rs);
 
           switch (rs.meta.count) {
             case 0:
@@ -137,22 +136,22 @@ export class ServiceAddressComponent implements OnInit {
     }
   }
 
-  onSubmit(form : NgForm) {
+  onSubmit(form: NgForm) {
     const parent = this.parent;
     if (form.valid) {
       this.serviceAddress.levelUnit = (this.serviceAddress.level) ? `#${this.serviceAddress.level}-${this.serviceAddress.unitNo}` : '';
       parent.model.premise.serviceAddress = _.chain(this.serviceAddress)
-        .pick([ 'houseNo', 'streetName', 'buildingName', 'levelUnit' ])
+        .pick(['houseNo', 'streetName', 'buildingName', 'levelUnit'])
         .values()
         .without('')
         .join(' ')
         .value();
-        var addressDto = new AddressDto();
-        addressDto.buildingName = form.value.buildingName;
-        addressDto.dwellingType = form.value.dwellingType;
-        addressDto.houseNo = form.value.houseNo;
-        addressDto.postalCode = form.value.servicePostalCode;
-        addressDto.streetName = form.value.streetName;
+      var addressDto = new AddressDto();
+      addressDto.buildingName = form.value.buildingName;
+      addressDto.dwellingType = form.value.dwellingType;
+      addressDto.houseNo = form.value.houseNo;
+      addressDto.postalCode = form.value.servicePostalCode;
+      addressDto.streetName = form.value.streetName;
 
       let customerDto = new CustomerDto();
       let objStr = localStorage.getItem("customerObj");
@@ -164,21 +163,29 @@ export class ServiceAddressComponent implements OnInit {
       customerDto.streetName = form.value.streetName;
       customerDto.unitNo = form.value.unitNo;
       customerDto.level = form.value.level;
-      localStorage.setItem("customerObj",JSON.stringify(customerDto))
+      localStorage.setItem("customerObj", JSON.stringify(customerDto))
       let timeStampDto = new TimeStampDto();
       timeStampDto.pageType = "ADDRESS_DETAILS",
-      timeStampDto.token = localStorage.getItem("Token");
-      this.service.post_service(ApiServiceServiceService.apiList.addAddressUrl,addressDto).subscribe((response)=>{
-      let responseData  = response;
-      let status = responseData['statusCode'];
-      if(status == 200){
-        this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{
+        timeStampDto.token = localStorage.getItem("Token");
+      this.service.post_service(ApiServiceServiceService.apiList.addAddressUrl, addressDto).subscribe((response) => {
+        let responseData = response;
+        let status = responseData['statusCode'];
+        if (status == 200) {
+          this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl, timeStampDto).subscribe((response) => {
 
-       })
+          })
         }
       })
       parent.saveAndNext();
       form.resetForm();
     }
   }
+
+  // keyPress(event: any) {
+  //   const pattern = /^([a-zA-Z0-9@#$%]{0,100})$/;
+  //   let inputChar = String.fromCharCode(event.charCode);
+  //   if (!pattern.test(inputChar) && event.charCode != '0') {
+  //     event.preventDefault();
+  //   }
+  // }
 }

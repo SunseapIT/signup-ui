@@ -87,6 +87,7 @@
                                             <div *ngIf="!spFlag" class="input-group">
                                                 {{serviceNo}}
                                             </div>
+                                            <!-- (blur)="update($event.target.value)" -->
                                             <div *ngIf="spFlag">
                                                 <input class="form-control" type="text" name="serviceNumber" maxlength="10" (keypress)="keyPress($event)" pattern="(^[1-9]\d{9})|(^[1-9]{9}[-])$" required [class.is-invalid]="serviceError?.invalid && (serviceError?.touched || form.submitted)" [(ngModel)]="serviceNo"
                                                     #serviceError="ngModel">

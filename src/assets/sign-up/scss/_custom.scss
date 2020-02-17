@@ -30,9 +30,6 @@ app-ema-fact-sheet {
 .ema-scroll-view {
     height: calc(100vh - 294px);
     overflow-y: auto;
-    &::-webkit-scrollbar {
-        display: none;
-    }
 }
 
 header#header {

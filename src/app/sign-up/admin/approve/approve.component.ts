@@ -82,6 +82,7 @@ export class ApproveComponent implements OnInit {
   promocodeStatus = false;
   customerDto = new CustomerDto();
 
+
   selectedPricingPlan: string;
   selectedPricingPlanId: number;
   fullName: string;
@@ -255,7 +256,7 @@ export class ApproveComponent implements OnInit {
     let approved = customerList.approved
     if (approved == true) {
       this.approvedCustomer(customerList)
-      this.lastApproveDate = this.approvalDate
+      this.lastApproveDate = customerList.approvedTime
       $('#approved').modal('show');
     }
     else {
@@ -386,8 +387,6 @@ export class ApproveComponent implements OnInit {
       customerDto.files.authorization_data = this.customerDto.files.authorization_data;
       customerDto.files.factSheet_data = this.customerDto.files.factSheet_data;
       customerDto.approvedTime = this.getTimeStamp(this.approvalDate);
-
-
       this.service.post_service(ApiServiceServiceService.apiList.approveCustomerUrl, customerDto)
         .subscribe((response) => {
           var responseBody = response['body'];
@@ -474,26 +473,10 @@ export class ApproveComponent implements OnInit {
     this.promotionMessage = '';
   }
 
-  verifyPromotionCode(index) {
-    let promocode = this.promoCodeList[index].referralCode.toLowerCase();
 
-    if (this.verifiedPromocodes.length > 0) {
-      this.verified = true;
-      this.verifiedPromocodes.findIndex(item => item == promocode)
-      if (this.verifiedPromocodes.findIndex(item => item == promocode) == -1) {
-        this.verifyPromocode(index, promocode);
-        this.duplicatePromoCode = false;
-      } else {
-        this.duplicatePromoCode = true;
-      }
-    } else {
-      this.verifyPromocode(index, promocode);
-      this.duplicatePromoCode = false;
-    }
-  }
-
-  verifyPromocode(index, promocode) {
+  verifyPromotionCode(promocode) {
     var customerDto = new CustomerDto();
+
     this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl + "?promoCode="
       + promocode, customerDto).subscribe((response: any) => {
         var responseBody = response['body'];
@@ -503,6 +486,50 @@ export class ApproveComponent implements OnInit {
         if (statusCode == 200) {
           this.promocodeStatus = true;
           this.promotionMessage = responseData;
+          this.verifiedPromocodes = []; //clear promo code list
+          this.verifiedPromocodes.push(promocode)
+          this.verified = true;
+          this.duplicatePromoCode = false;
+        }
+        else {
+          this.promocodeStatus = false;
+          this.promotionMessage = responseMessage;
+
+        }
+      })
+  }
+
+  // verifyPromotionCode(index) {
+  //   let promocode = this.promoCodeList[index].referralCode.toLowerCase();
+
+  //   if (this.verifiedPromocodes.length > 0) {
+  //     this.verified = true;
+  //     this.verifiedPromocodes.findIndex(item => item == promocode)
+  //     if (this.verifiedPromocodes.findIndex(item => item == promocode) == -1) {
+  //       this.verifyPromocode(index, promocode);
+  //       this.duplicatePromoCode = false;
+  //     } else {
+  //       this.duplicatePromoCode = true;
+  //     }
+  //   } else {
+  //     this.verifyPromocode(index, promocode);
+  //     this.duplicatePromoCode = false;
+  //   }
+  // }
+
+  verifyPromocode(index, promocode) {
+    var customerDto = new CustomerDto();
+
+    this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl + "?promoCode="
+      + promocode, customerDto).subscribe((response: any) => {
+        var responseBody = response['body'];
+        var responseData = responseBody['data'];
+        var responseMessage = responseBody['message'];
+        let statusCode = responseBody['statusCode']
+        if (statusCode == 200) {
+          this.promocodeStatus = true;
+          this.promotionMessage = responseData;
+          this.verifiedPromocodes = []; //clear promo code list
           this.verifiedPromocodes.push(promocode)
           this.verified = true;
           this.duplicatePromoCode = false;

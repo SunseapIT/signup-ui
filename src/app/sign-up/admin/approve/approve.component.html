@@ -113,6 +113,30 @@
                                     <div class="col-lg-7 col-sm-5 font-weight-bold">
                                         <div class="card-text-right p-0">
                                             <div *ngIf="!isPromoCodeFlag" class="input-group">
+                                                {{promoCode}}
+                                            </div>
+                                            <input *ngIf="isPromoCodeFlag" class="form-control" trim="blur" [(ngModel)]="promoCode" name="promoCode" #referralCode="ngModel" />
+
+                                            <button *ngIf="isPromoCodeFlag" type="button" class="btn input-button" (click)="verifyPromotionCode(promoCode)">
+                                                <span>Verify</span>
+                                            </button>
+
+                                            <div *ngIf="duplicatePromoCode" class="text-danger"><i>Promo/ Referral code already exists.</i></div>
+                                            <div *ngIf="promotionMessage != ''" [ngClass]="{'green-text':promocodeStatus,'red-text':!promocodeStatus}"><i>{{promotionMessage}}</i></div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-1 col-sm-1">
+                                        <i *ngIf="!isPromoCodeFlag" class="fas fa-pencil-alt" (click)="isPromoCodeFlag =! isPromoCodeFlag"></i>
+                                        <i *ngIf="isPromoCodeFlag" class="fa fa-check" (click)="isPromoCodeFlag =! isPromoCodeFlag"></i>
+                                    </div>
+                                </div>
+                                <!-- <div class="row mt-3">
+                                    <div class="col-lg-4 col-sm-6">Promotion/Referral Code:</div>
+                                    <div class="col-lg-7 col-sm-5 font-weight-bold">
+                                        <div class="card-text-right p-0">
+                                            <div *ngIf="!isPromoCodeFlag" class="input-group">
                                                 <textarea rows="3" cols="30" [disabled]="'true'">
                                                 {{promoCode}}
                                             </textarea>
@@ -128,8 +152,8 @@
                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                             </button>
                                             </div>
-                                            <!-- <button type="button" *ngIf="isPromoCodeFlag" class="btn btn-add" (click)="addPromoCode()"><b>Add
-                                                more</b></button> -->
+                                            <button type="button" *ngIf="isPromoCodeFlag" class="btn btn-add" (click)="addPromoCode()"><b>Add
+                                                more</b></button>
                                             <div *ngIf="duplicatePromoCode" class="text-danger"><i>Promo/ Referral code already exists.</i></div>
                                             <div *ngIf="promotionMessage != ''" [ngClass]="{'green-text':promocodeStatus,'red-text':!promocodeStatus}"><i>{{promotionMessage}}</i></div>
                                         </div>
@@ -140,7 +164,7 @@
                                         <i *ngIf="!isPromoCodeFlag" class="fas fa-pencil-alt" (click)="editPromoCode(promoCode)"></i>
                                         <i *ngIf="isPromoCodeFlag" class="fa fa-check" (click)="editPromoCode('')"></i>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="row mt-3">
@@ -678,7 +702,7 @@
                             <div class="col-lg-4 col-sm-6">Approved Date:</div>
                             <div class="col-lg-7 col-sm-6 font-weight-bold">
                                 <div class="card-text-right p-0">
-                                    {{approvalDate | date : 'dd/MM/yyyy'}}
+                                    {{lastApproveDate}}
                                 </div>
                             </div>
                         </div>

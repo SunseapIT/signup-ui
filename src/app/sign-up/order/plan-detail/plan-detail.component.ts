@@ -297,6 +297,7 @@ export class PlanDetailComponent implements OnInit {
         if (statusCode == 200) {
           this.promocodeStatus = true;
           this.promotionMessage = responseData;
+          this.verifiedPromocodes = []; //clear promocode list
           this.verifiedPromocodes.push(promocode)
           this.verified = true;
         }

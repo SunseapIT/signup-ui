@@ -14,7 +14,7 @@ environment.apiUrl = 'https://crm-test.sunseap.com';
 // environment.baseUrl= 'http://f00c8894.ngrok.io';
 
 // environment.apiUrl = 'https://b2c.uat.sunseap.com'; // stage
-// environment.apiUrl = 'https://b2c.sunseap.com'; // prod
+environment.apiUrl = 'https://b2c.sunseap.com'; // prod
 // environment.apiUrl = 'http://10.249.39.194:8000'; // minh do
 // environment.apiUrl = 'http://10.248.39.135:80'; // nhan
 // environment.apiUrl = 'http://10.248.39.213:8000'; // XUONG

@@ -1,6 +1,6 @@
 import { ApiServiceServiceService } from '@app/api-service-service.service';
 import { CustomerDto } from './../../../core/customer-dto';
-import { Component, Host, OnInit} from '@angular/core';
+import { Component, Host, OnInit } from '@angular/core';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import * as _ from 'lodash';
 import { GoogleTagManagerService, UtilService } from '@app/core';
@@ -17,153 +17,155 @@ declare var $: any;
 })
 export class DocumentsUploadComponent implements OnInit {
 
-currentId: number = 0;
-bill_data_file: any;
-opening_letter_data_file: any;
-authorization_data_file: any;
+  currentId: number = 0;
+  bill_data_file: any;
+  opening_letter_data_file: any;
+  authorization_data_file: any;
 
-bill_data: string;
-opening_letter_data: string;
-authorization_data: string;
+  bill_data: string;
+  opening_letter_data: string;
+  authorization_data: string;
 
-spPastMonthBill:any;
-newSpAccountOpeningLetter:any;
-letterOfAuthorisation:any;
+  spPastMonthBill: any;
+  newSpAccountOpeningLetter: any;
+  letterOfAuthorisation: any;
 
-newSpAccountOpeningLetterUploaded:boolean=false;
-spPastMonthBillUploaded:boolean=false;
-letterOfAuthorisationUploaded:boolean=false;
+  newSpAccountOpeningLetterUploaded: boolean = false;
+  spPastMonthBillUploaded: boolean = false;
+  letterOfAuthorisationUploaded: boolean = false;
 
-spPastMonthBillSuccess = false;
-openingLetter = false;
-authorization = false;
+  spPastMonthBillSuccess = false;
+  openingLetter = false;
+  authorization = false;
 
 
 
   constructor(
     @Host() public parent: OrderComponent,
-    private service : ApiServiceServiceService,
-    private toastr:ToastrService ) {
+    private service: ApiServiceServiceService,
+    private toastr: ToastrService) {
     const element = document.getElementById('step-section');
-    element.classList.remove('pt-3');    
+    element.classList.remove('pt-3');
   }
 
   ngOnInit() {
 
-    
+
   }
-  
-  onSubmit(form:NgForm) {   
-    if(this.parent.isSPAccountHolder && this.spPastMonthBill || this.newSpAccountOpeningLetter){      
+
+  onSubmit(form: NgForm) {
+    if (this.parent.isSPAccountHolder && this.spPastMonthBill || this.newSpAccountOpeningLetter) {
       this.saveDocuments()
-    } 
-    else if(!this.parent.isSPAccountHolder && this.letterOfAuthorisation && this.spPastMonthBill) {    
-      this.saveDocuments()   
-    } 
-  else{
-    this.toastr.error('', 'Please upload PDF file', {
-      timeOut: 3000
-    });
-   }
-  }
-
-  saveDocuments(){
-  var customerDto = new CustomerDto()
-  var objStr = localStorage.getItem("customerObj");
-  customerDto = JSON.parse(objStr);
-  customerDto.files.bill_data = this.bill_data;
-  customerDto.files.opening_letter_data = this.opening_letter_data;
-  customerDto.files.authorization_data = this.authorization_data;
-  localStorage.setItem("customerObj",JSON.stringify(customerDto));
-    var timeStampDto = new TimeStampDto();
-    timeStampDto.pageType = "UPLOAD_DOCUMENTS";
-    timeStampDto.token = localStorage.getItem("Token")
-  this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{       
-  })
-    this.parent.saveAndNext();
-  } 
-  
-
-
-selected(event,field){  
-  this.currentId = field;
-  let fileList : FileList = event.target.files;
-  if (fileList.length > 0) {
-    const file: File = fileList[0];    
-    if (field == 1 && file.type == "application/pdf") {
-      this.spPastMonthBill = file.name;    
-      this.bill_data_file = file;
-      this.handleInputChange(file);
-      this.spPastMonthBillSuccess = true;
-      this.spPastMonthBillUploaded=true; 
-
     }
-    else if (field == 2 && file.type == "application/pdf") {
-      this.newSpAccountOpeningLetter=file.name;
-      this.opening_letter_data_file = file;
-      this.handleInputChange(file); 
-      this.openingLetter = true;
-      this.newSpAccountOpeningLetterUploaded=true;
+    else if (!this.parent.isSPAccountHolder && this.letterOfAuthorisation && this.spPastMonthBill) {
+      this.saveDocuments()
     }
-    else if (field == 3 && file.type == "application/pdf") {
-      this.letterOfAuthorisation = file.name;
-      this.authorization_data_file = file;
-      this.handleInputChange(file); 
-      this.authorization = true;
-      this.letterOfAuthorisationUploaded=true;
-    }else{
-      this.toastr.error('', 'Upload PDF file only.', {
+    else {
+      this.toastr.error('', 'Please upload document', {
         timeOut: 3000
       });
     }
-  } 
-}
-
-handleInputChange(files) {  
-  var file = files;
-  var reader = new FileReader();
-  reader.onloadend = this._handleReaderLoaded.bind(this);
-  reader.readAsDataURL(file);
- 
-  
-}
-
-_handleReaderLoaded(e) {
-  let reader = e.target;
-  var base64result = reader.result.substr(reader.result.indexOf(',') + 1);
-
-  let id = this.currentId;
-  switch (id) {
-    case 1:
-      this.bill_data = base64result;
-      break;
-    case 2:
-      this.opening_letter_data = base64result;
-      break;
-    case 3:
-      this.authorization_data = base64result;
-      break;
-  
   }
 
-}
+  saveDocuments() {
+    var customerDto = new CustomerDto()
+    var objStr = localStorage.getItem("customerObj");
+    customerDto = JSON.parse(objStr);
+    customerDto.files.bill_data = this.bill_data;
+    customerDto.files.opening_letter_data = this.opening_letter_data;
+    customerDto.files.authorization_data = this.authorization_data;
+    localStorage.setItem("customerObj", JSON.stringify(customerDto));
+    var timeStampDto = new TimeStampDto();
+    timeStampDto.pageType = "UPLOAD_DOCUMENTS";
+    timeStampDto.token = localStorage.getItem("Token")
+    this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl, timeStampDto).subscribe((response) => {
+    })
+    this.parent.saveAndNext();
+  }
 
-removeFile(event,removeid){
-  if(removeid == 1){
- this.spPastMonthBill=''
- this.spPastMonthBillSuccess = false;
- this.spPastMonthBillUploaded=false;
-}
 
-else if(removeid==2){
-  this.newSpAccountOpeningLetter='';
-  this.openingLetter = false;
-  this.newSpAccountOpeningLetterUploaded=false;
-}
-else if(removeid ==3){
-  this.letterOfAuthorisation='';
-  this.authorization = false;
-  this.letterOfAuthorisationUploaded=false;
-}
-}  
+
+  selected(event, field) {
+    this.currentId = field;
+    let fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      const file: File = fileList[0];
+      // if (field == 1 && file.type == "application/pdf") {
+      if (field == 1) {
+        this.spPastMonthBill = file.name;
+        this.bill_data_file = file;
+        this.handleInputChange(file);
+        this.spPastMonthBillSuccess = true;
+        this.spPastMonthBillUploaded = true;
+
+      }
+      else if (field == 2) {
+        this.newSpAccountOpeningLetter = file.name;
+        this.opening_letter_data_file = file;
+        this.handleInputChange(file);
+        this.openingLetter = true;
+        this.newSpAccountOpeningLetterUploaded = true;
+      }
+      else if (field == 3) {
+        this.letterOfAuthorisation = file.name;
+        this.authorization_data_file = file;
+        this.handleInputChange(file);
+        this.authorization = true;
+        this.letterOfAuthorisationUploaded = true;
+      } else {
+        this.toastr.error('', 'Please upload file', {
+          timeOut: 3000
+        });
+      }
+    }
+  }
+
+
+  handleInputChange(files) {
+    var file = files;
+    var reader = new FileReader();
+    reader.onloadend = this._handleReaderLoaded.bind(this);
+    reader.readAsDataURL(file);
+
+
+  }
+
+  _handleReaderLoaded(e) {
+    let reader = e.target;
+    var base64result = reader.result.substr(reader.result.indexOf(',') + 1);
+
+    let id = this.currentId;
+    switch (id) {
+      case 1:
+        this.bill_data = base64result;
+        break;
+      case 2:
+        this.opening_letter_data = base64result;
+        break;
+      case 3:
+        this.authorization_data = base64result;
+        break;
+
+    }
+
+  }
+
+  removeFile(event, removeid) {
+    if (removeid == 1) {
+      this.spPastMonthBill = ''
+      this.spPastMonthBillSuccess = false;
+      this.spPastMonthBillUploaded = false;
+    }
+
+    else if (removeid == 2) {
+      this.newSpAccountOpeningLetter = '';
+      this.openingLetter = false;
+      this.newSpAccountOpeningLetterUploaded = false;
+    }
+    else if (removeid == 3) {
+      this.letterOfAuthorisation = '';
+      this.authorization = false;
+      this.letterOfAuthorisationUploaded = false;
+    }
+  }
 }

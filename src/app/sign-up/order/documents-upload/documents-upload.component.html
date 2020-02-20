@@ -1,146 +1,118 @@
 <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
     <div class="content-document-upload">
-      <div id="content-upload" class="form-content">
-  
-        <div class="document-upload-container">
-          <ng-container *ngIf="parent.isSPAccountHolder">
-             
-            <div class="form-row">
-              <div class="form-group col-lg-6 col-md-12 col-xs-12 mb-0 mb-lg-auto">              
+        <div id="content-upload" class="form-content">
 
-                 <label class="form-control-label" for="spPastMonthBill">SP past month bill</label>
-                  <input type="text" name="spPastMonthBill"  class="form-control fileUpload" 
-                  [(ngModel)]="spPastMonthBill" 
-                  [value]="uploaded"
-                  disabled required 
-                  #spPastMonthBillError="ngModel">
-                  <div class="upload-btn-remove">
-                    <div *ngIf="spPastMonthBillUploaded" class="d-inline"><button type="button" class="btn" (click)="removeFile($event,1)"><i class="fa fa-times mr-2" aria-hidden="true"></i></button></div>
+            <div class="document-upload-container">
+                <ng-container *ngIf="parent.isSPAccountHolder">
 
-                  </div>
-
-                  <div class="upload-btn-wrapper">                    
-                      <label class="btnUpload" for="file1">Upload</label>
-                      <input  #fileInput type="file" id="file1" (click)="fileInput.value = null"  name="myfile" accept="application/pdf"  (change)="selected($event,1)" />
-                  </div>
-                  <div class="text-secondary"><small><i>Please upload PDF format only.</i></small>            
-                  </div>                  
-                  <ng-container class="valid-feedback mt-2" *ngIf="spPastMonthBillSuccess">
-                    <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
+                    <div class="form-row">
+                        <div class="form-group col-lg-6 col-md-12 col-xs-12 mb-0 mb-lg-auto">
+                            <label class="form-control-label" for="spPastMonthBill">SP past month bill</label>
+                            <input type="text" name="spPastMonthBill" class="form-control fileUpload" [(ngModel)]="spPastMonthBill" [value]="uploaded" disabled required #spPastMonthBillError="ngModel">
+                            <div class="upload-btn-remove">
+                                <div *ngIf="spPastMonthBillUploaded" class="d-inline"><button type="button" class="btn" (click)="removeFile($event,1)"><i class="fa fa-times mr-2" aria-hidden="true"></i></button></div>
+                            </div>
+                            <div class="upload-btn-wrapper">
+                                <label class="btnUpload" for="file1">Upload</label>
+                                <input #fileInput type="file" id="file1" (click)="fileInput.value = null" name="myfile" (change)="selected($event,1)" />
+                            </div>
+                            <!-- <div class="text-secondary"><small><i>Please upload PDF format only.</i></small></div> -->
+                            <ng-container class="valid-feedback mt-2" *ngIf="spPastMonthBillSuccess">
+                                <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
+                            </ng-container>
+                        </div>
+                        <div class="form-control-label d-block d-lg-none pl-3">or</div>
+                        <div class="form-group col-lg-6 col-md-12 col-xs-12 mb-0 mb-lg-auto">
+                            <div class="connection-div d-none d-lg-block">or</div>
+                            <label class="form-control-label" for="newSpAccountOpeningLetter">New SP account opening letter</label>
+                            <input type="text" name="newSpAccountOpeningLetter" class="form-control fileUpload" [(ngModel)]="newSpAccountOpeningLetter" [value]="uploaded" disabled required #newSpAccountOpeningLetterError="ngModel">
+                            <div class="upload-btn-remove">
+                                <div *ngIf="newSpAccountOpeningLetterUploaded" class="d-inline"><button type="button" class="btn" (click)="removeFile($event,2)"><i class="fa fa-times mr-2" aria-hidden="true"></i></button></div>
+                            </div>
+                            <div class="upload-btn-wrapper">
+                                <label class="btnUpload" for="file2">Upload</label>
+                                <input type="file" id="file2" #inputFile2 (click)="inputFile2.value = null" name="myfile" (change)="selected($event,2)" />
+                            </div>
+                            <ng-container class="valid-feedback" *ngIf="openingLetter">
+                                <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
+                            </ng-container>
+                        </div>
+                    </div>
                 </ng-container>
-              </div>
-              <div class="form-control-label d-block d-lg-none pl-3">or</div>
-              <div class="form-group col-lg-6 col-md-12 col-xs-12 mb-0 mb-lg-auto">
-                <div class="connection-div d-none d-lg-block">or</div>
-                <label class="form-control-label" for="newSpAccountOpeningLetter">New SP account opening letter</label>
-                <input type="text" 
-                name="newSpAccountOpeningLetter" 
-                class="form-control fileUpload" 
-                [(ngModel)]="newSpAccountOpeningLetter" 
-                [value]="uploaded" 
-              
-                disabled required 
-                #newSpAccountOpeningLetterError="ngModel">
-                <div class="upload-btn-remove">
-                  <div *ngIf="newSpAccountOpeningLetterUploaded" class="d-inline"><button type="button" class="btn" (click)="removeFile($event,2)"><i class="fa fa-times mr-2" aria-hidden="true"></i></button></div>
-                </div>
-                <div class="upload-btn-wrapper">
-                    <label class="btnUpload" for="file2">Upload</label>
-                    <input type="file" id="file2" #inputFile2 (click)="inputFile2.value = null" name="myfile"  accept="application/pdf" (change)="selected($event,2)" />
-                </div>
-                <ng-container class="valid-feedback" *ngIf="openingLetter">
-                    <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
-                </ng-container>
-           </div>
-            </div>
-          </ng-container>
-          <ng-container *ngIf="!parent.isSPAccountHolder">
-            <div class="form-row">
-                <div class="form-group col-lg-6 col-md-12 col-xs-12 mb-0 mb-lg-auto">              
+                <ng-container *ngIf="!parent.isSPAccountHolder">
+                    <div class="form-row">
+                        <div class="form-group col-lg-6 col-md-12 col-xs-12 mb-0 mb-lg-auto">
 
-                    <label class="form-control-label" for="spPastMonthBill">SP past month bill</label>
-                     <input type="text" name="spPastMonthBill"  class="form-control fileUpload" 
-                     [(ngModel)]="spPastMonthBill" 
-                     [value]="uploaded"
-                     disabled required 
-                     #spPastMonthBillError="ngModel">
-                     <div class="upload-btn-remove">
-                       <div *ngIf="spPastMonthBillUploaded" class="d-inline"><button type="button" class="btn" (click)="removeFile($event,1)"><i class="fa fa-times mr-2" aria-hidden="true"></i></button></div>
-   
-                     </div>
-   
-                     <div class="upload-btn-wrapper">                    
-                         <label class="btnUpload" for="file2">Upload</label>
-                         <input type="file" id="file2" #inputFile11 (click)="inputFile11.value = null" name="myfile" accept="application/pdf"  (change)="selected($event,1)" />
-                     </div>
-                     <div class="text-secondary"><small><i>Please upload PDF format only.</i></small>            
-                     </div>                  
-                     <ng-container class="valid-feedback mt-2" *ngIf="spPastMonthBillSuccess">
-                       <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
-                   </ng-container>
-                 </div>
-             
-              <div class="form-group  col-lg-6 col-md-12 col-xs-12 mb-0 mb-lg-auto">
-                <label class="form-control-label" for="letterOfAuthorisation">Letter of Authorisation by SP account holder</label>
-                <input type="text" 
-                name="letterOfAuthorisation" 
-                class="form-control fileUpload" 
-                [(ngModel)]="letterOfAuthorisation" 
-                [value]="uploaded"                
-                disabled required                
-                #letterOfAuthorisationError="ngModel">
-                <div class="upload-btn-remove">
-              
-                </div>
-                
-                <div class="upload-btn-wrapper">
-                   
-                   
-                    <label class="btnUpload" for="file3">Upload</label>
-                    <input type="file" id="file3" #inputFille3 (click)="inputFille3.value = null" name="myfile1"  accept="application/pdf"  (change)="selected($event,3)" />
-                </div>
-                <div class="text-secondary"><small><i>Please upload PDF format only. </i></small>             
-              
-                </div>              
+                            <label class="form-control-label" for="spPastMonthBill">SP past month bill</label>
+                            <input type="text" name="spPastMonthBill" class="form-control fileUpload" [(ngModel)]="spPastMonthBill" [value]="uploaded" disabled required #spPastMonthBillError="ngModel">
+                            <div class="upload-btn-remove">
+                                <div *ngIf="spPastMonthBillUploaded" class="d-inline"><button type="button" class="btn" (click)="removeFile($event,1)"><i class="fa fa-times mr-2" aria-hidden="true"></i></button></div>
 
-                  <ng-container class="valid-feedback mt-2" *ngIf="authorization">
-                    <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
-                </ng-container>
-              </div>
-            </div>
-              <div class="form-row">
-              <div class="form-group col-lg-12 ">
-                <label class="form-control-label d-none d-lg-block">&nbsp;</label>
-                <div class="text-secondary"><small><i>Please make sure that the SP 
-                    account holder has given you the authorisation via this form.</i></small> 
-                 
-                  </div>     
-              
-             
-              </div>
-              <div class="form-row">
-              <div class="col-lg-12 ">
-                              
-                      <a href="/assets/sign-up/download/Authorisation_Letter.pdf" includeVersion download>
-                        <p><i>DOWNLOAD FORM</i></p>         </a>  
-                        
-                
-                  <!-- <a href="/assets/sign-up/download/Authorisation_Letter.pdf" includeVersion download>
+                            </div>
+
+                            <div class="upload-btn-wrapper">
+                                <label class="btnUpload" for="file2">Upload</label>
+                                <input type="file" id="file2" #inputFile11 (click)="inputFile11.value = null" name="myfile" (change)="selected($event,1)" />
+                            </div>
+                            <!-- <div class="text-secondary"><small><i>Please upload PDF format only.</i></small></div> -->
+                            <ng-container class="valid-feedback mt-2" *ngIf="spPastMonthBillSuccess">
+                                <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
+                            </ng-container>
+                        </div>
+
+                        <div class="form-group  col-lg-6 col-md-12 col-xs-12 mb-0 mb-lg-auto">
+                            <label class="form-control-label" for="letterOfAuthorisation">Letter of Authorisation by SP account holder</label>
+                            <input type="text" name="letterOfAuthorisation" class="form-control fileUpload" [(ngModel)]="letterOfAuthorisation" [value]="uploaded" disabled required #letterOfAuthorisationError="ngModel">
+                            <div class="upload-btn-remove">
+
+                            </div>
+
+                            <div class="upload-btn-wrapper">
+
+
+                                <label class="btnUpload" for="file3">Upload</label>
+                                <input type="file" id="file3" #inputFille3 (click)="inputFille3.value = null" name="myfile1" (change)="selected($event,3)" />
+                            </div>
+                            <!-- <div class="text-secondary"><small><i>Please upload PDF format only. </i></small></div> -->
+
+                            <ng-container class="valid-feedback mt-2" *ngIf="authorization">
+                                <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-lg-12 ">
+                            <label class="form-control-label d-none d-lg-block">&nbsp;</label>
+                            <div class="text-secondary"><small><i>Please make sure that the SP 
+                    account holder has given you the authorisation via this form.</i></small>
+
+                            </div>
+
+
+                        </div>
+                        <div class="form-row">
+                            <div class="col-lg-12 ">
+
+                                <a href="/assets/sign-up/download/Authorisation_Letter.pdf" includeVersion download>
+                                    <p><i>DOWNLOAD FORM</i></p>
+                                </a>
+
+
+                                <!-- <a href="/assets/sign-up/download/Authorisation_Letter.pdf" includeVersion download>
                     <p><i>DOWNLOAD FORM</i></p>
                   </a> -->
-                </div>
-                </div>
-            </div>    
-        
-          </ng-container>
-        </div>
-  
-        <div class="d-flex justify-content-center pt-4 pb-4">
-          <button class="btn step-next">
+                            </div>
+                        </div>
+                    </div>
+
+                </ng-container>
+            </div>
+
+            <div class="d-flex justify-content-center pt-4 pb-4">
+                <button class="btn step-next">
             <span>Next</span> <img src="/assets/sign-up/images/content/next.png" includeVersion>
           </button>
+            </div>
         </div>
-      </div>
     </div>
-  </form>
-  
+</form>

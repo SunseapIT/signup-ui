@@ -5,9 +5,9 @@ export const environment = {
   subDomain: false,
   apiUrl: '',
   reCaptchaSiteKey: '',
-  // baseUrl: "http://18.139.224.201:8085"
-  baseUrl: "http://111.93.31.228:9091"
-  // baseUrl: "http://14756a20.ngrok.io"
+  baseUrl: "http://18.139.224.201:8085"
+  // baseUrl: "http://111.93.31.228:9091"
+  // baseUrl: "http://31367127.ngrok.io"
 
 }
 

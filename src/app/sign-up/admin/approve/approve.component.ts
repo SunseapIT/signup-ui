@@ -342,19 +342,24 @@ export class ApproveComponent implements OnInit {
       + "?fileName=" + name).subscribe((response: any) => {
         var responseBody = response['body'];
         var responseData = responseBody['data'];
+        var responseFileData = responseData.fileData;
+        var responseFileName = responseData.fileName;
+        var responseFileType = responseData.fileType;
         var b64toBlob = require('b64-to-blob');
-        var file = b64toBlob(responseData, 'application/pdf');
+        var file = b64toBlob(responseFileData, responseFileType);
         var fileURL = URL.createObjectURL(file);
         window.open(fileURL);
+
       })
   }
+
+
 
   // spno
   // update(value) {
   //   this.spno = value
   //   console.log('spppp blur', this.spno);
   //   this.spFlag = false;
-
 
   // }
 

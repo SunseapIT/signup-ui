@@ -17,78 +17,78 @@ export class ApiServiceServiceService {
   public static apiList = {
 
     //ADMIN
-    approveCustomerUrl : environment.baseUrl+"/api/v1/admin/approveCustomer",
-    addPlanUrl:environment.baseUrl+"/api/v1/admin/addPlan",
-    viewPlanUrl: environment.baseUrl+"/api/v1/admin/getPlans",
-    getAllusersUrl:environment.baseUrl+"/api/v1/admin/getAllUsers",
-    searchTimestampsByDateRangeUrl : environment.baseUrl+"/api/v1/admin/searchTimestampsByDateRange",
-    searchCustomersByDateRangeUrl : environment.baseUrl+"/api/v1/admin/searchCustomersByDateRange",
-    searchCustomersForApprovalUrl : environment.baseUrl+"/api/v1/admin/searchCustomersForApproval",
-    removePlansUrl:environment.baseUrl+"/api/v1/admin/removePlan",
-    encodeFileUrl : environment.baseUrl+"/api/v1/admin/encodedFile",
-    messageUrl : environment.baseUrl+"/api/v1/admin/addNote",
-    searchCustomersUrl : environment.baseUrl+"/api/v1/admin/searchCustomers",
-    addPromoCodeUrl : environment.baseUrl+"/api/v1/admin/addPromocode",
-    getPromoCodeUrl : environment.baseUrl+"/api/v1/admin/getPromocode",
-    getPromoCodeById : environment.baseUrl+"/api/v1/admin/getPromocodeById",
-    deletePromoCodeUrl : environment.baseUrl+"/api/v1/admin/deletePromoCode",
-    customerRemark : environment.baseUrl+"/api/v1/admin/remarksForUser",
+    approveCustomerUrl: environment.baseUrl + "/api/v1/admin/approveCustomer",
+    addPlanUrl: environment.baseUrl + "/api/v1/admin/addPlan",
+    viewPlanUrl: environment.baseUrl + "/api/v1/admin/getPlans",
+    getAllusersUrl: environment.baseUrl + "/api/v1/admin/getAllUsers",
+    searchTimestampsByDateRangeUrl: environment.baseUrl + "/api/v1/admin/searchTimestampsByDateRange",
+    searchCustomersByDateRangeUrl: environment.baseUrl + "/api/v1/admin/searchCustomersByDateRange",
+    searchCustomersForApprovalUrl: environment.baseUrl + "/api/v1/admin/searchCustomersForApproval",
+    removePlansUrl: environment.baseUrl + "/api/v1/admin/removePlan",
+    encodeFileUrl: environment.baseUrl + "/api/v1/admin/encodedFile",
+    messageUrl: environment.baseUrl + "/api/v1/admin/addNote",
+    searchCustomersUrl: environment.baseUrl + "/api/v1/admin/searchCustomers",
+    addPromoCodeUrl: environment.baseUrl + "/api/v1/admin/addPromocode",
+    getPromoCodeUrl: environment.baseUrl + "/api/v1/admin/getPromocode",
+    getPromoCodeById: environment.baseUrl + "/api/v1/admin/getPromocodeById",
+    deletePromoCodeUrl: environment.baseUrl + "/api/v1/admin/deletePromoCode",
+    customerRemark: environment.baseUrl + "/api/v1/admin/remarksForUser",
 
 
     //CUSTOMER
-    addAddressUrl: environment.baseUrl+'/api/v1/customer/addAddress',
-    saveCustomerurl: environment.baseUrl+"/api/v1/customer/saveCustomer",
-    verifyPromoUrl: environment.baseUrl+"/api/v1/customer/verifyPromoCode",
-    verifyMobileUrl: environment.baseUrl+"/api/v1/customer/verifyMobile",
-    sendEmailOtp: environment.baseUrl+"/api/v1/customer/send-email-otp",
-    customerViewPlanUrl: environment.baseUrl+"/api/v1/customer/getPlans",
-    getFactSheet: environment.baseUrl+"/api/v1/customer/getFactSheet",
-    getTimestampUrl: environment.baseUrl+"/api/v1/customer/timestamps",
-    getCustomerFactsheetUrl : environment.baseUrl+"/api/v1/customer/getUpdatedFactSheet",
-    getEmailOtp: environment.baseUrl+"/api/v1/customer/validate-email-otp",
-    dateTimeRangePicker : environment.baseUrl+"/api/v1/customer/search",
-    sendMobileOtp: environment.baseUrl+"/api/v1/customer/generateOtp",
-    getMessageUrl : environment.baseUrl+"/api/v1/customer/getNote",
-    getSpAccountUrl : environment.baseUrl+"/api/v1/customer/getSpAccount",
-    getCustomerSpAccountUrl : environment.baseUrl+"/api/v1/customer/getCustomerSpAccount",
+    addAddressUrl: environment.baseUrl + '/api/v1/customer/addAddress',
+    saveCustomerurl: environment.baseUrl + "/api/v1/customer/saveCustomer",
+    verifyPromoUrl: environment.baseUrl + "/api/v1/customer/verifyPromoCode",
+    verifyMobileUrl: environment.baseUrl + "/api/v1/customer/verifyMobile",
+    sendEmailOtp: environment.baseUrl + "/api/v1/customer/send-email-otp",
+    customerViewPlanUrl: environment.baseUrl + "/api/v1/customer/getPlans",
+    getFactSheet: environment.baseUrl + "/api/v1/customer/getFactSheet",
+    getTimestampUrl: environment.baseUrl + "/api/v1/customer/timestamps",
+    getCustomerFactsheetUrl: environment.baseUrl + "/api/v1/customer/getUpdatedFactSheet",
+    getEmailOtp: environment.baseUrl + "/api/v1/customer/validate-email-otp",
+    dateTimeRangePicker: environment.baseUrl + "/api/v1/customer/search",
+    sendMobileOtp: environment.baseUrl + "/api/v1/customer/generateOtp",
+    getMessageUrl: environment.baseUrl + "/api/v1/customer/getNote",
+    getSpAccountUrl: environment.baseUrl + "/api/v1/customer/getSpAccount",
+    getCustomerSpAccountUrl: environment.baseUrl + "/api/v1/customer/getCustomerSpAccount",
 
     // LOGIN
-    adminLogin: environment.baseUrl+"/api/v1/user/login",
+    adminLogin: environment.baseUrl + "/api/v1/user/login",
 
     // TIMESTAMP API
-    updateTimeUrl:environment.baseUrl+"/api/v1/customer/updateTime",
-    addCardDetailUrl:environment.baseUrl+"/api/v1/tokens/tokenize",
+    updateTimeUrl: environment.baseUrl + "/api/v1/customer/updateTime",
+    addCardDetailUrl: environment.baseUrl + "/api/v1/tokens/tokenize",
   }
 
-  constructor(private http:HttpClient, private router : Router) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
-  getPromoCodeById(id:number) :Observable<any>{
-     return this.http.get<any>(this.getPromoCodeById + '/'+id);
-    }
+  getPromoCodeById(id: number): Observable<any> {
+    return this.http.get<any>(this.getPromoCodeById + '/' + id);
+  }
 
-   // Get service
+  // Get service
   get_service(url): Observable<any> {
-   return this.http.get<any>(url, { observe: 'response' });
+    return this.http.get<any>(url, { observe: 'response' });
   }
 
-  getFactSheetGet_service(url) :Observable<any> {
+  getFactSheetGet_service(url): Observable<any> {
     return this.http.get<any>(url, { observe: 'response' });
-    }
+  }
 
   post_service(url, data): Observable<any> {
     return this.http.post<any>(url, data, { observe: 'response' });
   }
 
   get_Token() {
-  return localStorage.getItem('Authorization');
+    return localStorage.getItem('Authorization');
   }
   login(): boolean {
-  if (this.get_Token() != null) {
-  return true;
-  }  else {
-  this.router.navigate(['/']);
-  return false;
-  }
+    if (this.get_Token() != null) {
+      return true;
+    } else {
+      this.router.navigate(['/']);
+      return false;
+    }
   }
 
 

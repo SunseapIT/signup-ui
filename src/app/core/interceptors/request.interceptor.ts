@@ -9,8 +9,8 @@ import { environment } from '@env/environment';
 import { HEADER_NEED_CREDENTIALS } from '../data-services';
 
 const HTTP_PATTERN = new RegExp('^(?:[a-z]+:)?//', 'i');
-const API_URL = `${environment.apiUrl}/b2capi/mobileapps/${environment.apiVersion}/`;
-
+//const API_URL = `${environment.apiUrl}/b2capi/mobileapps/${environment.apiVersion}/`;
+const API_URL = `${environment.apiUrl}/`;
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
 

@@ -295,36 +295,33 @@ export class ApproveComponent implements OnInit {
 
 
   validatePostalCode(code: string) {
+    let postalString = "https://developers.onemap.sg/commonapi/search?searchVal=" +
+      code + "&returnGeom=N&getAddrDetails=Y&pageNum=1"
     if (_.size(code) > 1 && !this.isPostalCodeValid(code)) {
       this.warningMessage = POSTAL_CODE_WARNING;
       this.modal.open(this.warningModal, 'lg', { ignoreBackdropClick: true });
     } else {
       if (_.size(code) === 6) {
-        this.utilService.requestAddresses(code).subscribe(rs => {
-          switch (rs.meta.count) {
-            case 0:
-              this.buildingName = null;
-              this.houseNo = null;
-              this.streetName = null;
-              break;
-            case 1:
-              this.buildingName = _.upperCase(rs.items[0].building) === 'NIL' ? null : rs.items[0].building;
-              this.houseNo = _.upperCase(rs.items[0].blockNo) === 'NIL' ? null : rs.items[0].blockNo;
-              this.streetName = _.upperCase(rs.items[0].roadName) === 'NIL' ? null : rs.items[0].roadName;
-              break;
-            default:
-              this.validLocations = {};
-              if (_.size(rs.items) > 5) {
-                rs.items.splice(0, 5);
-              }
-              _.forEach(rs.items, (item) => {
-                this.validLocations[item.address] = item;
-              });
-              this.pickedLocation = rs.items[0].address;
-              this.modal.open(this.pickUpModal, 'md', { ignoreBackdropClick: false });
-              break;
+        this.service.get_service(ApiServiceServiceService.apiList.getPostalCode + "?url=" + btoa(postalString)).subscribe((response) => {
+          let responseBody = response['body']
+          let status = responseBody['statusCode']
+          let responseData = responseBody['data']
+          let responseResults = responseData['results']
+          console.log('responseResults', responseResults);
+          if (responseResults != '') {
+            this.buildingName = responseResults[0].BUILDING;
+            this.streetName = responseResults[0].ROAD_NAME;
+            this.houseNo = responseResults[0].BLK_NO;
           }
-        });
+          else {
+            this.toastr.error('', 'Please enter correct postal code.')
+            // this.pickedLocation = responseResults[0];
+            // this.modal.open(this.pickUpModal, 'md', { ignoreBackdropClick: false });
+            this.buildingName = null;
+            this.streetName = null;
+            this.houseNo = null;
+          }
+        })
       }
     }
   }

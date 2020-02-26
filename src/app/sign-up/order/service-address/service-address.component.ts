@@ -84,37 +84,60 @@ export class ServiceAddressComponent implements OnInit {
   }
 
   validatePostalCode(code: string) {
+    let postalString = "https://developers.onemap.sg/commonapi/search?searchVal=" +
+      code + "&returnGeom=N&getAddrDetails=Y&pageNum=1"
     if (_.size(code) > 1 && !this.isPostalCodeValid(code)) {
       this.warningMessage = POSTAL_CODE_WARNING;
       this.modal.open(this.warningModal, 'lg', { ignoreBackdropClick: true });
     } else {
       if (_.size(code) === 6) {
-        this.utilService.requestAddresses(code).subscribe(rs => {
-
-          switch (rs.meta.count) {
-            case 0:
-              this.serviceAddress.buildingName = null;
-              this.serviceAddress.houseNo = null;
-              this.serviceAddress.streetName = null;
-              break;
-            case 1:
-              this.serviceAddress.buildingName = _.upperCase(rs.items[0].building) === 'NIL' ? null : rs.items[0].building;
-              this.serviceAddress.houseNo = _.upperCase(rs.items[0].blockNo) === 'NIL' ? null : rs.items[0].blockNo;
-              this.serviceAddress.streetName = _.upperCase(rs.items[0].roadName) === 'NIL' ? null : rs.items[0].roadName;
-              break;
-            default:
-              this.validLocations = {};
-              if (_.size(rs.items) > 5) {
-                rs.items.splice(0, 5);
-              }
-              _.forEach(rs.items, (item) => {
-                this.validLocations[item.address] = item;
-              });
-              this.pickedLocation = rs.items[0].address;
-              this.modal.open(this.pickUpModal, 'md', { ignoreBackdropClick: false });
-              break;
+        this.service.get_service(ApiServiceServiceService.apiList.getPostalCode + "?url=" + btoa(postalString)).subscribe((response) => {
+          let responseBody = response['body']
+          let status = responseBody['statusCode']
+          let responseData = responseBody['data']
+          let responseResults = responseData['results']
+          if (responseResults != '') {
+            this.serviceAddress.buildingName = responseResults[0].BUILDING;
+            this.serviceAddress.streetName = responseResults[0].ROAD_NAME;
+            this.serviceAddress.houseNo = responseResults[0].BLK_NO;
           }
-        });
+          else {
+            this.pickedLocation = responseResults[0];
+            this.modal.open(this.pickUpModal, 'md', { ignoreBackdropClick: false });
+            this.serviceAddress.buildingName = null;
+            this.serviceAddress.streetName = null;
+            this.serviceAddress.houseNo = null;
+          }
+        })
+
+
+        // this.utilService.requestAddresses(code).subscribe(rs => {
+
+        //       switch (rs.meta.count) {
+        //         case 0:
+        //           this.serviceAddress.buildingName = null;
+        //           this.serviceAddress.houseNo = null;
+        //           this.serviceAddress.streetName = null;
+        //           break;
+        //         case 1:
+        //           this.serviceAddress.buildingName = _.upperCase(rs.items[0].building) === 'NIL' ? null : rs.items[0].building;
+        //           this.serviceAddress.houseNo = _.upperCase(rs.items[0].blockNo) === 'NIL' ? null : rs.items[0].blockNo;
+        //           this.serviceAddress.streetName = _.upperCase(rs.items[0].roadName) === 'NIL' ? null : rs.items[0].roadName;
+        //           break;
+        //         default:
+        //           this.validLocations = {};
+        //           if (_.size(rs.items) > 5) {
+        //             rs.items.splice(0, 5);
+        //           }
+        //           _.forEach(rs.items, (item) => {
+        //             this.validLocations[item.address] = item;
+        //           });
+        //           this.pickedLocation = rs.items[0].address;
+        //           this.modal.open(this.pickUpModal, 'md', { ignoreBackdropClick: false });
+        //           break;
+        //       }
+        //     });
+        //   }
       }
     }
   }
@@ -152,7 +175,6 @@ export class ServiceAddressComponent implements OnInit {
       addressDto.houseNo = form.value.houseNo;
       addressDto.postalCode = form.value.servicePostalCode;
       addressDto.streetName = form.value.streetName;
-
       let customerDto = new CustomerDto();
       let objStr = localStorage.getItem("customerObj");
       customerDto = JSON.parse(objStr);

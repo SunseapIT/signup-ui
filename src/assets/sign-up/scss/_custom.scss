@@ -1483,6 +1483,12 @@ p {
     position: relative;
 }
 
+.modal-header .close {
+    padding: 1rem 1rem;
+    /* margin: -1rem -1rem -1rem auto; */
+    margin-top: 10px;
+}
+
 .modal-confirm h4 {
     text-align: center;
     font-size: 26px;

@@ -51,6 +51,7 @@ export class ApiServiceServiceService {
     getMessageUrl: environment.baseUrl + "/api/v1/customer/getNote",
     getSpAccountUrl: environment.baseUrl + "/api/v1/customer/getSpAccount",
     getCustomerSpAccountUrl: environment.baseUrl + "/api/v1/customer/getCustomerSpAccount",
+    getPostalCode: environment.baseUrl + "/api/v1/customer/getAddressWithPostalCode",
 
     // LOGIN
     adminLogin: environment.baseUrl + "/api/v1/user/login",

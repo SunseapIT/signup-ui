@@ -2,7 +2,7 @@ import { PAYMENT_COMPONENTS } from './tokenization/index';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Angular2CsvModule } from 'angular2-csv';
-import { BsDatepickerModule, PopoverModule, TooltipModule } from 'ngx-bootstrap';
+import { BsDatepickerModule, PopoverModule, TooltipModule, ModalModule } from 'ngx-bootstrap';
 import { FileUploadModule } from 'ng2-file-upload';
 import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
@@ -27,6 +27,7 @@ import { PaginationModule } from 'ngx-pagination-bootstrap';
     RecaptchaModule.forRoot(),
     PopoverModule.forRoot(),
     RecaptchaFormsModule,
+    PdfViewerModule,
     SignUpRoutingModule,
     NgxPaginationModule,
     PaginationModule,
@@ -40,6 +41,7 @@ import { PaginationModule } from 'ngx-pagination-bootstrap';
     }),
     PdfViewerModule,
     InputTrimModule,
+    ModalModule.forRoot()
 
   ],
   declarations: [

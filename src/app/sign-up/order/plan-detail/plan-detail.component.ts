@@ -1,12 +1,15 @@
 import { ToastrService } from 'ngx-toastr';
 import { ApiServiceServiceService } from './../../../api-service-service.service';
-import { Component, OnInit, Host, ViewChild, HostListener, ViewChildren } from '@angular/core';
+import { Component, OnInit, Host, ViewChild, HostListener, ViewChildren, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { OrderComponent } from '../order.component';
 import { STORAGE_KEYS, ORDER_GA_EVENT_NAMES } from '../order.constant';
+
+import { BsModalService, ModalDirective, BsModalRef } from 'ngx-bootstrap/modal';
+import { PDFDocumentProxy } from 'pdfjs-dist';
 import {
   PricingPlan,
   PricingPlanService,
@@ -32,10 +35,13 @@ const LIST_PRICE_PLAN_BY_REF_OR_PRO_CODE = {
   templateUrl: './plan-detail.component.html',
 })
 export class PlanDetailComponent implements OnInit {
-  planName: string = '';
+  planName: string = "";
   @ViewChild('advisory') advisory: any;
   @ViewChild('postalCodeOverlay') postalCodeOverlay: any;
   @ViewChildren('popover') popover: any;
+
+  @ViewChild("pdfViewFactSheetModal") pdfViewFactSheetModal: ModalDirective;
+  _pdf: PDFDocumentProxy;
 
   config = { bootstrap: null, dateTimeFormat: null, validationRegex: null };
 
@@ -69,11 +75,12 @@ export class PlanDetailComponent implements OnInit {
   adminMessage: any;
   duplicatePromoCode: boolean;
   verified: boolean;
-
+  modalRef: BsModalRef;
 
   constructor(
     @Host() public parent: OrderComponent,
     public modal: ModalService,
+    public modalService: BsModalService,
     private activateRoute: ActivatedRoute,
     private router: Router,
     private pricingPlanService: PricingPlanService,
@@ -239,6 +246,26 @@ export class PlanDetailComponent implements OnInit {
     this.getAdminMessage();
   }
 
+  hidePdfViewFactSheetModal() {
+    this.pdfViewFactSheetModal.hide();
+  }
+
+
+
+  showPdfViewFactSheetModal() {
+    this.pdfViewFactSheetModal.show();
+  }
+
+
+  ngOnDestroy(): void {
+
+    this.pdfSrc = null;
+    if (this._pdf) {
+      this._pdf.destroy();
+    }
+
+  }
+
   getPlans() {
     this.service.get_service(ApiServiceServiceService.apiList.customerViewPlanUrl).subscribe((response) => {
       var responseBody = response['body'];
@@ -247,17 +274,42 @@ export class PlanDetailComponent implements OnInit {
     })
   }
 
-
   viewFactSheet() {
-    this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet +
-      "?planName=" + (btoa(this.planName))).subscribe(response => {
+    this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet
+      + "?planName=" + (btoa(this.planName))).subscribe(response => {
         var responseBody = response['body'];
         var responseData = responseBody['data'];
-        var data = "data:application/pdf;base64," + responseData
+        var data = "data:application/pdf;base64," + responseData;
         this.pdfSrc = data;
-        $("#myModal").modal("show")
       })
+    this.pdfViewFactSheetModal.show();
+
   }
+
+  // viewFactSheet() {
+  //   this.pdfSrc = null;
+  //   this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet +
+  //     "?planName=" + (btoa(this.planName))).subscribe(response => {
+  //       console.log(response);
+  //       if (response.body && (response.body.statusCode == 200)) {
+  //         var responseBody = response['body'];
+  //         var responseData = responseBody['data'];
+  //         var data = "data:application/pdf;base64," + responseData;
+  //         var byteString = atob(responseData);
+  //         var ab = new ArrayBuffer(byteString.length);
+  //         var ia = new Uint8Array(ab);
+  //         for (var i = 0; i < byteString.length; i++) {
+  //           ia[i] = byteString.charCodeAt(i);
+  //         }
+  //         this.pdfSrc = ia;
+  //         this.pdfViewFactSheetModal.show();
+  //       }
+  //       $("#myModal").modal("show")
+  //     }, err => {
+  //       console.log(err.message);
+
+  //     })
+  // }
 
   onSelectPricingPlanChange(event) {
     let selectData = event.target.value;

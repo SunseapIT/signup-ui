@@ -54,10 +54,10 @@ export class ViewPlanComponent implements OnInit {
     this.service.post_service(ApiServiceServiceService.apiList.removePlansUrl+"?"+queryParams,data).subscribe((response)=>{
       var responseData  = response;
       var resultObject = responseData['data'];
-      var planBean = new PlanBean();
-      planBean = resultObject;
-      var findIndex = this.planList.findIndex(plan =>plan.id === planBean.id);
-      this.planList.splice(findIndex,1);
+      // var planBean = new PlanBean();
+      // planBean = resultObject;
+      // var findIndex = this.planList.findIndex(plan =>plan.id === planBean.id);
+      // this.planList.splice(findIndex,1);
 
       this.toastr.success('', 'Plan has been successfully removed.', {
         timeOut: 2000

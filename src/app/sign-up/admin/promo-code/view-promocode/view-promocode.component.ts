@@ -67,10 +67,10 @@ export class ViewPromocodeComponent implements OnInit {
     this.service.get_service(ApiServiceServiceService.apiList.deletePromoCodeUrl + "?promoId=" + id).subscribe((response) => {
       var responseData = response;
       var resultObject = responseData['data'];
-      var promoCode = new Promocode();
-      promoCode = resultObject;
-      var findIndex = this.promoCodeData.findIndex(promoCodeId => promoCodeId.id === promoCode.id);
-      this.promoCodeData.splice(findIndex, 1);
+      // var promoCode = new Promocode();
+      // promoCode = resultObject;
+      // var findIndex = this.promoCodeData.findIndex(promoCodeId => promoCodeId.id === promoCode.id);
+      // this.promoCodeData.splice(findIndex, 1);
       this.toastr.success('', 'Promo Code has been successfully removed.', {
         timeOut: 2000
       });

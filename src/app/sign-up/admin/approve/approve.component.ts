@@ -307,7 +307,6 @@ export class ApproveComponent implements OnInit {
           let status = responseBody['statusCode']
           let responseData = responseBody['data']
           let responseResults = responseData['results']
-          console.log('responseResults', responseResults);
           if (responseResults != '') {
             this.buildingName = responseResults[0].BUILDING;
             this.streetName = responseResults[0].ROAD_NAME;

@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
 
-declare const $:any;
+declare const $: any;
 
 @Component({
   selector: 'app-view-plan',
@@ -14,15 +14,15 @@ declare const $:any;
 })
 export class ViewPlanComponent implements OnInit {
 
-  planList =[];
-  p:number=1;
-  searchText : string;
+  planList = [];
+  p: number = 1;
+  searchText: string;
   pdfSrc: any;
-  planName:string = '';
-  isLoader:boolean=false;;
-  totalItems:any;
-  page:number;
-  currentPage:number = 1;
+  planName: string = '';
+  isLoader: boolean = false;;
+  totalItems: any;
+  page: number;
+  currentPage: number = 1;
 
 
   constructor(private service: ApiServiceServiceService, private toastr: ToastrService) {
@@ -34,25 +34,31 @@ export class ViewPlanComponent implements OnInit {
 
   }
 
-  getPlanList(page){
-    this.isLoader=true;
-    this.service.get_service(ApiServiceServiceService.apiList.viewPlanUrl+"?page="+page).subscribe((response:any)=>{
-      this.isLoader=false;
+  getPlanList(page) {
+    this.isLoader = true;
+    this.service.get_service(ApiServiceServiceService.apiList.viewPlanUrl + "?page=" + page).subscribe((response: any) => {
       var responseBody = response['body'];
       var responseData = responseBody['data'];
       this.totalItems = responseData.totalElements;
       var responseContent = responseData['content'];
-      this.planList = responseContent;
+      let status = responseBody['statusCode'];
+      if (status == 200) {
+        this.planList = responseContent;
+        this.isLoader = false;
+      }
+      else {
+        this.isLoader = false;
+      }
 
     });
   }
 
-  delete(id){
+  delete(id) {
     var data;
     let queryParams = new HttpParams();
-    queryParams = queryParams.append("planId",id);
-    this.service.post_service(ApiServiceServiceService.apiList.removePlansUrl+"?"+queryParams,data).subscribe((response)=>{
-      var responseData  = response;
+    queryParams = queryParams.append("planId", id);
+    this.service.post_service(ApiServiceServiceService.apiList.removePlansUrl + "?" + queryParams, data).subscribe((response) => {
+      var responseData = response;
       var resultObject = responseData['data'];
       // var planBean = new PlanBean();
       // planBean = resultObject;
@@ -68,22 +74,22 @@ export class ViewPlanComponent implements OnInit {
   }
 
 
-viewFactSheet(name){
-  this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet
-    +"?planName="+(btoa(name))).subscribe(response=>{
-      var responseBody = response['body'];
-      var responseData = responseBody['data'];
-      
-    var data = "data:application/pdf;base64," +responseData
-    this.pdfSrc = data;
+  viewFactSheet(name) {
+    this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet
+      + "?planName=" + (btoa(name))).subscribe(response => {
+        var responseBody = response['body'];
+        var responseData = responseBody['data'];
 
-  })
-  $("#myModal").modal("show")
-}
+        var data = "data:application/pdf;base64," + responseData
+        this.pdfSrc = data;
 
-pageChanged(event: any): void {
-  this.page = event.page-1;
-  this.getPlanList(this.page);
-}
+      })
+    $("#myModal").modal("show")
+  }
+
+  pageChanged(event: any): void {
+    this.page = event.page - 1;
+    this.getPlanList(this.page);
+  }
 
 }

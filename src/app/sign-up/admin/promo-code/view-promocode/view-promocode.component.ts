@@ -40,15 +40,20 @@ export class ViewPromocodeComponent implements OnInit {
 
   getPromoCode(page) {
     this.isLoader = true
-
     this.service.post_service(ApiServiceServiceService.apiList.getPromoByName + "?pageNum=" + page + "&promoId=" + this.name, null).subscribe((response: any) => {
       var responseBody = response['body'];
       var responseData = responseBody['data'];
       this.totalItems = responseData.totalElements;
       var responseContent = responseData['content'];
-      this.promoCodeData = responseContent;
-      this.searched = this.promoCodeData
-      this.isLoader = false;
+      let status = responseBody['statusCode'];
+      if (status == 200) {
+        this.promoCodeData = responseContent;
+        this.searched = this.promoCodeData
+        this.isLoader = false;
+      }
+      else {
+        this.isLoader = false;
+      }
     })
   }
 

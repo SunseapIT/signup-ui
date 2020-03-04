@@ -74,7 +74,7 @@
                                 <label class="btnUpload" for="file3">Upload</label>
                                 <input type="file" id="file3" #inputFille3 (click)="inputFille3.value = null" name="myfile1" (change)="selected($event,3)" />
                             </div>
-                            <!-- <div class="text-secondary"><small><i>Please upload PDF format only. </i></small></div> -->
+                            <div class="text-secondary"><small><i>Max file size is 500KB.</i></small></div>
 
                             <ng-container class="valid-feedback mt-2" *ngIf="authorization">
                                 <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>

@@ -16,7 +16,7 @@
                                 <label class="btnUpload" for="file1">Upload</label>
                                 <input #fileInput type="file" id="file1" (click)="fileInput.value = null" name="myfile" (change)="selected($event,1)" />
                             </div>
-                            <!-- <div class="text-secondary"><small><i>Please upload PDF format only.</i></small></div> -->
+                            <div class="text-secondary"><small><i>Max file size is 500KB.</i></small></div>
                             <ng-container class="valid-feedback mt-2" *ngIf="spPastMonthBillSuccess">
                                 <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
                             </ng-container>
@@ -33,6 +33,7 @@
                                 <label class="btnUpload" for="file2">Upload</label>
                                 <input type="file" id="file2" #inputFile2 (click)="inputFile2.value = null" name="myfile" (change)="selected($event,2)" />
                             </div>
+                            <div class="text-secondary"><small><i>Max file size is 500KB.</i></small></div>
                             <ng-container class="valid-feedback" *ngIf="openingLetter">
                                 <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
                             </ng-container>
@@ -54,7 +55,7 @@
                                 <label class="btnUpload" for="file2">Upload</label>
                                 <input type="file" id="file2" #inputFile11 (click)="inputFile11.value = null" name="myfile" (change)="selected($event,1)" />
                             </div>
-                            <!-- <div class="text-secondary"><small><i>Please upload PDF format only.</i></small></div> -->
+                            <div class="text-secondary"><small><i>Max file size is 500KB.</i></small></div>
                             <ng-container class="valid-feedback mt-2" *ngIf="spPastMonthBillSuccess">
                                 <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
                             </ng-container>

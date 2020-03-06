@@ -108,7 +108,9 @@ export class DocumentsUploadComponent implements OnInit {
     if (fileList.length > 0) {
       const file: File = fileList[0];
       // if (field == 1 && file.type == "application/pdf") {
-      if (field == 1) {
+      if (field == 1 && (file.type == "application/pdf" || file.type == "image/jpeg" || file.type == "image/png" ||
+        file.type == "image/tiff" || file.type == "image/gif" || file.type == "application/msword" ||
+        file.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document")) {
         this.spPastMonthBill = file.name;
         this.bill_data_file = file.type;
         this.spPastMonthBillSize = file.size;
@@ -116,7 +118,9 @@ export class DocumentsUploadComponent implements OnInit {
         this.spPastMonthBillSuccess = true;
         this.spPastMonthBillUploaded = true;
       }
-      else if (field == 2) {
+      else if (field == 2 && (file.type == "application/pdf" || file.type == "image/jpeg" || file.type == "image/png" ||
+        file.type == "image/tiff" || file.type == "image/gif" || file.type == "application/msword" ||
+        file.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document")) {
         this.newSpAccountOpeningLetter = file.name;
         this.opening_letter_data_file = file.type;
         this.newSpAccountOpeningLetterSize = file.size;
@@ -124,7 +128,9 @@ export class DocumentsUploadComponent implements OnInit {
         this.openingLetter = true;
         this.newSpAccountOpeningLetterUploaded = true;
       }
-      else if (field == 3) {
+      else if (field == 3 && (file.type == "application/pdf" || file.type == "image/jpeg" || file.type == "image/png" ||
+        file.type == "image/tiff" || file.type == "image/gif" || file.type == "application/msword" ||
+        file.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document")) {
         this.letterOfAuthorisation = file.name;
         this.authorization_data_file = file.type;
         this.letterOfAuthorisationSize = file.size;
@@ -132,7 +138,7 @@ export class DocumentsUploadComponent implements OnInit {
         this.authorization = true;
         this.letterOfAuthorisationUploaded = true;
       } else {
-        this.toastr.error('', 'Please upload file', {
+        this.toastr.error('', 'File format not supported.', {
           timeOut: 3000
         });
       }
@@ -145,8 +151,6 @@ export class DocumentsUploadComponent implements OnInit {
     var reader = new FileReader();
     reader.onloadend = this._handleReaderLoaded.bind(this);
     reader.readAsDataURL(file);
-
-
   }
 
   _handleReaderLoaded(e) {

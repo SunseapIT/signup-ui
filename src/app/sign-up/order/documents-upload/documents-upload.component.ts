@@ -24,7 +24,10 @@ export class DocumentsUploadComponent implements OnInit {
   bill_data: string;
   opening_letter_data: string;
   authorization_data: string;
-
+  fileMaxSize = 500000;
+  spPastMonthBillSize;
+  newSpAccountOpeningLetterSize;
+  letterOfAuthorisationSize;
   spPastMonthBill: any;
   newSpAccountOpeningLetter: any;
   letterOfAuthorisation: any;
@@ -54,10 +57,23 @@ export class DocumentsUploadComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     if (this.parent.isSPAccountHolder && this.spPastMonthBill || this.newSpAccountOpeningLetter) {
-      this.saveDocuments()
+      if ((this.spPastMonthBillSize > this.fileMaxSize || this.newSpAccountOpeningLetterSize > this.fileMaxSize)) {
+        this.toastr.error('', 'File size is too large.', {
+          timeOut: 3000
+        });
+      } else {
+        this.saveDocuments()
+      }
     }
     else if (!this.parent.isSPAccountHolder && this.letterOfAuthorisation && this.spPastMonthBill) {
-      this.saveDocuments()
+      if ((this.spPastMonthBillSize > this.fileMaxSize || this.letterOfAuthorisationSize > this.fileMaxSize)) {
+        this.toastr.error('', 'File size is too large.', {
+          timeOut: 3000
+        });
+
+      } else {
+        this.saveDocuments()
+      }
     }
     else {
       this.toastr.error('', 'Please upload document', {
@@ -86,7 +102,6 @@ export class DocumentsUploadComponent implements OnInit {
   }
 
 
-
   selected(event, field) {
     this.currentId = field;
     let fileList: FileList = event.target.files;
@@ -96,14 +111,15 @@ export class DocumentsUploadComponent implements OnInit {
       if (field == 1) {
         this.spPastMonthBill = file.name;
         this.bill_data_file = file.type;
+        this.spPastMonthBillSize = file.size;
         this.handleInputChange(file);
         this.spPastMonthBillSuccess = true;
         this.spPastMonthBillUploaded = true;
-
       }
       else if (field == 2) {
         this.newSpAccountOpeningLetter = file.name;
         this.opening_letter_data_file = file.type;
+        this.newSpAccountOpeningLetterSize = file.size;
         this.handleInputChange(file);
         this.openingLetter = true;
         this.newSpAccountOpeningLetterUploaded = true;
@@ -111,6 +127,7 @@ export class DocumentsUploadComponent implements OnInit {
       else if (field == 3) {
         this.letterOfAuthorisation = file.name;
         this.authorization_data_file = file.type;
+        this.letterOfAuthorisationSize = file.size;
         this.handleInputChange(file);
         this.authorization = true;
         this.letterOfAuthorisationUploaded = true;
@@ -157,17 +174,20 @@ export class DocumentsUploadComponent implements OnInit {
       this.spPastMonthBill = ''
       this.spPastMonthBillSuccess = false;
       this.spPastMonthBillUploaded = false;
+      this.spPastMonthBillSize = '';
     }
 
     else if (removeid == 2) {
       this.newSpAccountOpeningLetter = '';
       this.openingLetter = false;
       this.newSpAccountOpeningLetterUploaded = false;
+      this.newSpAccountOpeningLetterSize = '';
     }
     else if (removeid == 3) {
       this.letterOfAuthorisation = '';
       this.authorization = false;
       this.letterOfAuthorisationUploaded = false;
+      this.letterOfAuthorisationSize = '';
     }
   }
 }

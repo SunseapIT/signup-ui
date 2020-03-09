@@ -138,7 +138,7 @@ export class DocumentsUploadComponent implements OnInit {
         this.authorization = true;
         this.letterOfAuthorisationUploaded = true;
       } else {
-        this.toastr.error('', 'File format not supported.', {
+        this.toastr.error('', 'Please upload in acceptable file format', {
           timeOut: 3000
         });
       }

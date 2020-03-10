@@ -120,6 +120,9 @@
                                             <button *ngIf="isPromoCodeFlag" type="button" class="btn input-button" (click)="verifyPromotionCode(promoCode)">
                                                 <span>Verify</span>
                                             </button>
+                                            <button type="button" (click)="delete()" *ngIf="isPromoCodeFlag" class="btn varify-button">
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                            </button>
 
                                             <div *ngIf="duplicatePromoCode" class="text-danger"><i>Promo/ Referral code already exists.</i></div>
                                             <div *ngIf="promotionMessage != '' && !duplicatePromoCode" [ngClass]="{'green-text':promocodeStatus,'red-text':!promocodeStatus}"><i>{{promotionMessage}}</i></div>

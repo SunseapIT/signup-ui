@@ -462,17 +462,22 @@ export class ApproveComponent implements OnInit {
     this.promocodeStatus = false;
   }
 
-
-  delete(i: number) {
-    if (this.verified) {
-      this.verifiedPromocodes.splice(i, 1);
-      this.duplicatePromoCode = false;
-      this.promotionMessage = '';
-    }
-    this.promoCodeList.splice(i, 1);
-    this.duplicatePromoCode = false;
-    this.promotionMessage = '';
+  delete() {
+    this.promoCode=  this.customerDto.promoCode =[];
+    this.verifiedPromocodes = this.promoCode;
+   
   }
+
+  // delete(i: number) {
+  //   if (this.verified) {
+  //     this.verifiedPromocodes.splice(i, 1);
+  //     this.duplicatePromoCode = false;
+  //     this.promotionMessage = '';
+  //   }
+  //   this.promoCodeList.splice(i, 1);
+  //   this.duplicatePromoCode = false;
+  //   this.promotionMessage = '';
+  // }
 
 
   verifyPromotionCode(promocode) {

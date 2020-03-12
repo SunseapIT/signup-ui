@@ -71,7 +71,6 @@ export class OrderReviewComponent implements OnInit {
   acknowledgeConsent: false;
   acknowledgePrivacy: false;
 
-  checked = true;
   isDotPlan = false;
   reviewMapInput = {};
   serviceAddressMapInput = {};
@@ -221,13 +220,14 @@ export class OrderReviewComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    this.isLoader = true;
     if (this.acknowledgePrivacy && this.acknowledgeConsent && form.valid) {
+      this.isLoader = true;
       let objStr = localStorage.getItem("customerObj");
       this.customerDto = JSON.parse(objStr);
       this.customerDto.fullName = this.fullName;
       this.customerDto.lastName = this.lastName;
       this.customerDto.spAccountNumber = this.serviceNo;
+      this.customerDto.contentToMarketing = this.parent.checkedConsent;
       localStorage.setItem("customerObj", JSON.stringify(this.customerDto));
       this.service.post_service(ApiServiceServiceService.apiList.saveCustomerurl, this.customerDto).subscribe((response) => {
         if (response.body.data) {
@@ -243,10 +243,13 @@ export class OrderReviewComponent implements OnInit {
         }
         else {
           this.toster.error('', response.body.message)
-          this.isLoader = false
+          this.isLoader = false;
 
         }
       })
+    } else {
+      this.toster.error('', 'Enter the correct details.')
+      this.isLoader = false;
     }
   }
   keyPress(event: any) {

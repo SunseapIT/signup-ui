@@ -321,6 +321,7 @@ export class PlanDetailComponent implements OnInit {
     }
   }
 
+
   verifyPromotionCode(index) {
     let promocode = this.promoCode[index].referralCode.toLowerCase();
     if (this.verifiedPromocodes.length) {
@@ -378,6 +379,7 @@ export class PlanDetailComponent implements OnInit {
             customerDto.spAccountNumber = form.value.serviceNo;
             customerDto.plan = form.value.productName;
             customerDto.promoCode = this.verifiedPromocodes;
+            customerDto.selfSignup = this.parent.isSPAccountHolder;
             this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl, timeStampDto).subscribe((response) => {
               let responseBody = response['body']
               let responseData = responseBody['data']

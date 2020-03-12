@@ -1,49 +1,53 @@
 import { Files } from "./file-dto";
 
 export class CustomerDto {
-   
-   customerId:any;
 
-   approved:boolean;
+   customerId: any;
+
+   approved: boolean;
 
    approvedTime: any;
 
-   files =  new Files(); 
+   files = new Files();
 
-   token:string;
+   token: string;
 
-   plan:string;
-    
-   fullName:string;
-   
-   lastName:string;
+   plan: string;
 
-   eamilAddress:string;
-    
-   mobileNumber:string;
-    
-   spAccountNumber:string;
-    
-   promoCode : Array<string>; 
-   
-   postelCode:string;    
-    
-   buildingName:string;
-    
-   dwelingType:string;
-    
-   houseNo:string;
+   fullName: string;
 
-   level:string;
+   lastName: string;
+
+   eamilAddress: string;
+
+   mobileNumber: string;
+
+   spAccountNumber: string;
+
+   promoCode: Array<string>;
+
+   postelCode: string;
+
+   buildingName: string;
+
+   dwelingType: string;
+
+   houseNo: string;
+
+   level: string;
 
    unitNo: string;
-    
-   streetName:string;
-   
-   country : string;
 
-   sighnUpStarTimeStamp:string;
+   streetName: string;
 
-   sighnUpEndTimeStamp:string;
-   
+   country: string;
+
+   sighnUpStarTimeStamp: string;
+
+   sighnUpEndTimeStamp: string;
+
+   selfSignup: boolean;
+
+   contentToMarketing: boolean;
+
 }

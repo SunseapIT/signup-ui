@@ -9,7 +9,7 @@ import { OrderComponent } from './../../order/order.component';
 import { DatePipe } from '@angular/common';
 import { ApiServiceServiceService } from './../../../api-service-service.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ModalService, UtilService, DWELLING_TYPE_OPTIONS, GoogleTagManagerService } from '@app/core';
+import { ModalService, UtilService, DWELLING_TYPE_OPTIONS, GoogleTagManagerService, ConfigService } from '@app/core';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { NgForm } from '@angular/forms';
@@ -132,7 +132,7 @@ export class ApproveComponent implements OnInit {
   myDateValue: Date;
   planType = { energy: '', discount: '', rate: '', afterGst: '', rateChange: '' };
   lastApproveDate: Date;
-
+  dwellingObj: any;
 
   constructor(private service: ApiServiceServiceService,
     public parent: OrderComponent,
@@ -142,9 +142,11 @@ export class ApproveComponent implements OnInit {
     private utilService: UtilService,
     private localStorage: LocalStorage,
     private router: Router,
+    configService: ConfigService,
     private modalService: BsModalService,
     private gtagService: GoogleTagManagerService,
     private toastr: ToastrService) {
+    this.config.validationRegex = configService.get('validationRegex');
 
   }
 
@@ -186,9 +188,16 @@ export class ApproveComponent implements OnInit {
   onSelectDwellingType(name: string) {
     const dwellingTypes = _.map(DWELLING_TYPE_OPTIONS, (value, key: any) => ({ key: (!isNaN(key)) ? Number(key) : key, value }));
     const index = _.findIndex(dwellingTypes, type => _.isEqual(type.key, name));
+    this.dwellingType = dwellingTypes.find(item => item.key == name).value;
     if (index >= 0) {
       this.gtagService.sendEvent(this.DWELLING_TYPE_EVENT_NAMES[index]);
     }
+  }
+
+  getDwellingType(event) {
+    const dwellingTypes = _.map(DWELLING_TYPE_OPTIONS, (value, key: any) => ({ key: (!isNaN(key)) ? Number(key) : key, value }));
+    const obj = dwellingTypes.find(item => item.value == event);
+    this.dwellingObj = obj.key;
   }
 
   updateDwelling() {
@@ -229,6 +238,7 @@ export class ApproveComponent implements OnInit {
     Object.keys(doptions).forEach(key => {
       if (customerList.dwelingType != null && key.toLowerCase() == customerList.dwelingType.toLowerCase()) {
         this.dwellingType = doptions[key];
+
       }
     });
     this.serviceNo = customerList.spAccountNumber;
@@ -299,7 +309,12 @@ export class ApproveComponent implements OnInit {
       code + "&returnGeom=N&getAddrDetails=Y&pageNum=1"
     if (_.size(code) > 1 && !this.isPostalCodeValid(code)) {
       this.warningMessage = POSTAL_CODE_WARNING;
-      this.modal.open(this.warningModal, 'lg', { ignoreBackdropClick: true });
+      this.postalCode = null;
+      this.buildingName = null;
+      this.streetName = null;
+      this.houseNo = null;
+      this.toastr.error('', 'Please enter correct postal code.')
+      // this.modal.open(this.warningModal, 'lg', { ignoreBackdropClick: true });
     } else {
       if (_.size(code) === 6) {
         this.service.get_service(ApiServiceServiceService.apiList.getPostalCode + "?url=" + btoa(postalString)).subscribe((response) => {
@@ -316,6 +331,7 @@ export class ApproveComponent implements OnInit {
             this.toastr.error('', 'Please enter correct postal code.')
             // this.pickedLocation = responseResults[0];
             // this.modal.open(this.pickUpModal, 'md', { ignoreBackdropClick: false });
+            this.postalCode = null;
             this.buildingName = null;
             this.streetName = null;
             this.houseNo = null;
@@ -360,8 +376,8 @@ export class ApproveComponent implements OnInit {
   // }
 
   onSubmit(form: NgForm) {
-    this.isLoader = true;
     if (form.valid) {
+      this.isLoader = true;
       var customerDto = new CustomerDto();
       customerDto.customerId = this.customerId;
       customerDto.plan = this.selectedPricingPlan
@@ -463,9 +479,9 @@ export class ApproveComponent implements OnInit {
   }
 
   delete() {
-    this.promoCode=  this.customerDto.promoCode =[];
+    this.promoCode = this.customerDto.promoCode = [];
     this.verifiedPromocodes = this.promoCode;
-   
+
   }
 
   // delete(i: number) {

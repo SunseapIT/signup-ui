@@ -19,8 +19,8 @@
                     <div *ngIf="!spFlag" class="input-group">
                         {{serviceNo}}
                     </div>
-                    <div *ngIf="spFlag">
-                        <input class="form-control" maxlength="10" trim="blur" name="spAccNumber" pattern="(^[1-9]\d{9})|(^[1-9]{9}[-])$" (keypress)="keyPress($event)" [(ngModel)]="serviceNo" required #spNumber="ngModel" [ngClass]="{ 'is-invalid': form.submitted && spNumber?.invalid }">
+                    <div [hidden]="!spFlag">
+                        <input class="form-control" type="text" maxlength="10" trim="blur" name="spAccNumber" pattern="(^[1-9]\d{9})|(^[1-9]{9}[-])$" (keypress)="keyPress($event)" [(ngModel)]="serviceNo" required #spNumber="ngModel" [class.is-invalid]="spNumber.invalid && (spNumber.touched || form.submitted)">
 
                         <div *ngIf="spNumber?.invalid && (spNumber?.touched || form.submitted)" class="invalid-feedback">
                             <div *ngIf="spNumber?.errors.required">
@@ -65,16 +65,16 @@
                         <div *ngIf="!nameFlag" class="input-group">
                             {{fullName}}&nbsp;{{lastName}}
                         </div>
-                        <div *ngIf="nameFlag">
-                            <input type="text" name="fullName" [(ngModel)]="fullName" required [ngClass]="{ 'is-invalid': form.submitted && fName?.invalid }" class="form-control" #fName="ngModel">
+                        <div [hidden]="!nameFlag">
+                            <input type="text" name="fullName" trim="blur" [(ngModel)]="fullName" required [class.is-invalid]="fName.invalid && (fName.touched || form.submitted)" class="form-control" #fName="ngModel">
                             <div *ngIf="fName?.invalid && (fName?.touched || form.submitted)" class="invalid-feedback">
                                 <div *ngIf="fName?.errors.required">
                                     <i>Enter First Name</i>
                                 </div>
                             </div>
                         </div>
-                        <div *ngIf="nameFlag">
-                            <input type="text" name="lastName" [ngClass]="{ 'is-invalid': form.submitted && lName?.invalid }" [(ngModel)]="lastName" required class="form-control" #lName="ngModel">
+                        <div [hidden]="!nameFlag">
+                            <input type="text" name="lastName" trim="blur" [class.is-invalid]="lName.invalid && (lName.touched || form.submitted)" [(ngModel)]="lastName" required class="form-control" #lName="ngModel">
                             <div *ngIf="lName?.invalid && (lName?.touched || form.submitted)" class="invalid-feedback">
                                 <div *ngIf="lName?.errors.required">
                                     <i>Enter Last Name</i>
@@ -228,7 +228,7 @@
             Pte. Ltd. may identify me by name.</p>
 
         <label class="control control--checkbox text-justify">I consent to Sunseap contacting me for their marketing and promotional purposes. (Optional)
-    <input type="checkbox" [(ngModel)]="checked" name="one"/>
+    <input type="checkbox" [(ngModel)]="parent.checkedConsent" name="one"/>
     <div class="control__indicator"></div>
   </label>
 

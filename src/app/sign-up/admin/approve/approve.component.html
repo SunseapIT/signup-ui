@@ -11,11 +11,16 @@
             <div class="table-responsive">
                 <table class="table table-fixed">
                     <thead>
-                        <th id="name" class="arrow-down" (click)="sortingValue[0]= !sortingValue[0];sorting('name',sortingValue[0]); addClass($event)">Name</th>
-                        <th id="spAccount" class="arrow-down" (click)="sortingValue[1]= !sortingValue[1];sorting('spAccount',sortingValue[1]); addClass($event)">SP Account Number</th>
-                        <th id="address" class="arrow-down" (click)="sortingValue[2]= !sortingValue[2];sorting('address',sortingValue[2]); addClass($event)">Address</th>
-                        <th id="signedUp" class="arrow-down" (click)="sortingValue[3]= !sortingValue[3];sorting('final',sortingValue[3]); addClass($event)">Date of Sign Up</th>
-                        <th style="width: 100px;" id="status" class="arrow-down" (click)="sortingValue[4]= !sortingValue[4];sorting('status',sortingValue[4]); addClass($event)">Status</th>
+                        <th id="name" class="arrow-down" (click)="sortingValue[0]= !sortingValue[0];sorting('name',sortingValue[0]); addClass($event)">
+                            Name</th>
+                        <th id="spAccount" class="arrow-down" (click)="sortingValue[1]= !sortingValue[1];sorting('spAccount',sortingValue[1]); addClass($event)">
+                            SP Account Number</th>
+                        <th id="address" class="arrow-down" (click)="sortingValue[2]= !sortingValue[2];sorting('address',sortingValue[2]); addClass($event)">
+                            Address</th>
+                        <th id="signedUp" class="arrow-down" (click)="sortingValue[3]= !sortingValue[3];sorting('final',sortingValue[3]); addClass($event)">
+                            Date of Sign Up</th>
+                        <th style="width: 100px;" id="status" class="arrow-down" (click)="sortingValue[4]= !sortingValue[4];sorting('status',sortingValue[4]); addClass($event)">
+                            Status</th>
                         <th>Record</th>
                     </thead>
                     <tbody>
@@ -62,11 +67,12 @@
                                             </div>
                                             <div *ngIf="isPlanFlag">
                                                 <select name="productName" id="productName" class="form-control" [class.is-invalid]="productName?.invalid && (productName?.touched || form.submitted)" required [(ngModel)]="selectedPricingPlan" (change)="selectPlans($event.target.value)" #productName="ngModel">
-                                            <option value='' ng-selected="selected" disabled>Select your plan</option>
-                                            <option *ngFor="let item of planList" [value]="item.planName">
-                                                {{ item.planName }}
-                                            </option>
-                                        </select>
+                                                    <option value='' ng-selected="selected" disabled>Select your plan
+                                                    </option>
+                                                    <option *ngFor="let item of planList" [value]="item.planName">
+                                                        {{ item.planName }}
+                                                    </option>
+                                                </select>
                                                 <div *ngIf="productName?.invalid && (productName?.touched || form.submitted)" class="invalid-feedback">
                                                     <div *ngIf="productName?.errors.required">
                                                         <i>Plan details is required</i>
@@ -88,7 +94,7 @@
                                                 {{serviceNo}}
                                             </div>
                                             <!-- (blur)="update($event.target.value)" -->
-                                            <div *ngIf="spFlag">
+                                            <div [hidden]="!spFlag">
                                                 <input class="form-control" type="text" name="serviceNumber" maxlength="10" (keypress)="keyPress($event)" pattern="(^[1-9]\d{9})|(^[1-9]{9}[-])$" required [class.is-invalid]="serviceError?.invalid && (serviceError?.touched || form.submitted)" [(ngModel)]="serviceNo"
                                                     #serviceError="ngModel">
                                                 <div *ngIf="serviceError.invalid && (serviceError.touched || form.submitted)" class="invalid-feedback">
@@ -115,17 +121,22 @@
                                             <div *ngIf="!isPromoCodeFlag" class="input-group">
                                                 {{promoCode}}
                                             </div>
-                                            <input *ngIf="isPromoCodeFlag" class="form-control" trim="blur" [(ngModel)]="promoCode" name="promoCode" #referralCode="ngModel" />
+                                            <div *ngIf="isPromoCodeFlag">
+                                                <input class="form-control" trim="blur" [(ngModel)]="promoCode" name="promoCode" #referralCode="ngModel" />
 
-                                            <button *ngIf="isPromoCodeFlag" type="button" class="btn input-button" (click)="verifyPromotionCode(promoCode)">
-                                                <span>Verify</span>
-                                            </button>
-                                            <button type="button" (click)="delete()" *ngIf="isPromoCodeFlag" class="btn varify-button">
-                                                <i class="fa fa-times" aria-hidden="true"></i>
-                                            </button>
+                                                <button type="button" class="btn input-button" (click)="verifyPromotionCode(promoCode)">
+                                                    <span>Verify</span>
+                                                </button>
+                                                <button type="button" (click)="delete()" class="btn varify-button">
+                                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                                </button>
 
-                                            <div *ngIf="duplicatePromoCode" class="text-danger"><i>Promo/ Referral code already exists.</i></div>
-                                            <div *ngIf="promotionMessage != '' && !duplicatePromoCode" [ngClass]="{'green-text':promocodeStatus,'red-text':!promocodeStatus}"><i>{{promotionMessage}}</i></div>
+                                                <div *ngIf="duplicatePromoCode" class="text-danger"><i>Promo/ Referral
+                                                        code
+                                                        already exists.</i></div>
+                                                <div *ngIf="promotionMessage != '' && !duplicatePromoCode" [ngClass]="{'green-text':promocodeStatus,'red-text':!promocodeStatus}">
+                                                    <i>{{promotionMessage}}</i></div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -220,9 +231,9 @@
                                             <div *ngIf="!isPostalFlag" class="input-group">
                                                 {{servicePostalCode}}
                                             </div>
-                                            <div *ngIf="isPostalFlag">
-                                                <input name="servicePostalCode" class="form-control" (blur)="validatePostalCode($event.target.value)" maxlength="6" [class.is-invalid]="servicePostalCoderef?.invalid && (servicePostalCoderef?.touched || form.submitted)" required [(ngModel)]="servicePostalCode"
-                                                    #servicePostalCoderef="ngModel" numbersOnly />
+                                            <div [hidden]="!isPostalFlag">
+                                                <input name="servicePostalCode" type="text" class="form-control" (blur)="validatePostalCode($event.target.value)" maxlength="6" [class.is-invalid]="servicePostalCoderef?.invalid && (servicePostalCoderef?.touched || form.submitted)" required [(ngModel)]="servicePostalCode"
+                                                    #servicePostalCoderef="ngModel" numbersOnly [pattern]="config.validationRegex.postalCode" />
                                                 <div *ngIf="servicePostalCoderef?.invalid && (servicePostalCoderef?.touched || form.submitted)" class="invalid-feedback">
                                                     <div *ngIf="servicePostalCoderef?.errors.required">
                                                         <i>Postal code is required</i>
@@ -247,7 +258,9 @@
                                             <div *ngIf="!isPostalFlag" class="input-group">
                                                 {{houseNo}}
                                             </div>
-                                            <input name="houseNo" id="houseNo" *ngIf="isPostalFlag" class="form-control" [class.is-invalid]="houseNoRef.invalid && (houseNoRef.touched || form.submitted)" required [(ngModel)]="houseNo" #houseNoRef="ngModel" />
+                                            <div [hidden]="!isPostalFlag">
+                                                <input name="houseNo" type="text" id="houseNo" class="form-control" [class.is-invalid]="houseNoRef.invalid && (houseNoRef.touched || form.submitted)" required [(ngModel)]="houseNo" #houseNoRef="ngModel" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -258,7 +271,9 @@
                                             <div *ngIf="!isPostalFlag" class="input-group">
                                                 {{level}}
                                             </div>
-                                            <input name="level" *ngIf="isPostalFlag" id="level" class="form-control" [(ngModel)]="level" #levelRef="ngModel" />
+                                            <div [hidden]="!isPostalFlag">
+                                                <input name="level" id="level" type="text" class="form-control" [(ngModel)]="level" #levelRef="ngModel" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -269,7 +284,9 @@
                                             <div *ngIf="!isPostalFlag" class="input-group">
                                                 {{unitNo}}
                                             </div>
-                                            <input name="unitNo" *ngIf="isPostalFlag" class="form-control" [(ngModel)]="unitNo" #unitNoRef="ngModel" />
+                                            <div [hidden]="!isPostalFlag">
+                                                <input name="unitNo" type="text" class="form-control" [(ngModel)]="unitNo" #unitNoRef="ngModel" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -280,7 +297,10 @@
                                             <div *ngIf="!isPostalFlag" class="input-group">
                                                 {{streetName}}
                                             </div>
-                                            <input *ngIf="isPostalFlag" name="streetName" id="streetName" class="form-control" [class.is-invalid]="streetName.invalid && (streetName.touched || form.submitted)" required [(ngModel)]="streetName" #streetNameRef="ngModel" />
+
+                                            <div [hidden]="!isPostalFlag">
+                                                <input name="streetName" type="text" id="streetName" class="form-control" [class.is-invalid]="streetName?.invalid && (streetName?.touched || form.submitted)" required [(ngModel)]="streetName" #streetNameRef="ngModel" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -291,7 +311,10 @@
                                             <div *ngIf="!isPostalFlag" class="input-group">
                                                 {{buildingName}}
                                             </div>
-                                            <input *ngIf="isPostalFlag" name="buildingName" id="buildingName" class="form-control" placeholder="(Optional)" [(ngModel)]="buildingName" #buildingNameRef="ngModel" #buildingNameRef="ngModel" />
+
+                                            <div [hidden]="!isPostalFlag">
+                                                <input name="buildingName" type="text" id="buildingName" class="form-control" placeholder="(Optional)" [(ngModel)]="buildingName" #buildingNameRef="ngModel" #buildingNameRef="ngModel" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -299,23 +322,24 @@
                                     <div class="col-lg-4 col-sm-6">Dwelling type:</div>
                                     <div class="col-lg-7 col-sm-6 font-weight-bold">
                                         <div *ngIf="!isDwellingFlag" class="input-group">
-                                            {{dwellingType }}
+                                            {{dwellingType}}
                                         </div>
-                                        <select name="dwellingType" id="dwellingType" *ngIf="isDwellingFlag" class="form-control select-font" required (change)="onSelectDwellingType($event.target.value)" [(ngModel)]="dwellingType" [class.is-invalid]="dwellingTypeRef?.invalid && (dwellingTypeRef?.touched || form.submitted)"
+                                        <select name="dwellingType" id="dwellingType" *ngIf="isDwellingFlag" class="form-control select-font" required (change)="onSelectDwellingType($event.target.value)" [(ngModel)]="dwellingObj" [class.is-invalid]="dwellingTypeRef?.invalid && (dwellingTypeRef?.touched || form.submitted)"
                                             #dwellingTypeRef="ngModel">
-                                        <option [value]="null" disabled>Select your dwelling type</option>
-                                        <option class="option-font" *ngFor="let option of DWELLING_TYPE_OPTIONS | toArray"
-                                            [value]="option.key">{{ option.value }}</option>
-                                            
-                                                                                <div *ngIf="dwellingTypeRef?.invalid && (dwellingTypeRef?.touched || form.submitted)" class="invalid-feedback">
-                                                                                    <div *ngIf="dwellingTypeRef?.errors.required">
-                                                                                        <i>Dwelling Type is required</i>
-                                                                                    </div>
-                                                                                </div>
-                                    </select>
+                                            <option [value]="null" disabled>Select your dwelling type</option>
+                                            <option class="option-font"
+                                                *ngFor="let option of DWELLING_TYPE_OPTIONS | toArray"
+                                                [value]="option.key">{{ option.value }}</option>
+
+                                        </select>
+                                        <div *ngIf="dwellingTypeRef?.invalid && (dwellingTypeRef?.touched || form.submitted)" class="invalid-feedback">
+                                            <div *ngIf="dwellingTypeRef?.errors.required">
+                                                <i>Dwelling Type is required</i>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-lg-1 col-sm-1">
-                                        <i *ngIf="!isDwellingFlag" class="fas fa-pencil-alt" (click)="isDwellingFlag = !isDwellingFlag"></i>
+                                        <i *ngIf="!isDwellingFlag" class="fas fa-pencil-alt" (click)="isDwellingFlag = !isDwellingFlag; getDwellingType(dwellingType)"></i>
                                         <i *ngIf="isDwellingFlag" class="fa fa-check" (click)="updateDwelling()"></i>
                                     </div>
                                 </div>
@@ -359,7 +383,8 @@
                         <div class="row mt-3">
                             <div class="col-md-12 col-xl-12">
                                 <a class="lc-title text-decoration-none" data-toggle="collapse" (click)="arrowChange(5)" href="#plan-type" role="button" aria-expanded="false" aria-controls="family">
-                                    <img id="close" src="/assets/sign-up/images/icons/angle-down.png" width="25px" height="25px" [ngClass]="arrowPlanType?'arrowright':'down'">&nbsp; Plan Type </a>
+                                    <img id="close" src="/assets/sign-up/images/icons/angle-down.png" width="25px" height="25px" [ngClass]="arrowPlanType?'arrowright':'down'">&nbsp; Plan Type
+                                </a>
                             </div>
                         </div>
                         <div class="collapse show mt-3" id="plan-type">
@@ -409,8 +434,8 @@
                         <div class="row mt-3">
                             <div class="col-md-12 col-xl-12">
                                 <a class="lc-title text-decoration-none ml-4" aria-expanded="false" aria-controls="family">
-                                &nbsp; Final Approval Date
-                            </a>
+                                    &nbsp; Final Approval Date
+                                </a>
                             </div>
                             <div class="col-xs-12 col-md-6 form-group ml-3">&nbsp;
                                 <input class="form-control" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-red' }" [minDate]="lastApproveDate" bsDatepicker readOnly [(bsValue)]="approvalDate">
@@ -421,10 +446,10 @@
                             <form #f=ngForm>
                                 <div class="col-md-12 col-xl-12">
                                     <a class="lc-title text-decoration-none ml-4" aria-expanded="false" aria-controls="family">
-                                &nbsp; Comments/Remarks
-                            </a>
+                                        &nbsp; Comments/Remarks
+                                    </a>
                                     <div class="col-xs-12 col-md-6 form-group ml-3">&nbsp;
-                                        <textarea rows="4" cols="30" name="remarks" [(ngModel)]="remarks">                               
+                                        <textarea rows="4" cols="30" name="remarks" [(ngModel)]="remarks">
                             </textarea>
                                         <button class="btn btn-success" type="submit" (click)="addRemark(f)">Add</button>
                                     </div>
@@ -434,8 +459,8 @@
                         <div class="row  mt-5 mb-5">
                             <div class="col-md-12 col-sm-12">
                                 <button class="btn step-next mx-auto">
-                                <span>Approve</span>
-                            </button>
+                                    <span>Approve</span>
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -653,7 +678,8 @@
                         <div class="row mt-3">
                             <div class="col-md-12 col-xl-12">
                                 <a class="lc-title text-decoration-none" data-toggle="collapse" (click)="arrowChange(5)" href="#plan-type" role="button" aria-expanded="false" aria-controls="family">
-                                    <img id="close" src="/assets/sign-up/images/icons/angle-down.png" width="25px" height="25px" [ngClass]="arrowPlanType?'arrowright':'down'">&nbsp; Plan Type </a>
+                                    <img id="close" src="/assets/sign-up/images/icons/angle-down.png" width="25px" height="25px" [ngClass]="arrowPlanType?'arrowright':'down'">&nbsp; Plan Type
+                                </a>
                             </div>
                         </div>
                         <div class="collapse show mt-3" id="plan-type">

@@ -1,71 +1,65 @@
-  <!-- <div class="container"> -->
-    <app-dots-loader *ngIf="isLoader"></app-dots-loader>
-    <div class="container-fluid">
+<!-- <div class="container"> -->
+<app-dots-loader *ngIf="isLoader"></app-dots-loader>
+<div class="container-fluid">
     <div class="row mb-3 mt-3">
-      <div class="col-lg-4 col-md-4 col-sm-12 text-left">
-          <input type="text" class="form-control searchbar"  trim="blur" placeholder="Search..." 
-          (keyup)="searchCustomer($event)">
-      </div>
-      <div class="col-lg-5 col-md-5 col-sm-12  p-0  text-right ">
-          <input placeholder="Select a range..." 
-          class="form-control searchbar" 
-          [(ngModel)]="dateTimeRange" 
-          [selectMode]="'range'" 
-          [owlDateTimeTrigger]="dtRange1" 
-          [owlDateTime]="dtRange1" 
-          [max]="max"
-         
-          hour12Timer
-          [readonly]="true" 
-          (ngModelChange)="getSuccessfulSignUp()">
-                <button type="button" class="btn remove-time" (click)="clearValue()">
-                      <i class="fa fa-times mr-2" aria-hidden="true"></i>
-                </button>  
-          
-          <owl-date-time #dtRange1></owl-date-time>         
-      </div>
-      <div class="col-lg-3 col-md-3 csv-div  mt-2 text-right">
-          <angular2csv [data]="csvDataSuccess" type="button" class="download" 
-          filename="SuccessfulSignup.csv" [options]="options">Download</angular2csv>
-      </div>
-  </div>
-  <div class="row m-0 pl-0 pr-0">
-      <div class="col-lg-12 col-md-12  pl-0 pr-0">
-          <div class="table-responsive">
-          <table class="table table-fixed">
-              <thead>
-                
-                  <th id="firs" class="arrow-down" (click)="sortingValue[0]=!sortingValue[0];sorting('firstName',sortingValue[0]); addClass($event)">First Name</th>
-                  <th id="last" class="arrow-down" (click)="sortingValue[1]=!sortingValue[1];sorting('lastName',sortingValue[1]); addClass($event)">Last Name</th>
-                  <th id="email" class="arrow-down" (click)="sortingValue[2]=!sortingValue[2];sorting('email',sortingValue[2]); addClass($event)">Email</th>
-                  <th id="plan" class="arrow-down" (click)="sortingValue[3]=!sortingValue[3];sorting('planName',sortingValue[3]); addClass($event)">Plan Name</th>
-                  <th id="spNumber" class="arrow-down" (click)="sortingValue[4]=!sortingValue[4];sorting('spAccount',sortingValue[4]); addClass($event)">SP Number</th>
-                  <th id="promocode" class="arrow-down" (click)="sortingValue[5]=!sortingValue[5];sorting('promoCode',sortingValue[5]); addClass($event)">Promo Code</th>
-                  <th id="address" class="arrow-down" (click)="sortingValue[6]=!sortingValue[6];sorting('address',sortingValue[6]); addClass($event)">Address</th>
-                  <th id="initialTime" class="arrow-down" (click)="sortingValue[7]=!sortingValue[7];sorting('initial',sortingValue[7]); addClass($event)"> Initial Timestamp</th>
-                  <th id="finalTime" class="arrow-down" (click)="sortingValue[8]=!sortingValue[8];sorting('final',sortingValue[8]); addClass($event)">Final Timestamp</th>
-              
-                </thead>
-              <tbody>
-                  <tr *ngFor="let customerList of successData ; let i=index;">
-                      <td>{{customerList.fullName}}</td>
-                      <td>{{customerList.lastName}}</td>   
-                      <td>{{customerList.eamilAddress}}</td>
-                      <td>{{customerList.plan}}</td>
-                      <td>{{customerList.spAccountNumber}}</td>
-                      <td>{{customerList.promoCode}}</td>
-                      <td>{{customerList.buildingName}} &nbsp;{{customerList.streetName}} &nbsp;{{customerList.country}}
-                        {{customerList.postelCode}}
-                    </td>
-                      <td>{{customerList.sighnUpStarTimeStamp}}</td>
-                      <td>{{customerList.sighnUpEndTimeStamp}}</td>
-                  </tr>
-              </tbody>
-          </table>
-          <pagination [totalItems]="totalItems" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="5"></pagination>
+        <div class="col-lg-4 col-md-4 col-sm-12 text-left">
+            <input type="text" class="form-control searchbar" [(ngModel)]="searchText" trim="blur" placeholder="Search..." (keyup)="searchCustomer($event)">
         </div>
-          
+        <div class="col-lg-5 col-md-5 col-sm-12  p-0  text-right ">
+            <input placeholder="Select a range..." class="form-control searchbar" [(ngModel)]="dateTimeRange" [selectMode]="'range'" [owlDateTimeTrigger]="dtRange1" [owlDateTime]="dtRange1" [max]="max" hour12Timer [readonly]="true" (ngModelChange)="getSuccessfulSignUp()">
+            <button type="button" class="btn remove-time" (click)="clearValue()">
+        <i class="fa fa-times mr-2" aria-hidden="true"></i>
+      </button>
+
+            <owl-date-time #dtRange1></owl-date-time>
+        </div>
+        <div class="col-lg-3 col-md-3 csv-div  mt-2 text-right">
+            <angular2csv [data]="csvDataSuccess" type="button" class="download" filename="SuccessfulSignup.csv" [options]="options">Download</angular2csv>
+        </div>
     </div>
-  </div>
-  </div>
- 
+    <div class="row m-0 pl-0 pr-0">
+        <div class="col-lg-12 col-md-12  pl-0 pr-0">
+            <div class="table-responsive">
+                <table class="table table-fixed">
+                    <thead>
+
+                        <th id="firs" class="arrow-down" (click)="sortingValue[0]=!sortingValue[0];sorting('firstName',sortingValue[0]); addClass($event)">First Name
+                        </th>
+                        <th id="last" class="arrow-down" (click)="sortingValue[1]=!sortingValue[1];sorting('lastName',sortingValue[1]); addClass($event)">Last Name
+                        </th>
+                        <th id="email" class="arrow-down" (click)="sortingValue[2]=!sortingValue[2];sorting('email',sortingValue[2]); addClass($event)">Email</th>
+                        <th id="plan" class="arrow-down" (click)="sortingValue[3]=!sortingValue[3];sorting('planName',sortingValue[3]); addClass($event)">Plan Name
+                        </th>
+                        <th id="spNumber" class="arrow-down" (click)="sortingValue[4]=!sortingValue[4];sorting('spAccount',sortingValue[4]); addClass($event)">SP Number
+                        </th>
+                        <th id="promocode" class="arrow-down" (click)="sortingValue[5]=!sortingValue[5];sorting('promoCode',sortingValue[5]); addClass($event)">Promo Code
+                        </th>
+                        <th id="address" class="arrow-down" (click)="sortingValue[6]=!sortingValue[6];sorting('address',sortingValue[6]); addClass($event)">Address
+                        </th>
+                        <th id="initialTime" class="arrow-down" (click)="sortingValue[7]=!sortingValue[7];sorting('initial',sortingValue[7]); addClass($event)"> Initial Timestamp
+                        </th>
+                        <th id="finalTime" class="arrow-down" (click)="sortingValue[8]=!sortingValue[8];sorting('final',sortingValue[8]); addClass($event)">Final Timestamp
+                        </th>
+
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let customerList of successData ; let i=index;">
+                            <td>{{customerList.fullName}}</td>
+                            <td>{{customerList.lastName}}</td>
+                            <td>{{customerList.eamilAddress}}</td>
+                            <td>{{customerList.plan}}</td>
+                            <td>{{customerList.spAccountNumber}}</td>
+                            <td>{{customerList.promoCode}}</td>
+                            <td>{{customerList.buildingName}} &nbsp;{{customerList.streetName}} &nbsp;{{customerList.country}} {{customerList.postelCode}}
+                            </td>
+                            <td>{{customerList.sighnUpStarTimeStamp}}</td>
+                            <td>{{customerList.sighnUpEndTimeStamp}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <pagination [totalItems]="totalItems" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="5"></pagination>
+            </div>
+
+        </div>
+    </div>
+</div>

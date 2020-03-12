@@ -15,7 +15,7 @@ import * as moment from 'moment';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { BsLocaleService } from 'ngx-bootstrap'
+import { BsLocaleService, PageChangedEvent } from 'ngx-bootstrap'
 declare var require: any
 declare const $: any;
 
@@ -127,7 +127,7 @@ export class ApproveComponent implements OnInit {
 
   warningMessage = '';
   size = 10;
-  page: number = 0;
+  page: number = 1;
   customerId: any;
   myDateValue: Date;
   planType = { energy: '', discount: '', rate: '', afterGst: '', rateChange: '' };
@@ -178,11 +178,9 @@ export class ApproveComponent implements OnInit {
   getTimeStamp(time) {
     return this.dateFormat.transform(time, "yyyy-MM-dd");
   }
+  searchText: any;
 
-  pageChanged(event: any): void {
-    this.page = event.page;
-    this.getCustomerForApproval();
-  }
+
 
 
   onSelectDwellingType(name: string) {
@@ -364,7 +362,27 @@ export class ApproveComponent implements OnInit {
 
       })
   }
+  searchCustomer(event) {
+    // let name = event.target.value;
+    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl + "?fullName.contains=" + this.searchText + "&page=" + (this.page - 1)).subscribe((response: any) => {
+      var responseBody = response['body'];
+      var responseData = responseBody['data'];
+      var responseContent = responseData['content'];
+      this.totalItems = responseData.totalElements;
+      this.approvalData = responseContent;
+    })
+  }
 
+  pageChanged(event: PageChangedEvent): void {
+    this.page = event.page;
+    if (this.searchText != undefined && this.searchText != "") {
+      this.searchCustomer(this.searchText)
+    }
+    else {
+      this.currentPage = 1;
+      this.getCustomerForApproval();
+    }
+  }
 
 
   // spno
@@ -651,15 +669,7 @@ export class ApproveComponent implements OnInit {
     }
   }
 
-  searchCustomer(event) {
-    let name = event.target.value;
-    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl + "?fullName.contains=" + name).subscribe((response: any) => {
-      var responseBody = response['body'];
-      var responseData = responseBody['data'];
-      var responseContent = responseData['content'];
-      this.approvalData = responseContent;
-    })
-  }
+
 
   addClass(event) {
     let elementId = document.getElementById(event.target.id);

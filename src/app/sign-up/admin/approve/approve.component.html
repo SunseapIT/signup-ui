@@ -3,7 +3,7 @@
 
     <div class="row col-md-12 col-sm-12 mb-3 mt-3">
         <div class="col-lg-4 text-left">
-            <input type="text" class="form-control searchbar" placeholder="Search..." trim="blur" (keyup)="searchCustomer($event)">
+            <input type="text" class="form-control searchbar" placeholder="Search..." trim="blur" [(ngModel)]="searchText" (keyup)="searchCustomer($event)">
         </div>
     </div>
     <div class="row m-0 pl-0 pr-0">

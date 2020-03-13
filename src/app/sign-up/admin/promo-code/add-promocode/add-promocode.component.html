@@ -33,7 +33,7 @@
             <div class="form-group col-lg-9 offset-lg-3 col-md-6 col-sm-12">
                 <div class="custom-radio">
                     <label clearfix>
-                        <input class="custom-radio" type="radio" name="promocodeUses" [value]="true"
+                        <input class="custom-radio" type="radio" name="promocodeUses" value="true"
                             [(ngModel)]="responseData.infinity" #uses="ngModel" required
                             [class.is-invalid]="uses.invalid && form.submitted">
                         <span class="custom-span">No Limit</span>
@@ -45,14 +45,14 @@
             <div class="form-group col-lg-9 offset-lg-3 col-md-6 col-sm-12">
                 <div class="custom-radio">
                     <label clearfix>
-                        <input class="custom-radio" type="radio" name="promocodeUses" [value]="false"
+                        <input class="custom-radio" type="radio" name="promocodeUses" value="false"
                             [(ngModel)]="responseData.infinity" #uses="ngModel" required
                             [class.is-invalid]="uses.invalid && form.submitted">
                         <span class="custom-span">Number of Uses</span>
                     </label>
                 </div>
 
-                <div *ngIf="!responseData.infinity">
+                <div *ngIf="responseData.infinity == 'false'">
                     <input type="text" class="form-control usesBox" name="noOfLimitedUsers" numbersOnly trim="blur" [(ngModel)]="responseData.noOfLimitedUsers" #noOfUsers="ngModel" required [class.is-invalid]="noOfUsers.invalid && (noOfUsers.touched || form.submitted)">
                 </div>
             </div>

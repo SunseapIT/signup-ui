@@ -58,7 +58,7 @@ export class AddPromocodeComponent implements OnInit {
     if (form.valid) {
       this.responseData.dateFrom = this.getTimeStamp(this.dateTimeRange[0])
       this.responseData.dateTo = this.getTimeStamp(this.dateTimeRange[1])
-      this.responseData.noOfLimitedUsers = this.responseData.infinity ? null : this.responseData.noOfLimitedUsers;
+      this.responseData.noOfLimitedUsers = this.responseData.infinity == "true" ? null : this.responseData.noOfLimitedUsers;
       if (this.dateTimeRange[0] && this.dateTimeRange[1]) {
         this.isLoader = true;
         this.service.post_service(ApiServiceServiceService.apiList.addPromoCodeUrl, this.responseData).subscribe((response) => {

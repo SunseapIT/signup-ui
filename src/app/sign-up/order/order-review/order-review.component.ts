@@ -83,7 +83,7 @@ export class OrderReviewComponent implements OnInit {
   customerDto = new CustomerDto();
 
   userFullName: any;
-
+  siteKey = '6LduGuIUAAAAANn6GgdxeTC4n6G7wqW7-YBOudjY';
 
   constructor(
     @Host() public parent: OrderComponent,

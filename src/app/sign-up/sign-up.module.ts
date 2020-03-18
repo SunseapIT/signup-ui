@@ -17,6 +17,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PaginationModule } from 'ngx-pagination-bootstrap';
+import { NgxCaptchaModule } from 'ngx-captcha';
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import { PaginationModule } from 'ngx-pagination-bootstrap';
     }),
     PdfViewerModule,
     InputTrimModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    NgxCaptchaModule
 
   ],
   declarations: [

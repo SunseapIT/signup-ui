@@ -5,7 +5,9 @@
         <div class="row mt-3">
             <div class="form-group col-lg-6 offset-lg-3 col-md-6 col-sm-12">
                 <label class="form-control-label" for="promoCode">Promo Code Name:</label>
-                <input name="code" trim="blur" class="form-control" [class.is-invalid]="promoCode.invalid && (promoCode.touched || form.submitted)" required [(ngModel)]="responseData.promoCode" #promoCode="ngModel" />
+                <input name="code" trim="blur" class="form-control"
+                    [class.is-invalid]="promoCode.invalid && (promoCode.touched || form.submitted)" required
+                    [(ngModel)]="responseData.promoCode" #promoCode="ngModel" />
             </div>
 
         </div>
@@ -13,15 +15,32 @@
             <div class="form-group col-lg-3 offset-lg-3 col-md-3 col-sm-12">
                 <label class="form-control-label" for="validFromDate">Validate From:</label>
                 <br>
-                <input placeholder="Date Time Range From:" [(ngModel)]="dateTimeRange" class="form-control" name="dateFrom" hour12Timer [selectMode]="'rangeFrom'" #from="ngModel" [min]="min" [readonly]="true" required [class.is-invalid]="from.invalid && (from.touched || form.submitted)"
+                <input placeholder="Date Time Range From:" [(ngModel)]="dateTimeRange" class="form-control"
+                    name="dateFrom" hour12Timer [selectMode]="'rangeFrom'" #from="ngModel" [min]="min" [readonly]="true"
+                    required [class.is-invalid]="from.invalid && (from.touched || form.submitted)"
                     [owlDateTimeTrigger]="dtRange2" [owlDateTime]="dtRange2">
                 <owl-date-time #dtRange2></owl-date-time>
             </div>
             <div class="form-group col-lg-3 col-md-3 col-sm-12">
                 <label class="form-control-label" for="validToDate">Validate To:</label><br>
-                <input placeholder="Date Time Range To:" [(ngModel)]="dateTimeRange" class="form-control" name="dateTo" hour12Timer [selectMode]="'rangeTo'" #toDate="ngModel" [readonly]="true" required [class.is-invalid]="toDate.invalid && (toDate.touched || form.submitted)"
+                <input placeholder="Date Time Range To:" [(ngModel)]="dateTimeRange" class="form-control" name="dateTo"
+                    hour12Timer [selectMode]="'rangeTo'" #toDate="ngModel" [readonly]="true" required
+                    [class.is-invalid]="toDate.invalid && (toDate.touched || form.submitted)"
                     [owlDateTimeTrigger]="dtRange3" [owlDateTime]="dtRange3">
                 <owl-date-time #dtRange3></owl-date-time>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-lg-6 offset-lg-3 col-md-6 col-sm-12">
+                <label class="form-control-label" for="beforeGst">Select Plans</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-lg-6 offset-lg-3 col-md-6 col-sm-12">
+                <ng-multiselect-dropdown [placeholder]="'Select Plans'" [data]="dropdownList"
+                    [(ngModel)]="selectedItems" [settings]="dropdownSettings" [ngModelOptions]="{standalone: true}"
+                    (onSelect)=" onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                </ng-multiselect-dropdown>
             </div>
         </div>
         <div class="row">
@@ -29,6 +48,7 @@
                 <label class="form-control-label" for="beforeGst">Number of User's:</label>
             </div>
         </div>
+
         <div class="row">
             <div class="form-group col-lg-9 offset-lg-3 col-md-6 col-sm-12">
                 <div class="custom-radio">
@@ -53,10 +73,13 @@
                 </div>
 
                 <div *ngIf="responseData.infinity == 'false'">
-                    <input type="text" class="form-control usesBox" name="noOfLimitedUsers" numbersOnly trim="blur" [(ngModel)]="responseData.noOfLimitedUsers" #noOfUsers="ngModel" required [class.is-invalid]="noOfUsers.invalid && (noOfUsers.touched || form.submitted)">
+                    <input type="text" class="form-control usesBox" name="noOfLimitedUsers" numbersOnly trim="blur"
+                        [(ngModel)]="responseData.noOfLimitedUsers" #noOfUsers="ngModel" required
+                        [class.is-invalid]="noOfUsers.invalid && (noOfUsers.touched || form.submitted)">
                 </div>
             </div>
         </div>
+
         <div class="col-12 pt-4 pb-4">
             <button class="btn step-next mx-auto" type="submit">Add</button>
         </div>

@@ -310,10 +310,10 @@ export class PlanDetailComponent implements OnInit {
 
   //     })
   // }
-
+  selectData
   onSelectPricingPlanChange(event) {
-    let selectData = event.target.value;
-    if (selectData) {
+    this.selectData = event.target.value;
+    if (this.selectData) {
       this.openButtonFlag = true;
     }
     else {
@@ -341,8 +341,12 @@ export class PlanDetailComponent implements OnInit {
 
   verifyPromocode(index, promocode) {
     var customerDto = new CustomerDto();
+    let planId = this.selectData
+    if (planId == undefined) {
+      planId = ""
+    }
     this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl + "?promoCode="
-      + promocode, customerDto).subscribe((response: any) => {
+      + promocode + "&planId=" + btoa(planId), customerDto).subscribe((response: any) => {
         var responseBody = response['body'];
         var responseData = responseBody['data'];
         var responseMessage = responseBody['message'];

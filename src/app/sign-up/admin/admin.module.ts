@@ -24,16 +24,15 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SidebarComponent } from './sidebar/sidebar.component'
 import { SuccessfullSignupComponent } from './audit/successfull-signup/successfull-signup.component';
 import { AbandonedSignupComponent } from './audit/abandoned-signup/abandoned-signup.component';
-
 import { ApproveComponent } from './approve/approve.component';
 import { ORDER_COMPONENTS } from '../order';
 import { SharedModule } from '@app/shared';
 import { DatepickerModule, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PromoCodeComponent } from './promo-code/promo-code.component';
 import { AddPromocodeComponent } from './promo-code/add-promocode/add-promocode.component';
 import { ViewPromocodeComponent } from './promo-code/view-promocode/view-promocode.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 export const MY_CUSTOM_FORMATS = {
   datePickerInput: 'DD/MM/YYYY HH:mm',
   monthYearLabel: 'MMM YYYY',
@@ -42,7 +41,7 @@ export const MY_CUSTOM_FORMATS = {
   fullPickerInput: 'DD/MM/YYYY hh:mm A',
   dateA11yLabel: 'L',
   monthYearA11yLabel: 'MM YYYY',
-  };
+};
 
 
 
@@ -60,36 +59,37 @@ export const MY_CUSTOM_FORMATS = {
     OwlNativeDateTimeModule,
     OwlMomentDateTimeModule,
     NgxPaginationModule,
-    SharedModule, 
+    NgMultiSelectDropDownModule.forRoot(),
+    SharedModule,
     InputTrimModule,
     BsDatepickerModule.forRoot(),
-    DatepickerModule.forRoot() ,
+    DatepickerModule.forRoot(),
     PaginationModule.forRoot(),
   ],
   declarations: [AdminLoginComponent,
-     AddPlanComponent, 
-     AuditComponent, 
-     AdminDashboardComponent,
-     ViewPlanComponent, 
-     GrdFilterPipe,
-     SidebarComponent,
-     SuccessfullSignupComponent,
-     AbandonedSignupComponent,
-    
-     ApproveComponent,
-     PromoCodeComponent,
-     AddPromocodeComponent,
-     ViewPromocodeComponent,
-     DotsLoaderComponent
-    ],    
-    providers: [
-      AuthguardGuard,
-      DatePipe,
-      ORDER_COMPONENTS,
-      { provide: DateTimeAdapter, useClass: MomentDateTimeAdapter, deps: [OWL_DATE_TIME_LOCALE] },
-{ provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS },
-{ provide: OWL_DATE_TIME_LOCALE, useValue: 'en-nz' }
-      ]
+    AddPlanComponent,
+    AuditComponent,
+    AdminDashboardComponent,
+    ViewPlanComponent,
+    GrdFilterPipe,
+    SidebarComponent,
+    SuccessfullSignupComponent,
+    AbandonedSignupComponent,
+
+    ApproveComponent,
+    PromoCodeComponent,
+    AddPromocodeComponent,
+    ViewPromocodeComponent,
+    DotsLoaderComponent
+  ],
+  providers: [
+    AuthguardGuard,
+    DatePipe,
+    ORDER_COMPONENTS,
+    { provide: DateTimeAdapter, useClass: MomentDateTimeAdapter, deps: [OWL_DATE_TIME_LOCALE] },
+    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS },
+    { provide: OWL_DATE_TIME_LOCALE, useValue: 'en-nz' }
+  ]
 })
 
 export class AdminModule { }

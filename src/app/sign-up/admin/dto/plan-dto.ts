@@ -1,19 +1,21 @@
-export class Plandto{
+export class Plandto {
 
-    planName:string='';
+    planName: string = '';
 
-    planId:string='';
+    planId: string = '';
 
-    discount:string='';
+    discount: string = '';
 
-    duration:string='';
-    
-    energy:string='';
-  
-    rate:string='';
+    duration: string = '';
 
-    afterGst:string='';
-    
-    rateChange:string='';    
-    
+    energy: string = '';
+
+    rate: string = '';
+
+    afterGst: string = '';
+
+    rateChange: string = '';
+
+    plans = Array;
+
 }

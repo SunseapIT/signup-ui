@@ -16,7 +16,10 @@ export class AddPromocodeComponent implements OnInit {
   isLoader: boolean;
   responseData: any = {}
   min = new Date();
-  hour12Timer: boolean = false
+  hour12Timer: boolean = false;
+  dropdownList = [];
+  selectedItems = [];
+  dropdownSettings = {};
 
   constructor(private service: ApiServiceServiceService,
     private dateFormat: DatePipe,
@@ -29,8 +32,42 @@ export class AddPromocodeComponent implements OnInit {
   ngOnInit() {
     this.responseData.infinity = "true";
     this.getPromoCodeById();
+    this.getPlans();
+  }
+  planList = [];
+  getPlans() {
+    this.service.get_service(ApiServiceServiceService.apiList.customerViewPlanUrl).subscribe((response) => {
+      var responseBody = response['body'];
+      var responseData = responseBody['data'];
+      this.planList = responseData;
+      this.planMultiSelect();
+    })
   }
 
+  planMultiSelect() {
+    let selectedplan = []
+    this.planList.forEach(key => {
+      selectedplan.push({ item_id: key.id, item_name: key.planName })
+
+    })
+    this.dropdownList = selectedplan;
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_name',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true
+    };
+  }
+  onItemSelect(item: any) {
+    this.selectedItems;
+  }
+
+  onSelectAll(items: any) {
+
+  }
 
   getPromoCodeById() {
     let id = this.activatedRoute.snapshot.params['id'];
@@ -59,8 +96,8 @@ export class AddPromocodeComponent implements OnInit {
       this.responseData.dateFrom = this.getTimeStamp(this.dateTimeRange[0])
       this.responseData.dateTo = this.getTimeStamp(this.dateTimeRange[1])
       this.responseData.noOfLimitedUsers = this.responseData.infinity == "true" ? null : this.responseData.noOfLimitedUsers;
+      this.responseData.plans = this.selectedItems.map(item => item.item_id);
       if (this.dateTimeRange[0] && this.dateTimeRange[1]) {
-        this.isLoader = true;
         this.service.post_service(ApiServiceServiceService.apiList.addPromoCodeUrl, this.responseData).subscribe((response) => {
           this.isLoader = true;
           var responseBody = response['body'];

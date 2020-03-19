@@ -5,6 +5,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import { LocalStorage } from '@ngx-pwa/local-storage';
+import { ReCaptchaV3Service } from 'ngx-captcha';
 import { OrderComponent } from '../order.component';
 import { STORAGE_KEYS, ORDER_GA_EVENT_NAMES } from '../order.constant';
 
@@ -77,6 +78,8 @@ export class PlanDetailComponent implements OnInit {
   verified: boolean;
   modalRef: BsModalRef;
 
+  // siteKey = '6LfyZOIUAAAAAHutzQu3CcAiUTfnReV3mXWVxmH8';
+
   constructor(
     @Host() public parent: OrderComponent,
     public modal: ModalService,
@@ -89,7 +92,8 @@ export class PlanDetailComponent implements OnInit {
     private gtagService: GoogleTagManagerService,
     configService: ConfigService,
     private service: ApiServiceServiceService,
-    private toster: ToastrService
+    private toster: ToastrService,
+    private reCaptchaV3Service: ReCaptchaV3Service
   ) {
     this.config.bootstrap = configService.get('bootstrap');
     this.config.dateTimeFormat = configService.get('dateTimeFormat');
@@ -210,7 +214,21 @@ export class PlanDetailComponent implements OnInit {
     });
   }
 
+  handleReset() { }
+  handleExpire() { }
+  handleLoad() { }
+  handleSuccess($event) {
+    console.log('eventcaptcha', event);
+
+  }
   ngOnInit() {
+
+    // this.reCaptchaV3Service.execute(this.siteKey, 'homepage', (token) => {
+    //   console.log('This is your token: ', token);
+    //   useGlobalDomain: false
+    // });
+
+
     setTimeout(() => {
       this.parent.model.premise.productName = null;
     }, 100);

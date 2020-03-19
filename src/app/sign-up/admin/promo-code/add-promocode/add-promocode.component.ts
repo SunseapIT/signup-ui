@@ -20,6 +20,9 @@ export class AddPromocodeComponent implements OnInit {
   dropdownList = [];
   selectedItems = [];
   dropdownSettings = {};
+  selectedplan = [];
+  planList = [];
+  selects = [];
 
   constructor(private service: ApiServiceServiceService,
     private dateFormat: DatePipe,
@@ -32,42 +35,44 @@ export class AddPromocodeComponent implements OnInit {
   ngOnInit() {
     this.responseData.infinity = "true";
     this.getPromoCodeById();
-    this.getPlans();
   }
-  planList = [];
-  getPlans() {
+
+
+  getPlans(plan) {
     this.service.get_service(ApiServiceServiceService.apiList.customerViewPlanUrl).subscribe((response) => {
       var responseBody = response['body'];
       var responseData = responseBody['data'];
       this.planList = responseData;
       this.planMultiSelect();
+      if (plan != null) {
+        plan.forEach(plan => {
+          this.planList.forEach(key => {
+            if (plan == key.id) {
+              this.selects.push({ item_id: key.id, item_name: key.planName });
+            }
+          });
+        })
+        this.selectedItems = this.selects;
+      }
     })
   }
 
   planMultiSelect() {
-    let selectedplan = []
     this.planList.forEach(key => {
-      selectedplan.push({ item_id: key.id, item_name: key.planName })
-
+      this.selectedplan.push({ item_id: key.id, item_name: key.planName });
     })
-    this.dropdownList = selectedplan;
+    this.dropdownList = this.selectedplan;
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'item_id',
       textField: 'item_name',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 3,
+      itemsShowLimit: 5,
       allowSearchFilter: true
     };
   }
-  onItemSelect(item: any) {
-    this.selectedItems;
-  }
 
-  onSelectAll(items: any) {
-
-  }
 
   getPromoCodeById() {
     let id = this.activatedRoute.snapshot.params['id'];
@@ -82,7 +87,11 @@ export class AddPromocodeComponent implements OnInit {
         this.responseData = responseData;
         this.responseData.infinity = this.responseData.infinity ? "true" : "false";
         this.dateTimeRange = datefrom;
+        this.getPlans(responseData.plans)
       })
+    }
+    else {
+      this.getPlans(null);
     }
   }
 
@@ -113,11 +122,10 @@ export class AddPromocodeComponent implements OnInit {
           else {
             this.toastr.error('', responseMsg);
             this.isLoader = false;
-
           }
         })
-
-      } else {
+      }
+      else {
         this.toastr.error('', 'Please fill the form.');
       }
     }

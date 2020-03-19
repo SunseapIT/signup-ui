@@ -36,10 +36,10 @@
             </div>
         </div>
         <div class="row">
+
             <div class="form-group col-lg-6 offset-lg-3 col-md-6 col-sm-12">
                 <ng-multiselect-dropdown [placeholder]="'Select Plans'" [data]="dropdownList"
-                    [(ngModel)]="selectedItems" [settings]="dropdownSettings" [ngModelOptions]="{standalone: true}"
-                    (onSelect)=" onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                    [(ngModel)]="selectedItems" [settings]="dropdownSettings" [ngModelOptions]="{standalone: true}">
                 </ng-multiselect-dropdown>
             </div>
         </div>

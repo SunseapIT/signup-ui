@@ -513,12 +513,15 @@ export class ApproveComponent implements OnInit {
   //   this.promotionMessage = '';
   // }
 
-
+selectData
   verifyPromotionCode(promocode) {
     var customerDto = new CustomerDto();
-
+    let planId = this.selectData
+    if (planId == undefined) {
+      planId = ""
+    }
     this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl + "?promoCode="
-      + promocode, customerDto).subscribe((response: any) => {
+      + promocode + "&planId=" + btoa(planId), customerDto).subscribe((response: any) => {
         var responseBody = response['body'];
         var responseData = responseBody['data'];
         var responseMessage = responseBody['message'];
@@ -583,11 +586,11 @@ export class ApproveComponent implements OnInit {
   }
 
   selectPlans(value) {
-    let selectedPlan = value;
-    if (selectedPlan != null) {
+    this.selectData = value;
+    if (this.selectData != null) {
       for (let index = 0; index <= this.planList.length; index++) {
         const element = this.planList[index];
-        if (element.planName == selectedPlan) {
+        if (element.planName == this.selectData) {
           this.selectedPlanIndex = index;
           this.planType = element;
           break;

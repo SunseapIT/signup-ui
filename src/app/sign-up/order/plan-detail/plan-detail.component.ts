@@ -338,24 +338,50 @@ export class PlanDetailComponent implements OnInit {
       this.openButtonFlag = false;
     }
   }
-
-
-  verifyPromotionCode(index) {
-    let promocode = this.promoCode[index].referralCode.toLowerCase();
-    if (this.verifiedPromocodes.length) {
-      this.verified = true;
-      this.verifiedPromocodes.findIndex(item => item == promocode)
-      if (this.verifiedPromocodes.findIndex(item => item == promocode) == -1) {
-        this.verifyPromocode(index, promocode);
-        this.duplicatePromoCode = false;
-      } else {
-        this.duplicatePromoCode = true;
-      }
-    } else {
-      this.verifyPromocode(index, promocode);
-      this.duplicatePromoCode = false;
+  verifyPromotionCode(promocode) {
+    var customerDto = new CustomerDto();
+    let planId = this.selectData
+    if (planId == undefined) {
+      planId = ""
     }
+    this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl + "?promoCode="
+      + promocode + "&planId=" + btoa(planId), customerDto).subscribe((response: any) => {
+        var responseBody = response['body'];
+        var responseData = responseBody['data'];
+        var responseMessage = responseBody['message'];
+        let statusCode = responseBody['statusCode']
+        if (statusCode == 200) {
+          this.promocodeStatus = true;
+          this.promotionMessage = responseData;
+          this.verifiedPromocodes = []; //clear promo code list
+          this.verifiedPromocodes.push(promocode)
+          this.verified = true;
+          this.duplicatePromoCode = false;
+        }
+        else {
+          this.promocodeStatus = false;
+          this.promotionMessage = responseMessage;
+
+        }
+      })
   }
+
+  // verifyPromotionCode(index) {
+  //   let promocode = this.promoCode[index].referralCode.toLowerCase();
+  //   if (this.verifiedPromocodes.length) {
+  //     this.verified = true;
+  //     this.verifiedPromocodes.findIndex(item => item == promocode)
+  //     if (this.verifiedPromocodes.findIndex(item => item == promocode) == -1) {
+  //       this.verifyPromocode(index, promocode);
+  //       this.duplicatePromoCode = false;
+  //     } else {
+  //       this.duplicatePromoCode = true;
+  //     }
+  //   } else {
+  //     this.verifyPromocode(index, promocode);
+  //     this.duplicatePromoCode = false;
+  //   }
+  // }
 
   verifyPromocode(index, promocode) {
     var customerDto = new CustomerDto();

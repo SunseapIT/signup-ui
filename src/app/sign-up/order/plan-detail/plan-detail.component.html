@@ -62,19 +62,22 @@
             <label class="form-control-label" for="referralCode">Enter your promotion/referral code if you have
                 one:</label>
 
-            <div *ngFor="let promo of promoCode; let i=index">
+            <!-- <div *ngFor="let promo of promoCode; let i=index"> -->
 
-                <input [name]="'referralCode'+i" class="form-control" trim="blur"
+                <!-- <input [name]="'referralCode'+i" class="form-control" trim="blur"
                     placeholder="Enter promotion/referral code" (change)="isPromotionCodeVerifyFail = false"
-                    [(ngModel)]="promo.referralCode" #referralCode="ngModel" autocomplete="off" />
+                    [(ngModel)]="promo.referralCode" #referralCode="ngModel" autocomplete="off" /> -->
+                    <input class="form-control" trim="blur"
+                    placeholder="Enter promotion/referral code" (change)="isPromotionCodeVerifyFail = false"
+                    [(ngModel)]="referral" #referralCode="ngModel" autocomplete="off" [ngModelOptions]="{standalone: true}" />
 
-                <button type="button" class="btn input-button" (click)="verifyPromotionCode(i)">
+                <button type="button" class="btn input-button" (click)="verifyPromotionCode(referral)">
                     <span>Verify</span>
                 </button>
                 <button type="button" (click)="delete(i)" *ngIf="i" class="btn varify-button">
                     <i class="fa fa-times" aria-hidden="true"></i>
                 </button>
-            </div>
+            <!-- </div> -->
             <!-- <button type="button" class="btn btn-add" (click)="addPromoCode()"><b>Add more</b></button> -->
             <div *ngIf="duplicatePromoCode" class="text-danger"><i>Promo/ Referral code already exists.</i></div>
             <div *ngIf="promotionMessage != '' && !duplicatePromoCode"

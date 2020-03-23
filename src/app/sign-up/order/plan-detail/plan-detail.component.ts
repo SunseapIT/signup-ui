@@ -25,6 +25,7 @@ import { NgForm } from '@angular/forms';
 import { PlanBean } from '@app/core/plan-bean';
 import { TimeStampDto } from '@app/sign-up/admin/dto/time-stamp-dto';
 import { CustomerDto } from '@app/core/customer-dto';
+
 declare var $: any;
 const LIST_PRICE_PLAN_BY_REF_OR_PRO_CODE = {
   '50XMAS18': ['SUNSEAP-ONE_DOT_12MTHS', 'SUNSEAP-ONE_DOT_24MTHS', 'SUNSEAP-50_DOT', 'SUNSEAP-100_DOT', 'SUNSEAP-ONE_FIX_12MTHS',
@@ -338,30 +339,34 @@ export class PlanDetailComponent implements OnInit {
       this.openButtonFlag = false;
     }
   }
+
+  planId;
+  pCode
   verifyPromotionCode(promocode) {
+    this.pCode=promocode;
     var customerDto = new CustomerDto();
-    let planId = this.selectData
-    if (planId == undefined) {
-      planId = ""
+    this.planId = this.selectData
+    if (this.planId == undefined) {
+      this.planId = ""
     }
     this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl + "?promoCode="
-      + promocode + "&planId=" + btoa(planId), customerDto).subscribe((response: any) => {
+      + this.pCode + "&planId=" + btoa(this.planId), customerDto).subscribe((response: any) => {
         var responseBody = response['body'];
         var responseData = responseBody['data'];
         var responseMessage = responseBody['message'];
         let statusCode = responseBody['statusCode']
         if (statusCode == 200) {
-          this.promocodeStatus = true;
+          this.promocodeStatus = true;          
           this.promotionMessage = responseData;
           this.verifiedPromocodes = []; //clear promo code list
-          this.verifiedPromocodes.push(promocode)
+          this.verifiedPromocodes.push(promocode) 
           this.verified = true;
           this.duplicatePromoCode = false;
         }
         else {
           this.promocodeStatus = false;
           this.promotionMessage = responseMessage;
-
+          this.verifiedPromocodes = [];  //Clear promo code list       
         }
       })
   }
@@ -382,71 +387,132 @@ export class PlanDetailComponent implements OnInit {
   //     this.duplicatePromoCode = false;
   //   }
   // }
-
-  verifyPromocode(index, promocode) {
+  
+  pverify:boolean=false;
+  verifyPromocode(promocode) {
     var customerDto = new CustomerDto();
-    let planId = this.selectData
-    if (planId == undefined) {
-      planId = ""
+    this.planId = this.selectData
+    if (this.planId == undefined) {
+      this.planId = ""
     }
     this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl + "?promoCode="
-      + promocode + "&planId=" + btoa(planId), customerDto).subscribe((response: any) => {
+      + promocode + "&planId=" + btoa(this.planId), customerDto).subscribe((response: any) => {
         var responseBody = response['body'];
         var responseData = responseBody['data'];
         var responseMessage = responseBody['message'];
         let statusCode = responseBody['statusCode']
         if (statusCode == 200) {
           this.promocodeStatus = true;
+          this.pverify=true;
           this.promotionMessage = responseData;
-          this.verifiedPromocodes = []; //clear promocode list
+           this.verifiedPromocodes = []; //clear promocode list
           this.verifiedPromocodes.push(promocode)
           this.verified = true;
         }
         else {
           this.promocodeStatus = false;
           this.promotionMessage = responseMessage;
+          this.verifiedPromocodes = [];
         }
       })
   }
-
-  onSubmit(form: NgForm) {
+formData:any;
+  onSubmit(form) {
+this.formData=form;
     this.service.get_service(ApiServiceServiceService.apiList.getSpAccountUrl + "?spAccount=" + this.parent.model.premise.serviceNo)
       .subscribe((response: any) => {
         var responseBody = response['body'];
         var responseMessage = responseBody['message'];
         let statusCode = responseBody['statusCode']
         if (statusCode == 200) {
-          if (form.valid && this.verifiedPromocodes) {
-            this.parent.model.premise.startDate = moment(new Date()).add('days', 8).format(this.config.bootstrap.datePicker.dateInputFormat);
-            this.localStorage.setItem(STORAGE_KEYS.IS_SP_ACCOUNT_HOLDER, this.parent.isSPAccountHolder).subscribe();
-            const selectedPricingPlan = _.find(this.pricingPlanList, { name: this.parent.model.premise.productName });
-            this.gtagService.sendEvent(ORDER_GA_EVENT_NAMES.ENTER_YOUR_DETAIL_1);
-            var timeStampDto = new TimeStampDto();
-            timeStampDto.pageType = "PALN_DETAILS"
-            var customerDto = new CustomerDto();
-            customerDto.spAccountNumber = form.value.serviceNo;
-            customerDto.plan = form.value.productName;
-            customerDto.promoCode = this.verifiedPromocodes;
-            customerDto.selfSignup = this.parent.isSPAccountHolder;
-            this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl, timeStampDto).subscribe((response) => {
-              let responseBody = response['body']
-              let responseData = responseBody['data']
-              let responseToken = responseData['token'];
-              localStorage.setItem("Token", responseToken);
-              customerDto.token = responseToken;
-              localStorage.setItem("customerObj", JSON.stringify(customerDto));
+          if(this.verifiedPromocodes){
+            this.verifyPromotionCode(this.pCode);
+            setTimeout(()=>{
+            if(this.promocodeStatus){
+              this.save(form);
+            }
+                
+              }, 1000)
+             
+            
 
-            })
-            this.parent.saveAndNext();
-          }
         }
         else {
           this.toster.error('', responseMessage, {
             timeOut: 3000
           })
         }
+      }
+      
       })
   }
+  customerDto = new CustomerDto();
+
+  save(form:NgForm){
+  
+    if (form.valid && this.verifiedPromocodes){
+      this.parent.model.premise.startDate = moment(new Date()).add('days', 8).format(this.config.bootstrap.datePicker.dateInputFormat);
+      this.localStorage.setItem(STORAGE_KEYS.IS_SP_ACCOUNT_HOLDER, this.parent.isSPAccountHolder).subscribe();
+      const selectedPricingPlan = _.find(this.pricingPlanList, { name: this.parent.model.premise.productName });
+      this.gtagService.sendEvent(ORDER_GA_EVENT_NAMES.ENTER_YOUR_DETAIL_1);
+      var timeStampDto = new TimeStampDto();
+      timeStampDto.pageType = "PALN_DETAILS"
+      
+      this.customerDto.spAccountNumber = form.value.serviceNo;
+      this.customerDto.plan = form.value.productName;
+      this.customerDto.promoCode = this.verifiedPromocodes;
+      this.customerDto.selfSignup = this.parent.isSPAccountHolder;
+      this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl, timeStampDto).subscribe((response) => {
+        let responseBody = response['body']
+        let responseData = responseBody['data']
+        let responseToken = responseData['token'];
+        localStorage.setItem("Token", responseToken);
+        this.customerDto.token = responseToken;
+        localStorage.setItem("customerObj", JSON.stringify(this.customerDto));
+
+      })
+      this.parent.saveAndNext();
+    }
+  }
+
+  // onSubmit(form: NgForm) {
+  //   this.service.get_service(ApiServiceServiceService.apiList.getSpAccountUrl + "?spAccount=" + this.parent.model.premise.serviceNo)
+  //     .subscribe((response: any) => {
+  //       var responseBody = response['body'];
+  //       var responseMessage = responseBody['message'];
+  //       let statusCode = responseBody['statusCode']
+  //       if (statusCode == 200) {
+  //         if (form.valid && this.verifiedPromocodes) {
+  //           this.parent.model.premise.startDate = moment(new Date()).add('days', 8).format(this.config.bootstrap.datePicker.dateInputFormat);
+  //           this.localStorage.setItem(STORAGE_KEYS.IS_SP_ACCOUNT_HOLDER, this.parent.isSPAccountHolder).subscribe();
+  //           const selectedPricingPlan = _.find(this.pricingPlanList, { name: this.parent.model.premise.productName });
+  //           this.gtagService.sendEvent(ORDER_GA_EVENT_NAMES.ENTER_YOUR_DETAIL_1);
+  //           var timeStampDto = new TimeStampDto();
+  //           timeStampDto.pageType = "PALN_DETAILS"
+  //           var customerDto = new CustomerDto();
+  //           customerDto.spAccountNumber = form.value.serviceNo;
+  //           customerDto.plan = form.value.productName;
+  //           customerDto.promoCode = this.verifiedPromocodes;
+  //           customerDto.selfSignup = this.parent.isSPAccountHolder;
+  //           this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl, timeStampDto).subscribe((response) => {
+  //             let responseBody = response['body']
+  //             let responseData = responseBody['data']
+  //             let responseToken = responseData['token'];
+  //             localStorage.setItem("Token", responseToken);
+  //             customerDto.token = responseToken;
+  //             localStorage.setItem("customerObj", JSON.stringify(customerDto));
+
+  //           })
+  //           this.parent.saveAndNext();
+  //         }
+  //       }
+  //       else {
+  //         this.toster.error('', responseMessage, {
+  //           timeOut: 3000
+  //         })
+  //       }
+  //     })
+  // }
 
   delayedPopover(pop) {
     this.popupDelayTimeout = setTimeout(() => {

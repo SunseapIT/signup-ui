@@ -84,6 +84,8 @@ export class AddPromocodeComponent implements OnInit {
         let datefrom: any[] = []
         datefrom.push(moment(responseData.dateFrom, "DD-MM-YYYY,H:mm:ss").format())
         datefrom.push(moment(responseData.dateTo, "DD-MM-YYYY,H:mm:ss").format())
+        // datefrom.push(moment(responseData.dateFrom, "DD-MM-YYYY,H:mm:ss"))
+        // datefrom.push(moment(responseData.dateTo, "DD-MM-YYYY,H:mm:ss"))
         this.responseData = responseData;
         this.responseData.infinity = this.responseData.infinity ? "true" : "false";
         this.dateTimeRange = datefrom;
@@ -101,12 +103,13 @@ export class AddPromocodeComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
+    console.log('valid',form.valid, form.value);
     if (form.valid) {
       this.responseData.dateFrom = this.getTimeStamp(this.dateTimeRange[0])
       this.responseData.dateTo = this.getTimeStamp(this.dateTimeRange[1])
       this.responseData.noOfLimitedUsers = this.responseData.infinity == "true" ? null : this.responseData.noOfLimitedUsers;
       this.responseData.plans = this.selectedItems.map(item => item.item_id);
-      if (this.dateTimeRange[0] && this.dateTimeRange[1]) {
+     if (this.dateTimeRange[0] && this.dateTimeRange[1]) {
         this.service.post_service(ApiServiceServiceService.apiList.addPromoCodeUrl, this.responseData).subscribe((response) => {
           this.isLoader = true;
           var responseBody = response['body'];
@@ -115,9 +118,10 @@ export class AddPromocodeComponent implements OnInit {
           var responseMsg = responseBody['message'];
           if (statusCode == 200) {
             this.isLoader = false;
+            form.resetForm();
             this.router.navigateByUrl('/admin-login/admin-dash/view-promo');
             this.toastr.success('', 'Promo Code added successfully');
-            form.resetForm();
+           
           }
           else {
             this.toastr.error('', responseMsg);
@@ -133,4 +137,6 @@ export class AddPromocodeComponent implements OnInit {
       this.toastr.error('', 'Please fill the form.');
     }
   }
+
+  
 }

@@ -117,7 +117,8 @@ export class ApproveComponent implements OnInit {
   arrowPlanType: boolean;
   approvedDate: any;
   promoCode: any;
-  finalApproved = {}
+  finalApproved = {};
+  selectData;
 
   approvedCustomerData = [];
 
@@ -513,7 +514,7 @@ export class ApproveComponent implements OnInit {
   //   this.promotionMessage = '';
   // }
 
-selectData
+
   verifyPromotionCode(promocode) {
     var customerDto = new CustomerDto();
     let planId = this.selectData
@@ -537,6 +538,8 @@ selectData
         else {
           this.promocodeStatus = false;
           this.promotionMessage = responseMessage;
+          this.verifiedPromocodes = []; //clear promo code list
+
 
         }
       })

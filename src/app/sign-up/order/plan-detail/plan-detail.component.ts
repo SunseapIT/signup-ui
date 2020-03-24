@@ -362,6 +362,7 @@ export class PlanDetailComponent implements OnInit {
           this.verifiedPromocodes.push(promocode) 
           this.verified = true;
           this.duplicatePromoCode = false;
+          
         }
         else {
           this.promocodeStatus = false;
@@ -425,24 +426,30 @@ this.formData=form;
         var responseMessage = responseBody['message'];
         let statusCode = responseBody['statusCode']
         if (statusCode == 200) {
-          if(this.verifiedPromocodes){
-            this.verifyPromotionCode(this.pCode);
-            setTimeout(()=>{
-            if(this.promocodeStatus){
-              this.save(form);
-            }
-                
-              }, 1000)
-             
+          if(this.pCode == "" || this.pCode == undefined){
             
-
+            this.save(form);
         }
         else {
+          this.verifyPromotionCode(this.pCode);
+            
+          setTimeout(()=>{
+            console.log('this.promocodeStatus',this.promocodeStatus);
+          if(this.promocodeStatus){
+            this.save(form);
+          }
+        
+       }, 1000)
+       this.pCode=null;
+          this.pCode="";
+        }
+      }
+        else { 
           this.toster.error('', responseMessage, {
             timeOut: 3000
           })
         }
-      }
+      
       
       })
   }

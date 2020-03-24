@@ -59,7 +59,7 @@
         </div>
 
         <div class="form-group col-sm-6">
-            <label class="form-control-label" for="referralCode">Enter your promotion/referral code if you have
+            <label class="form-control-label" for="referral">Enter your promotion/referral code if you have
                 one:</label>
 
             <!-- <div *ngFor="let promo of promoCode; let i=index"> -->
@@ -67,11 +67,11 @@
                 <!-- <input [name]="'referralCode'+i" class="form-control" trim="blur"
                     placeholder="Enter promotion/referral code" (change)="isPromotionCodeVerifyFail = false"
                     [(ngModel)]="promo.referralCode" #referralCode="ngModel" autocomplete="off" /> -->
-                    <input class="form-control" trim="blur"
+                    <input class="form-control" trim="blur" name="referral" [value]="referral"
                     placeholder="Enter promotion/referral code" (change)="isPromotionCodeVerifyFail = false"
-                    [(ngModel)]="referral" #referralCode="ngModel" autocomplete="off" [ngModelOptions]="{standalone: true}" />
+                    [(ngModel)]="parent.model.premise.referral" #referral="ngModel" autocomplete="off" />
 
-                <button type="button" class="btn input-button" (click)="verifyPromotionCode(referral)">
+                <button type="button" class="btn input-button" (click)="verifyPromotionCode(parent.model.premise.referral)">
                     <span>Verify</span>
                 </button>
                 <button type="button" (click)="delete(i)" *ngIf="i" class="btn varify-button">

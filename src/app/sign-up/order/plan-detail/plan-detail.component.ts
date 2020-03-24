@@ -426,7 +426,7 @@ this.formData=form;
         var responseMessage = responseBody['message'];
         let statusCode = responseBody['statusCode']
         if (statusCode == 200) {
-          if(this.pCode == "" || this.pCode == undefined){
+          if(this.pCode == "" || this.pCode == undefined){  
             
             this.save(form);
         }
@@ -434,14 +434,16 @@ this.formData=form;
           this.verifyPromotionCode(this.pCode);
             
           setTimeout(()=>{
-            console.log('this.promocodeStatus',this.promocodeStatus);
           if(this.promocodeStatus){
             this.save(form);
+           
           }
         
        }, 1000)
-       this.pCode=null;
-          this.pCode="";
+      this.pCode= ""
+      this.pCode=null;
+          this.parent.model.premise.referral="";
+          this.promotionMessage="";   
         }
       }
         else { 
@@ -464,7 +466,6 @@ this.formData=form;
       this.gtagService.sendEvent(ORDER_GA_EVENT_NAMES.ENTER_YOUR_DETAIL_1);
       var timeStampDto = new TimeStampDto();
       timeStampDto.pageType = "PALN_DETAILS"
-      
       this.customerDto.spAccountNumber = form.value.serviceNo;
       this.customerDto.plan = form.value.productName;
       this.customerDto.promoCode = this.verifiedPromocodes;
@@ -476,6 +477,7 @@ this.formData=form;
         localStorage.setItem("Token", responseToken);
         this.customerDto.token = responseToken;
         localStorage.setItem("customerObj", JSON.stringify(this.customerDto));
+        form.resetForm();
 
       })
       this.parent.saveAndNext();

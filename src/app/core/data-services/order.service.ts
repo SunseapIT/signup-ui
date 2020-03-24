@@ -58,6 +58,7 @@ export class OrderPremise extends BaseModel {
   contactEmail: string = null;
   payment: Payment = null;
   planId: number = null;
+  referral: string;
 
   set paymentData(data: object) {
     this.payment = data ? new Payment().fromData(data) : null;

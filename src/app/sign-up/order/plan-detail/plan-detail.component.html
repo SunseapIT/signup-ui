@@ -7,14 +7,6 @@
 </div>
 <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
     <div class="form-content form-row content-plan-detail">
-
-        <!-- 
-        <ngx-recaptcha2 #captchaElem [siteKey]="siteKey" (reset)="handleReset()" (expire)="handleExpire()"
-            (load)="handleLoad()" (success)="handleSuccess($event)" [ngModelOptions]="{standalone: true}" [size]="size"
-            [hl]="lang" [theme]="theme" [type]="type" [(ngModel)]="captcha" #captchaerr="ngModel" required>
-        </ngx-recaptcha2> -->
-
-
         <div class="form-group col-12">
             <label class="form-control-label" for="productName">Plan details</label>
             <select name="productName" id="productName" class="form-control select-font"

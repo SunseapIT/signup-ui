@@ -20,6 +20,7 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 import { Router } from '@angular/router';
 import { CustomerDto } from '@app/core/customer-dto';
+import { ReCaptchaV3Service } from 'ngx-captcha';
 
 
 const POSTAL_CODE_WARNING = 'The postal code you have entered is currently not eligible for the Open Electricity Market. ' +
@@ -81,9 +82,10 @@ export class OrderReviewComponent implements OnInit {
   minExpiryDate = moment(new Date()).add(IDENTIFICATION_EXPIRY_DATE_CONFIG.minMonthsFromToday, 'month').toDate();
   nationName = 'singapore';
   customerDto = new CustomerDto();
-
+  captcha:any ="";
   userFullName: any;
-  siteKey = '6LduGuIUAAAAANn6GgdxeTC4n6G7wqW7-YBOudjY';
+  // siteKey = "6LdKQeMUAAAAADzEAi5eeo9SDqD7X4ZpFtcnYYTu";
+  siteKey ="6Lfe6OMUAAAAAPvSPYaQA8tMBm59F4d6S5Fclqcn";
 
   constructor(
     @Host() public parent: OrderComponent,
@@ -93,7 +95,8 @@ export class OrderReviewComponent implements OnInit {
     private gtagService: GoogleTagManagerService,
     private router: Router,
     private service: ApiServiceServiceService,
-    private toster: ToastrService
+    private toster: ToastrService,
+    private reCaptchaV3Service: ReCaptchaV3Service
   ) {
     this.config.bootstrap = configService.get('bootstrap');
     const validationRegex = configService.get('validationRegex');
@@ -113,8 +116,17 @@ export class OrderReviewComponent implements OnInit {
   }
 
   ngOnInit() {
+      this.reCaptchaV3Service.execute(this.siteKey, "home", (token) => {
+      useGlobalDomain: false
+    });
     this.getCustomerDetail();
   }
+  handleReset(){}
+  handleSuccess(event){
+  this.captcha = event;
+  }
+  handleExpire(){}
+  handleLoad(){}
 
   validate(fieldName: string, input: HTMLInputElement) {
     if (this.validation[fieldName].isRequired) {
@@ -228,6 +240,7 @@ export class OrderReviewComponent implements OnInit {
       this.customerDto.lastName = this.lastName;
       this.customerDto.spAccountNumber = this.serviceNo;
       this.customerDto.contentToMarketing = this.parent.checkedConsent;
+      this.customerDto.captchaResponse = this.captcha;      
       localStorage.setItem("customerObj", JSON.stringify(this.customerDto));
       this.service.post_service(ApiServiceServiceService.apiList.saveCustomerurl, this.customerDto).subscribe((response) => {
         if (response.body.data) {

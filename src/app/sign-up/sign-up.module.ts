@@ -5,7 +5,6 @@ import { Angular2CsvModule } from 'angular2-csv';
 import { BsDatepickerModule, PopoverModule, TooltipModule, ModalModule } from 'ngx-bootstrap';
 import { FileUploadModule } from 'ng2-file-upload';
 import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
-import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 import { environment } from '@env/environment';
 import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
@@ -27,12 +26,13 @@ import { NgxCaptchaModule } from 'ngx-captcha';
     FileUploadModule,
     RecaptchaModule.forRoot(),
     PopoverModule.forRoot(),
-    RecaptchaFormsModule,
+
     PdfViewerModule,
     SignUpRoutingModule,
     NgxPaginationModule,
     PaginationModule,
     CoreModule,
+    RecaptchaModule,
     SharedModule,
     Angular2CsvModule,
     ToastrModule.forRoot({

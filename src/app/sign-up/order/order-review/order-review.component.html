@@ -242,15 +242,27 @@
       <div class="control__indicator"></div> 
     </label>
 
-
+   
+        <!-- <re-captcha></re-captcha> -->
+       <ngx-recaptcha2 #captchaElem [siteKey]="siteKey"  
+       id="#recaptch"
+       (reset)="handleReset()" (expire)="handleExpire()"
+           (load)="handleLoad()" (success)="handleSuccess($event)" 
+           [ngModelOptions]="{standalone: true}" 
+           [size]="size"
+           [hl]="lang" 
+           [theme]="theme" 
+           [type]="type" 
+           [ngModel]="captcha" 
+        data-type="image"
+           #captchaerr="ngModel" required>
+   </ngx-recaptcha2>
 
         <div class="pt-5 d-flex justify-content-center mb-4 pb-4">
             <button [disabled]="!acknowledgeConsent || !acknowledgePrivacy" class="btn step-next" type="submit">
       <span>Confirm Order</span>
     </button>
         </div>
-
-
         <ng-template #warningModal>
             <!-- Modal Header -->
             <div class="modal-header border-bottom-0 pb-0">

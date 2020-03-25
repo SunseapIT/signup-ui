@@ -50,4 +50,6 @@ export class CustomerDto {
 
    contentToMarketing: boolean;
 
+   captchaResponse : string;
+
 }

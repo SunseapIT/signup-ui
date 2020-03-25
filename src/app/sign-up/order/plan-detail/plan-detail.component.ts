@@ -426,13 +426,11 @@ this.formData=form;
         var responseMessage = responseBody['message'];
         let statusCode = responseBody['statusCode']
         if (statusCode == 200) {
-          if(this.pCode == "" || this.pCode == undefined){  
-            
+          if(this.pCode == "" || this.pCode == undefined || this.parent.model.premise.referral== ""){  
             this.save(form);
         }
         else {
-          this.verifyPromotionCode(this.pCode);
-            
+          this.verifyPromotionCode(this.pCode);  
           setTimeout(()=>{
           if(this.promocodeStatus){
             this.save(form);

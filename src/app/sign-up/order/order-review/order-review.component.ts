@@ -84,8 +84,10 @@ export class OrderReviewComponent implements OnInit {
   customerDto = new CustomerDto();
   captcha:any ="";
   userFullName: any;
-  // siteKey = "6LdKQeMUAAAAADzEAi5eeo9SDqD7X4ZpFtcnYYTu";
-  siteKey ="6Lfe6OMUAAAAAPvSPYaQA8tMBm59F4d6S5Fclqcn";
+  // siteKey = "6LdKQeMUAAAAADzEAi5eeo9SDqD7X4ZpFtcnYYTu"; // local
+  // siteKey ="6Lfe6OMUAAAAAPvSPYaQA8tMBm59F4d6S5Fclqcn";UAT
+  siteKey = "6Le8F-QUAAAAANLvdpKtY5jb_RrH2vToFAp4y_M1"
+
 
   constructor(
     @Host() public parent: OrderComponent,

@@ -242,10 +242,9 @@
       <div class="control__indicator"></div> 
     </label>
 
-   
-        <!-- <re-captcha></re-captcha> -->
+  
        <ngx-recaptcha2 #captchaElem [siteKey]="siteKey"  
-       id="#recaptch"
+       id="recaptcha"   
        (reset)="handleReset()" (expire)="handleExpire()"
            (load)="handleLoad()" (success)="handleSuccess($event)" 
            [ngModelOptions]="{standalone: true}" 

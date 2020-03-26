@@ -21,6 +21,7 @@ import * as _ from 'lodash';
 import { Router } from '@angular/router';
 import { CustomerDto } from '@app/core/customer-dto';
 import { ReCaptchaV3Service } from 'ngx-captcha';
+import { environment } from '@env/base';
 
 
 const POSTAL_CODE_WARNING = 'The postal code you have entered is currently not eligible for the Open Electricity Market. ' +
@@ -84,9 +85,9 @@ export class OrderReviewComponent implements OnInit {
   customerDto = new CustomerDto();
   captcha:any ="";
   userFullName: any;
-  // siteKey = "6LdKQeMUAAAAADzEAi5eeo9SDqD7X4ZpFtcnYYTu"; // local
+  siteKey = environment.reCaptchaSiteKey; // local
   // siteKey ="6Lfe6OMUAAAAAPvSPYaQA8tMBm59F4d6S5Fclqcn";UAT
-  siteKey = "6Le8F-QUAAAAANLvdpKtY5jb_RrH2vToFAp4y_M1"
+  // siteKey = "6Le8F-QUAAAAANLvdpKtY5jb_RrH2vToFAp4y_M1"
 
 
   constructor(
@@ -118,16 +119,20 @@ export class OrderReviewComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.reCaptchaV3Service.execute(this.siteKey, "home", (token) => {
+      this.reCaptchaV3Service.execute(this.siteKey,  "recaptcha", (token) => {
       useGlobalDomain: false
     });
     this.getCustomerDetail();
   }
   handleReset(){}
   handleSuccess(event){
-  this.captcha = event;
+  this.captcha = event;  
   }
-  handleExpire(){}
+  
+  handleExpire(){
+    this.captcha="";    
+  }
+
   handleLoad(){}
 
   validate(fieldName: string, input: HTMLInputElement) {

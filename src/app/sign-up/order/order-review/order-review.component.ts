@@ -85,10 +85,8 @@ export class OrderReviewComponent implements OnInit {
   customerDto = new CustomerDto();
   captcha:any ="";
   userFullName: any;
-  siteKey = environment.reCaptchaSiteKey; // local
-  // siteKey ="6Lfe6OMUAAAAAPvSPYaQA8tMBm59F4d6S5Fclqcn";UAT
-  // siteKey = "6Le8F-QUAAAAANLvdpKtY5jb_RrH2vToFAp4y_M1"
-
+  siteKey = environment.reCaptchaSiteKey; 
+ 
 
   constructor(
     @Host() public parent: OrderComponent,

@@ -33,6 +33,9 @@ import { PromoCodeComponent } from './promo-code/promo-code.component';
 import { AddPromocodeComponent } from './promo-code/add-promocode/add-promocode.component';
 import { ViewPromocodeComponent } from './promo-code/view-promocode/view-promocode.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { TestCaptchComponent } from './test-captch/test-captch.component';
+import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
+import { NgxCaptchaModule } from 'ngx-captcha';
 export const MY_CUSTOM_FORMATS = {
   datePickerInput: 'DD/MM/YYYY HH:mm',
   monthYearLabel: 'MMM YYYY',
@@ -48,6 +51,7 @@ export const MY_CUSTOM_FORMATS = {
 @NgModule({
   imports: [
     CommonModule,
+    RecaptchaModule,
     AdminLoginRoutingModule,
     FormsModule,
     Angular2CsvModule,
@@ -62,6 +66,7 @@ export const MY_CUSTOM_FORMATS = {
     NgMultiSelectDropDownModule.forRoot(),
     SharedModule,
     InputTrimModule,
+    NgxCaptchaModule,
     BsDatepickerModule.forRoot(),
     DatepickerModule.forRoot(),
     PaginationModule.forRoot(),
@@ -80,7 +85,8 @@ export const MY_CUSTOM_FORMATS = {
     PromoCodeComponent,
     AddPromocodeComponent,
     ViewPromocodeComponent,
-    DotsLoaderComponent
+    DotsLoaderComponent,
+    TestCaptchComponent
   ],
   providers: [
     AuthguardGuard,
@@ -88,7 +94,9 @@ export const MY_CUSTOM_FORMATS = {
     ORDER_COMPONENTS,
     { provide: DateTimeAdapter, useClass: MomentDateTimeAdapter, deps: [OWL_DATE_TIME_LOCALE] },
     { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS },
-    { provide: OWL_DATE_TIME_LOCALE, useValue: 'en-nz' }
+    { provide: OWL_DATE_TIME_LOCALE, useValue: 'en-nz' },
+    { provide: RECAPTCHA_SETTINGS,
+      useValue: { siteKey: '', size: 'invisible' } as RecaptchaSettings}
   ]
 })
 

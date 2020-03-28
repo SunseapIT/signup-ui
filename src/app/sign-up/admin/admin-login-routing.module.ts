@@ -13,6 +13,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { AddPlanComponent } from './add-plan/add-plan.component';
 import { AuditComponent } from './audit/audit.component';
+import { TestCaptchComponent } from './test-captch/test-captch.component';
 
 
 
@@ -28,9 +29,11 @@ const routes: Routes = [
       {path: 'approve' , component: ApproveComponent},
       {path: 'promo', component:AddPromocodeComponent},
       {path: 'edit/:id', component : AddPromocodeComponent},
-      {path: 'view-promo', component:ViewPromocodeComponent}
+      {path: 'view-promo', component:ViewPromocodeComponent},
+     
     
     ]  },
+    {path: 'captcha', component: TestCaptchComponent}
      
 
   

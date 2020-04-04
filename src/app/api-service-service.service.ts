@@ -53,6 +53,11 @@ export class ApiServiceServiceService {
     getSpAccountUrl: environment.baseUrl + "/api/v1/customer/getSpAccount",
     getCustomerSpAccountUrl: environment.baseUrl + "/api/v1/customer/getCustomerSpAccount",
     getPostalCode: environment.baseUrl + "/api/v1/customer/getAddressWithPostalCode",
+    generateMobileOtp : environment.baseUrl + "/api/v1/user/generate-mobile-Otp",
+    userLogin : environment.baseUrl + "/api/v1/user/login",
+    verifyEmailOtp : environment.baseUrl + "/api/v1/user/verify-email-otp",
+    requestEmailOtp : environment.baseUrl + "/api/v1/user/request-email-otp",
+    changePassword : environment.baseUrl + "/api/v1/user/change-password",
 
     // LOGIN
     adminLogin: environment.baseUrl + "/api/v1/user/login",

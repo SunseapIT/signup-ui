@@ -1,0 +1,127 @@
+.nav-side-menu {
+    overflow: auto;
+    font-family: MyriadPro-Cond !important;
+    font-size: 14px;
+    font-weight: 400;
+    background-color: #ffffff;
+    top: 84px;
+    height: 100vh;
+    width: 17%;
+    color: #000000;
+    position: fixed;
+}
+
+.nav-side-menu .toggle-btn {
+    display: none;
+}
+
+.nav-side-menu ul,
+.nav-side-menu li {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    line-height: 35px;
+    font-family: MyriadPro-Cond !important;
+    font-size: 2rem;
+    cursor: pointer;
+    .collapsed {
+        .arrow:before {
+            font-family: MyriadPro-Cond !important;
+            content: "▾";
+            display: inline-block;
+            padding-left: 10px;
+            padding-right: 10px;
+            vertical-align: middle;
+            float: right;
+        }
+    }
+}
+
+.nav-side-menu ul :not(collapsed) .arrow:before,
+.nav-side-menu li :not(collapsed) .arrow:before {
+    font-family: MyriadPro-Cond !important;
+    content: "▴";
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+    vertical-align: middle;
+    float: right;
+}
+
+.nav-side-menu ul .sub-menu li,
+.nav-side-menu li .sub-menu li {
+    background-color: #ffffff;
+    border: none;
+    line-height: 28px;
+    padding: 10px;
+    font-size: 1rem;
+    font-family: MyriadPro-Cond !important;
+}
+
+.nav-side-menu li {
+    text-decoration: none;
+    color: #000000;
+    font-size: 18px;
+    font-family: MyriadPro-Cond !important;
+    padding: 10px;
+}
+
+.nav-side-menu li:hover:not(.active) {
+    background-color: #000 !important;
+    color: #ffffff !important;
+    font-family: MyriadPro-Cond !important;
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
+}
+
+li.active {
+    background-color: #cb2b2b !important;
+    font-family: MyriadPro-Cond !important;
+    color: #ffffff !important;
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
+}
+
+@media (max-width: 767px) {
+    .nav-side-menu {
+        position: relative;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .nav-side-menu .toggle-btn {
+        display: block;
+        cursor: pointer;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        z-index: 10 !important;
+        padding: 3px;
+        background-color: #ffffff;
+        color: #000;
+        width: 40px;
+        text-align: center;
+    }
+    .nav-side-menu {
+        overflow: auto;
+        font-family: MyriadPro-Cond !important;
+        font-size: 14px;
+        font-weight: 400;
+        background-color: #ffffff;
+        // top: 0px;
+        width: 300px;
+        height: 100vh;
+        color: #000000;
+    }
+}
+
+@media (min-width: 767px) {
+    .nav-side-menu .menu-list .menu-content {
+        display: block;
+    }
+}

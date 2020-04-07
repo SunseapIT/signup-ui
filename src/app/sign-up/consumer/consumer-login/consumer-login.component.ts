@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ApiServiceServiceService } from '@app/api-service-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { CustomerDto } from '@app/core/customer-dto';
 
 @Component({
   selector: 'app-consumer-login',
@@ -13,6 +14,8 @@ export class ConsumerLoginComponent implements OnInit {
   model = {userId : "", password : "", mobileNumber : "",  otp : ""};
   verifiedMobileNo = '';
   userId = '';
+
+  customerDto = new CustomerDto;
   constructor(private _service : ApiServiceServiceService,
     private toster: ToastrService,
     private router : Router) { }
@@ -23,16 +26,19 @@ export class ConsumerLoginComponent implements OnInit {
   onSubmit(form:NgForm){
     if(form.value){
    var data:any[] = form.value;
+   this.customerDto.eamilAddress = this.model.userId;
     this._service.post_service(ApiServiceServiceService.apiList.userLogin,data).subscribe
       (response =>{ 
       var responseBody = response['body'];
       var responseMessage = responseBody['message'];
       let statusCode = responseBody['statusCode']
       if (statusCode == 200) {
+
         this.router.navigateByUrl('/consumer/profile')
         this.toster.success('', responseMessage, {
           timeOut: 2000
         });
+        localStorage.setItem("Customer_Details", JSON.stringify(this.customerDto))
         form.resetForm();
       }
       else{

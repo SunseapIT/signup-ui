@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiServiceServiceService } from '@app/api-service-service.service';
 import { ToastrModule } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { CustomerDto } from '@app/core/customer-dto';
 
 @Component({
   selector: 'app-profile',
@@ -17,12 +18,19 @@ export class ProfileComponent implements OnInit {
     private route : Router) { }
 
   ngOnInit() {
+    this.getCustomerDetailByEmail();
   }
 
+  userId:any;
   getCustomerDetailByEmail(){
-    this._service.get_service(ApiServiceServiceService.apiList.getCustomerDetailsByEmail).subscribe(
+    var customerDto = new CustomerDto();
+    var objStr = localStorage.getItem("Customer_Details");
+    customerDto = JSON.parse(objStr);
+    this.userId = customerDto.eamilAddress;
+    
+    this._service.get_service(ApiServiceServiceService.apiList.getCustomerDetailsByEmail+"?email="+this.userId).subscribe(
       (response =>{
-        console.log(response);
+        console.log('customer details',response);
         
       })
     )

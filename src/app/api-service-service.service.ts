@@ -58,6 +58,7 @@ export class ApiServiceServiceService {
     verifyEmailOtp : environment.baseUrl + "/api/v1/user/verify-email-otp",
     requestEmailOtp : environment.baseUrl + "/api/v1/user/request-email-otp",
     changePassword : environment.baseUrl + "/api/v1/user/change-password",
+    getCustomerDetailsByEmail : environment.baseUrl + "/api/v1/customer/get-customer-details-by-email",
 
     // LOGIN
     adminLogin: environment.baseUrl + "/api/v1/user/login",

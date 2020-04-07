@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./consumer-login.component.scss']
 })
 export class ConsumerLoginComponent implements OnInit {
-  model = {userId : "", password : "", mobile : "",  otpMobile : ""};
+  model = {userId : "", password : "", mobileNumber : "",  otp : ""};
   verifiedMobileNo = '';
   userId = '';
   constructor(private _service : ApiServiceServiceService,
@@ -29,7 +29,7 @@ export class ConsumerLoginComponent implements OnInit {
       var responseMessage = responseBody['message'];
       let statusCode = responseBody['statusCode']
       if (statusCode == 200) {
-        this.router.navigateByUrl('/consumer/login/')
+        this.router.navigateByUrl('/consumer/profile')
         this.toster.success('', responseMessage, {
           timeOut: 2000
         });
@@ -51,7 +51,7 @@ else {
    
     generateMobileOtp(){
       this.userId = this.model.userId;
-      this.verifiedMobileNo = this.model.mobile;
+      this.verifiedMobileNo = this.model.mobileNumber;
       this._service.post_service(ApiServiceServiceService.apiList.generateMobileOtp + "?userId=" + this.userId +
         "&mobileNumber=" + this.verifiedMobileNo, null)
         .subscribe((response) => {

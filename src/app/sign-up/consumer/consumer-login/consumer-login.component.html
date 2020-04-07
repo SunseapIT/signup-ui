@@ -57,8 +57,8 @@
                   <div class="row">
                     <div class="form-group col-lg-7 offset-lg-2">
                         <label class="form-control-label" for="mobile">Mobile</label>
-                        <input type="text" name="mobile" class="form-control" 
-                        [(ngModel)]="model.mobile" 
+                        <input type="text" name="mobileNumber" class="form-control" 
+                        [(ngModel)]="model.mobileNumber" 
                         #mobile="ngModel" 
                         pattern="^(8|9)\d{7}$" maxlength="8"
                         [class.is-invalid]="mobile.invalid && (mobile.touched || form.submitted)" 
@@ -83,8 +83,8 @@
                   <div class="row">
                     <div class="form-group col-lg-7 offset-lg-2">
                         <label class="form-control-label" for="otpMobile">OTP</label>
-                        <input type="text" name="otpMobile" class="form-control" 
-                        [(ngModel)]="model.otpMobile" 
+                        <input type="text" name="otp" class="form-control" 
+                        [(ngModel)]="model.otp" 
                         #otpMobile="ngModel" 
                         [class.is-invalid]="password.invalid && (password.touched || form.submitted)" 
                         blockCopyPaste

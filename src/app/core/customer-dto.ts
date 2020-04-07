@@ -1,3 +1,4 @@
+import { PlanBean } from '@app/core/plan-bean';
 import { Files } from "./file-dto";
 
 export class CustomerDto {
@@ -51,5 +52,6 @@ export class CustomerDto {
    contentToMarketing: boolean;
 
    captchaResponse : string;
-
+   
+   planDetails: PlanBean;
 }

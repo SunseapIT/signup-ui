@@ -1,39 +1,54 @@
-import { Component, OnInit } from '@angular/core';
-import { ApiServiceServiceService } from '@app/api-service-service.service';
-import { ToastrModule } from 'ngx-toastr';
-import { Router } from '@angular/router';
-import { CustomerDto } from '@app/core/customer-dto';
+import { Component, OnInit } from "@angular/core";
+import { ApiServiceServiceService } from "@app/api-service-service.service";
+import { ToastrModule } from "ngx-toastr";
+import { Router } from "@angular/router";
+import { CustomerDto } from "@app/core/customer-dto";
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  selector: "app-profile",
+  templateUrl: "./profile.component.html",
+  styleUrls: ["./profile.component.scss"],
 })
 export class ProfileComponent implements OnInit {
+  customerPlanDetail: CustomerDto[] = [];
+  customerDto: CustomerDto = null;
 
-  customerPlanDetail:any =[];
+  constructor(
+    private _service: ApiServiceServiceService,
+    private toastre: ToastrModule,
+    private route: Router,
+  ) {}
 
-  constructor(private _service  : ApiServiceServiceService,
-    private toastre : ToastrModule,
-    private route : Router) { }
+  userId: any;
 
   ngOnInit() {
     this.getCustomerDetailByEmail();
   }
 
-  userId:any;
-  getCustomerDetailByEmail(){
+  getCustomerDetailByEmail() {
     var customerDto = new CustomerDto();
     var objStr = localStorage.getItem("Customer_Details");
     customerDto = JSON.parse(objStr);
     this.userId = customerDto.eamilAddress;
-    
-    this._service.get_service(ApiServiceServiceService.apiList.getCustomerDetailsByEmail+"?email="+this.userId).subscribe(
-      (response =>{
-        console.log('customer details',response);
-        
-      })
-    )
+
+    this._service
+      .get_service(
+        ApiServiceServiceService.apiList.getCustomerDetailsByEmail +
+          "?email=" +
+          this.userId
+      )
+      .subscribe(response => {
+        if (response.body.statusCode == 200 ) {
+          this.customerPlanDetail = response.body.data;
+          this.assignDefaultServiceAddress();
+        }
+      });
+  }
+
+  assignDefaultServiceAddress() {
+    if (this.customerPlanDetail != null && this.customerPlanDetail.length > 0) {
+      this.customerDto = this.customerPlanDetail[0];
+    }
   }
 
 }

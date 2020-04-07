@@ -7,6 +7,10 @@ export class PlanBean {
 
  planName:string;
 
+ energy:string;
+
+ rate: string;
+
  factSheetName:string;
 
  

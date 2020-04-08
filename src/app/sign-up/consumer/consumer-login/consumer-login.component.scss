@@ -18,10 +18,9 @@
 }
 
 .login-otp {
-    element.style {
-        position: absolute;
-        bottom: 47px;
-        right: -58px;
-        border-radius: 16px;
-    }
+    position: absolute;
+    bottom: 8px;
+    right: 20px;
+    border-radius: 16px;
+    border: transparent;
 }

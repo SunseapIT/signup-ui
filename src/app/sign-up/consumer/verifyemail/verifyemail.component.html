@@ -8,77 +8,55 @@
             <a class="h5 ml-1 pt-3 col-xs-2" href="https://www.sunseap.com/contact/enquiries/" target="blank">Contact</a>
         </div>
     </div>
-  </header>
-  
-  <div class="container-fluid p-0">
-    <div class="row m-0">
-        <div class="col-lg-4 left-image d-none d-md-block p-0">
-            <img src="/assets/sign-up/images/background/bg-garden-building.jpg" includeVersion alt="Marketing image" onerror="this.onerror = null; this.src='/assets/sign-up/images/background/default/bg-garden-building';">
-            <img src="/assets/sign-up/images/background/bg-green-building.jpg" includeVersion alt="Marketing image" onerror="this.onerror = null; this.src='/assets/sign-up/images/background/default/bg-green-building.jpg';">
-        </div>
-  
-        <div class="col-lg-8">
-            <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate autocomplete="off">
-                <div class="logindiv">
-  
-                    <div class="row">
-                        <div class="form-group  col-lg-7 offset-lg-2">
-                            <label class="form-control-label" for="userId">Username</label>
-                            <input type="text" name="userId" class="form-control" 
-                            [(ngModel)]="model.userId" 
-                            #userId="ngModel" 
-                            [class.is-invalid]="userId.invalid && (userId.touched || form.submitted)" 
-                            blockCopyPaste 
-                            required>
-                            <div *ngIf="userId.invalid && (userId.touched || form.submitted)" class="invalid-feedback">
-                                <div *ngIf="userId?.errors.required">
-                                    <i>Username is required</i>
+</header>
+<div class="bg-img">
+    <div class="container-fluid p-0">
+        <div class="row m-0">
+            <div class="col-lg-12">
+                <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate autocomplete="off">
+                    <div class="logindiv">
+
+                        <div class="row">
+                            <div class="form-group  col-lg-7 offset-lg-3">
+                                <!-- <label class="form-control-label" for="userId">Username</label> -->
+                                <input type="text" placeholder="Enter Yout Email ID" name="userId" class="form-control login-form" [(ngModel)]="model.userId" #userId="ngModel" [class.is-invalid]="userId.invalid && (userId.touched || form.submitted)" blockCopyPaste required>
+                                <div *ngIf="userId.invalid && (userId.touched || form.submitted)" class="invalid-feedback">
+                                    <div *ngIf="userId?.errors.required">
+                                        <i>Username is required</i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                
-                  <div class="row">
-                          <div class=" col-lg-3 offset-lg-2">
-                              <button type="button" (click)="requestEmailOtp()">Get OTP</button>
-                          </div>
-                          <div class="col-lg-3">
-                                <!-- <button type="button" class=""  (click)="generateMobileOtp()"><span>Resend OTP</span></button> -->
-                          </div>
-                    </div>
-                    <div class="row">
-                      <div class="form-group col-lg-7 offset-lg-2">
-                          <label class="form-control-label" for="otp">OTP</label>
-                          <input type="text" name="otp" class="form-control" 
-                          [(ngModel)]="model.otp" 
-                          #otp="ngModel" 
-                          [class.is-invalid]="otp.invalid &&  form.submitted" 
-                          numbersOnly
-                          maxlength="6"
-                          required>
-                          <div *ngIf="otp.invalid &&  form.submitted" class="invalid-feedback">
-                              <div *ngIf="otp?.errors.required">
-                                  <i>OTP is required</i>
-                              </div>
+
+                        <div class="row">
+                            <div class=" col-lg-3 offset-lg-3">
+                                <!-- <button type="button" (click)="requestEmailOtp()">Get OTP</button> -->
                             </div>
-                      </div>
-                  </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <button class="btn step-next mx-auto">
-                                <span>Login</span> </button>
+                            <div class="col-lg-3">
+                                <!-- <button type="button" class=""  (click)="generateMobileOtp()"><span>Resend OTP</span></button> -->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-7 offset-lg-3">
+                                <!-- <label class="form-control-label" for="otp">OTP</label> -->
+                                <input type="text" name="otp" placeholder="OTP" class="form-control login-form" [(ngModel)]="model.otp" #otp="ngModel" [class.is-invalid]="otp.invalid &&  form.submitted" numbersOnly maxlength="6" required>
+                                <button type="button" class="emailverifyOTP" (click)="requestEmailOtp()">Get OTP</button>
+                                <div *ngIf="otp.invalid &&  form.submitted" class="invalid-feedback">
+                                    <div *ngIf="otp?.errors.required">
+                                        <i>OTP is required</i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <button class="btn step-next mx-auto">
+                                <span>Submit</span> </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-  </div>
-  
-  
-   
-  
-  
-  
-  
-   
+</div>

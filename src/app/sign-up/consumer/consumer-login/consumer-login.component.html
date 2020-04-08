@@ -59,24 +59,25 @@
                         </div>
                         <div class="row">
                             <div class=" col-lg-3 offset-lg-5">
-                                <a type="submit" class="text-underline" (click)="generateMobileOtp()">Get OTP</a>
+                                <!-- OTP -->
                             </div>
                             <div class="col-lg-3">
                                 <!-- <button type="button" class=""  (click)="generateMobileOtp()"><span>Resend OTP</span></button> -->
 
                             </div>
                         </div>
-                        <!-- <div class="row">
-                        <div class="form-group col-lg-7 offset-lg-3">
-                            <label class="form-control-label" for="otpMobile">OTP</label>
-                            <input type="text" name="otp" class="form-control login-form" [(ngModel)]="model.otp" #otpMobile="ngModel" [class.is-invalid]="password.invalid && (password.touched || form.submitted)" blockCopyPaste required>
-                            <div *ngIf="password.invalid && (password.touched || form.submitted)" class="invalid-feedback">
-                                <div *ngIf="password?.errors.required">
-                                    <i>Password is required</i>
+                        <div class="row">
+                            <div class="form-group col-lg-7 offset-lg-3">
+                                <!-- <label class="form-control-label" for="otpMobile">OTP</label> -->
+                                <input type="text" name="otp" placeholder="OTP" class="form-control login-form" [(ngModel)]="model.otp" #otpMobile="ngModel" [class.is-invalid]="password.invalid && (password.touched || form.submitted)" blockCopyPaste required>
+                                <button type="button" class="login-otp" (click)="generateMobileOtp()">Get OTP</button>
+                                <div *ngIf="otpMobile.invalid &&  form.submitted" class="invalid-feedback">
+                                    <div *ngIf="password?.errors.required">
+                                        <i>OTP is required</i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div> -->
                         <div class="row mt-3">
                             <div class="col-md-4"></div>
                             <div class="col-md-3">

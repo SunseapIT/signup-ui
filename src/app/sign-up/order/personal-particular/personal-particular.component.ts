@@ -142,16 +142,27 @@ export class PersonalParticularComponent implements OnInit {
     this.token = customerDto.token;
     this.service.post_service(ApiServiceServiceService.apiList.sendEmailOtp + "?token=" + this.token + "&email=" + this.verifiedEmail, null)
       .subscribe((response) => {
+        var responseBody = response['body'];
+        var responseData = responseBody['data'];
+        var responseMessage = responseBody['message'];
+        let statusCode = responseBody['statusCode']
+        if (statusCode == 200) {
         if (verifyEmail) {
           $('#emailOTP').modal('show');
         }
         else {
           this.toster.success('', 'OTP has been resent to email address.', {
-            timeOut: 3000
+          
           });
           this.otp = ''
         }
-      })
+      }
+      else{
+        this.toster.error('', responseMessage, {
+         
+        });
+      }
+      });
   }
 
 
@@ -193,6 +204,11 @@ export class PersonalParticularComponent implements OnInit {
     this.service.post_service(ApiServiceServiceService.apiList.sendMobileOtp + "?token=" + this.token +
       "&mobileNumber=" + this.verifiedMobileNo, null)
       .subscribe((response) => {
+        var responseBody = response['body'];
+        var responseData = responseBody['data'];
+        var responseMessage = responseBody['message'];
+        let statusCode = responseBody['statusCode']
+        if (statusCode == 200) {
         if (verifyMobile) {
           $('#mobileOTP').modal('show')
         }
@@ -202,6 +218,12 @@ export class PersonalParticularComponent implements OnInit {
           });
           this.otpMobile = ''
         }
+      }
+      else{
+        this.toster.error('', responseMessage, {
+         
+      }
+    }
       })
   }
 

@@ -222,7 +222,7 @@ export class PersonalParticularComponent implements OnInit {
       else{
         this.toster.error('', responseMessage, {
          
-      }
+        });
     }
       })
   }

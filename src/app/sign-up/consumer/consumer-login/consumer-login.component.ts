@@ -29,11 +29,14 @@ export class ConsumerLoginComponent implements OnInit {
    this.customerDto.eamilAddress = this.model.userId;
     this._service.post_service(ApiServiceServiceService.apiList.userLogin,data).subscribe
       (response =>{ 
-      var responseBody = response['body'];
-      var responseMessage = responseBody['message'];
-      let statusCode = responseBody['statusCode']
-      if (statusCode == 200) {
-
+        var responseBody = response['body'];
+        var responseMessage = responseBody['message'];
+      var responseData = responseBody['data'];
+      
+      if(responseBody['statusCode']==200){
+        var resultObject = responseData
+        var token = resultObject['token'];
+        localStorage.setItem("Authorization",token);
         this.router.navigateByUrl('/consumer/profile')
         this.toster.success('', responseMessage, {
           timeOut: 2000

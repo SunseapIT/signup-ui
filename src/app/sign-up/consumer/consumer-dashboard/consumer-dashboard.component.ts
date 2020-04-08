@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-consumer-dashboard',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConsumerDashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit() {
+  }
+
+  logout(){
+    localStorage.removeItem("Authorization");
+    this.router.navigateByUrl('/consumer/login');
   }
 
 }

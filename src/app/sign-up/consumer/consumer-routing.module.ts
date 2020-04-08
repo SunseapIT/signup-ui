@@ -11,7 +11,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 const routes: Routes = [
    
      {path : 'login', component: ConsumerLoginComponent },
-     {path : 'profile', component : ConsumerDashboardComponent,
+     {path : 'profile', component : ConsumerDashboardComponent,canActivate : [AuthguardGuard],
     children : [
       {path: '' , component: ProfileComponent },
      

@@ -1,8 +1,6 @@
-
-
-.logindiv{
-    height: 30%;
-    width: 70%;
+.logindiv {
+    height: 20%;
+    width: 40%;
     background-color: #f6f6f6;
     margin: auto;
     margin-top: 10%;
@@ -10,3 +8,20 @@
     border-radius: 15px;
 }
 
+.login-form {
+    border-radius: 30px;
+}
+
+.bg-img {
+    background-image: url('/assets/sign-up/images/background/bg-green-building.jpg');
+    height: 100vh;
+}
+
+.login-otp {
+    element.style {
+        position: absolute;
+        bottom: 47px;
+        right: -58px;
+        border-radius: 16px;
+    }
+}

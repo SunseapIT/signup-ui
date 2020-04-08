@@ -157,9 +157,15 @@ export class PersonalParticularComponent implements OnInit {
           this.otp = ''
         }
       }
+      else if(statusCode == 400){
+        $('#emailOTP').modal('hide');
+        this.toster.error('', responseMessage, {        
+        });
+
+        this.router.navigateByUrl('');
+      }
       else{
-        this.toster.error('', responseMessage, {
-         
+        this.toster.error('', responseMessage, {   
         });
       }
       });
@@ -219,12 +225,18 @@ export class PersonalParticularComponent implements OnInit {
           this.otpMobile = ''
         }
       }
-      else{
-        this.toster.error('', responseMessage, {
-         
+      else if(statusCode == 400){
+        $('#mobileOTP').modal('hide')
+        this.toster.error('', responseMessage, {        
         });
-    }
-      })
+
+        this.router.navigateByUrl('');
+      }
+      else{
+        this.toster.error('', responseMessage, {   
+        });
+      }
+      });
   }
 
   //Validate mobile OTP

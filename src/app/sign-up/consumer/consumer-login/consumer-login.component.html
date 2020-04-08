@@ -1,117 +1,94 @@
 <header id="header" class="col-xs-12 pt-3 pb-3">
-  <div class="content-header">
-      <div class="row">
-          <a class="col-xs-8" href="https://www.sunseap.com/residential/electricity-plans/">
-              <img src="/assets/sign-up/images/logo/large-logo.png" includeVersion height="50" alt="">
-          </a>
-          <button class="btn btn-admin ml-auto pt-2 col-xs-2" (click)="home()">Home</button>
-          <a class="h5 ml-1 pt-3 col-xs-2" href="https://www.sunseap.com/contact/enquiries/" target="blank">Contact</a>
-      </div>
-  </div>
+    <div class="content-header">
+        <div class="row">
+            <a class="col-xs-8" href="https://www.sunseap.com/residential/electricity-plans/">
+                <img src="/assets/sign-up/images/logo/large-logo.png" includeVersion height="50" alt="">
+            </a>
+            <button class="btn btn-admin ml-auto pt-2 col-xs-2" (click)="home()">Home</button>
+            <a class="h5 ml-1 pt-3 col-xs-2" href="https://www.sunseap.com/contact/enquiries/" target="blank">Contact</a>
+        </div>
+    </div>
 </header>
-
-<div class="container-fluid p-0">
-  <div class="row m-0">
-      <div class="col-lg-4 left-image d-none d-md-block p-0">
-          <img src="/assets/sign-up/images/background/bg-garden-building.jpg" includeVersion alt="Marketing image" onerror="this.onerror = null; this.src='/assets/sign-up/images/background/default/bg-garden-building';">
-          <img src="/assets/sign-up/images/background/bg-green-building.jpg" includeVersion alt="Marketing image" onerror="this.onerror = null; this.src='/assets/sign-up/images/background/default/bg-green-building.jpg';">
-      </div>
-
-      <div class="col-lg-8">
-          <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate autocomplete="off">
-              <div class="logindiv">
-
-                  <div class="row">
-                      <div class="form-group  col-lg-7 offset-lg-2">
-                          <label class="form-control-label" for="userId">Username</label>
-                          <input type="text" name="userId" class="form-control" 
-                          [(ngModel)]="model.userId" 
-                          #userId="ngModel" 
-                          [class.is-invalid]="userId.invalid && (userId.touched || form.submitted)" 
-                          blockCopyPaste 
-                          required>
-                          <div *ngIf="userId.invalid && (userId.touched || form.submitted)" class="invalid-feedback">
-                              <div *ngIf="userId?.errors.required">
-                                  <i>Username is required</i>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="form-group col-lg-7 offset-lg-2">
-                          <label class="form-control-label" for="password">Password</label>
-                          <input type="password" name="password" class="form-control" 
-                          [(ngModel)]="model.password" 
-                          #password="ngModel" 
-                          [class.is-invalid]="password.invalid && (password.touched || form.submitted)" 
-                          blockCopyPaste
-                          required>
-                          <div *ngIf="password.invalid && (password.touched || form.submitted)" class="invalid-feedback">
-                              <div *ngIf="password?.errors.required">
-                                  <i>Password is required</i>
-                              </div>
+<div class="bg-img">
+    <div class="container-fluid p-0">
+        <div class="row m-0">
+            <div class="col-lg-12">
+                <!-- <img src="/assets/sign-up/images/background/bg-garden-building.jpg" includeVersion alt="Marketing image" onerror="this.onerror = null; this.src='/assets/sign-up/images/background/default/bg-garden-building';"> -->
+                <!-- <img src="/assets/sign-up/images/background/bg-green-building.jpg" includeVersion alt="Marketing image" onerror="this.onerror = null; this.src='/assets/sign-up/images/background/default/bg-green-building.jpg';"> -->
+                <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate autocomplete="off">
+                    <div class="logindiv">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <h4>Login</h4>
                             </div>
-                      </div>
-                  </div>
-                
-                  <div class="row">
-                    <div class="form-group col-lg-7 offset-lg-2">
-                        <label class="form-control-label" for="mobile">Mobile</label>
-                        <input type="text" name="mobileNumber" class="form-control" 
-                        [(ngModel)]="model.mobileNumber" 
-                        #mobile="ngModel" 
-                        pattern="^(8|9)\d{7}$" maxlength="8"
-                        [class.is-invalid]="mobile.invalid && (mobile.touched || form.submitted)" 
-                        blockCopyPaste
-                        required>
-                        <div *ngIf="mobile.invalid && (mobile.touched || form.submitted)" class="invalid-feedback">
-                            <div *ngIf="mobile?.errors.required">
-                                <i>Mobile number is required</i>
-                            </div>
-                          </div>
-                    </div>
-                </div>
-                <div class="row">
-                        <div class=" col-lg-3 offset-lg-2">
-                            <button type="button" (click)="generateMobileOtp()">Get OTP</button>
                         </div>
-                        <div class="col-lg-3">
-                              <!-- <button type="button" class=""  (click)="generateMobileOtp()"><span>Resend OTP</span></button> -->
-  
-                        </div>
-                  </div>
-                  <div class="row">
-                    <div class="form-group col-lg-7 offset-lg-2">
-                        <label class="form-control-label" for="otpMobile">OTP</label>
-                        <input type="text" name="otp" class="form-control" 
-                        [(ngModel)]="model.otp" 
-                        #otpMobile="ngModel" 
-                        [class.is-invalid]="password.invalid && (password.touched || form.submitted)" 
-                        blockCopyPaste
-                        required>
-                        <div *ngIf="password.invalid && (password.touched || form.submitted)" class="invalid-feedback">
-                            <div *ngIf="password?.errors.required">
-                                <i>Password is required</i>
+                        <div class="row mt-3">
+                            <div class="form-group  col-lg-7 offset-lg-3">
+                                <!-- <label class="form-control-label" for="userId">Username</label> -->
+                                <input type="text" name="userId" placeholder="Email ID" class="form-control login-form" [(ngModel)]="model.userId" #userId="ngModel" [class.is-invalid]="userId.invalid && (userId.touched || form.submitted)" blockCopyPaste required>
+                                <div *ngIf="userId.invalid && (userId.touched || form.submitted)" class="invalid-feedback">
+                                    <div *ngIf="userId?.errors.required">
+                                        <i>Username is required</i>
+                                    </div>
+                                </div>
                             </div>
-                          </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-7 offset-lg-3">
+                                <!-- <label class="form-control-label" for="password">Password</label> -->
+                                <input type="password" name="password" placeholder="Password" class="form-control login-form" [(ngModel)]="model.password" #password="ngModel" [class.is-invalid]="password.invalid && (password.touched || form.submitted)" blockCopyPaste required>
+                                <div *ngIf="password.invalid && (password.touched || form.submitted)" class="invalid-feedback">
+                                    <div *ngIf="password?.errors.required">
+                                        <i>Password is required</i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-lg-7 offset-lg-3">
+                                <!-- <label class="form-control-label" for="mobile">Mobile</label> -->
+                                <input type="text" name="mobileNumber" placeholder="Mobile Number" class="form-control login-form" [(ngModel)]="model.mobileNumber" #mobile="ngModel" pattern="^(8|9)\d{7}$" maxlength="8" [class.is-invalid]="mobile.invalid && (mobile.touched || form.submitted)"
+                                    blockCopyPaste required>
+                                <div *ngIf="mobile.invalid && (mobile.touched || form.submitted)" class="invalid-feedback">
+                                    <div *ngIf="mobile?.errors.required">
+                                        <i>Mobile number is required</i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class=" col-lg-3 offset-lg-5">
+                                <a type="submit" class="text-underline" (click)="generateMobileOtp()">Get OTP</a>
+                            </div>
+                            <div class="col-lg-3">
+                                <!-- <button type="button" class=""  (click)="generateMobileOtp()"><span>Resend OTP</span></button> -->
+
+                            </div>
+                        </div>
+                        <!-- <div class="row">
+                        <div class="form-group col-lg-7 offset-lg-3">
+                            <label class="form-control-label" for="otpMobile">OTP</label>
+                            <input type="text" name="otp" class="form-control login-form" [(ngModel)]="model.otp" #otpMobile="ngModel" [class.is-invalid]="password.invalid && (password.touched || form.submitted)" blockCopyPaste required>
+                            <div *ngIf="password.invalid && (password.touched || form.submitted)" class="invalid-feedback">
+                                <div *ngIf="password?.errors.required">
+                                    <i>Password is required</i>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                        <div class="row mt-3">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-3">
+                                <button class="btn step-next">
+                                  <span>Login</span> </button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                  <div class="row">
-                      <div class="col-12">
-                          <button class="btn step-next mx-auto">
-                              <span>Login</span> </button>
-                      </div>
-                  </div>
-              </div>
-          </form>
-      </div>
-  </div>
+                </form>
+            </div>
+
+
+        </div>
+    </div>
 </div>
-
-
- 
-
-
-
-
- 

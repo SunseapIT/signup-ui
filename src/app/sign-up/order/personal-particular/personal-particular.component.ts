@@ -161,7 +161,9 @@ export class PersonalParticularComponent implements OnInit {
         $('#emailOTP').modal('hide');
         this.toster.error('', responseMessage, {        
         });
-
+        localStorage.removeItem("customerObj")
+        localStorage.removeItem("Token")
+        this.parent.isAdvisoryAgreed = false;
         this.router.navigateByUrl('');
       }
       else{
@@ -229,8 +231,11 @@ export class PersonalParticularComponent implements OnInit {
         $('#mobileOTP').modal('hide')
         this.toster.error('', responseMessage, {        
         });
-
+        localStorage.removeItem("customerObj")
+        localStorage.removeItem("Token")
+        this.parent.isAdvisoryAgreed = false;
         this.router.navigateByUrl('');
+
       }
       else{
         this.toster.error('', responseMessage, {   

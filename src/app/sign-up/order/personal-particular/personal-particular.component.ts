@@ -107,7 +107,9 @@ export class PersonalParticularComponent implements OnInit {
     return this.verificationFailCount >= OTP_SEND_LIMIT;
   }
 
+  formData:any=[];
   onSubmit(form: NgForm) {
+      this.formData=form;
     if (form.valid && this.isMobileOtpValidate && this.isEmailOtpValidated) {
       if (!_.includes([IdentificationType.EmploymentPass, IdentificationType.WorkPermit], this.parent.model.identificationType)) {
         this.parent.model.identificationExpiryDate = '';
@@ -162,6 +164,9 @@ export class PersonalParticularComponent implements OnInit {
         this.toster.error('', responseMessage, {        
         });
         this.parent.model.email="";
+      this.parent.model.identificationName="";
+      this.parent.model.lastName=""
+      this.parent.model.mobileNo=""
         localStorage.removeItem("customerObj")
         localStorage.removeItem("Token")
         this.parent.isAdvisoryAgreed = false;
@@ -232,7 +237,11 @@ export class PersonalParticularComponent implements OnInit {
         $('#mobileOTP').modal('hide')
         this.toster.error('', responseMessage, {        
         });
-        this.parent.model.mobileNo="";
+        this.parent.model.email="";
+        this.parent.model.identificationName="";
+        this.parent.model.lastName=""
+        this.parent.model.mobileNo=""
+        this.formData.resetForm();
         localStorage.removeItem("customerObj")
         localStorage.removeItem("Token")
         this.parent.isAdvisoryAgreed = false;

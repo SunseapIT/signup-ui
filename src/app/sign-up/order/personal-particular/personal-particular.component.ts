@@ -241,7 +241,7 @@ export class PersonalParticularComponent implements OnInit {
         this.parent.model.identificationName="";
         this.parent.model.lastName=""
         this.parent.model.mobileNo=""
-        this.formData.resetForm();
+       
         localStorage.removeItem("customerObj")
         localStorage.removeItem("Token")
         this.parent.isAdvisoryAgreed = false;

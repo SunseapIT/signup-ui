@@ -3,6 +3,7 @@ import { ApiServiceServiceService } from "@app/api-service-service.service";
 import { ToastrModule } from "ngx-toastr";
 import { Router } from "@angular/router";
 import { CustomerDto } from "@app/core/customer-dto";
+import { serviceAddressDto } from "@app/core/service-address-dto";
 
 @Component({
   selector: "app-profile",
@@ -11,6 +12,7 @@ import { CustomerDto } from "@app/core/customer-dto";
 })
 export class ProfileComponent implements OnInit {
   customerPlanDetail: CustomerDto[] = [];
+  serviceAddresses : serviceAddressDto[] = [];
   customerDto: CustomerDto = null;
 
   constructor(
@@ -34,22 +36,24 @@ export class ProfileComponent implements OnInit {
     this._service.get_service(ApiServiceServiceService.apiList.getCustomerDetailsByEmail +"?email=" + this.userId)
       .subscribe(response => {
         if (response.body.statusCode == 200 ) {
-          this.customerPlanDetail = response.body.data.map(item=> {return {...item, address: item.houseNo + ' ' + item.buildingName + ' ' + item.streetName + '-' + item.postelCode}});     
+          this.customerPlanDetail = response.body.data; 
+          this.createServiceAddresses();    
           this.assignDefaultServiceAddress();
         }
       });
+  }
+  createServiceAddresses() {
+    this.serviceAddresses =this.customerPlanDetail.map(item=> {return {...item, serviceAddress: item.houseNo + ' ' + item.buildingName + ' ' + item.streetName + '-' + item.postelCode,spAccountNo:item.spAccountNumber}});     
   }
 
   assignDefaultServiceAddress() {
     if (this.customerPlanDetail != null && this.customerPlanDetail.length > 0) {
       this.customerDto = this.customerPlanDetail[0];
-      this.onSelectServiceAddress(this.customerPlanDetail);     
     }
   }
 
   onSelectServiceAddress(event){
-    console.log(event);
-   
+    this.customerDto = this.customerPlanDetail.find(item=> item.spAccountNumber == event);
   }
 
 }

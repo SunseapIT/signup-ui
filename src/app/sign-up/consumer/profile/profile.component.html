@@ -3,8 +3,8 @@
         <div class="row p-0">
             <div class="col-md-6 p-0" style="background-color: rgba(180, 210, 228, 0.356);"></div>
             <div class="col-md-6" style="background-color: #ffffff;">
-                <select name="serviceAddress" id="serviceAddress" (change)="onSelectServiceAddress($event)" class="form-control select-font">
-          <option class="option-font" [value]="item.spAccountNumber" *ngFor="let item of customerPlanDetail ; let i= index ">{{ item.address}} </option>
+                <select name="serviceAddress" id="serviceAddress" (change)="onSelectServiceAddress($event.target.value)" class="form-control select-font">
+          <option class="option-font" [value]="item.spAccountNo" *ngFor="let item of serviceAddresses ; let i= index ">{{ item.serviceAddress}} </option>
         </select>
             </div>
         </div>

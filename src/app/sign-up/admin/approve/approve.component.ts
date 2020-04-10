@@ -69,7 +69,7 @@ export class ApproveComponent implements OnInit {
   verified: boolean;
   sortParams = "fullName"
   sort = 'asc';
-  sortingValue = [true, true, true, true]
+  sortingValue = [true, true, true, true, true, true, true,]
 
   spFlag: boolean;
   isPlanFlag: boolean;
@@ -667,6 +667,24 @@ export class ApproveComponent implements OnInit {
     else if (value == 'status') {
       this.sortParams = 'isApproved'
       this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl + "?sort=isApproved," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
+        var responseBody = response['body'];
+        var responseData = responseBody['data'];
+        var responseContent = responseData['content'];
+        this.approvalData = responseContent;
+      })
+    }
+    else if (value == 'record') {
+      this.sortParams = 'duplicate'
+      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl + "?sort=duplicate," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
+        var responseBody = response['body'];
+        var responseData = responseBody['data'];
+        var responseContent = responseData['content'];
+        this.approvalData = responseContent;
+      })
+    }
+    else if (value == 'marketing') {
+      this.sortParams = 'contentToMarketing'
+      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl + "?sort=contentToMarketing," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
         var responseBody = response['body'];
         var responseData = responseBody['data'];
         var responseContent = responseData['content'];

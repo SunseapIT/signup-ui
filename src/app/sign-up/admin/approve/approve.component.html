@@ -3,60 +3,52 @@
 
     <div class="row col-md-12 col-sm-12 mb-3 mt-3">
         <div class="col-lg-4 text-left">
-            <input type="text" class="form-control searchbar" placeholder="Search..." trim="blur"
-                [(ngModel)]="searchText" (keyup)="searchCustomer($event)">
+            <input type="text" class="form-control searchbar" placeholder="Search..." trim="blur" [(ngModel)]="searchText" (keyup)="searchCustomer($event)">
         </div>
     </div>
     <div class="row m-0 pl-0 pr-0">
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="table-responsive">
-                <table class="table table-fixed">
+                <table class="table table-bordered">
                     <thead>
-                        <th id="name" class="arrow-down"
-                            (click)="sortingValue[0]= !sortingValue[0];sorting('name',sortingValue[0]); addClass($event)">
+                        <th id="name" class="arrow-down align-middle" (click)="sortingValue[0]= !sortingValue[0];sorting('name',sortingValue[0]); addClass($event)">
                             Name</th>
-                        <th id="spAccount" class="arrow-down"
-                            (click)="sortingValue[1]= !sortingValue[1];sorting('spAccount',sortingValue[1]); addClass($event)">
+                        <th id="spAccount" class="arrow-down align-middle" (click)="sortingValue[1]= !sortingValue[1];sorting('spAccount',sortingValue[1]); addClass($event)">
                             SP Account Number</th>
-                        <th id="address" class="arrow-down"
-                            (click)="sortingValue[2]= !sortingValue[2];sorting('address',sortingValue[2]); addClass($event)">
+                        <th id="address" class="arrow-down align-middle" (click)="sortingValue[2]= !sortingValue[2];sorting('address',sortingValue[2]); addClass($event)">
                             Address</th>
-                        <th id="signedUp" class="arrow-down"
-                            (click)="sortingValue[3]= !sortingValue[3];sorting('final',sortingValue[3]); addClass($event)">
+                        <th id="signedUp" class="arrow-down align-middle" (click)="sortingValue[3]= !sortingValue[3];sorting('final',sortingValue[3]); addClass($event)">
                             Date of Sign Up</th>
-                        <th style="width: 100px;" id="status" class="arrow-down"
-                            (click)="sortingValue[4]= !sortingValue[4];sorting('status',sortingValue[4]); addClass($event)">
+                        <th id="status" class="arrow-down align-middle" (click)="sortingValue[4]= !sortingValue[4];sorting('status',sortingValue[4]); addClass($event)">
                             Status</th>
-                        <th>Record</th>
-                        <th>Marketing Agreement</th>
+                        <th id="record" class="arrow-down align-middle" (click)="sortingValue[5]= !sortingValue[5];sorting('record',sortingValue[5]); addClass($event)">Record</th>
+                        <th id="marketing" class="arrow-down align-middle" (click)="sortingValue[6]= !sortingValue[6];sorting('marketing',sortingValue[6]); addClass($event)">Marketing Agreement</th>
+                        <th class="align-middle">Remarks</th>
 
                     </thead>
                     <tbody>
-                        <tr [ngClass]="customerList.duplicate == 'EXISTING_CUSTOMER' ? 'text-danger' : ''"
-                            *ngFor="let customerList of approvalData | grdFilter: {fullName: searchTextSuccess, spAccountNumber:searchTextSuccess};  let i=index;"
-                            (click)="editCustomer(customerList)" style="cursor: pointer;">
+                        <tr [ngClass]="customerList.duplicate == 'EXISTING_CUSTOMER' ? 'text-danger' : ''" *ngFor="let customerList of approvalData ; let i=index;" (click)="editCustomer(customerList)" style="cursor: pointer;">
                             <td>{{customerList.fullName}}&nbsp;{{customerList.lastName}}</td>
                             <td>{{customerList.spAccountNumber}}</td>
-                            <td class="text-left">{{customerList.houseNumber}}{{customerList.buildingName}} &nbsp;
-                                {{customerList.streetName}} &nbsp;{{customerList.country}} {{customerList.postelCode}}
+                            <td class="text-left">{{customerList.houseNumber}}{{customerList.buildingName}} &nbsp; {{customerList.streetName}} &nbsp;{{customerList.country}} {{customerList.postelCode}}
                             </td>
                             <td>{{customerList.sighnUpEndTimeStamp}}</td>
-                            <td class="ml-5 text-center" style="width: 100px;" *ngIf="customerList.approved"><i
-                                    class="fa fa-check" style="color:#3AC76A;" aria-hidden="true"></i></td>
-                            <td class="ml-5 text-center" style="width: 100px;" *ngIf="!customerList.approved"><i
-                                    class="fa fa-times" aria-hidden="true"></i>
+                            <td class="ml-5 text-center" style="width: 100px;" *ngIf="customerList.approved"><i class="fa fa-check" style="color:#3AC76A;" aria-hidden="true"></i></td>
+                            <td class="ml-5 text-center" style="width: 100px;" *ngIf="!customerList.approved"><i class="fa fa-times" aria-hidden="true"></i>
                             </td>
                             <td>{{customerList.newUserMessage}}</td>
                             <td class="text-center">
                                 {{customerList.contentToMarketing == true ? 'Yes' :(customerList.contentToMarketing == false) ? 'No':''}}
+                            </td>
+                            <td class="text-center">
+                                {{customerList.remarks == null ? 'No Remark' : customerList.remarks}}
                             </td>
 
 
                         </tr>
                     </tbody>
                 </table>
-                <pagination [totalItems]="totalItems" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"
-                    [maxSize]="5"></pagination>
+                <pagination [totalItems]="totalItems" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="5"></pagination>
             </div>
         </div>
     </div>
@@ -71,8 +63,7 @@
                         <form #form="ngForm" (ngSubmit)="onSubmit(form)">
                             <div class="row mt-5 accordian-head">
                                 <div class="col-md-12 col-xl-12">
-                                    <a class="accordian-header" data-toggle="collapse" href="#planDetail" role="button"
-                                        aria-expanded="false" aria-controls="family">
+                                    <a class="accordian-header" data-toggle="collapse" href="#planDetail" role="button" aria-expanded="false" aria-controls="family">
                                         &nbsp; Plan Details
                                     </a>
                                 </div>
@@ -87,11 +78,7 @@
                                                     {{selectedPricingPlan}}
                                                 </div>
                                                 <div *ngIf="isPlanFlag">
-                                                    <select name="productName" id="productName" class="form-control"
-                                                        [class.is-invalid]="productName?.invalid && (productName?.touched || form.submitted)"
-                                                        required [(ngModel)]="selectedPricingPlan"
-                                                        (change)="selectPlans($event.target.value)"
-                                                        #productName="ngModel">
+                                                    <select name="productName" id="productName" class="form-control" [class.is-invalid]="productName?.invalid && (productName?.touched || form.submitted)" required [(ngModel)]="selectedPricingPlan" (change)="selectPlans($event.target.value)" #productName="ngModel">
                                                         <option value='' ng-selected="selected" disabled>Select your
                                                             plan
                                                         </option>
@@ -99,8 +86,7 @@
                                                             {{ item.planName }}
                                                         </option>
                                                     </select>
-                                                    <div *ngIf="productName?.invalid && (productName?.touched || form.submitted)"
-                                                        class="invalid-feedback">
+                                                    <div *ngIf="productName?.invalid && (productName?.touched || form.submitted)" class="invalid-feedback">
                                                         <div *ngIf="productName?.errors.required">
                                                             <i>Plan details is required</i>
                                                         </div>
@@ -109,10 +95,8 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-1 col-sm-1">
-                                            <i *ngIf="!isPlanFlag" class="fas fa-pencil-alt"
-                                                (click)="isPlanFlag = !isPlanFlag"></i>
-                                            <i *ngIf="isPlanFlag" class="fa fa-check"
-                                                (click)="isPlanFlag = !isPlanFlag"></i>
+                                            <i *ngIf="!isPlanFlag" class="fas fa-pencil-alt" (click)="isPlanFlag = !isPlanFlag"></i>
+                                            <i *ngIf="isPlanFlag" class="fa fa-check" (click)="isPlanFlag = !isPlanFlag"></i>
                                         </div>
                                     </div>
                                     <div class="row mt-3">
@@ -124,13 +108,9 @@
                                                 </div>
                                                 <!-- (blur)="update($event.target.value)" -->
                                                 <div [hidden]="!spFlag">
-                                                    <input class="form-control" type="text" name="serviceNumber"
-                                                        maxlength="10" (keypress)="keyPress($event)"
-                                                        pattern="(^[1-9]\d{9})|(^[1-9]{9}[-])$" required
-                                                        [class.is-invalid]="serviceError?.invalid && (serviceError?.touched || form.submitted)"
-                                                        [(ngModel)]="serviceNo" #serviceError="ngModel">
-                                                    <div *ngIf="serviceError.invalid && (serviceError.touched || form.submitted)"
-                                                        class="invalid-feedback">
+                                                    <input class="form-control" type="text" name="serviceNumber" maxlength="10" (keypress)="keyPress($event)" pattern="(^[1-9]\d{9})|(^[1-9]{9}[-])$" required [class.is-invalid]="serviceError?.invalid && (serviceError?.touched || form.submitted)" [(ngModel)]="serviceNo"
+                                                        #serviceError="ngModel">
+                                                    <div *ngIf="serviceError.invalid && (serviceError.touched || form.submitted)" class="invalid-feedback">
                                                         <div *ngIf="serviceError?.errors.required">
                                                             <i>Your SP Account No. is required</i>
                                                         </div>
@@ -155,11 +135,9 @@
                                                     {{promoCode}}
                                                 </div>
                                                 <div *ngIf="isPromoCodeFlag">
-                                                    <input class="form-control" trim="blur" [(ngModel)]="promoCode"
-                                                        name="promoCode" #referralCode="ngModel" />
+                                                    <input class="form-control" trim="blur" [(ngModel)]="promoCode" name="promoCode" #referralCode="ngModel" />
 
-                                                    <button type="button" class="btn input-button"
-                                                        (click)="verifyPromotionCode(promoCode)">
+                                                    <button type="button" class="btn input-button" (click)="verifyPromotionCode(promoCode)">
                                                         <span>Verify</span>
                                                     </button>
                                                     <button type="button" (click)="delete()" class="btn varify-button">
@@ -170,8 +148,7 @@
                                                             Referral
                                                             code
                                                             already exists.</i></div>
-                                                    <div *ngIf="promotionMessage != '' && !duplicatePromoCode"
-                                                        [ngClass]="{'green-text':promocodeStatus,'red-text':!promocodeStatus}">
+                                                    <div *ngIf="promotionMessage != '' && !duplicatePromoCode" [ngClass]="{'green-text':promocodeStatus,'red-text':!promocodeStatus}">
                                                         <i>{{promotionMessage}}</i></div>
                                                 </div>
                                             </div>
@@ -179,10 +156,8 @@
 
 
                                         <div class="col-lg-1 col-sm-1">
-                                            <i *ngIf="!isPromoCodeFlag" class="fas fa-pencil-alt"
-                                                (click)="isPromoCodeFlag =! isPromoCodeFlag"></i>
-                                            <i *ngIf="isPromoCodeFlag" class="fa fa-check"
-                                                (click)="isPromoCodeFlag =! isPromoCodeFlag"></i>
+                                            <i *ngIf="!isPromoCodeFlag" class="fas fa-pencil-alt" (click)="isPromoCodeFlag =! isPromoCodeFlag"></i>
+                                            <i *ngIf="isPromoCodeFlag" class="fa fa-check" (click)="isPromoCodeFlag =! isPromoCodeFlag"></i>
                                         </div>
                                     </div>
                                     <!-- <div class="row mt-3">
@@ -222,8 +197,7 @@
                             </div>
                             <div class="row mt-3 accordian-head">
                                 <div class="col-md-12 col-xl-12">
-                                    <a class="accordian-header" data-toggle="collapse" href="#personalDetail"
-                                        role="button" aria-expanded="false" aria-controls="family">
+                                    <a class="accordian-header" data-toggle="collapse" href="#personalDetail" role="button" aria-expanded="false" aria-controls="family">
                                         &nbsp; Personal Details
                                     </a>
                                 </div>
@@ -258,8 +232,7 @@
                             </div>
                             <div class="row mt-3 accordian-head">
                                 <div class="col-md-12 col-xl-12">
-                                    <a class="accordian-header" data-toggle="collapse" href="#address" role="button"
-                                        aria-expanded="false" aria-controls="family">
+                                    <a class="accordian-header" data-toggle="collapse" href="#address" role="button" aria-expanded="false" aria-controls="family">
                                         &nbsp; Address
                                     </a>
                                 </div>
@@ -274,19 +247,13 @@
                                                     {{servicePostalCode}}
                                                 </div>
                                                 <div [hidden]="!isPostalFlag">
-                                                    <input name="servicePostalCode" type="text" class="form-control"
-                                                        (blur)="validatePostalCode($event.target.value)" maxlength="6"
-                                                        [class.is-invalid]="servicePostalCoderef?.invalid && (servicePostalCoderef?.touched || form.submitted)"
-                                                        required [(ngModel)]="servicePostalCode"
-                                                        #servicePostalCoderef="ngModel" numbersOnly
-                                                        [pattern]="config.validationRegex.postalCode" />
-                                                    <div *ngIf="servicePostalCoderef?.invalid && (servicePostalCoderef?.touched || form.submitted)"
-                                                        class="invalid-feedback">
+                                                    <input name="servicePostalCode" type="text" class="form-control" (blur)="validatePostalCode($event.target.value)" maxlength="6" [class.is-invalid]="servicePostalCoderef?.invalid && (servicePostalCoderef?.touched || form.submitted)" required [(ngModel)]="servicePostalCode"
+                                                        #servicePostalCoderef="ngModel" numbersOnly [pattern]="config.validationRegex.postalCode" />
+                                                    <div *ngIf="servicePostalCoderef?.invalid && (servicePostalCoderef?.touched || form.submitted)" class="invalid-feedback">
                                                         <div *ngIf="servicePostalCoderef?.errors.required">
                                                             <i>Postal code is required</i>
                                                         </div>
-                                                        <div
-                                                            *ngIf="!servicePostalCoderef?.errors.required && servicePostalCoderef?.errors.pattern">
+                                                        <div *ngIf="!servicePostalCoderef?.errors.required && servicePostalCoderef?.errors.pattern">
                                                             <i>Postal code is invalid</i>
                                                         </div>
                                                     </div>
@@ -294,10 +261,8 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-1 col-sm-1">
-                                            <i *ngIf="!isPostalFlag" class="fas fa-pencil-alt"
-                                                (click)="isPostalFlag = !isPostalFlag"></i>
-                                            <i *ngIf="isPostalFlag" class="fa fa-check"
-                                                (click)="isPostalFlag = !isPostalFlag"></i>
+                                            <i *ngIf="!isPostalFlag" class="fas fa-pencil-alt" (click)="isPostalFlag = !isPostalFlag"></i>
+                                            <i *ngIf="isPostalFlag" class="fa fa-check" (click)="isPostalFlag = !isPostalFlag"></i>
                                         </div>
                                     </div>
                                     <div class="row mt-3">
@@ -309,9 +274,7 @@
                                                     {{houseNo}}
                                                 </div>
                                                 <div [hidden]="!isPostalFlag">
-                                                    <input name="houseNo" type="text" id="houseNo" class="form-control"
-                                                        [class.is-invalid]="houseNoRef.invalid && (houseNoRef.touched || form.submitted)"
-                                                        required [(ngModel)]="houseNo" #houseNoRef="ngModel" />
+                                                    <input name="houseNo" type="text" id="houseNo" class="form-control" [class.is-invalid]="houseNoRef.invalid && (houseNoRef.touched || form.submitted)" required [(ngModel)]="houseNo" #houseNoRef="ngModel" />
                                                 </div>
                                             </div>
                                         </div>
@@ -324,8 +287,7 @@
                                                     {{level}}
                                                 </div>
                                                 <div [hidden]="!isPostalFlag">
-                                                    <input name="level" id="level" type="text" class="form-control"
-                                                        [(ngModel)]="level" #levelRef="ngModel" />
+                                                    <input name="level" id="level" type="text" class="form-control" [(ngModel)]="level" #levelRef="ngModel" />
                                                 </div>
                                             </div>
                                         </div>
@@ -338,8 +300,7 @@
                                                     {{unitNo}}
                                                 </div>
                                                 <div [hidden]="!isPostalFlag">
-                                                    <input name="unitNo" type="text" class="form-control"
-                                                        [(ngModel)]="unitNo" #unitNoRef="ngModel" />
+                                                    <input name="unitNo" type="text" class="form-control" [(ngModel)]="unitNo" #unitNoRef="ngModel" />
                                                 </div>
                                             </div>
                                         </div>
@@ -353,10 +314,7 @@
                                                 </div>
 
                                                 <div [hidden]="!isPostalFlag">
-                                                    <input name="streetName" type="text" id="streetName"
-                                                        class="form-control"
-                                                        [class.is-invalid]="streetName?.invalid && (streetName?.touched || form.submitted)"
-                                                        required [(ngModel)]="streetName" #streetNameRef="ngModel" />
+                                                    <input name="streetName" type="text" id="streetName" class="form-control" [class.is-invalid]="streetName?.invalid && (streetName?.touched || form.submitted)" required [(ngModel)]="streetName" #streetNameRef="ngModel" />
                                                 </div>
                                             </div>
                                         </div>
@@ -370,10 +328,7 @@
                                                 </div>
 
                                                 <div [hidden]="!isPostalFlag">
-                                                    <input name="buildingName" type="text" id="buildingName"
-                                                        class="form-control" placeholder="(Optional)"
-                                                        [(ngModel)]="buildingName" #buildingNameRef="ngModel"
-                                                        #buildingNameRef="ngModel" />
+                                                    <input name="buildingName" type="text" id="buildingName" class="form-control" placeholder="(Optional)" [(ngModel)]="buildingName" #buildingNameRef="ngModel" #buildingNameRef="ngModel" />
                                                 </div>
                                             </div>
                                         </div>
@@ -384,11 +339,7 @@
                                             <div *ngIf="!isDwellingFlag" class="input-group">
                                                 {{dwellingType}}
                                             </div>
-                                            <select name="dwellingType" id="dwellingType" *ngIf="isDwellingFlag"
-                                                class="form-control select-font" required
-                                                (change)="onSelectDwellingType($event.target.value)"
-                                                [(ngModel)]="dwellingObj"
-                                                [class.is-invalid]="dwellingTypeRef?.invalid && (dwellingTypeRef?.touched || form.submitted)"
+                                            <select name="dwellingType" id="dwellingType" *ngIf="isDwellingFlag" class="form-control select-font" required (change)="onSelectDwellingType($event.target.value)" [(ngModel)]="dwellingObj" [class.is-invalid]="dwellingTypeRef?.invalid && (dwellingTypeRef?.touched || form.submitted)"
                                                 #dwellingTypeRef="ngModel">
                                                 <option [value]="null" disabled>Select your dwelling type</option>
                                                 <option class="option-font"
@@ -396,26 +347,22 @@
                                                     [value]="option.key">{{ option.value }}</option>
 
                                             </select>
-                                            <div *ngIf="dwellingTypeRef?.invalid && (dwellingTypeRef?.touched || form.submitted)"
-                                                class="invalid-feedback">
+                                            <div *ngIf="dwellingTypeRef?.invalid && (dwellingTypeRef?.touched || form.submitted)" class="invalid-feedback">
                                                 <div *ngIf="dwellingTypeRef?.errors.required">
                                                     <i>Dwelling Type is required</i>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-1 col-sm-1">
-                                            <i *ngIf="!isDwellingFlag" class="fas fa-pencil-alt"
-                                                (click)="isDwellingFlag = !isDwellingFlag; getDwellingType(dwellingType)"></i>
-                                            <i *ngIf="isDwellingFlag" class="fa fa-check"
-                                                (click)="updateDwelling()"></i>
+                                            <i *ngIf="!isDwellingFlag" class="fas fa-pencil-alt" (click)="isDwellingFlag = !isDwellingFlag; getDwellingType(dwellingType)"></i>
+                                            <i *ngIf="isDwellingFlag" class="fa fa-check" (click)="updateDwelling()"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row mt-3 accordian-head">
                                 <div class="col-md-12 col-xl-12">
-                                    <a class="accordian-header" data-toggle="collapse" href="#upload-documents"
-                                        role="button" aria-expanded="false" aria-controls="family">
+                                    <a class="accordian-header" data-toggle="collapse" href="#upload-documents" role="button" aria-expanded="false" aria-controls="family">
                                         &nbsp; Uploaded Documents
                                     </a>
                                 </div>
@@ -425,8 +372,7 @@
                                     <div class="row">
                                         <div class="col-lg-4 col-sm-6">SP past month bill:</div>
                                         <div class="col-lg-7 col-sm-6 font-weight-bold">
-                                            <div class="card-text-right p-0 textunderline"
-                                                (click)="getCustomerFile(bill_fileName)">
+                                            <div class="card-text-right p-0 textunderline" (click)="getCustomerFile(bill_fileName)">
                                                 {{bill_fileName}}
                                             </div>
                                         </div>
@@ -434,8 +380,7 @@
                                     <div class="row mt-3">
                                         <div class="col-lg-4 col-sm-6">New SP account opening letter:</div>
                                         <div class="col-lg-7 col-sm-6 font-weight-bold">
-                                            <div class="card-text-right p-0 textunderline"
-                                                (click)="getCustomerFile(opening_letter_fileName)">
+                                            <div class="card-text-right p-0 textunderline" (click)="getCustomerFile(opening_letter_fileName)">
                                                 {{opening_letter_fileName}}
                                             </div>
                                         </div>
@@ -443,8 +388,7 @@
                                     <div class="row mt-3">
                                         <div class="col-lg-4 col-sm-6">Letter of Authorisation:</div>
                                         <div class="col-lg-7 col-sm-6 font-weight-bold">
-                                            <div class="card-text-right p-0 textunderline"
-                                                (click)="getCustomerFile(authorization_fileName)">
+                                            <div class="card-text-right p-0 textunderline" (click)="getCustomerFile(authorization_fileName)">
                                                 {{authorization_fileName}}
                                             </div>
                                         </div>
@@ -453,8 +397,7 @@
                             </div>
                             <div class="row mt-3 accordian-head">
                                 <div class="col-md-12 col-xl-12">
-                                    <a class="accordian-header" data-toggle="collapse" href="#plan-type" role="button"
-                                        aria-expanded="false" aria-controls="family">
+                                    <a class="accordian-header" data-toggle="collapse" href="#plan-type" role="button" aria-expanded="false" aria-controls="family">
                                         &nbsp; Plan Type
                                     </a>
                                 </div>
@@ -505,30 +448,25 @@
                             </div>
                             <div class="row mt-3">
                                 <div class="col-md-12 col-xl-12">
-                                    <a class="lc-title text-decoration-none ml-4" aria-expanded="false"
-                                        aria-controls="family">
+                                    <a class="lc-title text-decoration-none ml-4" aria-expanded="false" aria-controls="family">
                                         &nbsp; Final Approval Date
                                     </a>
                                 </div>
                                 <div class="col-xs-12 col-md-6 form-group ml-3">&nbsp;
-                                    <input class="form-control"
-                                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-red' }"
-                                        [minDate]="lastApproveDate" bsDatepicker readOnly [(bsValue)]="approvalDate">
+                                    <input class="form-control" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-red' }" [minDate]="lastApproveDate" bsDatepicker readOnly [(bsValue)]="approvalDate">
                                 </div>
 
                             </div>
                             <div class="row mt-3">
                                 <form #f=ngForm>
                                     <div class="col-md-12 col-xl-12">
-                                        <a class="lc-title text-decoration-none ml-4" aria-expanded="false"
-                                            aria-controls="family">
+                                        <a class="lc-title text-decoration-none ml-4" aria-expanded="false" aria-controls="family">
                                             &nbsp; Comments/Remarks
                                         </a>
                                         <div class="col-xs-12 col-md-6 form-group ml-3">&nbsp;
                                             <textarea rows="4" cols="30" name="remarks" [(ngModel)]="remarks">
                             </textarea>
-                                            <button class="btn btn-success" type="submit"
-                                                (click)="addRemark(f)">Add</button>
+                                            <button class="btn btn-success" type="submit" (click)="addRemark(f)">Add</button>
                                         </div>
                                     </div>
                                 </form>
@@ -557,8 +495,7 @@
                         <form>
                             <div class="row mt-5">
                                 <div class="col-md-12 col-xl-12">
-                                    <a class="accordian-header" data-toggle="collapse" (click)="arrowChange(1)"
-                                        href="#planDetail" role="button" aria-expanded="false" aria-controls="family">
+                                    <a class="accordian-header" data-toggle="collapse" (click)="arrowChange(1)" href="#planDetail" role="button" aria-expanded="false" aria-controls="family">
                                         &nbsp; Plan Details
                                     </a>
                                 </div>
@@ -601,9 +538,7 @@
                             </div>
                             <div class="row mt-3">
                                 <div class="col-md-12 col-xl-12">
-                                    <a class="accordian-header" data-toggle="collapse" (click)="arrowChange(2)"
-                                        href="#personalDetail" role="button" aria-expanded="false"
-                                        aria-controls="family">
+                                    <a class="accordian-header" data-toggle="collapse" (click)="arrowChange(2)" href="#personalDetail" role="button" aria-expanded="false" aria-controls="family">
                                         &nbsp; Personal Details
                                     </a>
                                 </div>
@@ -638,8 +573,7 @@
                             </div>
                             <div class="row mt-3">
                                 <div class="col-md-12 col-xl-12">
-                                    <a class="accordian-header" data-toggle="collapse" (click)="arrowChange(3)"
-                                        href="#address" role="button" aria-expanded="false" aria-controls="family">
+                                    <a class="accordian-header" data-toggle="collapse" (click)="arrowChange(3)" href="#address" role="button" aria-expanded="false" aria-controls="family">
                                         &nbsp; Address
                                     </a>
                                 </div>
@@ -727,9 +661,7 @@
                             </div>
                             <div class="row mt-3">
                                 <div class="col-md-12 col-xl-12">
-                                    <a class="accordian-header" data-toggle="collapse" (click)="arrowChange(4)"
-                                        href="#upload-documents" role="button" aria-expanded="false"
-                                        aria-controls="family">
+                                    <a class="accordian-header" data-toggle="collapse" (click)="arrowChange(4)" href="#upload-documents" role="button" aria-expanded="false" aria-controls="family">
                                         &nbsp; Uploaded Documents
                                     </a>
                                 </div>
@@ -739,8 +671,7 @@
                                     <div class="row">
                                         <div class="col-lg-4 col-sm-6">SP past month bill:</div>
                                         <div class="col-lg-7 col-sm-6 font-weight-bold">
-                                            <div class="card-text-right p-0 textunderline"
-                                                (click)="getCustomerFile(bill_fileName)">
+                                            <div class="card-text-right p-0 textunderline" (click)="getCustomerFile(bill_fileName)">
                                                 {{bill_fileName}}
                                             </div>
                                         </div>
@@ -748,8 +679,7 @@
                                     <div class="row mt-3">
                                         <div class="col-lg-4 col-sm-6">New SP account opening letter:</div>
                                         <div class="col-lg-7 col-sm-6 font-weight-bold">
-                                            <div class="card-text-right p-0 textunderline"
-                                                (click)="getCustomerFile(opening_letter_fileName)">
+                                            <div class="card-text-right p-0 textunderline" (click)="getCustomerFile(opening_letter_fileName)">
                                                 {{opening_letter_fileName}}
                                             </div>
                                         </div>
@@ -757,8 +687,7 @@
                                     <div class="row mt-3">
                                         <div class="col-lg-4 col-sm-6">Letter of Authorisation:</div>
                                         <div class="col-lg-7 col-sm-6 font-weight-bold">
-                                            <div class="card-text-right p-0 textunderline"
-                                                (click)="getCustomerFile(authorization_fileName)">
+                                            <div class="card-text-right p-0 textunderline" (click)="getCustomerFile(authorization_fileName)">
                                                 {{authorization_fileName}}
                                             </div>
                                         </div>
@@ -767,8 +696,7 @@
                             </div>
                             <div class="row mt-3">
                                 <div class="col-md-12 col-xl-12">
-                                    <a class="accordian-header" data-toggle="collapse" (click)="arrowChange(5)"
-                                        href="#plan-type" role="button" aria-expanded="false" aria-controls="family">
+                                    <a class="accordian-header" data-toggle="collapse" (click)="arrowChange(5)" href="#plan-type" role="button" aria-expanded="false" aria-controls="family">
                                         &nbsp; Plan Type
                                     </a>
                                 </div>

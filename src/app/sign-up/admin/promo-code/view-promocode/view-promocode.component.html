@@ -3,8 +3,16 @@
     <div class="row mb-4 mt-3">
         <div class="col-lg-4 col-xs-12 text-left">
 
-            <input type="text" class="form-control searchbar" placeholder="Search..." (keyup)="searchPromoCode($event)">
+            <input type="text" class="form-control searchbar" [(ngModel)]="searchText" placeholder="Search..." (keyup)="searchPromoCode($event)">
 
+        </div>
+        <div class="col-lg-5 col-md-5 col-sm-12  p-0  text-right ">
+            <input placeholder="Select a range..." class="form-control searchbar" [(ngModel)]="dateTimeRange" [selectMode]="'range'" [owlDateTimeTrigger]="dtRange1" [owlDateTime]="dtRange1" [max]="max" hour12Timer [readonly]="true" (ngModelChange)="getPromoCodeByRange()">
+            <button type="button" class="btn remove-time" (click)="clearValue()">
+        <i class="fa fa-times mr-2" aria-hidden="true"></i>
+      </button>
+
+            <owl-date-time #dtRange1></owl-date-time>
         </div>
     </div>
 
@@ -21,7 +29,7 @@
                         <th class="text-center">Action</th>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let promoData of promoCodeData| grdFilter: {promoCode: searchText}; let i=index;">
+                        <tr *ngFor="let promoData of promoCodeData; let i=index;">
                             <td class="pt-3 pb-2">{{promoData.promoCode}}</td>
                             <td class="pt-2 pb-2">{{promoData.dateFrom}}</td>
                             <td class="pt-2 pb-2">{{promoData.dateTo}}</td>

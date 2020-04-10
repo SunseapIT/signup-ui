@@ -22,6 +22,7 @@ export class ProfileComponent implements OnInit {
   userId: any;
 
   ngOnInit() {
+    
     this.getCustomerDetailByEmail();
   }
 
@@ -30,16 +31,10 @@ export class ProfileComponent implements OnInit {
     var objStr = localStorage.getItem("Customer_Details");
     customerDto = JSON.parse(objStr);
     this.userId = customerDto.eamilAddress;
-
-    this._service
-      .get_service(
-        ApiServiceServiceService.apiList.getCustomerDetailsByEmail +
-          "?email=" +
-          this.userId
-      )
+    this._service.get_service(ApiServiceServiceService.apiList.getCustomerDetailsByEmail +"?email=" + this.userId)
       .subscribe(response => {
         if (response.body.statusCode == 200 ) {
-          this.customerPlanDetail = response.body.data;
+          this.customerPlanDetail = response.body.data.map(item=> {return {...item, address: item.houseNo + ' ' + item.buildingName + ' ' + item.streetName + '-' + item.postelCode}});     
           this.assignDefaultServiceAddress();
         }
       });
@@ -48,7 +43,13 @@ export class ProfileComponent implements OnInit {
   assignDefaultServiceAddress() {
     if (this.customerPlanDetail != null && this.customerPlanDetail.length > 0) {
       this.customerDto = this.customerPlanDetail[0];
+      this.onSelectServiceAddress(this.customerPlanDetail);     
     }
+  }
+
+  onSelectServiceAddress(event){
+    console.log(event);
+   
   }
 
 }

@@ -1,194 +1,236 @@
 <div class="wrapper background">
-    <div class=" container-fluid p-0 ">
-        <div class="row">
-            <div class="col-md-6 p-0"></div>
-            <div class="col-md-6">
-                <select name="serviceAddress " id="serviceAddress " (change)="onSelectServiceAddress($event.target.value) " class="form-control select-font ">
-          <option class="option-font " [value]="item.spAccountNo " *ngFor="let item of serviceAddresses ; let i=i ndex ">{{ item.serviceAddress}} </option>
+  <div class="container-fluid p-0">
+    <div class="row">
+      <div class="col-md-6 p-0"></div>
+      <div class="col-md-6">
+        <select
+          name="serviceAddress "
+          id="serviceAddress "
+          (change)="onSelectServiceAddress($event.target.value)"
+          class="form-control select-font"
+        >
+          <option
+            class="option-font"
+            [value]="item.spAccountNo"
+            *ngFor="let item of serviceAddresses; let i = i; ndex"
+            >{{ item.serviceAddress }}
+          </option>
         </select>
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
 
-    <div class="container-fluid p-0 mt-5 background-white ">
-        <div class="row p-0 ">
-            <div class="col-md-6 m-0 ">
-                <div class="customer-card mr-3 mb-3"> </div>
-                <h5 class="ml-3">Plan Summary</h5>
-                <div class="row ">
-                    <div class="col-md-4 ml-3 ">
-                        <p class="form-control-label ">Plan Summary:</p>
-                    </div>
-                    <div class="col-md-7 ">
-                        {{ customerDto?.planDetails.planName }}
-                    </div>
-                </div>
-
-                <div class="row mt-1">
-                    <div class="col-md-4 ml-3">
-                        <p class="form-control-label ">Solar Energy:</p>
-                    </div>
-                    <div class="col-md-7 ">
-                        {{ customerDto?.planDetails.energy }}%
-                    </div>
-                </div>
-                <div class="row mt-1 ">
-                    <div class="col-md-4 ml-3 ">
-                        <p class="form-control-label ">DOT/Fix Rate:</p>
-                    </div>
-                    <div class="col-md-7 ">
-                        {{ customerDto?.planDetails.rate }} cents/kWh Fixed - Excluding GST
-                    </div>
-                </div>
-                <div class="row mt-1 ">
-                    <div class="col-md-4 ml-3">
-                        <p class="form-control-label ">Contract Start Date:</p>
-                    </div>
-                    <div class="col-md-7">
-                        {{ customerDto?.sighnUpStarTimeStamp}}
-                    </div>
-                </div>
-                <div class="row mt-1 ">
-                    <div class="col-md-4 ml-3">
-                        <p class="form-control-label ">Contract End Date:</p>
-                    </div>
-                    <div class="col-md-7 ">
-                        {{ customerDto?.sighnUpEndTimeStamp }}
-                    </div>
-                </div>
-                <div class="row mt-1 mb-4">
-                    <div class="col-md-4 ml-3 ">
-                        <p class="form-control-label ">Security Deposit:</p>
-                    </div>
-                    <div class="col-md-7">
-                        $0.0
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-md-6 ">
-                <div class="customer-card mb-3 "></div>
-                <h5>Referral</h5>
-                <div class="row ">
-                    <div class="col-md-12 ">
-                        <ol>
-                            <li>Get your friends to sign up with this referral code.</li>
-                            <li>You and your friends will enjoy the referral benefit.</li>
-                        </ol>
-                    </div>
-                </div>
-
-            </div>
+  <div class="container-fluid p-0 mt-5 background-white">
+    <div class="row p-0">
+      <div class="col-md-6 m-0">
+        <div class="customer-card mr-3 mb-3"></div>
+        <h5 class="ml-3">Plan Summary</h5>
+        <div class="row">
+          <div class="col-md-4 ml-3">
+            <p class="form-control-label">Plan Summary:</p>
+          </div>
+          <div class="col-md-7">
+            {{ customerDto?.planDetails.planName }}
+          </div>
         </div>
-    </div>
 
-    <div class="container-fluid p-0 mt-5 background-white">
-        <div class="row ">
-            <div class="col-md-6 ">
-                <div class="customer-card-blue mr-3 mb-3"> </div>
-                <h5 class="ml-3">Customer</h5>
-                <div class="row ">
-                    <div class="col-md-4 ml-3">
-                        <p class="form-control-label ">Full Name:</p>
-                    </div>
-                    <div class="col-md-7">
-                        {{ customerDto?.fullName }}
-                    </div>
-                </div>
-
-                <div class="row mt-1 ">
-                    <div class="col-md-4 ml-3">
-                        <p class="form-control-label ">User Id:</p>
-                    </div>
-                    <div class="col-md-7">
-                        {{ customerDto?.customerId }}
-                    </div>
-                </div>
-                <div class="row mt-1 ">
-                    <div class="col-md-4 ml-3">
-                        <p class="form-control-label ">Billing Address:</p>
-                    </div>
-                    <div class="col-md-7">
-                        {{ customerDto?.buildingName }}
-                    </div>
-                </div>
-                <div class="row mt-1 ">
-                    <div class="col-md-4 ml-3">
-                        <p class="form-control-label ">Billing Postal Code:</p>
-                    </div>
-                    <div class="col-md-7">
-                        {{ customerDto?.postelCode}}
-                    </div>
-                </div>
-                <div class="row mt-1">
-                    <div class="col-md-4 ml-3">
-                        <p class="form-control-label ">Email:</p>
-                    </div>
-                    <div class="col-md-7">
-                        {{ customerDto?.eamilAddress }}
-                    </div>
-                </div>
-                <div class="row mt-1 mb-4">
-                    <div class="col-md-4 ml-3">
-                        <p class="form-control-label ">Mobile:</p>
-                    </div>
-                    <div class="col-md-7">
-                        {{ customerDto?.mobileNumber }}
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-md-6 ">
-                <div class="customer-card-blue mb-3"> </div>
-                <h5 class="ml-3">Service</h5>
-                <div class="row mt-1 ">
-                    <div class="col-md-4  ml-3">
-                        <p class="form-control-label ">Service Address:</p>
-                    </div>
-                    <div class="col-md7 ">
-                        {{ customerDto?.buildingName }}
-                    </div>
-                </div>
-                <div class="row mt-1 ">
-                    <div class="col-md-4 ml-3 ">
-                        <p class="form-control-label ">Postal Code:</p>
-                    </div>
-                    <div class="col-md-7 ">
-                        {{ customerDto?.postelCode }}
-                    </div>
-                </div>
-                <div class="row mt-1 ">
-                    <div class="col-md-4 ml-3">
-                        <p class="form-control-label ">Dwelling Type:</p>
-                    </div>
-                    <div class="col-md-7">
-                        {{ customerDto?.dwelingType }}
-                    </div>
-                </div>
-
-            </div>
+        <div class="row mt-1">
+          <div class="col-md-4 ml-3">
+            <p class="form-control-label">Solar Energy:</p>
+          </div>
+          <div class="col-md-7">{{ customerDto?.planDetails.energy }}%</div>
         </div>
+        <div class="row mt-1">
+          <div class="col-md-4 ml-3">
+            <p class="form-control-label">DOT/Fix Rate:</p>
+          </div>
+          <div class="col-md-7">
+            {{ customerDto?.planDetails.rate }} cents/kWh Fixed - Excluding GST
+          </div>
+        </div>
+        <div class="row mt-1">
+          <div class="col-md-4 ml-3">
+            <p class="form-control-label">Contract Start Date:</p>
+          </div>
+          <div class="col-md-7">
+            {{ customerDto?.sighnUpStarTimeStamp }}
+          </div>
+        </div>
+        <div class="row mt-1">
+          <div class="col-md-4 ml-3">
+            <p class="form-control-label">Contract End Date:</p>
+          </div>
+          <div class="col-md-7">
+            {{ customerDto?.sighnUpEndTimeStamp }}
+          </div>
+        </div>
+        <div class="row mt-1 mb-4">
+          <div class="col-md-4 ml-3">
+            <p class="form-control-label">Security Deposit:</p>
+          </div>
+          <div class="col-md-7">
+            $0.0
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="customer-card mb-3"></div>
+        <h5>Referral</h5>
+        <div class="row">
+          <div class="col-md-12">
+            <ol>
+              <li>Get your friends to sign up with this referral code.</li>
+              <li>You and your friends will enjoy the referral benefit.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
+  <div class="container-fluid p-0 mt-5 background-white">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="customer-card-blue mr-3 mb-3"></div>
+        <h5 class="ml-3">Customer</h5>
+        <div class="row">
+          <div class="col-md-4 ml-3">
+            <p class="form-control-label">Full Name:</p>
+          </div>
+          <div class="col-md-7">
+            {{ customerDto?.fullName }}
+          </div>
+        </div>
+
+        <div class="row mt-1">
+          <div class="col-md-4 ml-3">
+            <p class="form-control-label">User Id:</p>
+          </div>
+          <div class="col-md-7">
+            {{ customerDto?.customerId }}
+          </div>
+        </div>
+        <div class="row mt-1">
+          <div class="col-md-4 ml-3">
+            <p class="form-control-label">Billing Address:</p>
+          </div>
+          <div class="col-md-7">
+            {{ customerDto?.buildingName }}
+          </div>
+        </div>
+        <div class="row mt-1">
+          <div class="col-md-4 ml-3">
+            <p class="form-control-label">Billing Postal Code:</p>
+          </div>
+          <div class="col-md-7">
+            {{ customerDto?.postelCode }}
+          </div>
+        </div>
+        <div class="row mt-1">
+          <div class="col-md-4 ml-3">
+            <p class="form-control-label">Email:</p>
+          </div>
+          <div class="col-md-7">
+            {{ customerDto?.eamilAddress }}
+          </div>
+        </div>
+        <div class="row mt-1 mb-4">
+          <div class="col-md-4 ml-3">
+            <p class="form-control-label">Mobile:</p>
+          </div>
+          <div class="col-md-7">
+            {{ customerDto?.mobileNumber }}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="customer-card-blue mb-3"></div>
+        <h5 class="ml-3">Service</h5>
+        <div class="row mt-1">
+          <div class="col-md-4 ml-3">
+            <p class="form-control-label">Service Address:</p>
+          </div>
+          <div class="col-md7">
+            {{ customerDto?.buildingName }}
+          </div>
+        </div>
+        <div class="row mt-1">
+          <div class="col-md-4 ml-3">
+            <p class="form-control-label">Postal Code:</p>
+          </div>
+          <div class="col-md-7">
+            {{ customerDto?.postelCode }}
+          </div>
+        </div>
+        <div class="row mt-1">
+          <div class="col-md-4 ml-3">
+            <p class="form-control-label">Dwelling Type:</p>
+          </div>
+          <div class="col-md-7">
+            {{ customerDto?.dwelingType }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid p-0 mt-5 mb-5 background-white">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="customer-card-blue mr-3 mb-3"></div>
+        <h5>Payment Method</h5>
+        <div class="row">
+          <div class="col-md-12 text-center mt-5">
+            <p>Apply for recurring payment method:</p>
+            <div class="col-md-12 mt-3">
+              <img
+                src="/assets/sign-up/images/icons/MasterCard.svg"
+                height="100px"
+                width="70px"
+              />
+              <img
+                src="/assets/sign-up/images/icons/VisaCard.svg"
+                height="100px"
+                width="70px"
+              />
+              <img
+                src="/assets/sign-up/images/icons/amex.svg"
+                height="100px"
+                width="70px"
+              />
+            </div>
+
+            <button class="btn btn-success" (click)="goToCard()">
+              Add Card
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngFor="let tokenDetails of customerDto?.tokenDtoList">
     <div class="container-fluid p-0 mt-5 mb-5 background-white">
-        <div class="row ">
-            <div class="col-md-6 ">
-                <div class="customer-card-blue mr-3 mb-3"></div>
-                <h5>Payment Method</h5>
-                <div class="row ">
-                    <div class="col-md-12 text-center mt-5 ">
-                        <p>Apply for recurring payment method:</p>
-                        <div class="col-md-12 mt-3">
-                            <img src="/assets/sign-up/images/icons/MasterCard.svg" height="100px" width="70px" />
-                            <img src="/assets/sign-up/images/icons/VisaCard.svg" height="100px" width="70px" />
-                            <img src="/assets/sign-up/images/icons/amex.svg" height="100px" width="70px" />
-                        </div>
-
-                        <button class="btn btn-success" (click)="goToCard()">Add Card</button>
-                    </div>
-                </div>
-
+      <div class="row">
+        <div class="col-md-4">
+          <div class="customer-card-blue mr-3 mb-3"></div>
+          <h5 class="ml-3">Card Details</h5>
+          <div class="row">
+            <div class="col-md-4 ml-3">
+              <p class="form-control-label">
+                Card Number: XXXXXXXXXXXX{{ tokenDetails.token | slice: 12 }}
+              </p>
             </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 ml-3">
+              <p class="form-control-label">
+                Card Name:{{ tokenDetails.brand }}
+              </p>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

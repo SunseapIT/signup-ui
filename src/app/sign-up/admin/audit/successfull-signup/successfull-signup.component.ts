@@ -93,8 +93,7 @@ export class SuccessfullSignupComponent implements OnInit {
 
 
   searchCustomer(event) {
-    // let name = event.target.value;
-    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?fullName.contains=" + this.searchText + "&page=" + (this.page - 1)).subscribe((response: any) => {
+    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?searchKey=" + this.searchText + "&page=" + (this.page - 1)).subscribe((response: any) => {
       var responseBody = response['body'];
       var responseData = responseBody['data'];
       this.totalItems = responseData.totalElements;

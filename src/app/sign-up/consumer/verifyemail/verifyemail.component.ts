@@ -3,6 +3,7 @@ import { ApiServiceServiceService } from '@app/api-service-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CustomerDto } from '@app/core/customer-dto';
 
 @Component({
   selector: 'app-verifyemail',
@@ -14,6 +15,7 @@ export class VerifyemailComponent implements OnInit {
   model = {userId : "",  otp : ""};
   userId = '';
   confirmPassword='';
+  customerDto = new CustomerDto;
   constructor(private _service : ApiServiceServiceService,
     private toster: ToastrService,
     private router : Router) { }
@@ -23,8 +25,9 @@ export class VerifyemailComponent implements OnInit {
 
   onSubmit(form:NgForm){
     if(form.value){
-     let data:any[] = form.value; 
-     console.log('data',data);
+     let data:any[] = form.value;
+     this.customerDto.eamilAddress = this.model.userId;
+
      this._service.post_service(ApiServiceServiceService.apiList.verifyEmailOtp,data).subscribe(response=>{
       console.log('submit', response);
       
@@ -32,6 +35,7 @@ export class VerifyemailComponent implements OnInit {
        var responseMessage = responseBody['message'];
        let statusCode = responseBody['statusCode']
        if (statusCode == 200) {
+        localStorage.setItem("Customer_Details", JSON.stringify(this.customerDto))
          this.router.navigateByUrl('/consumer/change_password')
          this.toster.success('', 'Email verified successfully', {
            timeOut: 2000

@@ -54,4 +54,10 @@ export class CustomerDto {
    captchaResponse : string;
    
    planDetails: PlanBean;
+
+   userId : string;
+
+   password: string;
+
+   confirmPassword:string;
 }

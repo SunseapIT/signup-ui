@@ -45,20 +45,29 @@ export class CardDetailComponent implements OnInit {
   ]
 
   spAccountNumber:any;
-sp
+  sp;
   ngOnInit() {
+
+  
+    this.activatedRoute.queryParams.subscribe((params: any) => {
+      this.spAccountNumber = JSON.parse(atob(params.spActNo))
+      console.log("params : ",this.spAccountNumber);
+      
+    })
+
     this.getUserDetail();
     this.expYear = new Date().getFullYear();
     this.expMonth = new Date().getMonth();
     for(let i=0; i<10; i++){
       this.years.push(this.expYear +i);
     }
-    this.spAccountNumber = this.activatedRoute.params.subscribe(params => {
-      this.sp = +params['sp']; 
-   });
+  //   this.spAccountNumber = this.activatedRoute.params.subscribe(params => {
+  //     this.sp = +params['sp']; 
+  //  });
   
    console.log('this.spAccountNumber=',this.spAccountNumber);
-   console.log(this.sp)    
+   console.log(this.sp);
+
   }
 
 
@@ -71,17 +80,21 @@ sp
     }
 
   onSubmit(form:NgForm){
+    // console.log("---- form is : ",form.value);
+    
     if(form.valid && this.isCardValid){
     var customerDto = new CustomerDto();
      var objStr = localStorage.getItem("customerObj");
      customerDto = JSON.parse(objStr);
-     var spAccountNumber = customerDto.spAccountNumber;
+    //  var spAccountNumber = customerDto.spAccountNumber;
      var paymentDto = new PaymentDto()
       paymentDto.cardNumber = form.value.cardNumber;
       paymentDto.expiryMonth = form.value.expMonth;
       paymentDto.expiryYear = form.value.expYear;
-      paymentDto.sourceType = "CARD"
-      this.service.post_service(ApiServiceServiceService.apiList.addCardDetailUrl+"?sp_account_no="+spAccountNumber, paymentDto).
+      paymentDto.sourceType = "CARD";
+      // console.log("before is : ",this.spAccountNumber);
+      
+      this.service.post_service(ApiServiceServiceService.apiList.addCardDetailUrl+"?sp_account_no="+this.spAccountNumber, paymentDto).
       subscribe((response)=>{
         var responseBody = response['body'];
       var responseMessage = responseBody['message'];
@@ -90,7 +103,7 @@ sp
           this.isCardAdded=true;
           localStorage.removeItem("customerObj")
           localStorage.removeItem("Token")
-          this.router.navigateByUrl('');
+          this.router.navigateByUrl('/consumer/profile');
           form.resetForm()
 
         }
@@ -132,6 +145,6 @@ sp
   }
 
   yes(){
-    this.router.navigateByUrl('');
+    this.router.navigateByUrl('/consumer/profile');
   }
 }

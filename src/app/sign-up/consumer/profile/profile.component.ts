@@ -66,8 +66,8 @@ export class ProfileComponent implements OnInit {
   }
 
   goToCard(){
-  
-    this.route.navigate(['consumer/profile/add-card']);
+    let spActNo = btoa(JSON.stringify(this.customerDto.spAccountNumber));
+    this.route.navigate(['consumer/profile/add-card'], {queryParams: { spActNo: spActNo }});
   }
 
  

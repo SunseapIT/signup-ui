@@ -1,7 +1,11 @@
 import { DatePipe } from '@angular/common';
 import { ApiServiceServiceService } from './../../../../api-service-service.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,  } from '@angular/core';
 import { PageChangedEvent } from 'ngx-bootstrap';
+import {
+  ConfigService,
+  DWELLING_TYPE_OPTIONS,
+  ETC_FEE_OPTIONS,} from '@app/core';
 
 @Component({
   selector: 'app-successfull-signup',
@@ -9,12 +13,12 @@ import { PageChangedEvent } from 'ngx-bootstrap';
   styleUrls: ['./successfull-signup.component.scss']
 })
 export class SuccessfullSignupComponent implements OnInit {
-
+  ETC_FEE_OPTIONS = ETC_FEE_OPTIONS;
   public dateTimeRange: Date[];
 
   sort = "asc"
   sortParam = 'fullName'
-  sortingValue = [true, true, true, true, true, true, true, true, true]
+  sortingValue = [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
   successData = [];
   p: number = 1;
   searchTextSuccess: string;

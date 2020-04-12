@@ -2,9 +2,7 @@
 <div class="container">
     <div class="row mb-4 mt-3">
         <div class="col-lg-4 col-xs-12 text-left">
-
             <input type="text" class="form-control searchbar" [(ngModel)]="searchText" placeholder="Search..." (keyup)="searchPromoCode($event)">
-
         </div>
         <div class="col-lg-5 col-md-5 col-sm-12  p-0  text-right ">
             <input placeholder="Select a range..." class="form-control searchbar" [(ngModel)]="dateTimeRange" [selectMode]="'range'" [owlDateTimeTrigger]="dtRange1" [owlDateTime]="dtRange1" [max]="max" hour12Timer [readonly]="true" (ngModelChange)="getPromoCodeByRange()">
@@ -21,11 +19,11 @@
             <div class="table-responsive">
                 <table class="table table-fixed">
                     <thead>
-                        <th>Promo Code Name</th>
-                        <th>Valid From</th>
-                        <th>Valid To</th>
+                        <th id="promo" class="arrow-down" (click)="sortingValue[0]=!sortingValue[0];sorting('promo',sortingValue[0]); addClass($event)">Promo Code Name</th>
+                        <th id="from" class="arrow-down" (click)="sortingValue[1]=!sortingValue[1];sorting('from',sortingValue[1]); addClass($event)">Valid From</th>
+                        <th id="to" class="arrow-down" (click)="sortingValue[2]=!sortingValue[2];sorting('to',sortingValue[2]); addClass($event)">Valid To</th>
                         <th>No Limit</th>
-                        <th>Number of Uses</th>
+                        <th id="noOfUser" class="arrow-down" (click)="sortingValue[4]=!sortingValue[4];sorting('noOfUser',sortingValue[4]); addClass($event)">Number of Uses</th>
                         <th class="text-center">Action</th>
                     </thead>
                     <tbody>

@@ -60,6 +60,7 @@ export class ApproveComponent implements OnInit {
   searchTextSuccess: string;
   totalItems: any;
   currentPage: number = 1;
+  
   isLoader: boolean = false;
   public i: number = 0;
   promotionMessage = '';
@@ -82,7 +83,7 @@ export class ApproveComponent implements OnInit {
   promocodeStatus = false;
   customerDto = new CustomerDto();
 
-
+  public dateTimeRange: Date[];
   selectedPricingPlan: string;
   selectedPricingPlanId: number;
   fullName: string;
@@ -119,6 +120,14 @@ export class ApproveComponent implements OnInit {
   promoCode: any;
   finalApproved = {};
   selectData;
+  max = new Date();
+  queryParams = "";
+  filters = {
+    fromTimestamp: "",
+    toTimestamp: "",
+    size: 10,
+    page: 0,
+  }
 
   approvedCustomerData = [];
 
@@ -134,6 +143,7 @@ export class ApproveComponent implements OnInit {
   planType = { energy: '', discount: '', rate: '', afterGst: '', rateChange: '' };
   lastApproveDate: Date;
   dwellingObj: any;
+  searched = [];
 
   constructor(private service: ApiServiceServiceService,
     public parent: OrderComponent,
@@ -146,14 +156,15 @@ export class ApproveComponent implements OnInit {
     configService: ConfigService,
     private modalService: BsModalService,
     private gtagService: GoogleTagManagerService,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    ) {
     this.config.validationRegex = configService.get('validationRegex');
 
   }
 
   ngOnInit() {
     this.approvalStatus = this.customerDto.approved
-    this.getCustomerForApproval();
+    this.getCustomerForApproval(null);
     this.getPlans();
     this.postalCode = ""
     this.localStorage.getItem(STORAGE_KEYS.SERVICE_ADDRESS)
@@ -163,10 +174,11 @@ export class ApproveComponent implements OnInit {
     }
   }
 
-  getCustomerForApproval() {
+  getCustomerForApproval(val) {
     this.isLoader = true;
+    this.buildQueryParams();
     this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl
-      + "?size=" + this.size + '&page=' + (this.page - 1) + "&sort=" + this.sortParams + ',' + this.sort).subscribe((responseData: any) => {
+      + "/?" + this.queryParams + "&sort=" + this.sortParams + ',' + this.sort).subscribe((responseData: any) => {
         this.isLoader = false;
         var resultObject = responseData['body'];
         var result = resultObject['data'];
@@ -180,7 +192,73 @@ export class ApproveComponent implements OnInit {
     return this.dateFormat.transform(time, "yyyy-MM-dd");
   }
   searchText: any;
+  searchCustomer(event) {
+    // let name = event.target.value;
+    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl + "?fullName.contains=" + this.searchText + "&page=" + (this.page - 1)).subscribe((response: any) => {
+      var responseBody = response['body'];
+      var responseData = responseBody['data'];
+      var responseContent = responseData['content'];
+      this.totalItems = responseData.totalElements;
+      this.approvalData = responseContent;
+      this.searched = this.approvalData;
+    })
+  }
 
+  buildQueryParams() {
+    let finalQuery = '';
+    for (const item in this.filters) {
+      if (this.filters[item]) {
+        finalQuery = finalQuery + '&' + item + '=' + this.filters[item];
+      }
+    }
+    this.queryParams = finalQuery.replace('&', '');
+  }
+
+  getTimeStamps(time) {
+    return this.dateFormat.transform(time, "dd-MM-yyyy hh:mm:ss");
+  }
+
+  getApproveByRange(){
+    this.filters['fromTimestamp'] = this.dateTimeRange ? this.getTimeStamps(this.dateTimeRange[0]) : null;
+    this.filters['toTimestamp'] = this.dateTimeRange ? this.getTimeStamps(this.dateTimeRange[1]) : null;
+    this.filters['page'] = 0;
+    this.getCustomerForApproval("datetime");
+  }
+
+  getFilteredList() {
+    this.filters['fromTimestamp'] = this.dateTimeRange ? this.getTimeStamps(this.dateTimeRange[0]) : null;
+    this.filters['toTimestamp'] = this.dateTimeRange ? this.getTimeStamps(this.dateTimeRange[1]) : null;
+    this.filters['page'] = this.page ? this.page - 1 : 0;
+    this.getCustomerForApproval(null);
+  }
+
+  pageChanged(event: PageChangedEvent): void {
+    this.page = event.page;
+    if (this.searchText != undefined && this.searchText != "") {
+      this.searchCustomer(this.searchText)
+    }
+    else {
+      this.getFilteredList();
+      this.searched;
+    }
+  }
+
+  clearValue() {
+    this.page = 0;
+    this.dateTimeRange = [];
+    this.resetFilters();
+    this.getCustomerForApproval(null);
+  }
+
+
+  resetFilters() {
+    this.filters = {
+      fromTimestamp: "",
+      toTimestamp: "",
+      size: 10,
+      page: 0,
+    }
+  }
 
 
 
@@ -360,30 +438,9 @@ export class ApproveComponent implements OnInit {
         var file = b64toBlob(responseFileData, responseFileType);
         var fileURL = URL.createObjectURL(file);
         window.open(fileURL);
-
       })
   }
-  searchCustomer(event) {
-    // let name = event.target.value;
-    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl + "?fullName.contains=" + this.searchText + "&page=" + (this.page - 1)).subscribe((response: any) => {
-      var responseBody = response['body'];
-      var responseData = responseBody['data'];
-      var responseContent = responseData['content'];
-      this.totalItems = responseData.totalElements;
-      this.approvalData = responseContent;
-    })
-  }
 
-  pageChanged(event: PageChangedEvent): void {
-    this.page = event.page;
-    if (this.searchText != undefined && this.searchText != "") {
-      this.searchCustomer(this.searchText)
-    }
-    else {
-      this.currentPage = 1;
-      this.getCustomerForApproval();
-    }
-  }
 
 
   // spno
@@ -435,7 +492,7 @@ export class ApproveComponent implements OnInit {
             this.toastr.success('', 'Customer approved successfully.', {
             })
             $('#customer').modal('hide');
-            this.getCustomerForApproval();
+            this.getCustomerForApproval(null);
           }
           else if (statusCode == 400 && responseMsg == 'installationIdentifier Consumer already exists with provided MSSL number.') {
             this.isLoader = false;
@@ -545,27 +602,8 @@ export class ApproveComponent implements OnInit {
       })
   }
 
-  // verifyPromotionCode(index) {
-  //   let promocode = this.promoCodeList[index].referralCode.toLowerCase();
-
-  //   if (this.verifiedPromocodes.length > 0) {
-  //     this.verified = true;
-  //     this.verifiedPromocodes.findIndex(item => item == promocode)
-  //     if (this.verifiedPromocodes.findIndex(item => item == promocode) == -1) {
-  //       this.verifyPromocode(index, promocode);
-  //       this.duplicatePromoCode = false;
-  //     } else {
-  //       this.duplicatePromoCode = true;
-  //     }
-  //   } else {
-  //     this.verifyPromocode(index, promocode);
-  //     this.duplicatePromoCode = false;
-  //   }
-  // }
-
   verifyPromocode(index, promocode) {
     var customerDto = new CustomerDto();
-
     this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl + "?promoCode="
       + promocode, customerDto).subscribe((response: any) => {
         var responseBody = response['body'];
@@ -712,7 +750,7 @@ export class ApproveComponent implements OnInit {
     this.service.post_service(ApiServiceServiceService.apiList.customerRemark, customerRemark).subscribe((response) => {
       this.toastr.success('', 'Added remarks/comments successfully.')
       $('#customer').modal('hide');
-      this.getCustomerForApproval();
+      this.getCustomerForApproval(null);
     })
     form.resetForm()
   }

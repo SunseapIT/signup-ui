@@ -11,9 +11,12 @@ import { serviceAddressDto } from "@app/core/service-address-dto";
   styleUrls: ["./profile.component.scss"],
 })
 export class ProfileComponent implements OnInit {
+
+  
   customerPlanDetail: CustomerDto[] = [];
   serviceAddresses : serviceAddressDto[] = [];
   customerDto: CustomerDto = null;
+  sp:any;
 
   constructor(
     private _service: ApiServiceServiceService,
@@ -54,6 +57,18 @@ export class ProfileComponent implements OnInit {
 
   onSelectServiceAddress(event){
     this.customerDto = this.customerPlanDetail.find(item=> item.spAccountNumber == event);
+    console.log('this.customerDto event',this.customerDto );
+    console.log('this.customerDto event sp',this.customerDto.spAccountNumber );
+    this.sp =this.customerDto.spAccountNumber;
+    console.log('this.sp',this.sp);
+    
+    
   }
 
+  goToCard(){
+  
+    this.route.navigate(['consumer/profile/add-card']);
+  }
+
+ 
 }

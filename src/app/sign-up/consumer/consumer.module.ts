@@ -11,6 +11,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { VerifyemailComponent } from './verifyemail/verifyemail.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { CardDetailComponent } from './card-detail/card-detail.component';
 
 
 @NgModule({
@@ -33,7 +34,9 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
         
     VerifyemailComponent,
         
-    ChangePasswordComponent],
+    ChangePasswordComponent,
+        
+    CardDetailComponent],
     providers: [
       ORDER_COMPONENTS
     ]

@@ -7,6 +7,7 @@ import { AuthguardGuard } from '@app/authguard.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { VerifyemailComponent } from './verifyemail/verifyemail.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { CardDetailComponent } from './card-detail/card-detail.component';
 
 const routes: Routes = [
    
@@ -14,6 +15,7 @@ const routes: Routes = [
      {path : 'profile', component : ConsumerDashboardComponent,canActivate : [AuthguardGuard],
     children : [
       {path: '' , component: ProfileComponent },
+      {path: 'add-card', component : CardDetailComponent}
      
     ]},
     {path : 'verify_email', component : VerifyemailComponent},

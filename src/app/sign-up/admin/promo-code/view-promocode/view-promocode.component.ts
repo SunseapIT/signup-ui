@@ -1,6 +1,5 @@
 import { ToastrService } from 'ngx-toastr';
-import { Promocode } from './../../dto/promo-dto';
-import { HttpParams } from '@angular/common/http';
+
 import { Router } from '@angular/router';
 import { ApiServiceServiceService } from '@app/api-service-service.service';
 import { Component, OnInit } from '@angular/core';
@@ -16,7 +15,8 @@ declare const $: any;
 })
 export class ViewPromocodeComponent implements OnInit {
   sort = "asc"
-  sortParam = 'fullName'
+  sortParam = 'promoCode'
+  sortingValue = [true,true,true,true,true]
   promoCodeData = [];
   public dateTimeRange: Date[];
   isLoader: boolean;
@@ -46,7 +46,6 @@ export class ViewPromocodeComponent implements OnInit {
     private router: Router,
     private dateFormat: DatePipe) { }
 
-    
 
   ngOnInit() {
     this.getPromoCode(null);
@@ -56,7 +55,7 @@ export class ViewPromocodeComponent implements OnInit {
   getPromoCode(val) {
     this.isLoader = true;
     this.buildQueryParams();
-    this.service.get_service(ApiServiceServiceService.apiList.getPromocodeByCriteria + "/?" + this.queryParams).subscribe((response: any) => {
+    this.service.get_service(ApiServiceServiceService.apiList.getPromocodeByCriteria + "/?" + this.queryParams + "&sort=" + this.sortParam + ',' + this.sort).subscribe((response: any) => {
       var responseBody = response['body'];
       var responseData = responseBody['data'];
       this.totalItems = responseData.totalElements;
@@ -97,6 +96,7 @@ export class ViewPromocodeComponent implements OnInit {
       this.searched =this.promoCodeData;
     })
   }
+
   clearValue() {
     this.page = 0;
     this.dateTimeRange = [];
@@ -164,4 +164,90 @@ export class ViewPromocodeComponent implements OnInit {
 
   // }
 
+
+  addClass(event) {
+    let elementId = document.getElementById(event.target.id);
+    if (event.target.className == "arrow-down") {
+      elementId.classList.replace("arrow-down", "arrow-up");
+    } else {
+      elementId.classList.replace("arrow-up", "arrow-down");
+    }
+
+  }
+
+  sorting(value, format) {
+    let pageNumber = 0
+    if (this.page == 0) {
+      pageNumber = 0
+    } else {
+      pageNumber = this.page - 1;
+    }
+
+    if (format) {
+      this.sort = "asc"
+    } else {
+      this.sort = "desc"
+    }
+    if (value == 'promo') {
+      this.sortParam = "promoCode";
+      this.service.get_service(ApiServiceServiceService.apiList.getPromocodeByCriteria + "?sort=promoCode,"
+        + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
+          var responseBody = response['body'];
+          var responseData = responseBody['data'];
+          this.totalItems = responseData.totalElements;
+          var responseContent = responseData['content'];
+          this.promoCodeData = responseContent;
+          
+        })
+    }
+    else if (value == 'from') {
+      this.sortParam = 'fromDate';
+      this.service.get_service(ApiServiceServiceService.apiList.getPromocodeByCriteria + "?sort=fromDate," + this.sort + '&page=' + pageNumber)
+        .subscribe((response: any) => {
+          var responseBody = response['body'];
+          var responseData = responseBody['data'];
+          this.totalItems = responseData.totalElements;
+          var responseContent = responseData['content'];
+          this.promoCodeData = responseContent;
+         
+        })
+    }
+  
+    else if (value == 'to') {
+      this.sortParam = 'toDate';
+      this.service.get_service(ApiServiceServiceService.apiList.getPromocodeByCriteria + "?sort=toDate," + this.sort + '&page=' + pageNumber)
+        .subscribe((response: any) => {
+          var responseBody = response['body'];
+          var responseData = responseBody['data'];
+          this.totalItems = responseData.totalElements;
+          var responseContent = responseData['content'];
+          this.promoCodeData = responseContent;
+         
+        })
+    }
+    else if (value == 'user') {
+      this.sortParam = 'noOfUsers';
+      this.service.get_service(ApiServiceServiceService.apiList.getPromocodeByCriteria + "?sort=user," + this.sort + '&page=' + pageNumber)
+        .subscribe((response: any) => {
+          var responseBody = response['body'];
+          var responseData = responseBody['data'];
+          this.totalItems = responseData.totalElements;
+          var responseContent = responseData['content'];
+          this.promoCodeData = responseContent;
+         
+        })
+    }
+    else if (value == 'noOfUser') {
+      this.sortParam = 'noOfLimitedUsers';
+      this.service.get_service(ApiServiceServiceService.apiList.getPromocodeByCriteria + "?sort=noOfLimitedUsers," + this.sort + '&page=' + pageNumber)
+        .subscribe((response: any) => {
+          var responseBody = response['body'];
+          var responseData = responseBody['data'];
+          this.totalItems = responseData.totalElements;
+          var responseContent = responseData['content'];
+          this.promoCodeData = responseContent;
+         
+        })
+    }
+  }
 }

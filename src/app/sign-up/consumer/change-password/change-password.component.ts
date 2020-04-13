@@ -3,6 +3,7 @@ import { ApiServiceServiceService } from '@app/api-service-service.service';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { CustomerDto } from '@app/core/customer-dto';
 
 @Component({
   selector: 'app-change-password',
@@ -20,11 +21,19 @@ export class ChangePasswordComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  customerDto = new CustomerDto;
   onSubmit(form:NgForm){
      let data:any[] = form.value; 
      console.log('data',data);
-     this._service.post_service(ApiServiceServiceService.apiList.changePassword,data).subscribe(response=>{
+     var objStr = localStorage.getItem("Customer_Details");
+     let customerDto = JSON.parse(objStr);
+     this.model.userId = customerDto.eamilAddress;
+     
+     this.customerDto.userId = this.model.userId;
+     this.customerDto.password = this.model.password;
+     this.customerDto.confirmPassword = this.model.confirmPassword;
+
+     this._service.post_service(ApiServiceServiceService.apiList.changePassword,this.customerDto).subscribe(response=>{
        console.log('change',response);
     var responseBody = response['body'];
           var responseMessage = responseBody['message'];

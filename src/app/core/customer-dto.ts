@@ -56,6 +56,12 @@ export class CustomerDto {
    
    planDetails: PlanBean;
 
+   userId : string;
+
+   password: string;
+
+   confirmPassword:string;
+
    tokenDtoList:tokenDto;
 
 }

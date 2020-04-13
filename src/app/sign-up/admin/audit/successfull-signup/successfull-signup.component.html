@@ -43,7 +43,7 @@
                         <th id="etc" class="arrow-down" (click)="sortingValue[15]=!sortingValue[15];sorting('etc',sortingValue[15]); addClass($event)">ETC</th>
                         <th id="promo" class="arrow-down" (click)="sortingValue[16]=!sortingValue[16];sorting('promo',sortingValue[16]); addClass($event)">Promo Code</th>
                         <th id="contractTerm" class="arrow-down" (click)="sortingValue[17]=!sortingValue[17];sorting('constractTerm',sortingValue[17]); addClass($event)">Contract Term</th>
-                        <th id="plandot" class="arrow-down" (click)="sortingValue[18]=!sortingValue[18];sorting('planName',sortingValue[18]); addClass($event)">Plan DTO</th>
+                        <!-- <th id="plandot" class="arrow-down" (click)="sortingValue[18]=!sortingValue[18];sorting('planName',sortingValue[18]); addClass($event)">Plan DOT</th> -->
                         <th id="approvedate" class="arrow-down" (click)="sortingValue[19]=!sortingValue[19];sorting('planName',sortingValue[19]); addClass($event)">Approve date</th>
                         <th id="contractprice" class="arrow-down" (click)="sortingValue[20]=!sortingValue[20];sorting('planName',sortingValue[20]); addClass($event)">Contract Price</th>
                         <th id="behalf" class="arrow-down" (click)="sortingValue[21]=!sortingValue[21];sorting('planName',sortingValue[21]); addClass($event)">Account Holder</th>
@@ -88,7 +88,7 @@
                             <td>${{ ETC_FEE_OPTIONS[customerList.dwelingType] }}</td>
                             <td>{{customerList.promoCode}}</td>
                             <td></td>
-                            <td></td>
+                            <!-- <td></td> -->
                             <td>{{customerList.approvedTime}}</td>
                             <td>{{customerList.planDetails.rate}}</td>
                             <td>{{customerList.selfSignup == null ? 'Self SignUp' : customerList.selfSignup }}</td>

@@ -22,32 +22,53 @@
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
-                        <th id="first" class="arrow-down" (click)="sortingValue[0]=!sortingValue[0];sorting('firstName',sortingValue[0]); addClass($event)">First Name
+                        <th  id="first" class="arrow-down" (click)="sortingValue[0]=!sortingValue[0];sorting('firstName',sortingValue[0]); addClass($event)">
+                            <span style="width: 5% !important;display: block;">First Name</span>
                         </th>
-                        <th id="last" class="arrow-down" (click)="sortingValue[1]=!sortingValue[1];sorting('lastName',sortingValue[1]); addClass($event)">Last Name
+                        <th style="width: 5% !important;" id="last" class="arrow-down" (click)="sortingValue[1]=!sortingValue[1];sorting('lastName',sortingValue[1]); addClass($event)">
+                            <span style="width: 5% !important;display: block;">Last Name</span>
                         </th>
-                        <th id="email" class="arrow-down" (click)="sortingValue[2]=!sortingValue[2];sorting('email',sortingValue[2]); addClass($event)">Email</th>
-                        <th id="mobile" class="arrow-down" (click)="sortingValue[3]=!sortingValue[3];sorting('mobile',sortingValue[3]); addClass($event)">Mobile</th>
-                        <th id="spNumber" class="arrow-down" (click)="sortingValue[4]=!sortingValue[4];sorting('spAccount',sortingValue[4]); addClass($event)">SP Number
+                        <th style="width: 5% !important;" id="email" class="arrow-down" (click)="sortingValue[2]=!sortingValue[2];sorting('email',sortingValue[2]); addClass($event)">
+                            <span style="width: 5% !important;display: block;">Email</span></th>
+                        <th style="width: 5% !important;" id="mobile" class="arrow-down" (click)="sortingValue[3]=!sortingValue[3];sorting('mobile',sortingValue[3]); addClass($event)">
+                            <span style="width: 5% !important;display: block;">Mobile</span></th>
+                        <th style="width: 5% !important;" id="spNumber" class="arrow-down" (click)="sortingValue[4]=!sortingValue[4];sorting('spAccount',sortingValue[4]); addClass($event)">
+                            <span style="width: 5% !important;display: block;">SP Number</span>
                         </th>
-                        <th id="building" class="arrow-down" (click)="sortingValue[5]=!sortingValue[5];sorting('building',sortingValue[5]); addClass($event)">Building Name</th>
-                        <th id="houseNo" class="arrow-down" (click)="sortingValue[6]=!sortingValue[6];sorting('houseNo',sortingValue[6]); addClass($event)">House No</th>
-                        <th id="level" class="arrow-down" (click)="sortingValue[7]=!sortingValue[7];sorting('level',sortingValue[7]); addClass($event)">Level</th>
-                        <th id="unit" class="arrow-down" (click)="sortingValue[8]=!sortingValue[8];sorting('unit',sortingValue[8]); addClass($event)">Unit</th>
+                        <th style="width: 5% !important;" id="building" class="arrow-down" (click)="sortingValue[5]=!sortingValue[5];sorting('building',sortingValue[5]); addClass($event)">
+                            <span style="width: 5% !important;display: block;">Building Name</span></th>
+                        <th style="width: 5% !important;" id="houseNo" class="arrow-down" (click)="sortingValue[6]=!sortingValue[6];sorting('houseNo',sortingValue[6]); addClass($event)">
+                            <span style="width: 5% !important;display: block;">House No</span></th>
+                        <th style="width: 5% !important;" id="level" class="arrow-down" (click)="sortingValue[7]=!sortingValue[7];sorting('level',sortingValue[7]); addClass($event)">
+                            <span style="width: 5% !important;display: block;">Level</span></th>
+                        <th style="width: 5% !important;" id="unit" class="arrow-down" (click)="sortingValue[8]=!sortingValue[8];sorting('unit',sortingValue[8]); addClass($event)">
+                            <span style="width: 5% !important;display: block;">Unit</span></th>
                         <!-- <th id="level" class="arrow-down" (click)="sortingValue[9]=!sortingValue[9];sorting('level',sortingValue[9]); addClass($event)">Level</th> -->
-                        <th id="street" class="arrow-down" (click)="sortingValue[10]=!sortingValue[10];sorting('street',sortingValue[10]); addClass($event)">Street</th>
-                        <th id="postal" class="arrow-down" (click)="sortingValue[11]=!sortingValue[11];sorting('postal',sortingValue[11]); addClass($event)">Postal Code</th>
-                        <th id="dwelling" class="arrow-down" (click)="sortingValue[12]=!sortingValue[12];sorting('dwelling',sortingValue[12]); addClass($event)">Dwelling Type</th>
-                        <th id="plan" class="arrow-down" (click)="sortingValue[13]=!sortingValue[13];sorting('planName',sortingValue[13]); addClass($event)">Plan Name</th>
-                        <th id="signup" class="arrow-down" (click)="sortingValue[14]=!sortingValue[14];sorting('signup',sortingValue[14]); addClass($event)">SignUp Date</th>
-                        <th id="etc" class="arrow-down" (click)="sortingValue[15]=!sortingValue[15];sorting('etc',sortingValue[15]); addClass($event)">ETC</th>
-                        <th id="promo" class="arrow-down" (click)="sortingValue[16]=!sortingValue[16];sorting('promo',sortingValue[16]); addClass($event)">Promo Code</th>
-                        <th id="contractTerm" class="arrow-down" (click)="sortingValue[17]=!sortingValue[17];sorting('constractTerm',sortingValue[17]); addClass($event)">Contract Term</th>
+                        <th style="width: 5% !important;" id="street" class="arrow-down" (click)="sortingValue[10]=!sortingValue[10];sorting('street',sortingValue[10]); addClass($event)">
+                            <span style="width: 5% !important;display: block;">Street</span></th>
+                        <th style="width: 5% !important;" id="postal" class="arrow-down" (click)="sortingValue[11]=!sortingValue[11];sorting('postal',sortingValue[11]); addClass($event)">
+                            <span style="width: 5% !important;display: block;">Postal Code</span></th>
+                        <th style="width: 5% !important;" id="dwelling" class="arrow-down" (click)="sortingValue[12]=!sortingValue[12];sorting('dwelling',sortingValue[12]); addClass($event)">
+                            <span style="width: 5% !important;display: block;">Dwelling Type</span></th>
+                        <th style="width: 5% !important;" id="plan" class="arrow-down" (click)="sortingValue[13]=!sortingValue[13];sorting('planName',sortingValue[13]); addClass($event)">
+                            <span style="width: 5% !important;display: block;">Plan Name</span></th>
+                        <th style="width: 5% !important;" id="signup" class="arrow-down" (click)="sortingValue[14]=!sortingValue[14];sorting('signup',sortingValue[14]); addClass($event)">
+                            <span style="width: 5% !important;display: block;">SignUp Date</span></th>
+                        <th style="width: 5% !important;" id="etc" class="arrow-down" (click)="sortingValue[15]=!sortingValue[15];sorting('etc',sortingValue[15]); addClass($event)">
+                            <span style="width: 5% !important;display: block;">ETC</span></th>
+                        <th style="width: 5% !important;" id="promo" class="arrow-down" (click)="sortingValue[16]=!sortingValue[16];sorting('promo',sortingValue[16]); addClass($event)">
+                            <span style="width: 5% !important;display: block;">Promo Code</span></th>
+                        <th style="width: 5% !important;" id="contractTerm" class="arrow-down" (click)="sortingValue[17]=!sortingValue[17];sorting('constractTerm',sortingValue[17]); addClass($event)">
+                            <span style="width: 5% !important;display: block;">Contract Term</span></th>
                         <!-- <th id="plandot" class="arrow-down" (click)="sortingValue[18]=!sortingValue[18];sorting('planName',sortingValue[18]); addClass($event)">Plan DOT</th> -->
-                        <th id="approvedate" class="arrow-down" (click)="sortingValue[19]=!sortingValue[19];sorting('planName',sortingValue[19]); addClass($event)">Approve date</th>
-                        <th id="contractprice" class="arrow-down" (click)="sortingValue[20]=!sortingValue[20];sorting('planName',sortingValue[20]); addClass($event)">Contract Price</th>
-                        <th id="behalf" class="arrow-down" (click)="sortingValue[21]=!sortingValue[21];sorting('planName',sortingValue[21]); addClass($event)">Account Holder</th>
-                        <th id="marketing" class="arrow-down" (click)="sortingValue[22]=!sortingValue[22];sorting('planName',sortingValue[22]); addClass($event)">Marketing</th>
+                        <th style="width: 5% !important;" id="approvedate" class="arrow-down" (click)="sortingValue[19]=!sortingValue[19];sorting('planName',sortingValue[19]); addClass($event)">
+                            <span style="width: 5% !important;display: block;">Approve date</span></th>
+                        <th style="width: 5% !important;" id="contractprice" class="arrow-down" (click)="sortingValue[20]=!sortingValue[20];sorting('planName',sortingValue[20]); addClass($event)">
+                            <span style="width: 5% !important;display: block;">Contract Price</span></th>
+                        <th style="width: 5% !important;" id="behalf" class="arrow-down" (click)="sortingValue[21]=!sortingValue[21];sorting('planName',sortingValue[21]); addClass($event)">
+                            <span style="width: 5% !important;display: block;">Account Holder</span></th>
+                        <th style="width: 5% !important;" id="marketing" class="arrow-down" (click)="sortingValue[22]=!sortingValue[22];sorting('planName',sortingValue[22]); addClass($event)">
+                            <span style="width: 5% !important;display: block;">Marketing</span></th>
 
                         <!-- <th id="firs" class="arrow-down" (click)="sortingValue[0]=!sortingValue[0];sorting('firstName',sortingValue[0]); addClass($event)">First Name
                         </th>
@@ -70,29 +91,50 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let customerList of successData ; let i=index;">
-                            <td>{{customerList.fullName}}</td>
-                            <td>{{customerList.lastName}}</td>
-                            <td>{{customerList.eamilAddress}}</td>
-                            <td>{{customerList.mobileNumber}}</td>
-                            <td>{{customerList.spAccountNumber}}</td>
-                            <td>{{customerList.buildingName}}</td>
-                            <td>{{customerList.houseNo}}</td>
-                            <td>{{customerList.level}}</td>
-                            <td>{{customerList.unit}}</td>
-                            <td>{{customerList.streetName}}</td>
-                            <td>{{customerList.postelCode}}</td>
-                            <td>{{customerList.dwelingType}}</td>
-                            <td>{{customerList.plan}}</td>
+                            <td style="width: 5% !important;">
+                                <span style="width: 5% !important;display: block;">{{customerList.fullName}}</span></td>
+                            <td style="width: 5% !important;">
+                                <span style="width: 5% !important;display: block;">{{customerList.lastName}}</span></td>
+                            <td style="width: 5% !important;">
+                                <span style="width: 5% !important;display: block;">{{customerList.eamilAddress}}</span></td>
+                            <td style="width: 5% !important;">
+                                <span style="width: 5% !important;display: block;">{{customerList.mobileNumber}}</span></td>
+                            <td style="width: 5% !important;">
+                                <span style="width: 5% !important;display: block;">{{customerList.spAccountNumber}}</span></td>
+                            <td style="width: 4% !important;">
+                                <span style="width: 4% !important;display: block;">{{customerList.buildingName}}</span></td>
+                            <td style="width: 5% !important;">
+                                <span style="width: 3% !important;display: block;">{{customerList.houseNo}}</span></td>
+                            <td style="width: 5% !important;">
+                                <span style="width: 5% !important;display: block;">{{customerList.level}}</span></td>
+                            <td style="width: 5% !important;">
+                                <span style="width: 5% !important;display: block;">{{customerList.unit}}</span></td>
+                            <td style="width: 5% !important;">
+                                <span style="width: 5% !important;display: block;">{{customerList.streetName}}</span></td>
+                            <td style="width: 5% !important;">
+                                <span style="width: 5% !important;display: block;">{{customerList.postelCode}}</span></td>
+                            <td style="width: 5% !important;">
+                                <span style="width: 5% !important;display: block;">{{customerList.dwelingType}}</span></td>
+                            <td style="width: 8% !important;">
+                                <span style="width: 8% !important;display: block;">{{customerList.plan}}</span></td>
                             <!-- <td>{{customerList.sighnUpStarTimeStamp}}</td> -->
-                            <td>{{customerList.sighnUpEndTimeStamp}}</td>
-                            <td>${{ ETC_FEE_OPTIONS[customerList.dwelingType] }}</td>
-                            <td>{{customerList.promoCode}}</td>
-                            <td></td>
+                            <td style="width: 5% !important;">
+                                <span style="width: 5% !important;display: block;">{{customerList.sighnUpEndTimeStamp}}</span></td>
+                            <td style="width: 5% !important;">
+                                <span style="width: 5% !important;display: block;">${{ ETC_FEE_OPTIONS[customerList.dwelingType] }}</span></td>
+                            <td style="width: 5% !important;">
+                                <span style="width: 5% !important;display: block;">{{customerList.promoCode}}</span></td>
+                            <td style="width: 5% !important;">
+                            <span style="width: 5% !important;display: block;"></span></td>
                             <!-- <td></td> -->
-                            <td>{{customerList.approvedTime}}</td>
-                            <td>{{customerList.planDetails.rate}}</td>
-                            <td>{{customerList.selfSignup == null ? 'Self SignUp' : customerList.selfSignup }}</td>
-                            <td>{{customerList.contentToMarketing == true ? 'Yes' :(customerList.contentToMarketing == false) ? 'No':''}}</td>
+                            <td style="width: 5% !important;">
+                                <span style="width: 5% !important;display: block;">{{customerList.approvedTime}}</span></td>
+                            <td style="width: 5% !important;">
+                                <span style="width: 5% !important;display: block;">{{customerList.planDetails.rate}}</span></td>
+                            <td style="width: 2% !important;">
+                                <span style="width: 2% !important;display: block;">{{customerList.selfSignup == null ? 'Self SignUp' : customerList.selfSignup }}</span></td>
+                            <td style="width: 2% !important;">
+                                <span style="width: 2% !important;display: block;">{{customerList.contentToMarketing == true ? 'Yes' :(customerList.contentToMarketing == false) ? 'No':''}}</span></td>
                         </tr>
                     </tbody>
                 </table>

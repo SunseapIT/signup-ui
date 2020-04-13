@@ -32,6 +32,10 @@ export class ViewPromocodeComponent implements OnInit {
   currentPage: number = 1;
   totalItems: any;
 
+  promoCodesList = [];
+  selectedPromo = '';
+  selectedPlanIds = [];
+
   queryParams = "";
   filters = {
     fromTimestamp: "",
@@ -49,6 +53,7 @@ export class ViewPromocodeComponent implements OnInit {
 
   ngOnInit() {
     this.getPromoCode(null);
+    this.getPromoCodesForDropdown();
   }
 
   getPromoCode(val) {
@@ -62,7 +67,9 @@ export class ViewPromocodeComponent implements OnInit {
           "&sort=" +
           this.sortParam +
           "," +
-          this.sort
+          this.sort +
+          "&planIds=" + 
+          this.selectedPromo 
       )
       .subscribe((response: any) => {
         var responseBody = response["body"];
@@ -94,7 +101,7 @@ export class ViewPromocodeComponent implements OnInit {
     this.router.navigate(["admin-login/admin-dash/edit", id]);
   }
 
-  searchByKey(event) {
+  searchByKey(selectedPlan) {
     if (this.searchText != null && this.searchText.trim() != "") {
       this.setPageNo();
       this.service
@@ -102,8 +109,7 @@ export class ViewPromocodeComponent implements OnInit {
           ApiServiceServiceService.apiList.getPromocodeByCriteria +
             "?searchKey=" +
             this.searchText +
-            "&page=" +
-            this.page
+            "&page="
         )
         .subscribe((response: any) => {
           var responseBody = response["body"];
@@ -164,7 +170,7 @@ export class ViewPromocodeComponent implements OnInit {
     this.filters["page"] = this.page > 0 ? this.page - 1 : 0;
     this.getPromoCode(null);
   }
-  pageChanged(event: PageChangedEvent): void {
+  pageChanged(event: PageChangedEvent): void {    
     this.page = event.page;
     this.getFilteredList();
   }
@@ -293,5 +299,59 @@ export class ViewPromocodeComponent implements OnInit {
           this.promoCodeData = responseContent;
         });
     }
+  }
+
+  onSelectPromoCode(value) {
+    let pageNumber = 0;
+    if (this.page == 0) {
+      pageNumber = 0;
+    } else {
+      pageNumber = this.page - 1;
+    }
+    console.log("value is : ",value);
+    if(value != null && value != '') {
+      this.selectedPlanIds.push(value);
+    }
+    else {
+      this.selectedPlanIds = [];
+    }
+    if(this.selectedPlanIds && this.selectedPlanIds.length > 0) {
+      this.selectedPromo = this.selectedPlanIds[0];
+    }
+    else  {
+      this.selectedPromo = '';
+    }
+    // this.searchByKey(this.selectedPlanIds[0]);
+    this.isLoader = true;
+    this.service
+    .get_service(
+      ApiServiceServiceService.apiList.getPromocodeByCriteria +
+        "?planIds=" +
+          this.selectedPromo +
+          "&page=" +
+            pageNumber
+    )
+    .subscribe((response: any) => {
+      this.isLoader = false;
+      var responseBody = response["body"];
+      var responseData = responseBody["data"];
+      this.totalItems = responseData.totalElements;
+      var responseContent = responseData["content"];
+      this.promoCodeData = responseContent;
+    }, (error) => {
+      this.isLoader = false;
+    });
+  }
+
+  getPromoCodesForDropdown() {
+    this.isLoader = true;
+    this.service.get_service(ApiServiceServiceService.apiList.getPromoCodesForDropdown).subscribe((resposne: any) => {
+      if(resposne && resposne.body.data) {
+        this.isLoader = false;
+        this.promoCodesList = resposne.body.data;
+      }
+    },(error) => {
+      this.isLoader = false;
+    })
   }
 }

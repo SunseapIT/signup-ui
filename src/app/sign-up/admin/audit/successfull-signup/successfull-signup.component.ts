@@ -424,6 +424,17 @@ export class SuccessfullSignupComponent implements OnInit {
         this.csvDataSuccess = this.successData;
       })
     }
+    else if (value == 'postal') {
+      this.sortParam = 'addressData.postalCode';
+      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=addressData.postalCode," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
+        var responseBody = response['body'];
+        var responseData = responseBody['data'];
+        this.totalItems = responseData.totalElements;
+        var responseContent = responseData['content'];
+        this.successData = responseContent;
+        this.csvDataSuccess = this.successData;
+      })
+    }
     
   }
 

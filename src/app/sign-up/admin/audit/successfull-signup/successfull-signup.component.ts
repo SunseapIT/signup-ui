@@ -257,8 +257,7 @@ export class SuccessfullSignupComponent implements OnInit {
 
       })
     }
-
-    else if (value == 'address') {
+    else if (value == 'building') {
       this.sortParam = 'addressData.buildingName'
       this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=addressData.buildingName," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
         var responseBody = response['body'];
@@ -314,7 +313,118 @@ export class SuccessfullSignupComponent implements OnInit {
         this.successData = responseContent;
         this.csvDataSuccess = this.successData;
       })
+    } else if (value == 'mobile') {
+      this.sortParam = 'mobileNumber';
+      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=mobileNumber," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
+        var responseBody = response['body'];
+        var responseData = responseBody['data'];
+        this.totalItems = responseData.totalElements;
+        var responseContent = responseData['content'];
+        this.successData = responseContent;
+        this.csvDataSuccess = this.successData;
+      })
+    } else if (value == 'level') {
+      this.sortParam = 'addressData.level';
+      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=addressData.level," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
+        var responseBody = response['body'];
+        var responseData = responseBody['data'];
+        this.totalItems = responseData.totalElements;
+        var responseContent = responseData['content'];
+        this.successData = responseContent;
+        this.csvDataSuccess = this.successData;
+      })
+    } else if (value == 'unit') {
+      this.sortParam = 'addressData.unitNo';
+      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=addressData.unitNo," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
+        var responseBody = response['body'];
+        var responseData = responseBody['data'];
+        this.totalItems = responseData.totalElements;
+        var responseContent = responseData['content'];
+        this.successData = responseContent;
+        this.csvDataSuccess = this.successData;
+      })
+    } else if (value == 'dwelling') {
+      this.sortParam = 'addressData.dwellingType';
+      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=addressData.dwellingType," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
+        var responseBody = response['body'];
+        var responseData = responseBody['data'];
+        this.totalItems = responseData.totalElements;
+        var responseContent = responseData['content'];
+        this.successData = responseContent;
+        this.csvDataSuccess = this.successData;
+      })
+    } else if (value == 'street') {
+      this.sortParam = 'addressData.streetName';
+      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=addressData.streetName," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
+        var responseBody = response['body'];
+        var responseData = responseBody['data'];
+        this.totalItems = responseData.totalElements;
+        var responseContent = responseData['content'];
+        this.successData = responseContent;
+        this.csvDataSuccess = this.successData;
+      })
+    } else if (value == 'contractTerm') {
+      this.sortParam = 'plans.contractTerm';
+      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=plans.contractTerm," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
+        var responseBody = response['body'];
+        var responseData = responseBody['data'];
+        this.totalItems = responseData.totalElements;
+        var responseContent = responseData['content'];
+        this.successData = responseContent;
+        this.csvDataSuccess = this.successData;
+      })
+    } else if (value == 'rate') {
+      this.sortParam = 'plans.rate';
+      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=plans.rate," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
+        var responseBody = response['body'];
+        var responseData = responseBody['data'];
+        this.totalItems = responseData.totalElements;
+        var responseContent = responseData['content'];
+        this.successData = responseContent;
+        this.csvDataSuccess = this.successData;
+      })
+    } else if (value == 'selfSignup') {
+      this.sortParam = 'selfSignup';
+      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=selfSignup," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
+        var responseBody = response['body'];
+        var responseData = responseBody['data'];
+        this.totalItems = responseData.totalElements;
+        var responseContent = responseData['content'];
+        this.successData = responseContent;
+        this.csvDataSuccess = this.successData;
+      })
+    } else if (value == 'contentToMarketing') {
+      this.sortParam = 'contentToMarketing';
+      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=contentToMarketing," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
+        var responseBody = response['body'];
+        var responseData = responseBody['data'];
+        this.totalItems = responseData.totalElements;
+        var responseContent = responseData['content'];
+        this.successData = responseContent;
+        this.csvDataSuccess = this.successData;
+      })
+    } else if (value == 'planType') {
+      this.sortParam = 'plans.planType';
+      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=plans.planType," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
+        var responseBody = response['body'];
+        var responseData = responseBody['data'];
+        this.totalItems = responseData.totalElements;
+        var responseContent = responseData['content'];
+        this.successData = responseContent;
+        this.csvDataSuccess = this.successData;
+      })
+    }else if (value == 'approvalTime') {
+      this.sortParam = 'approvedTime';
+      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=approvedTime," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
+        var responseBody = response['body'];
+        var responseData = responseBody['data'];
+        this.totalItems = responseData.totalElements;
+        var responseContent = responseData['content'];
+        this.successData = responseContent;
+        this.csvDataSuccess = this.successData;
+      })
     }
+    
   }
 
   addClass(event) {

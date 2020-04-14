@@ -11,6 +11,10 @@ export class PlanBean {
 
  rate: string;
 
+ contractTerm:string;
+
+ planType:string;
+
  factSheetName:string;
 
  

@@ -43,7 +43,6 @@
                             Level</th>
                         <th  id="unit" class="arrow-down" (click)="sortingValue[8]=!sortingValue[8];sorting('unit',sortingValue[8]); addClass($event)">
                             Unit</th>
-                        <!-- <th id="level" class="arrow-down" (click)="sortingValue[9]=!sortingValue[9];sorting('level',sortingValue[9]); addClass($event)">Level</th> -->
                         <th  id="street" class="arrow-down" (click)="sortingValue[10]=!sortingValue[10];sorting('street',sortingValue[10]); addClass($event)">
                             Street</th>
                         <th  id="postal" class="arrow-down" (click)="sortingValue[11]=!sortingValue[11];sorting('postal',sortingValue[11]); addClass($event)">
@@ -56,38 +55,19 @@
                             SignUp Date</th>
                         <th  id="etc" class="arrow-down" (click)="sortingValue[15]=!sortingValue[15];sorting('etc',sortingValue[15]); addClass($event)">
                             ETC</th>
-                        <th  id="promo" class="arrow-down" (click)="sortingValue[16]=!sortingValue[16];sorting('promo',sortingValue[16]); addClass($event)">
-                            Promo Code</th>
-                        <th  id="contractTerm" class="arrow-down" (click)="sortingValue[17]=!sortingValue[17];sorting('constractTerm',sortingValue[17]); addClass($event)">
+                        <!-- <th  id="promo" class="arrow-down" (click)="sortingValue[16]=!sortingValue[16];sorting('promo',sortingValue[16]); addClass($event)">
+                            Promo Code</th> -->
+                        <th  id="contractTerm" class="arrow-down" (click)="sortingValue[17]=!sortingValue[17];sorting('contractTerm',sortingValue[17]); addClass($event)">
                             Contract Term</th>
-                        <!-- <th id="plandot" class="arrow-down" (click)="sortingValue[18]=!sortingValue[18];sorting('planName',sortingValue[18]); addClass($event)">Plan DOT</th> -->
-                        <th  id="approvedate" class="arrow-down" (click)="sortingValue[19]=!sortingValue[19];sorting('planName',sortingValue[19]); addClass($event)">
+                        <th id="plandot" class="arrow-down" (click)="sortingValue[18]=!sortingValue[18];sorting('planType',sortingValue[18]); addClass($event)">DOT/FIX</th>
+                        <th  id="approvedate" class="arrow-down" (click)="sortingValue[19]=!sortingValue[19];sorting('approvalTime',sortingValue[19]); addClass($event)">
                             Approve date</th>
-                        <th  id="contractprice" class="arrow-down" (click)="sortingValue[20]=!sortingValue[20];sorting('planName',sortingValue[20]); addClass($event)">
+                        <th  id="contractprice" class="arrow-down" (click)="sortingValue[20]=!sortingValue[20];sorting('rate',sortingValue[20]); addClass($event)">
                             Contract Price</th>
-                        <th  id="behalf" class="arrow-down" (click)="sortingValue[21]=!sortingValue[21];sorting('planName',sortingValue[21]); addClass($event)">
+                        <th  id="behalf" class="arrow-down" (click)="sortingValue[21]=!sortingValue[21];sorting('selfSignup',sortingValue[21]); addClass($event)">
                             Account Holder</th>
-                        <th  id="marketing" class="arrow-down" (click)="sortingValue[22]=!sortingValue[22];sorting('planName',sortingValue[22]); addClass($event)">
+                        <th  id="marketing" class="arrow-down" (click)="sortingValue[22]=!sortingValue[22];sorting('contentToMarketing',sortingValue[22]); addClass($event)">
                             Marketing</th>
-
-                        <!-- <th id="firs" class="arrow-down" (click)="sortingValue[0]=!sortingValue[0];sorting('firstName',sortingValue[0]); addClass($event)">First Name
-                        </th>
-                        <th id="last" class="arrow-down" (click)="sortingValue[1]=!sortingValue[1];sorting('lastName',sortingValue[1]); addClass($event)">Last Name
-                        </th>
-                        <th id="email" class="arrow-down" (click)="sortingValue[2]=!sortingValue[2];sorting('email',sortingValue[2]); addClass($event)">Email</th>
-                        <th id="plan" class="arrow-down" (click)="sortingValue[3]=!sortingValue[3];sorting('planName',sortingValue[3]); addClass($event)">Plan Name
-                        </th>
-                        <th id="spNumber" class="arrow-down" (click)="sortingValue[4]=!sortingValue[4];sorting('spAccount',sortingValue[4]); addClass($event)">SP Number
-                        </th>
-                        <th id="promocode" class="arrow-down" (click)="sortingValue[5]=!sortingValue[5];sorting('promoCode',sortingValue[5]); addClass($event)">Promo Code
-                        </th>
-                        <th id="address" class="arrow-down" (click)="sortingValue[6]=!sortingValue[6];sorting('address',sortingValue[6]); addClass($event)">Address
-                        </th>
-                        <th id="initialTime" class="arrow-down" (click)="sortingValue[7]=!sortingValue[7];sorting('initial',sortingValue[7]); addClass($event)"> Initial Timestamp
-                        </th>
-                        <th id="finalTime" class="arrow-down" (click)="sortingValue[8]=!sortingValue[8];sorting('final',sortingValue[8]); addClass($event)">Final Timestamp
-                        </th> -->
-
                     </thead>
                     <tbody>
                         <tr *ngFor="let customerList of successData ; let i=index;">
@@ -122,19 +102,23 @@
                                 {{customerList.sighnUpEndTimeStamp}}</td>
                             <td class="text-center">
                                 ${{ ETC_FEE_OPTIONS[customerList.dwelingType] }}</td>
-                            <td >
+                            <!-- <td >
                                 {{customerList.promoCode}}</td>
-                            <td >
+                             -->
+                             <td>
+                                {{customerList.planDetails.contractTerm}}
                             </td>
-                            <!-- <td></td> -->
+                             <td>
+                                {{customerList.planDetails.planType}}
+                             </td>
                             <td >
                                 {{customerList.approvedTime}}</td>
                             <td >
                                 {{customerList.planDetails.rate}}</td>
                             <td class="text-center" >
-                                {{customerList.selfSignup == null ? 'Self SignUp' : customerList.selfSignup }}</td>
+                                {{customerList.selfSignup == true ? 'Self SignUp':'Not Self SignUp' }}</td>
                             <td class="text-center">
-                                {{customerList.contentToMarketing == true ? 'Yes' :(customerList.contentToMarketing == false) ? 'No':''}}</td>
+                                {{customerList.contentToMarketing == true ? 'Yes' :'No'}}</td>
                         </tr>
                     </tbody>
                 </table>

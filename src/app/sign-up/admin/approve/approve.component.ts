@@ -859,6 +859,22 @@ export class ApproveComponent implements OnInit {
           var responseContent = responseData["content"];
           this.approvalData = responseContent;
         });
+    } else if (value == "remarks") {
+      this.sortParams = "remarks";
+      this.service
+        .get_service(
+          ApiServiceServiceService.apiList.searchCustomersForApprovalUrl +
+            "?sort=remarks," +
+            this.sort +
+            "&page=" +
+            pageNumber
+        )
+        .subscribe((response: any) => {
+          var responseBody = response["body"];
+          var responseData = responseBody["data"];
+          var responseContent = responseData["content"];
+          this.approvalData = responseContent;
+        });
     }
   }
 

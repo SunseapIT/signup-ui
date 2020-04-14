@@ -1844,22 +1844,22 @@ p {
 
 .arrow-down::after {
     font-family: 'FontAwesome';
-    content: '\279C';
+    content: '\2193';
     margin-left: 5px;
     color: #ffffff;
     font-weight: bold;
-    transform: rotate(90deg);
-    position: absolute;
+    // transform: rotate(90deg);
+    position: relative;
 }
 
 .arrow-up::after {
     font-family: 'FontAwesome';
-    content: '\279C';
+    content: '\2191';
     color: #ffffff;
     margin-left: 5px;
     font-weight: bold;
-    transform: rotate(270deg);
-    position: absolute;
+    // transform: rotate(270deg);
+    position: relative;
 }
 
 .table thead th {

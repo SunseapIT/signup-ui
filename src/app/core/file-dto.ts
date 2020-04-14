@@ -16,4 +16,8 @@ export class Files {
 
   factSheet_fileType: string;
 
+  sp_bill_fileType:string;
+
+  sp_bill_data:string;
+
 }

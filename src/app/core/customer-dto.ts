@@ -64,4 +64,10 @@ export class CustomerDto {
 
    tokenDtoList:tokenDto;
 
+   rate:string;
+
+   isSelfSignupDes:string;
+
+   isContentToMarketingDes:string;
+
 }

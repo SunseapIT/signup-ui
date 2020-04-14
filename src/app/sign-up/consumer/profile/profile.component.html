@@ -166,6 +166,82 @@
                     </div>
                 </div>
             </div>
+            =======
+            <div class="col-md-4 ml-3">
+                <p class="form-control-label">Full Name:</p>
+            </div>
+            <div class="col-md-7">
+                {{ customerDto?.fullName }} {{customerDto?.lastName}}
+            </div>
+        </div>
+
+        <div class="row mt-1">
+            <div class="col-md-4 ml-3">
+                <p class="form-control-label">User Id:</p>
+            </div>
+            <div class="col-md-7">
+                {{ customerDto?.customerId }}
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-md-4 ml-3">
+                <p class="form-control-label">Billing Address:</p>
+            </div>
+            <div class="col-md-7">
+                {{ customerDto?.buildingName }}, House No: {{customerDto?.houseNo}}, {{customerDto?.streetName}}
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-md-4 ml-3">
+                <p class="form-control-label">Billing Postal Code:</p>
+            </div>
+            <div class="col-md-7">
+                {{ customerDto?.postelCode }}
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-md-4 ml-3">
+                <p class="form-control-label">Email:</p>
+            </div>
+            <div class="col-md-7">
+                {{ customerDto?.eamilAddress }}
+            </div>
+        </div>
+        <div class="row mt-1 mb-4">
+            <div class="col-md-4 ml-3">
+                <p class="form-control-label">Mobile:</p>
+            </div>
+            <div class="col-md-7">
+                {{ customerDto?.mobileNumber }}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="customer-card-blue mb-3"></div>
+        <h5 class="ml-3">Service</h5>
+        <div class="row mt-1">
+            <div class="col-md-4 ml-3">
+                <p class="form-control-label">Service Address:</p>
+            </div>
+            <div class="col-md-7">
+                {{ customerDto?.buildingName }}, House No: {{customerDto?.houseNo}}, {{customerDto?.streetName}}
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-md-4 ml-3">
+                <p class="form-control-label">Postal Code:</p>
+            </div>
+            <div class="col-md-7">
+                {{ customerDto?.postelCode }}
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-md-4 ml-3">
+                <p class="form-control-label">Dwelling Type:</p>
+            </div>
+            <div class="col-md-7">
+                {{ customerDto?.dwelingType }}
+            </div>
         </div>
     </div>
 

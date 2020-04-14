@@ -4,13 +4,31 @@
         <div class="col-lg-4 col-xs-12 text-left">
             <input type="text" class="form-control searchbar" [(ngModel)]="searchText" placeholder="Search..." (keyup)="searchByKey($event)">
         </div>
-        <div class="col-lg-5 col-md-5 col-sm-12  p-0  text-right ">
+        <div class="col-lg-4 col-md-5 col-sm-12  p-0  text-right ">
             <input placeholder="Select a range..." class="form-control searchbar" [(ngModel)]="dateTimeRange" [selectMode]="'range'" [owlDateTimeTrigger]="dtRange1" [owlDateTime]="dtRange1" [max]="max" hour12Timer [readonly]="true" (ngModelChange)="getPromoCodeByRange()">
             <button type="button" class="btn remove-time" (click)="clearValue()">
         <i class="fa fa-times mr-2" aria-hidden="true"></i>
       </button>
 
             <owl-date-time #dtRange1></owl-date-time>
+        </div>
+        <div class="col-lg-4">
+                <select
+                  name="serviceAddress "
+                  id="serviceAddress "
+                  [(ngModel)]="selectedPromo"
+                  (change)="onSelectPromoCode($event.target.value)"
+                  class="form-control select-font"
+                >
+                <option value="">--Select plan--</option>
+                <option
+                class="option-font"
+                [value]="item.id"
+                *ngFor="let item of promoCodesList; let i = index"
+                    >
+                    {{ item.planId }}
+                  </option>
+                </select>
         </div>
     </div>
 

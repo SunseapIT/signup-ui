@@ -36,6 +36,8 @@ export class CustomerDto {
 
    houseNo: string;
 
+   accountNumber:string;
+
    level: string;
 
    unitNo: string;

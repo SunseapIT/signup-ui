@@ -93,7 +93,7 @@
                         <p class="form-control-label">Full Name:</p>
                     </div>
                     <div class="col-md-7">
-                        {{ customerDto?.fullName }}
+                        {{ customerDto?.fullName }} {{ customerDto?.lastName }}
                     </div>
                 </div>
 
@@ -102,7 +102,7 @@
                         <p class="form-control-label">User Id:</p>
                     </div>
                     <div class="col-md-7">
-                        {{ customerDto?.customerId }}
+                        {{ customerDto?.accountNumber }}
                     </div>
                 </div>
                 <div class="row mt-1">
@@ -110,7 +110,7 @@
                         <p class="form-control-label">Billing Address:</p>
                     </div>
                     <div class="col-md-7">
-                        {{ customerDto?.buildingName }}
+                       House No:{{ customerDto?.houseNo }},{{ customerDto?.buildingName }},{{ customerDto?.streetName }}
                     </div>
                 </div>
                 <div class="row mt-1">
@@ -145,8 +145,8 @@
                     <div class="col-md-4 ml-3">
                         <p class="form-control-label">Service Address:</p>
                     </div>
-                    <div class="col-md7">
-                        {{ customerDto?.buildingName }}
+                    <div class="col-md-7">
+                        House No:{{ customerDto?.houseNo }},{{ customerDto?.buildingName }},{{ customerDto?.streetName }}
                     </div>
                 </div>
                 <div class="row mt-1">

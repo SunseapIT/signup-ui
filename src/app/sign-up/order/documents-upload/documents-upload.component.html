@@ -90,6 +90,30 @@
                         </div>
                     </div>
                     <div class="form-row">
+
+                        <div class="form-group  col-lg-6 col-md-12 col-xs-12 mb-0 mb-lg-auto">
+                            <label class="form-control-label" for="loc">LOC</label>
+                            <input type="text" name="loc" class="form-control fileUpload" [(ngModel)]="spBillLocName" [value]="uploaded" disabled required #locError="ngModel">
+                            <div class="upload-btn-remove">
+    
+                            </div>
+    
+                            <div class="upload-btn-wrapper">
+    
+    
+                                <label class="btnUpload" for="file4">Upload</label>
+                                <input type="file" id="file4" #inputFile4 (click)="inputFile4.value = null" name="myfile1" (change)="selected($event,4)" />
+                            </div>
+                            <div class="text-secondary"><small><i>Max file size is 500KB.</i></small></div>
+    
+                            <div class="text-secondary"><small><i>Acceptable file format - .pdf, jpeg, png, doc, tif, gif, docx.</i></small></div>
+    
+                            <ng-container class="valid-feedback mt-2" *ngIf="locAuthorized">
+                                <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="form-row">
                         <div class="form-group col-lg-12 ">
                             <label class="form-control-label d-none d-lg-block">&nbsp;</label>
                             <div class="text-secondary"><small><i>Please make sure that the SP 
@@ -115,31 +139,6 @@
                     </div>
 
                 </ng-container>
-
-                <div class="form-row">
-
-                    <div class="form-group  col-lg-6 col-md-12 col-xs-12 mb-0 mb-lg-auto">
-                        <label class="form-control-label" for="loc">LOC</label>
-                        <input type="text" name="loc" class="form-control fileUpload" [(ngModel)]="spBillLocName" [value]="uploaded" disabled required #locError="ngModel">
-                        <div class="upload-btn-remove">
-
-                        </div>
-
-                        <div class="upload-btn-wrapper">
-
-
-                            <label class="btnUpload" for="file4">Upload</label>
-                            <input type="file" id="file4" #inputFile4 (click)="inputFile4.value = null" name="myfile1" (change)="selected($event,4)" />
-                        </div>
-                        <div class="text-secondary"><small><i>Max file size is 500KB.</i></small></div>
-
-                        <div class="text-secondary"><small><i>Acceptable file format - .pdf, jpeg, png, doc, tif, gif, docx.</i></small></div>
-
-                        <ng-container class="valid-feedback mt-2" *ngIf="locAuthorized">
-                            <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
-                        </ng-container>
-                    </div>
-                </div>
 
 
             </div>

@@ -194,7 +194,7 @@ export class ApproveComponent implements OnInit {
   searchText: any;
   searchCustomer(event) {
     // let name = event.target.value;
-    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl + "?fullName.contains=" + this.searchText + "&page=" + (this.page - 1)).subscribe((response: any) => {
+    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersForApprovalUrl + "?searchKey=" + this.searchText + "&page=" + (this.page - 1)).subscribe((response: any) => {
       var responseBody = response['body'];
       var responseData = responseBody['data'];
       var responseContent = responseData['content'];

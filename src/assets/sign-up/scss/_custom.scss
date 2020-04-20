@@ -1233,8 +1233,9 @@ div.left-image {
     text-decoration: none;
     background-color: transparent;
     cursor: pointer;
-    font-size: 18px !important;
+    font-size: 16px !important;
     color: #007bff;
+    word-break: break-all;
 }
 
 .textunderline:hover {
@@ -1889,4 +1890,25 @@ p {
 
 .login-form {
     border-radius: 30px;
+}
+
+
+.owl-dt-inline-container, .owl-dt-popup-container{
+
+    overflow: overlay;
+    height: 400px !important;
+
+    top: 30% !important;
+
+}
+
+
+
+.accordion .accordian-header:after {
+    font-family: 'FontAwesome';
+    content: "\2B9E";
+    float: left;
+    position: relative;
+    top: 4px;
+
 }

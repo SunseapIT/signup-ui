@@ -73,7 +73,7 @@
                 </div>
 
                 <div *ngIf="responseData.infinity == 'false'">
-                    <input type="text" class="form-control usesBox" name="noOfLimitedUsers" numbersOnly trim="blur"
+                    <input type="number" min="1" class="form-control usesBox" name="noOfLimitedUsers" numbersOnly trim="blur"
                         [(ngModel)]="responseData.noOfLimitedUsers" #noOfUsers="ngModel" required
                         [class.is-invalid]="noOfUsers.invalid && (noOfUsers.touched || form.submitted)">
                 </div>

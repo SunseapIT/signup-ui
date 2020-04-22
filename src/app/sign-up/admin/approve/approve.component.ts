@@ -77,7 +77,7 @@ export class ApproveComponent implements OnInit {
   pickedLocation: string = null;
   selectedPlanIndex: number;
   verified: boolean;
-  sortParams = "fullName";
+  sortParams = "searchableFullName";
   sort = "asc";
   sortingValue = [true, true, true, true, true, true, true];
 
@@ -747,135 +747,45 @@ export class ApproveComponent implements OnInit {
     } else {
       this.sort = "desc";
     }
+
     if (value == "spAccount") {
       this.sortParams = "spAccountNumberDetails.spAccountNumber";
-      this.service
-        .get_service(
-          ApiServiceServiceService.apiList.searchCustomersForApprovalUrl +
-            "?sort=spAccountNumberDetails.spAccountNumber," +
-            this.sort +
-            "&page=" +
-            pageNumber
-        )
-        .subscribe((response: any) => {
-          var responseBody = response["body"];
-          var responseData = responseBody["data"];
-          var responseContent = responseData["content"];
-          this.approvalData = responseContent;
-        });
     } else if (value == "address") {
       this.sortParams = "addressData.buildingName";
-      this.service
-        .get_service(
-          ApiServiceServiceService.apiList.searchCustomersForApprovalUrl +
-            "?sort=addressData.buildingName," +
-            this.sort +
-            "&page=" +
-            pageNumber
-        )
-        .subscribe((response: any) => {
-          var responseBody = response["body"];
-          var responseData = responseBody["data"];
-          var responseContent = responseData["content"];
-          this.approvalData = responseContent;
-        });
     } else if (value == "name") {
-      this.sortParams = "fullName";
-      this.service
-        .get_service(
-          ApiServiceServiceService.apiList.searchCustomersForApprovalUrl +
-            "?sort=fullName," +
-            this.sort +
-            "&page=" +
-            pageNumber
-        )
-        .subscribe((response: any) => {
-          var responseBody = response["body"];
-          var responseData = responseBody["data"];
-          var responseContent = responseData["content"];
-          this.approvalData = responseContent;
-        });
+      this.sortParams = "searchableFullName";
     } else if (value == "final") {
       this.sortParams = "TimestampRecords.signUp";
-      this.service
-        .get_service(
-          ApiServiceServiceService.apiList.searchCustomersForApprovalUrl +
-            "?sort=TimestampRecords.signUp," +
-            this.sort +
-            "&page=" +
-            pageNumber
-        )
-        .subscribe((response: any) => {
-          var responseBody = response["body"];
-          var responseData = responseBody["data"];
-          var responseContent = responseData["content"];
-          this.approvalData = responseContent;
-        });
     } else if (value == "status") {
       this.sortParams = "isApproved";
-      this.service
-        .get_service(
-          ApiServiceServiceService.apiList.searchCustomersForApprovalUrl +
-            "?sort=isApproved," +
-            this.sort +
-            "&page=" +
-            pageNumber
-        )
-        .subscribe((response: any) => {
-          var responseBody = response["body"];
-          var responseData = responseBody["data"];
-          var responseContent = responseData["content"];
-          this.approvalData = responseContent;
-        });
     } else if (value == "record") {
       this.sortParams = "duplicate";
-      this.service
-        .get_service(
-          ApiServiceServiceService.apiList.searchCustomersForApprovalUrl +
-            "?sort=duplicate," +
-            this.sort +
-            "&page=" +
-            pageNumber
-        )
-        .subscribe((response: any) => {
-          var responseBody = response["body"];
-          var responseData = responseBody["data"];
-          var responseContent = responseData["content"];
-          this.approvalData = responseContent;
-        });
     } else if (value == "marketing") {
       this.sortParams = "contentToMarketing";
-      this.service
-        .get_service(
-          ApiServiceServiceService.apiList.searchCustomersForApprovalUrl +
-            "?sort=contentToMarketing," +
-            this.sort +
-            "&page=" +
-            pageNumber
-        )
-        .subscribe((response: any) => {
-          var responseBody = response["body"];
-          var responseData = responseBody["data"];
-          var responseContent = responseData["content"];
-          this.approvalData = responseContent;
-        });
     } else if (value == "remarks") {
       this.sortParams = "remarks";
-      this.service
-        .get_service(
-          ApiServiceServiceService.apiList.searchCustomersForApprovalUrl +
-            "?sort=remarks," +
-            this.sort +
-            "&page=" +
-            pageNumber
-        )
-        .subscribe((response: any) => {
-          var responseBody = response["body"];
-          var responseData = responseBody["data"];
-          var responseContent = responseData["content"];
-          this.approvalData = responseContent;
-        });
     }
+    
+    this.service
+      .get_service(
+        ApiServiceServiceService.apiList.searchCustomersForApprovalUrl +
+          "?sort=" +
+          this.sortParams +
+          "," +
+          this.sort +
+          (this.searchText ? "&searchKey=" + this.searchText : "") +
+          "&page=" +
+          pageNumber
+      )
+      .subscribe((response: any) => {
+        var responseBody = response["body"];
+        var responseData = responseBody["data"];
+        var responseContent = responseData["content"];
+        this.approvalData = responseContent;
+      });
+
+   
+
   }
 
   addClass(event) {

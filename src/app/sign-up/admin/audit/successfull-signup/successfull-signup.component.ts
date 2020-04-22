@@ -1,24 +1,44 @@
-import { DatePipe } from '@angular/common';
-import { ApiServiceServiceService } from './../../../../api-service-service.service';
-import { Component, OnInit,  } from '@angular/core';
-import { PageChangedEvent } from 'ngx-bootstrap';
+import { DatePipe } from "@angular/common";
+import { ApiServiceServiceService } from "./../../../../api-service-service.service";
+import { Component, OnInit } from "@angular/core";
+import { PageChangedEvent } from "ngx-bootstrap";
 import {
   ConfigService,
   DWELLING_TYPE_OPTIONS,
-  ETC_FEE_OPTIONS,} from '@app/core';
+  ETC_FEE_OPTIONS,
+} from "@app/core";
 
 @Component({
-  selector: 'app-successfull-signup',
-  templateUrl: './successfull-signup.component.html',
-  styleUrls: ['./successfull-signup.component.scss']
+  selector: "app-successfull-signup",
+  templateUrl: "./successfull-signup.component.html",
+  styleUrls: ["./successfull-signup.component.scss"],
 })
 export class SuccessfullSignupComponent implements OnInit {
   ETC_FEE_OPTIONS = ETC_FEE_OPTIONS;
   public dateTimeRange: Date[];
 
-  sort = "asc"
-  sortParam = 'fullName'
-  sortingValue = [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+  sort = "asc";
+  sortParam = "fullName";
+  sortingValue = [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+  ];
   successData = [];
   p: number = 1;
   searchTextSuccess: string;
@@ -30,54 +50,58 @@ export class SuccessfullSignupComponent implements OnInit {
   currentPage: number = 1;
   isLoader: boolean = false;
   searchText: any;
-  csvDataSuccess = []
+  csvDataSuccess = [];
   options = {
-    fieldSeparator: ',',
+    fieldSeparator: ",",
     quoteStrings: '"',
-    decimalseparator: '.',
+    decimalseparator: ".",
     showLabels: false,
-    headers: ['First Name',
-      'Last Name',
-      'Email Address',
-      'Mobile Number',
-      'SP Account Number',
-      'Promo Code',
-      'Building Name',
-      'House No',
-      'Level',
-      'Unit',
-      'Street Name',
-      'Postal Code',
-      'Dwelling Type',
-      'Plan Name',
-      'Signup Date',
-      'Approval Date',
-      'Contract Price',
-      'Account Holder',
-      'Market'],
+    headers: [
+      "First Name",
+      "Last Name",
+      "Email Address",
+      "Mobile Number",
+      "SP Account Number",
+      "Promo Code",
+      "Building Name",
+      "House No",
+      "Level",
+      "Unit",
+      "Street Name",
+      "Postal Code",
+      "Dwelling Type",
+      "Plan Name",
+      "Signup Date",
+      "Approval Date",
+      "Contract Price",
+      "Account Holder",
+      "Market",
+    ],
     showTitle: true,
-    title: '',
+    title: "",
     useBom: true,
     removeNewLines: true,
-    keys: ['fullName',
-      'lastName',
-      'eamilAddress',
-      'mobileNumber',
-      'spAccountNumber',
-      'promoCode',
-      'buildingName',
-      'houseNo',
-      'level',
-      'unitNo',
-      'streetName',
-      'postelCode',
-      'dwelingType',
-      'plan',
-      'sighnUpStarTimeStamp',
-      'approvedTime',
-      'rate',
-      'isSelfSignupDes',
-      'isContentToMarketingDes']
+    keys: [
+      "fullName",
+      "lastName",
+      "eamilAddress",
+      "mobileNumber",
+      "spAccountNumber",
+      "promoCode",
+      "buildingName",
+      "houseNo",
+      "level",
+      "unitNo",
+      "streetName",
+      "postelCode",
+      "dwelingType",
+      "plan",
+      "sighnUpStarTimeStamp",
+      "approvedTime",
+      "rate",
+      "isSelfSignupDes",
+      "isContentToMarketingDes",
+    ],
   };
   max = new Date();
   queryParams = "";
@@ -86,11 +110,12 @@ export class SuccessfullSignupComponent implements OnInit {
     toTimestamp: "",
     size: 10,
     page: 0,
-  }
+  };
 
-  constructor(private service: ApiServiceServiceService,
-    private dateFormat: DatePipe) {
-  }
+  constructor(
+    private service: ApiServiceServiceService,
+    private dateFormat: DatePipe
+  ) {}
 
   ngOnInit() {
     this.getAllSuccessSignupUsers(null);
@@ -99,30 +124,48 @@ export class SuccessfullSignupComponent implements OnInit {
   getAllSuccessSignupUsers(val) {
     this.isLoader = true;
     this.buildQueryParams();
-    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "/?" + this.queryParams + "&sort=" + this.sortParam + ',' + this.sort)
+    this.service
+      .get_service(
+        ApiServiceServiceService.apiList.searchCustomersUrl +
+          "/?" +
+          this.queryParams +
+          "&sort=" +
+          this.sortParam +
+          "," +
+          this.sort
+      )
       .subscribe((response: any) => {
         this.isLoader = false;
-        var responseBody = response['body'];
-        var responseData = responseBody['data'];
+        var responseBody = response["body"];
+        var responseData = responseBody["data"];
         this.totalItems = responseData.totalElements;
-        var responseContent = responseData['content'];
+        var responseContent = responseData["content"];
         this.successData = responseContent;
         this.csvFormatSuccessSignup(val);
-      })
+      });
   }
 
-
   searchCustomer(event) {
-    this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?searchKey=" + this.searchText + "&page=" + (this.page - 1)).subscribe((response: any) => {
-      var responseBody = response['body'];
-      var responseData = responseBody['data'];
-      this.totalItems = responseData.totalElements;
-      var responseContent = responseData['content'];
-      this.successData = responseContent;
-      this.searched = this.successData
-      this.csvDataSuccess = this.successData;
-
-    })
+    if(this.searchText!=null && this.searchText.trim()!=''){
+    this.service
+      .get_service(
+        ApiServiceServiceService.apiList.searchCustomersUrl +
+          "?searchKey=" +
+          this.searchText +
+          "&page=" +
+          (this.page - 1)
+      )
+      .subscribe((response: any) => {
+        var responseBody = response["body"];
+        var responseData = responseBody["data"];
+        this.totalItems = responseData.totalElements;
+        var responseContent = responseData["content"];
+        this.successData = responseContent;
+        this.searched = this.successData;
+        this.csvDataSuccess = this.successData;
+      });}else{
+        this.getFilteredList();
+      }
   }
 
   clearValue() {
@@ -132,25 +175,33 @@ export class SuccessfullSignupComponent implements OnInit {
     this.getAllSuccessSignupUsers(null);
   }
   getFilteredList() {
-    this.filters['fromTimestamp'] = this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[0]) : null;
-    this.filters['toTimestamp'] = this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[1]) : null;
-    this.filters['page'] = this.page ? this.page - 1 : 0;
+    this.filters["fromTimestamp"] = this.dateTimeRange
+      ? this.getTimeStamp(this.dateTimeRange[0])
+      : null;
+    this.filters["toTimestamp"] = this.dateTimeRange
+      ? this.getTimeStamp(this.dateTimeRange[1])
+      : null;
+    this.filters["page"] = this.page ? this.page - 1 : 0;
     this.getAllSuccessSignupUsers(null);
   }
   getSuccessfulSignUp() {
-    this.filters['fromTimestamp'] = this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[0]) : null;
-    this.filters['toTimestamp'] = this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[1]) : null;
-    this.filters['page'] = 0;
+    this.filters["fromTimestamp"] = this.dateTimeRange
+      ? this.getTimeStamp(this.dateTimeRange[0])
+      : null;
+    this.filters["toTimestamp"] = this.dateTimeRange
+      ? this.getTimeStamp(this.dateTimeRange[1])
+      : null;
+    this.filters["page"] = 0;
     this.getAllSuccessSignupUsers("datetime");
   }
   buildQueryParams() {
-    let finalQuery = '';
+    let finalQuery = "";
     for (const item in this.filters) {
       if (this.filters[item]) {
-        finalQuery = finalQuery + '&' + item + '=' + this.filters[item];
+        finalQuery = finalQuery + "&" + item + "=" + this.filters[item];
       }
     }
-    this.queryParams = finalQuery.replace('&', '');
+    this.queryParams = finalQuery.replace("&", "");
   }
   getTimeStamp(time) {
     return this.dateFormat.transform(time, "dd-MM-yyyy hh:mm:ss");
@@ -159,8 +210,7 @@ export class SuccessfullSignupComponent implements OnInit {
     this.page = event.page;
     if (this.searchText != undefined && this.searchText != "") {
       this.searchCustomer(this.searchText);
-    }
-    else {
+    } else {
       this.getFilteredList();
       this.searched;
     }
@@ -172,270 +222,123 @@ export class SuccessfullSignupComponent implements OnInit {
       toTimestamp: "",
       size: 10,
       page: 0,
-    }
+    };
   }
 
   csvFormatSuccessSignup(value) {
-    if (value == 'datetime') {
-      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?size=" + this.totalItems + '&fromTimestamp=' + this.getTimeStamp(this.dateTimeRange[0])
-        + '&toTimestamp=' + this.getTimeStamp(this.dateTimeRange[1])).subscribe((response: any) => {
-          var responseBody = response['body'];
-          var responseData = responseBody['data'];
+    if (value == "datetime") {
+      this.service
+        .get_service(
+          ApiServiceServiceService.apiList.searchCustomersUrl +
+            "?size=" +
+            this.totalItems +
+            "&fromTimestamp=" +
+            this.getTimeStamp(this.dateTimeRange[0]) +
+            "&toTimestamp=" +
+            this.getTimeStamp(this.dateTimeRange[1])
+        )
+        .subscribe((response: any) => {
+          var responseBody = response["body"];
+          var responseData = responseBody["data"];
           this.totalItems = responseData.totalElements;
-          var responseContent = responseData['content'];
+          var responseContent = responseData["content"];
           this.csvDataSuccess = responseContent;
-        })
+        });
     } else {
-      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?size=" + this.totalItems).subscribe((response: any) => {
-        var responseBody = response['body'];
-        var responseData = responseBody['data'];
-        this.totalItems = responseData.totalElements;
-        var responseContent = responseData['content'];
-        this.csvDataSuccess = responseContent;
-      })
+      this.service
+        .get_service(
+          ApiServiceServiceService.apiList.searchCustomersUrl +
+            "?size=" +
+            this.totalItems
+        )
+        .subscribe((response: any) => {
+          var responseBody = response["body"];
+          var responseData = responseBody["data"];
+          this.totalItems = responseData.totalElements;
+          var responseContent = responseData["content"];
+          this.csvDataSuccess = responseContent;
+        });
     }
   }
 
   sorting(value, format) {
-    let pageNumber = 0
+    let pageNumber = 0;
     if (this.page == 0) {
-      pageNumber = 0
+      pageNumber = 0;
     } else {
       pageNumber = this.page - 1;
     }
 
     if (format) {
-      this.sort = "asc"
+      this.sort = "asc";
     } else {
-      this.sort = "desc"
+      this.sort = "desc";
     }
-    if (value == 'spAccount') {
+
+    if (value == "spAccount") {
       this.sortParam = "spAccountNumberDetails.spAccountNumber";
-      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=spAccountNumberDetails.spAccountNumber,"
-        + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
-          var responseBody = response['body'];
-          var responseData = responseBody['data'];
-          this.totalItems = responseData.totalElements;
-          var responseContent = responseData['content'];
-          this.successData = responseContent;
-          this.csvDataSuccess = this.successData;
-        })
-    }
-    else if (value == 'planName') {
-      this.sortParam = 'plans.planName';
-      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=plans.planName," + this.sort + '&page=' + pageNumber)
-        .subscribe((response: any) => {
-          var responseBody = response['body'];
-          var responseData = responseBody['data'];
-          this.totalItems = responseData.totalElements;
-          var responseContent = responseData['content'];
-          this.successData = responseContent;
-          this.csvDataSuccess = this.successData;
-        })
-    }
-    else if (value == 'email') {
-      this.sortParam = 'eamilAddress';
-      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=eamilAddress," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
-        var responseBody = response['body'];
-        var responseData = responseBody['data'];
-        this.totalItems = responseData.totalElements;
-        var responseContent = responseData['content'];
-        this.successData = responseContent;
-        this.csvDataSuccess = this.successData;
-
-      })
-    }
-    else if (value == 'promoCode') {
-      this.sortParam = 'customerPromoCodes.customerPromoCode';
-      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=customerPromoCodes.customerPromoCode," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
-        var responseBody = response['body'];
-        var responseData = responseBody['data'];
-        this.totalItems = responseData.totalElements;
-        var responseContent = responseData['content'];
-        this.successData = responseContent;
-        this.csvDataSuccess = this.successData;
-
-      })
-    }
-    else if (value == 'building') {
-      this.sortParam = 'addressData.buildingName'
-      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=addressData.buildingName," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
-        var responseBody = response['body'];
-        var responseData = responseBody['data'];
-        this.totalItems = responseData.totalElements;
-        var responseContent = responseData['content'];
-        this.successData = responseContent;
-        this.csvDataSuccess = this.successData;
-
-      })
-    }
-    else if (value == 'lastName') {
-      this.sortParam = 'lastName';
-      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=lastName," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
-        var responseBody = response['body'];
-        var responseData = responseBody['data'];
-        this.totalItems = responseData.totalElements;
-        var responseContent = responseData['content'];
-        this.successData = responseContent;
-        this.csvDataSuccess = this.successData
-      })
-    }
-    else if (value == 'firstName') {
-      this.sortParam = 'fullName';
-      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=fullName," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
-        var responseBody = response['body'];
-        var responseData = responseBody['data'];
-        this.totalItems = responseData.totalElements;
-        var responseContent = responseData['content'];
-        this.successData = responseContent;
-        this.csvDataSuccess = this.successData;
-
-      })
-    }
-    else if (value == 'initial') {
-      this.sortParam = 'TimestampRecords.planDetails'
-      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=TimestampRecords.planDetails," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
-        var responseBody = response['body'];
-        var responseData = responseBody['data'];
-        this.totalItems = responseData.totalElements;
-        var responseContent = responseData['content'];
-        this.successData = responseContent;
-        this.csvDataSuccess = this.successData;
-      })
-    }
-    else if (value == 'final') {
-      this.sortParam = 'TimestampRecords.signUp';
-      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=TimestampRecords.signUp," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
-        var responseBody = response['body'];
-        var responseData = responseBody['data'];
-        this.totalItems = responseData.totalElements;
-        var responseContent = responseData['content'];
-        this.successData = responseContent;
-        this.csvDataSuccess = this.successData;
-      })
-    } else if (value == 'mobile') {
-      this.sortParam = 'mobileNumber';
-      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=mobileNumber," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
-        var responseBody = response['body'];
-        var responseData = responseBody['data'];
-        this.totalItems = responseData.totalElements;
-        var responseContent = responseData['content'];
-        this.successData = responseContent;
-        this.csvDataSuccess = this.successData;
-      })
-    } else if (value == 'level') {
-      this.sortParam = 'addressData.level';
-      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=addressData.level," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
-        var responseBody = response['body'];
-        var responseData = responseBody['data'];
-        this.totalItems = responseData.totalElements;
-        var responseContent = responseData['content'];
-        this.successData = responseContent;
-        this.csvDataSuccess = this.successData;
-      })
-    } else if (value == 'unit') {
-      this.sortParam = 'addressData.unitNo';
-      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=addressData.unitNo," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
-        var responseBody = response['body'];
-        var responseData = responseBody['data'];
-        this.totalItems = responseData.totalElements;
-        var responseContent = responseData['content'];
-        this.successData = responseContent;
-        this.csvDataSuccess = this.successData;
-      })
-    } else if (value == 'dwelling') {
-      this.sortParam = 'addressData.dwellingType';
-      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=addressData.dwellingType," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
-        var responseBody = response['body'];
-        var responseData = responseBody['data'];
-        this.totalItems = responseData.totalElements;
-        var responseContent = responseData['content'];
-        this.successData = responseContent;
-        this.csvDataSuccess = this.successData;
-      })
-    } else if (value == 'street') {
-      this.sortParam = 'addressData.streetName';
-      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=addressData.streetName," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
-        var responseBody = response['body'];
-        var responseData = responseBody['data'];
-        this.totalItems = responseData.totalElements;
-        var responseContent = responseData['content'];
-        this.successData = responseContent;
-        this.csvDataSuccess = this.successData;
-      })
-    } else if (value == 'contractTerm') {
-      this.sortParam = 'plans.contractTerm';
-      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=plans.contractTerm," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
-        var responseBody = response['body'];
-        var responseData = responseBody['data'];
-        this.totalItems = responseData.totalElements;
-        var responseContent = responseData['content'];
-        this.successData = responseContent;
-        this.csvDataSuccess = this.successData;
-      })
-    } else if (value == 'rate') {
-      this.sortParam = 'plans.rate';
-      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=plans.rate," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
-        var responseBody = response['body'];
-        var responseData = responseBody['data'];
-        this.totalItems = responseData.totalElements;
-        var responseContent = responseData['content'];
-        this.successData = responseContent;
-        this.csvDataSuccess = this.successData;
-      })
-    } else if (value == 'selfSignup') {
-      this.sortParam = 'selfSignup';
-      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=selfSignup," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
-        var responseBody = response['body'];
-        var responseData = responseBody['data'];
-        this.totalItems = responseData.totalElements;
-        var responseContent = responseData['content'];
-        this.successData = responseContent;
-        this.csvDataSuccess = this.successData;
-      })
-    } else if (value == 'contentToMarketing') {
-      this.sortParam = 'contentToMarketing';
-      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=contentToMarketing," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
-        var responseBody = response['body'];
-        var responseData = responseBody['data'];
-        this.totalItems = responseData.totalElements;
-        var responseContent = responseData['content'];
-        this.successData = responseContent;
-        this.csvDataSuccess = this.successData;
-      })
-    } else if (value == 'planType') {
-      this.sortParam = 'plans.planType';
-      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=plans.planType," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
-        var responseBody = response['body'];
-        var responseData = responseBody['data'];
-        this.totalItems = responseData.totalElements;
-        var responseContent = responseData['content'];
-        this.successData = responseContent;
-        this.csvDataSuccess = this.successData;
-      })
-    }else if (value == 'approvalTime') {
-      this.sortParam = 'approvedTime';
-      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=approvedTime," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
-        var responseBody = response['body'];
-        var responseData = responseBody['data'];
-        this.totalItems = responseData.totalElements;
-        var responseContent = responseData['content'];
-        this.successData = responseContent;
-        this.csvDataSuccess = this.successData;
-      })
-    }
-    else if (value == 'postal') {
-      this.sortParam = 'addressData.postalCode';
-      this.service.get_service(ApiServiceServiceService.apiList.searchCustomersUrl + "?sort=addressData.postalCode," + this.sort + '&page=' + pageNumber).subscribe((response: any) => {
-        var responseBody = response['body'];
-        var responseData = responseBody['data'];
-        this.totalItems = responseData.totalElements;
-        var responseContent = responseData['content'];
-        this.successData = responseContent;
-        this.csvDataSuccess = this.successData;
-      })
+    } else if (value == "planName") {
+      this.sortParam = "plans.planName";
+    } else if (value == "email") {
+      this.sortParam = "eamilAddress";
+    } else if (value == "promoCode") {
+      this.sortParam = "customerPromoCodes.customerPromoCode";
+    } else if (value == "building") {
+      this.sortParam = "addressData.buildingName";
+    } else if (value == "lastName") {
+      this.sortParam = "lastName";
+    } else if (value == "firstName") {
+      this.sortParam = "fullName";
+    } else if (value == "initial") {
+      this.sortParam = "TimestampRecords.planDetails";
+    } else if (value == "final") {
+      this.sortParam = "TimestampRecords.signUp";
+    } else if (value == "mobile") {
+      this.sortParam = "mobileNumber";
+    } else if (value == "level") {
+      this.sortParam = "level";
+    } else if (value == "unit") {
+      this.sortParam = "unitNo";
+    } else if (value == "dwelling") {
+      this.sortParam = "addressData.dwellingType";
+    } else if (value == "street") {
+      this.sortParam = "addressData.streetName";
+    } else if (value == "contractTerm") {
+      this.sortParam = "plans.contractTerm";
+    } else if (value == "rate") {
+      this.sortParam = "plans.rate";
+    } else if (value == "selfSignup") {
+      this.sortParam = "selfSignup";
+    } else if (value == "contentToMarketing") {
+      this.sortParam = "contentToMarketing";
+    } else if (value == "planType") {
+      this.sortParam = "plans.planType";
+    } else if (value == "approvalTime") {
+      this.sortParam = "approvedTime";
+    } else if (value == "postal") {
+      this.sortParam = "addressData.postalCode";
+    } else if (value == "houseNo") {
+      this.sortParam = "addressData.houseNo";
     }
     
+    this.service
+      .get_service(
+        ApiServiceServiceService.apiList.searchCustomersUrl +
+          "?sort=" +
+          this.sortParam +","+
+          this.sort +
+          (this.searchText?"&searchKey="+this.searchText : "")+
+          "&page=" +
+          pageNumber
+      )
+      .subscribe((response: any) => {
+        var responseBody = response["body"];
+        var responseData = responseBody["data"];
+        this.totalItems = responseData.totalElements;
+        var responseContent = responseData["content"];
+        this.successData = responseContent;
+        this.csvDataSuccess = this.successData;
+      });
   }
 
   addClass(event) {
@@ -445,6 +348,5 @@ export class SuccessfullSignupComponent implements OnInit {
     } else {
       elementId.classList.replace("arrow-up", "arrow-down");
     }
-
   }
 }

@@ -33,8 +33,7 @@ export class ApiServiceServiceService {
     getPromoCodeById: environment.baseUrl + "/api/v1/admin/getPromocodeById",
     deletePromoCodeUrl: environment.baseUrl + "/api/v1/admin/deletePromoCode",
     customerRemark: environment.baseUrl + "/api/v1/admin/remarksForUser",
-    getPromoByName: environment.baseUrl + "/api/v1/admin/getPromoByName",
-    getPromocodeByCriteria : environment.baseUrl + "/api/v1/admin/get-promo-codes-by-criteria",
+    getPromocodeByCriteria : environment.baseUrl + "/api/v1/admin/get-promo-codes",
     getPromoCodesForDropdown: environment.baseUrl + "/api/v1/admin/get-plans-for-promo-codes",
 
     //CUSTOMER

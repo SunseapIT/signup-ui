@@ -11,23 +11,20 @@ import { serviceAddressDto } from "@app/core/service-address-dto";
   styleUrls: ["./profile.component.scss"],
 })
 export class ProfileComponent implements OnInit {
-
-  
   customerPlanDetail: CustomerDto[] = [];
-  serviceAddresses : serviceAddressDto[] = [];
+  serviceAddresses: serviceAddressDto[] = [];
   customerDto: CustomerDto = null;
-  sp:any;
+  sp: any;
 
   constructor(
     private _service: ApiServiceServiceService,
     private toastre: ToastrModule,
-    private route: Router,
+    private route: Router
   ) {}
 
   userId: any;
 
   ngOnInit() {
-    
     this.getCustomerDetailByEmail();
   }
 
@@ -36,17 +33,42 @@ export class ProfileComponent implements OnInit {
     var objStr = localStorage.getItem("Customer_Details");
     customerDto = JSON.parse(objStr);
     this.userId = customerDto.eamilAddress;
-    this._service.get_service(ApiServiceServiceService.apiList.getCustomerDetailsByEmail +"?email=" + this.userId)
-      .subscribe(response => {
-        if (response.body.statusCode == 200 ) {
-          this.customerPlanDetail = response.body.data; 
-          this.createServiceAddresses();    
+    this._service
+      .get_service(
+        ApiServiceServiceService.apiList.getCustomerDetailsByEmail +
+          "?email=" +
+          this.userId
+      )
+      .subscribe((response) => {
+        if (response.body.statusCode == 200) {
+          this.customerPlanDetail = response.body.data;
+          this.createServiceAddresses();
           this.assignDefaultServiceAddress();
         }
       });
   }
   createServiceAddresses() {
-    this.serviceAddresses =this.customerPlanDetail.map(item=> {return {...item, serviceAddress: item.houseNo + ' ' + item.buildingName + ' ' + item.streetName + '-' + item.postelCode,spAccountNo:item.spAccountNumber}});     
+    this.serviceAddresses = this.customerPlanDetail.map((item) => {
+      return {
+        ...item,
+        serviceAddress:
+          item.houseNo +
+          " " +
+          item.streetName +
+          (item.level != null && item.level.trim() != ""
+            ? "#" + item.level
+            : "") +
+          (item.unitNo != null && item.unitNo.trim() != ""
+            ? "-" + item.level + ","
+            : ",") +
+          item.buildingName +
+          " " +
+          item.country +
+          " " +
+          item.postelCode,
+        spAccountNo: item.spAccountNumber,
+      };
+    });
   }
 
   assignDefaultServiceAddress() {
@@ -55,20 +77,20 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  onSelectServiceAddress(event){
-    this.customerDto = this.customerPlanDetail.find(item=> item.spAccountNumber == event);
-    console.log('this.customerDto event',this.customerDto );
-    console.log('this.customerDto event sp',this.customerDto.spAccountNumber );
-    this.sp =this.customerDto.spAccountNumber;
-    console.log('this.sp',this.sp);
-    
-    
+  onSelectServiceAddress(event) {
+    this.customerDto = this.customerPlanDetail.find(
+      (item) => item.spAccountNumber == event
+    );
+    console.log("this.customerDto event", this.customerDto);
+    console.log("this.customerDto event sp", this.customerDto.spAccountNumber);
+    this.sp = this.customerDto.spAccountNumber;
+    console.log("this.sp", this.sp);
   }
 
-  goToCard(){
+  goToCard() {
     let spActNo = btoa(JSON.stringify(this.customerDto.spAccountNumber));
-    this.route.navigate(['consumer/profile/add-card'], {queryParams: { spActNo: spActNo }});
+    this.route.navigate(["consumer/profile/add-card"], {
+      queryParams: { spActNo: spActNo },
+    });
   }
-
- 
 }

@@ -72,4 +72,6 @@ export class CustomerDto {
 
    isContentToMarketingDes:string;
 
+   etc:string;
+
 }

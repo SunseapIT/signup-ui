@@ -304,7 +304,7 @@ export class SuccessfullSignupComponent implements OnInit {
     } else if (value == "street") {
       this.sortParam = "addressData.streetName";
     } else if (value == "contractTerm") {
-      this.sortParam = "plans.contractTerm";
+      this.sortParam = "plans.planInMonths";
     } else if (value == "rate") {
       this.sortParam = "plans.rate";
     } else if (value == "selfSignup") {
@@ -319,6 +319,8 @@ export class SuccessfullSignupComponent implements OnInit {
       this.sortParam = "addressData.postalCode";
     } else if (value == "houseNo") {
       this.sortParam = "addressData.houseNo";
+    } else if (value == "etc") {
+      this.sortParam = "addressData.etc.etcRate";
     }
     
     this.service

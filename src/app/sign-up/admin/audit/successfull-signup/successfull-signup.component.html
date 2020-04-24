@@ -1,131 +1,371 @@
 <!-- <div class="container"> -->
 <app-dots-loader *ngIf="isLoader"></app-dots-loader>
 <div class="container-fluid contentsuccess">
-    <div class="row mb-3 mt-3">
-        <div class="col-lg-4 col-md-4 col-sm-12 text-left">
-            <input type="text" class="form-control searchbar" [(ngModel)]="searchText" trim="blur" placeholder="Search..." (keyup)="searchCustomer($event)">
-        </div>
-        <div class="col-lg-5 col-md-5 col-sm-12  p-0  text-right ">
-            <input placeholder="Select a range..." class="form-control searchbar" [(ngModel)]="dateTimeRange" [selectMode]="'range'" [owlDateTimeTrigger]="dtRange1" [owlDateTime]="dtRange1" [max]="max" hour12Timer [readonly]="true" (ngModelChange)="getSuccessfulSignUp()">
-            <button type="button" class="btn remove-time" (click)="clearValue()">
+  <div class="row mb-3 mt-3">
+    <div class="col-lg-4 col-md-4 col-sm-12 text-left">
+      <input
+        type="text"
+        class="form-control searchbar"
+        [(ngModel)]="searchText"
+        trim="blur"
+        placeholder="Search..."
+        (keyup)="searchCustomer($event)"
+      />
+    </div>
+    <div class="col-lg-5 col-md-5 col-sm-12 p-0 text-right">
+      <input
+        placeholder="Select a range..."
+        class="form-control searchbar"
+        [(ngModel)]="dateTimeRange"
+        [selectMode]="'range'"
+        [owlDateTimeTrigger]="dtRange1"
+        [owlDateTime]="dtRange1"
+        [max]="max"
+        hour12Timer
+        [readonly]="true"
+        (ngModelChange)="getSuccessfulSignUp()"
+      />
+      <button type="button" class="btn remove-time" (click)="clearValue()">
         <i class="fa fa-times mr-2" aria-hidden="true"></i>
       </button>
 
-            <owl-date-time #dtRange1></owl-date-time>
-        </div>
-        <div class="col-lg-3 col-md-3 csv-div  mt-2 text-right">
-            <angular2csv [data]="csvDataSuccess" type="button" class="download" filename="SuccessfulSignup.csv" [options]="options">Download</angular2csv>
-        </div>
+      <owl-date-time #dtRange1></owl-date-time>
     </div>
-    <div class="row m-0 pl-0 pr-0">
-        <div class="col-lg-12 col-md-12  pl-0 pr-0">
-            <div class="table-responsive">
-                <table class="table table-striped" style="width: 3000px;">
-                    <thead>
-                        <th  id="first" class="arrow-down" (click)="sortingValue[0]=!sortingValue[0];sorting('firstName',sortingValue[0]); addClass($event)">
-                            First Name
-                        </th>
-                        <th  id="last" class="arrow-down" (click)="sortingValue[1]=!sortingValue[1];sorting('lastName',sortingValue[1]); addClass($event)">
-                            Last Name
-                        </th>
-                        <th  id="email" class="arrow-down" (click)="sortingValue[2]=!sortingValue[2];sorting('email',sortingValue[2]); addClass($event)">
-                            Email</th>
-                        <th  id="mobile" class="arrow-down" (click)="sortingValue[3]=!sortingValue[3];sorting('mobile',sortingValue[3]); addClass($event)">
-                            Mobile</th>
-                        <th  id="spNumber" class="arrow-down" (click)="sortingValue[4]=!sortingValue[4];sorting('spAccount',sortingValue[4]); addClass($event)">
-                            SP Number
-                        </th>
-                        <th  id="building" class="arrow-down" (click)="sortingValue[5]=!sortingValue[5];sorting('building',sortingValue[5]); addClass($event)">
-                            Building Name</th>
-                        <th  id="houseNo" class="arrow-down" (click)="sortingValue[6]=!sortingValue[6];sorting('houseNo',sortingValue[6]); addClass($event)">
-                            House No</th>
-                        <th  id="level" class="arrow-down" (click)="sortingValue[7]=!sortingValue[7];sorting('level',sortingValue[7]); addClass($event)">
-                            Level</th>
-                        <th  id="unit" class="arrow-down" (click)="sortingValue[8]=!sortingValue[8];sorting('unit',sortingValue[8]); addClass($event)">
-                            Unit</th>
-                        <th  id="street" class="arrow-down" (click)="sortingValue[10]=!sortingValue[10];sorting('street',sortingValue[10]); addClass($event)">
-                            Street</th>
-                        <th  id="postal" class="arrow-down" (click)="sortingValue[11]=!sortingValue[11];sorting('postal',sortingValue[11]); addClass($event)">
-                            Postal Code</th>
-                        <th  id="dwelling" class="arrow-down" (click)="sortingValue[12]=!sortingValue[12];sorting('dwelling',sortingValue[12]); addClass($event)">
-                            Dwelling Type</th>
-                        <th  id="plan" class="arrow-down" (click)="sortingValue[13]=!sortingValue[13];sorting('planName',sortingValue[13]); addClass($event)">
-                            Plan Name</th>
-                        <th  id="signup" class="arrow-down" (click)="sortingValue[14]=!sortingValue[14];sorting('signup',sortingValue[14]); addClass($event)">
-                            SignUp Date</th>
-                        <th  id="etc" class="arrow-down" (click)="sortingValue[15]=!sortingValue[15];sorting('etc',sortingValue[15]); addClass($event)">
-                            ETC</th>
-                        <!-- <th  id="promo" class="arrow-down" (click)="sortingValue[16]=!sortingValue[16];sorting('promo',sortingValue[16]); addClass($event)">
+    <div class="col-lg-3 col-md-3 csv-div mt-2 text-right">
+      <angular2csv
+        [data]="csvDataSuccess"
+        type="button"
+        class="download"
+        filename="SuccessfulSignup.csv"
+        [options]="options"
+        >Download</angular2csv
+      >
+    </div>
+  </div>
+  <div class="row m-0 pl-0 pr-0">
+    <div class="col-lg-12 col-md-12 pl-0 pr-0">
+      <div class="table-responsive">
+        <table class="table table-striped" style="width: 3000px;">
+          <thead>
+            <th
+              id="first"
+              class="arrow-down"
+              (click)="
+                sortingValue[0] = !sortingValue[0];
+                sorting('firstName', sortingValue[0]);
+                addClass($event)
+              "
+            >
+              First Name
+            </th>
+            <th
+              id="last"
+              class="arrow-down"
+              (click)="
+                sortingValue[1] = !sortingValue[1];
+                sorting('lastName', sortingValue[1]);
+                addClass($event)
+              "
+            >
+              Last Name
+            </th>
+            <th
+              id="email"
+              class="arrow-down"
+              (click)="
+                sortingValue[2] = !sortingValue[2];
+                sorting('email', sortingValue[2]);
+                addClass($event)
+              "
+            >
+              Email
+            </th>
+            <th
+              id="mobile"
+              class="arrow-down"
+              (click)="
+                sortingValue[3] = !sortingValue[3];
+                sorting('mobile', sortingValue[3]);
+                addClass($event)
+              "
+            >
+              Mobile
+            </th>
+            <th
+              id="spNumber"
+              class="arrow-down"
+              (click)="
+                sortingValue[4] = !sortingValue[4];
+                sorting('spAccount', sortingValue[4]);
+                addClass($event)
+              "
+            >
+              SP Number
+            </th>
+            <th
+              id="building"
+              class="arrow-down"
+              (click)="
+                sortingValue[5] = !sortingValue[5];
+                sorting('building', sortingValue[5]);
+                addClass($event)
+              "
+            >
+              Building Name
+            </th>
+            <th
+              id="houseNo"
+              class="arrow-down"
+              (click)="
+                sortingValue[6] = !sortingValue[6];
+                sorting('houseNo', sortingValue[6]);
+                addClass($event)
+              "
+            >
+              House No
+            </th>
+            <th
+              id="level"
+              class="arrow-down"
+              (click)="
+                sortingValue[7] = !sortingValue[7];
+                sorting('level', sortingValue[7]);
+                addClass($event)
+              "
+            >
+              Level
+            </th>
+            <th
+              id="unit"
+              class="arrow-down"
+              (click)="
+                sortingValue[8] = !sortingValue[8];
+                sorting('unit', sortingValue[8]);
+                addClass($event)
+              "
+            >
+              Unit
+            </th>
+            <th
+              id="street"
+              class="arrow-down"
+              (click)="
+                sortingValue[10] = !sortingValue[10];
+                sorting('street', sortingValue[10]);
+                addClass($event)
+              "
+            >
+              Street
+            </th>
+            <th
+              id="postal"
+              class="arrow-down"
+              (click)="
+                sortingValue[11] = !sortingValue[11];
+                sorting('postal', sortingValue[11]);
+                addClass($event)
+              "
+            >
+              Postal Code
+            </th>
+            <th
+              id="dwelling"
+              class="arrow-down"
+              (click)="
+                sortingValue[12] = !sortingValue[12];
+                sorting('dwelling', sortingValue[12]);
+                addClass($event)
+              "
+            >
+              Dwelling Type
+            </th>
+            <th
+              id="plan"
+              class="arrow-down"
+              (click)="
+                sortingValue[13] = !sortingValue[13];
+                sorting('planName', sortingValue[13]);
+                addClass($event)
+              "
+            >
+              Plan Name
+            </th>
+            <th
+              id="signup"
+              class="arrow-down"
+              (click)="
+                sortingValue[14] = !sortingValue[14];
+                sorting('signup', sortingValue[14]);
+                addClass($event)
+              "
+            >
+              SignUp Date
+            </th>
+            <th
+              id="etc"
+              class="arrow-down"
+              (click)="
+                sortingValue[15] = !sortingValue[15];
+                sorting('etc', sortingValue[15]);
+                addClass($event)
+              "
+            >
+              ETC
+            </th>
+            <!-- <th  id="promo" class="arrow-down" (click)="sortingValue[16]=!sortingValue[16];sorting('promo',sortingValue[16]); addClass($event)">
                             Promo Code</th> -->
-                        <th  id="contractTerm" class="arrow-down" (click)="sortingValue[17]=!sortingValue[17];sorting('contractTerm',sortingValue[17]); addClass($event)">
-                            Contract Term</th>
-                        <th id="plandot" class="arrow-down" (click)="sortingValue[18]=!sortingValue[18];sorting('planType',sortingValue[18]); addClass($event)">DOT/FIX</th>
-                        <th  id="approvedate" class="arrow-down" (click)="sortingValue[19]=!sortingValue[19];sorting('approvalTime',sortingValue[19]); addClass($event)">
-                            Approve date</th>
-                        <th  id="contractprice" class="arrow-down" (click)="sortingValue[20]=!sortingValue[20];sorting('rate',sortingValue[20]); addClass($event)">
-                            Contract Price</th>
-                        <th  id="behalf" class="arrow-down" (click)="sortingValue[21]=!sortingValue[21];sorting('selfSignup',sortingValue[21]); addClass($event)">
-                            Account Holder</th>
-                        <th  id="marketing" class="arrow-down" (click)="sortingValue[22]=!sortingValue[22];sorting('contentToMarketing',sortingValue[22]); addClass($event)">
-                            Marketing</th>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let customerList of successData ; let i=index;">
-                            <td class="text-center">
-                                {{customerList.fullName}}</td>
-                            <td class="text-center">
-                                {{customerList.lastName}}</td>
-                            <td >
-                                {{customerList.eamilAddress}}</td>
-                            <td >
-                                {{customerList.mobileNumber}}</td>
-                            <td >
-                                {{customerList.spAccountNumber}}</td>
-                            <td>
-                                {{customerList.buildingName}}</td>
-                            <td class="text-center">
-                                {{customerList.houseNo}}</td>
-                            <td class="text-center">
-                                {{customerList.level}}</td>
-                            <td class="text-center">
-                                {{customerList.unit}}</td>
-                            <td >
-                                {{customerList.streetName}}</td>
-                            <td class="text-center">
-                                {{customerList.postelCode}}</td>
-                            <td class="text-center">
-                                {{customerList.dwelingType}}</td>
-                            <td >
-                                {{customerList.plan}}</td>
-                            <!-- <td>{{customerList.sighnUpStarTimeStamp}}</td> -->
-                            <td >
-                                {{customerList.sighnUpEndTimeStamp}}</td>
-                            <td class="text-center">
-                                ${{ ETC_FEE_OPTIONS[customerList.dwelingType] }}</td>
-                            <!-- <td >
+            <th
+              id="contractTerm"
+              class="arrow-down"
+              (click)="
+                sortingValue[17] = !sortingValue[17];
+                sorting('contractTerm', sortingValue[17]);
+                addClass($event)
+              "
+            >
+              Contract Term
+            </th>
+            <th
+              id="plandot"
+              class="arrow-down"
+              (click)="
+                sortingValue[18] = !sortingValue[18];
+                sorting('planType', sortingValue[18]);
+                addClass($event)
+              "
+            >
+              DOT/FIX
+            </th>
+            <th
+              id="approvedate"
+              class="arrow-down"
+              (click)="
+                sortingValue[19] = !sortingValue[19];
+                sorting('approvalTime', sortingValue[19]);
+                addClass($event)
+              "
+            >
+              Approve date
+            </th>
+            <th
+              id="contractprice"
+              class="arrow-down"
+              (click)="
+                sortingValue[20] = !sortingValue[20];
+                sorting('rate', sortingValue[20]);
+                addClass($event)
+              "
+            >
+              Contract Price
+            </th>
+            <th
+              id="behalf"
+              class="arrow-down"
+              (click)="
+                sortingValue[21] = !sortingValue[21];
+                sorting('selfSignup', sortingValue[21]);
+                addClass($event)
+              "
+            >
+              Account Holder
+            </th>
+            <th
+              id="marketing"
+              class="arrow-down"
+              (click)="
+                sortingValue[22] = !sortingValue[22];
+                sorting('contentToMarketing', sortingValue[22]);
+                addClass($event)
+              "
+            >
+              Marketing
+            </th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let customerList of successData; let i = index">
+              <td class="text-center">
+                {{ customerList.fullName }}
+              </td>
+              <td class="text-center">
+                {{ customerList.lastName }}
+              </td>
+              <td>
+                {{ customerList.eamilAddress }}
+              </td>
+              <td>
+                {{ customerList.mobileNumber }}
+              </td>
+              <td>
+                {{ customerList.spAccountNumber }}
+              </td>
+              <td>
+                {{ customerList.buildingName }}
+              </td>
+              <td class="text-center">
+                {{ customerList.houseNo }}
+              </td>
+              <td class="text-center">
+                {{ customerList.level }}
+              </td>
+              <td class="text-center">
+                {{ customerList.unit }}
+              </td>
+              <td>
+                {{ customerList.streetName }}
+              </td>
+              <td class="text-center">
+                {{ customerList.postelCode }}
+              </td>
+              <td class="text-center">
+                {{ customerList.dwelingType }}
+              </td>
+              <td>
+                {{ customerList.plan }}
+              </td>
+              <!-- <td>{{customerList.sighnUpStarTimeStamp}}</td> -->
+              <td>
+                {{ customerList.sighnUpEndTimeStamp }}
+              </td>
+              <td class="text-center">${{ customerList.etc }}</td>
+              <!-- <td >
                                 {{customerList.promoCode}}</td>
                              -->
-                             <td>
-                                {{customerList.planDetails.contractTerm}}
-                            </td>
-                             <td>
-                                {{customerList.planDetails.planType}}
-                             </td>
-                            <td >
-                                {{customerList.approvedTime}}</td>
-                            <td >
-                                {{customerList.planDetails.rate}}</td>
-                            <td class="text-center" >
-                                {{customerList.selfSignup == true ? 'Self SignUp':'Not Self SignUp' }}</td>
-                            <td class="text-center">
-                                {{customerList.contentToMarketing == true ? 'Yes' :'No'}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+              <td>
+                {{ customerList.planDetails.contractTerm }}
+              </td>
+              <td>
+                {{ customerList.planDetails.planType }}
+              </td>
+              <td>
+                <span *ngIf="customerList.approvedTime != null">{{customerList.approvedTime}}</span>
+                <span *ngIf="customerList.approvedTime == null">Not Applicable</span>
+              </td>
+              <td>
+                {{ customerList.planDetails.rate }}
+              </td>
+              <td class="text-center">
+                {{
+                  customerList.selfSignup == true
+                    ? "Self SignUp"
+                    : "Not Self SignUp"
+                }}
+              </td>
+              <td class="text-center">
+                {{ customerList.contentToMarketing == true ? "Yes" : "No" }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <span class="pagination">
-        <pagination id="pagination" [totalItems]="totalItems" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="5"></pagination>
-    </span>
+  </div>
+  <span class="pagination">
+    <pagination
+      id="pagination"
+      [totalItems]="totalItems"
+      [(ngModel)]="currentPage"
+      (pageChanged)="pageChanged($event)"
+      [maxSize]="5"
+    ></pagination>
+  </span>
 </div>

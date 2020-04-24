@@ -62,8 +62,7 @@ export class DocumentsUploadComponent implements OnInit {
       this.newSpAccountOpeningLetter
     ) {
       if (
-        this.spPastMonthBillSize > this.fileMaxSize ||
-        this.newSpAccountOpeningLetterSize > this.fileMaxSize
+        this.spPastMonthBillSize > this.fileMaxSize ||  this.newSpAccountOpeningLetterSize > this.fileMaxSize
       ) {
         this.toastr.error("", "File size is too large.", {
           timeOut: 3000,
@@ -73,10 +72,7 @@ export class DocumentsUploadComponent implements OnInit {
         
       }
     } else if (
-      !this.parent.isSPAccountHolder &&
-      this.letterOfAuthorisation &&
-      this.spPastMonthBill
-    ) {
+      !this.parent.isSPAccountHolder &&  this.letterOfAuthorisation &&  (this.spPastMonthBill || this.spBillLocName)  ) {
       if (
         this.spPastMonthBillSize > this.fileMaxSize ||
         this.letterOfAuthorisationSize > this.fileMaxSize

@@ -16,7 +16,7 @@ declare const $: any;
 })
 export class AddPlanComponent {
   formData: any;
-  model: any = { planId: '', planName: '', energy: '', discount: '', rateChange: '', rate: '', afterGst: '' };
+  model: any = { planId: '', planName: '', energy: '', discount: '', rateChange: '', rate: '', afterGst: '', planInMonths : ''  , planType: '' };
   uploadSuccess: boolean;
   file: any;
   isLoader: boolean;
@@ -26,6 +26,11 @@ export class AddPlanComponent {
   fileName: string;
   myfile: any;
   fileType: any;
+  selectedPlanType:any;
+  selectedContractTerm:any;
+  contractMonths:any;
+  planTypeOthers:boolean;
+  months = [];
   message
   msgModal = { message: '' }
   constructor(private service: ApiServiceServiceService,
@@ -34,6 +39,12 @@ export class AddPlanComponent {
 
   ngOnInit() {
     this.getAdminMessage();
+    this.contractMonths = 1;
+    for (let i=0; i<24; i++){
+    this.months.push(this.contractMonths+i);
+    }
+    console.log('this.months',this.months);
+    
   }
 
   onSubmit(form: NgForm) {
@@ -41,7 +52,9 @@ export class AddPlanComponent {
       this.isLoader = true;
       this.uploadSuccess = false;
       var plandto = new Plandto()
-      plandto = this.model
+      plandto = this.model;
+      console.log('plandto ',plandto );
+      
       let sendlbeFormData = new FormData();
       sendlbeFormData.append("multipartFile", this.formData);
       sendlbeFormData.append("planDto", JSON.stringify(plandto));
@@ -133,6 +146,23 @@ export class AddPlanComponent {
     let reader = e.target;
     var base64result = reader.result.substr(reader.result.indexOf(',') + 1);
     this.bill_data = base64result;
+  }
+
+  onSelectContractTerm(event){
+   this.selectedContractTerm=event.target.value;
+  }
+
+  onSelectPlanType(event){
+   this.selectedPlanType= event.target.value;
+    // var selected = event.target.value;
+    // if(selected == "others"){
+    //   this.planTypeOthers = true;
+    // }
+    // else{
+    //   this.planTypeOthers = false;
+    // }
+    
+
   }
 
 

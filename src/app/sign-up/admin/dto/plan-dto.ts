@@ -15,7 +15,11 @@ export class Plandto {
     afterGst: string = '';
 
     rateChange: string = '';
-
+    
+    planInMonths : number;
+    
+    planType : string;
+    
     plans = Array;
 
 }

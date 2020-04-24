@@ -190,9 +190,10 @@ export class ServiceAddressComponent implements OnInit {
       timeStampDto.pageType = "ADDRESS_DETAILS",
         timeStampDto.token = localStorage.getItem("Token");
       this.service.post_service(ApiServiceServiceService.apiList.addAddressUrl, addressDto).subscribe((response) => {
-        let responseData = response;
-        let status = responseData['statusCode'];
-        if (status == 200) {
+        var responseBody = response['body'];
+        var responseMessage = responseBody['message'];
+        let statusCode = responseBody['statusCode']
+        if (statusCode == 200) {
           this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl, timeStampDto).subscribe((response) => {
 
           })

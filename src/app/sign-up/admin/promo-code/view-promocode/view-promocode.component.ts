@@ -150,18 +150,15 @@ export class ViewPromocodeComponent implements OnInit {
   }
 
   getPromoCodeByRange() {
-    this.filters["fromTimestamp"] = this.dateTimeRange
-      ? this.getTimeStamp(this.dateTimeRange[0])
-      : null;
-    this.filters["toTimestamp"] = this.dateTimeRange
-      ? this.getTimeStamp(this.dateTimeRange[1])
-      : null;
+    this.filters["fromTimestamp"] = this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[0]) : null;      
+    this.filters["toTimestamp"] = this.dateTimeRange ? this.getTimeStamp(this.dateTimeRange[1]) : null;
+           
     this.filters["page"] = 0;
     this.getPromoCode("datetime");
   }
 
   getTimeStamp(time) {
-    return this.dateFormat.transform(time, "dd-MM-yyyy hh:mm:ss");
+    return this.dateFormat.transform(time, "dd-MM-yyyy H:mm:ss");
   }
 
   getFilteredList() {

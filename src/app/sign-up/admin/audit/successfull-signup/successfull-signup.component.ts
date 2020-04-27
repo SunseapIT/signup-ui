@@ -17,6 +17,8 @@ export class SuccessfullSignupComponent implements OnInit {
   ETC_FEE_OPTIONS = ETC_FEE_OPTIONS;
   public dateTimeRange: Date[];
 
+  columns = ["First Name", "Last Name", "Email", "Mobile", "SP Number", "Building Name"];
+
   sort = "asc";
   sortParam = "fullName";
   sortingValue = [
@@ -351,4 +353,6 @@ export class SuccessfullSignupComponent implements OnInit {
       elementId.classList.replace("arrow-up", "arrow-down");
     }
   }
+
+  onSelectColumn(event){}
 }

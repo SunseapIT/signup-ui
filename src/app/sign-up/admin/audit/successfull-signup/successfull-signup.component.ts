@@ -19,6 +19,10 @@ export class SuccessfullSignupComponent implements OnInit {
 
   columns = ["First Name", "Last Name", "Email", "Mobile", "SP Number", "Building Name"];
 
+   dropdownList = [];
+  selectedItems = [];
+  dropdownSettings = {};
+
   sort = "asc";
   sortParam = "fullName";
   sortingValue = [
@@ -121,6 +125,7 @@ export class SuccessfullSignupComponent implements OnInit {
 
   ngOnInit() {
     this.getAllSuccessSignupUsers(null);
+    this.onSelectColumn();
   }
 
   getAllSuccessSignupUsers(val) {
@@ -354,5 +359,31 @@ export class SuccessfullSignupComponent implements OnInit {
     }
   }
 
-  onSelectColumn(event){}
+  onSelectColumn(){
+    this.dropdownList = [
+      { item_id: 1, item_text: 'First Name' },
+      { item_id: 2, item_text: 'Last Name' },
+      { item_id: 3, item_text: 'Email' },
+      { item_id: 4, item_text: 'Mobile' },
+      { item_id: 5, item_text: 'SP Number' },
+      { item_id: 6, item_text: 'House No' }
+    ];
+    this.selectedItems = [];
+
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true
+    };
+  }
+  onItemSelect(item: any) {
+    console.log(item);
+  }
+  onSelectAll(items: any) {
+    console.log(items);
+  }
 }

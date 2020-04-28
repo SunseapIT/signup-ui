@@ -6,10 +6,10 @@ export const environment = {
   apiUrl: '',
   reCaptchaSiteKey: '',
   // baseUrl: "api/",
-  baseUrl : "http://signup-uat.sunseap.com:8085",
+  // baseUrl : "http://signup-uat.sunseap.com:8085",
   dialogUrl: '',
-  // baseUrl: "http://111.93.31.228:9091"
-  // baseUrl: "http://31367127.ngrok.io"
+  baseUrl: "http://111.93.31.228:9091"
+  // baseUrl: "https://eb4f1023.ngrok.io"
 
 }
 

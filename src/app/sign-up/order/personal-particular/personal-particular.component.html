@@ -3,7 +3,7 @@
         <div class="row">
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="identificationName">First name (as per ID)</label>
-                <input name="identificationName" id="identificationName" trim="blur" class="form-control" [class.is-invalid]="identificationName.invalid && (identificationName.touched || form.submitted)" required [(ngModel)]="parent.model.identificationName" #identificationName="ngModel"
+                <input name="identificationName" id="identificationName" placeholder="Enter First Name" trim="blur" class="form-control" [class.is-invalid]="identificationName.invalid && (identificationName.touched || form.submitted)" required [(ngModel)]="parent.model.identificationName" #identificationName="ngModel"
                     blockCopyPaste/>
                 <div *ngIf="identificationName.invalid && (identificationName.touched || form.submitted)" class="invalid-feedback">
                     <div *ngIf="identificationName?.errors.required">
@@ -13,7 +13,9 @@
             </div>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="lastName">Last name (as per ID)</label>
-                <input name="lastName" id="lastName" trim="blur" class="form-control" [class.is-invalid]="lastName.invalid && (lastName.touched || form.submitted)" required [(ngModel)]="parent.model.lastName" #lastName="ngModel" blockCopyPaste/>
+                <input name="lastName" id="lastName" trim="blur" placeholder="Enter Last Name"
+                 class="form-control" [class.is-invalid]="lastName.invalid && (lastName.touched || form.submitted)" 
+                 required [(ngModel)]="parent.model.lastName" #lastName="ngModel" blockCopyPaste/>
                 <div *ngIf="lastName.invalid && (lastName.touched || form.submitted)" class="invalid-feedback">
                     <div *ngIf="lastName?.errors.required">
                         <i>Last name is required</i>
@@ -38,7 +40,7 @@
             <div class="form-group col-md-6 col-sm-12">
                 <label class="form-control-label" for="email">Email Address</label>
                 <input name="email" id="email" trim="blur" class="form-control text-lowercase" [class.is-valid]="isEmailOtpValidated && parent.model.email" [class.is-invalid]="(!isEmailOtpValidated || parent.model.email == '') && (email.touched || form.submitted)" [pattern]="config.validationRegex.email"
-                    [(ngModel)]="parent.model.email" required #email="ngModel" [readonly]="isEmailOtpValidated" blockCopyPaste />
+                    [(ngModel)]="parent.model.email" placeholder="Enter Email" required #email="ngModel" [readonly]="isEmailOtpValidated" blockCopyPaste />
                 <button type="button" class="btn input-button" [disabled]="isEmailOtpValidated || parent.model.email == '' || !parent.model.email || email.invalid" (click)="requestEmailOTP(true)"><span>Verify</span></button>
 
                 <div *ngIf="email.invalid && (email.touched || form.submitted)" class="invalid-feedback">
@@ -46,16 +48,20 @@
                         <i>Email address is required</i>
                     </div>
                 </div>
+
+                git config --global user.name "jsn koushik"
+                git config --global user.email "koushik.j@thrymr.net"
+
                 <div *ngIf="email.errors?.pattern" class="invalid-feedback"><i>Please enter valid email address</i></div>
             </div>
             <div class="form-group col-md-6 col-sm-12">
                 <label class="form-control-label" trim="blur" for="mobileNo">Mobile number</label>
                 <input name="mobileNo" id="mobileNo" class="form-control" [class.is-valid]="isMobileOtpValidate && parent.model.mobileNo" [class.is-invalid]="(!isMobileOtpValidate || parent.model.mobileNo == '') && (mobileNo.touched || form.submitted)" [(ngModel)]="parent.model.mobileNo"
-                    #mobileNo="ngModel" pattern="^(8|9)\d{7}$" maxlength="8" [readonly]="isMobileOtpValidate" blockCopyPaste numbersOnly />
+                    #mobileNo="ngModel" placeholder="Enter Mobile No" required pattern="^(8|9)\d{7}$" maxlength="8" [readonly]="isMobileOtpValidate" blockCopyPaste numbersOnly />
 
                 <button type="button" class="btn input-button" [disabled]="isMobileOtpValidate || parent.model.mobileNo == '' || !parent.model.mobileNo || mobileNo.invalid" (click)="requestMobileOTP(true)"><span>Verify</span></button>
-                <div *ngIf="email.invalid && (email.touched || form.submitted)" class="invalid-feedback">
-                    <div *ngIf="email?.errors.required">
+                <div *ngIf="mobileNo.invalid && (mobileNo.touched || form.submitted)" class="invalid-feedback">
+                    <div *ngIf="mobileNo?.errors.required">
                         <i>Mobile Number is required</i>
                     </div>
                 </div>

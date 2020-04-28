@@ -40,11 +40,11 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let promoData of promoCodeData; let i=index;">
-                            <td class="pt-3 pb-2">{{promoData.promoCode}}</td>
+                            <td class="pt-2 pb-2">{{promoData.promoCode}}</td>
                             <td class="pt-2 pb-2">{{promoData.dateFrom}}</td>
                             <td class="pt-2 pb-2">{{promoData.dateTo}}</td>
                             <td class="pt-2 pb-2">{{promoData.infinity}}</td>
-                            <td class="pt-2 pb-2">{{promoData.noOfUsers}}</td>
+                            <td class="pt-2 pb-2">{{promoData.noOfLimitedUsers}}</td>
                             <td class="text-center pt-2 pb-3"><i class="fas fa-pencil-alt mr-5" aria-hidden="true" (click)="edit(promoData.id)"></i>
                                 <i class="fa fa-trash text-danger" aria-hidden="true" (click)="delete(promoData.id)"></i></td>
                         </tr>

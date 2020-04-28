@@ -104,10 +104,13 @@ export class AddPlanComponent {
 
   addMessage() {
     this.message = this.msgModal.message;
-    this.service.get_service(ApiServiceServiceService.apiList.messageUrl + "?message=" + (btoa(this.message))).subscribe((response) => {
+    console.log(this.message)
+    this.service.get_service(ApiServiceServiceService.apiList.messageUrl + "?message=" + (btoa(this.message))).subscribe((response) =>
+     {
       this.toastr.success('', 'Message added successfully.', {
         timeOut: 2000
       })
+      this.message=''
     })
   }
 

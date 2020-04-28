@@ -28,7 +28,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let abandonedList of abandonedData | grdFilter: {plan_Details: searchTextAbandoned}; let i=index">
-                            <td class="pt-3 pb-2">{{ abandonedList.planDetails }}</td>
+                            <td class="pb-2">{{ abandonedList.planDetails }}</td>
                             <td class="pt-2 pb-2">{{ abandonedList.personal_Details }}</td>
                             <td class="pt-2 pb-2">{{ abandonedList.address_Details }}</td>
                             <td class="pt-2 pb-2">{{ abandonedList.upload_Documents }}</td>

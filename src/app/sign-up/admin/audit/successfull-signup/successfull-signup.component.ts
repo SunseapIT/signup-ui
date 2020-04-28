@@ -359,16 +359,32 @@ export class SuccessfullSignupComponent implements OnInit {
     }
   }
 
+
   onSelectColumn(){
     this.dropdownList = [
-      { item_id: 1, item_text: 'First Name' },
-      { item_id: 2, item_text: 'Last Name' },
-      { item_id: 3, item_text: 'Email' },
-      { item_id: 4, item_text: 'Mobile' },
-      { item_id: 5, item_text: 'SP Number' },
-      { item_id: 6, item_text: 'House No' }
+      { item_id: "FIRSTNAME", item_text: 'First Name' },
+      { item_id: "LASTNAME", item_text: 'Last Name' },
+      { item_id: "EMAIL", item_text: 'Email' },
+      { item_id: "MOBILE", item_text: 'Mobile' },
+      { item_id: "SPACCOUNTNO", item_text: 'SP Number' },
+      { item_id: "BUILDINGNAME", item_text: 'Building Name' },
+      { item_id: "HOUSENO", item_text: 'House No' },
+      { item_id: "LEVEL", item_text: 'Level' },
+      { item_id: "UNIT", item_text: 'Unit' },
+      { item_id: "STREET", item_text: 'Street' },
+      { item_id: "POSTALCODE", item_text: 'Postal Code' },
+      { item_id: "DWELLING_TYPE", item_text: 'Dwelling Type' },
+      { item_id: "PLAN_NAME", item_text: 'Plan Name' },
+      { item_id: "REMARKS", item_text: 'Remark' },
+      { item_id: "COUNTRY", item_text: 'Country' },
+      { item_id: "PLANTYPE", item_text: 'Plan Type' },
+      { item_id: "PLANINMMONTHS", item_text: 'Plan In Months' },
+      { item_id: "SEARCHABLEFULLNAME", item_text: 'Fulll Name' },
+    
     ];
     this.selectedItems = [];
+    console.log('this.selectedItems ',this.selectedItems );
+    
 
     this.dropdownSettings = {
       singleSelection: false,

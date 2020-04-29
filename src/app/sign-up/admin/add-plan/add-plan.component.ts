@@ -30,7 +30,7 @@ export class AddPlanComponent {
   selectedContractTerm:any;
   contractMonths:any;
   planTypeOthers:boolean;
-  months = [];
+  months = [ "3", "6", "12", "other"];
   message
   msgModal = { message: '' }
   constructor(private service: ApiServiceServiceService,
@@ -39,11 +39,11 @@ export class AddPlanComponent {
 
   ngOnInit() {
     this.getAdminMessage();
-    this.contractMonths = 1;
-    for (let i=0; i<24; i++){
-    this.months.push(this.contractMonths+i);
-    }
-    console.log('this.months',this.months);
+    // this.contractMonths = 1;
+    // for (let i=0; i<24; i++){
+    // this.months.push(this.contractMonths+i);
+    // }
+    // console.log('this.months',this.months);
     
   }
 

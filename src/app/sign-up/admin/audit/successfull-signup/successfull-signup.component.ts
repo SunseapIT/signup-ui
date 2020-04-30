@@ -7,6 +7,7 @@ import {
   DWELLING_TYPE_OPTIONS,
   ETC_FEE_OPTIONS,
 } from "@app/core";
+import { SearchDto } from "@app/core/search-dto";
 
 @Component({
   selector: "app-successfull-signup",
@@ -17,11 +18,14 @@ export class SuccessfullSignupComponent implements OnInit {
   ETC_FEE_OPTIONS = ETC_FEE_OPTIONS;
   public dateTimeRange: Date[];
 
-  columns = ["First Name", "Last Name", "Email", "Mobile", "SP Number", "Building Name"];
+  
 
    dropdownList = [];
   selectedItems = [];
   dropdownSettings = {};
+
+  searchAllColumns:boolean = false;
+  searchdColumns:any = [];
 
   sort = "asc";
   sortParam = "fullName";
@@ -154,15 +158,15 @@ export class SuccessfullSignupComponent implements OnInit {
 
   searchCustomer(event) {
     if(this.searchText!=null && this.searchText.trim()!=''){
-    this.service
-      .get_service(
-        ApiServiceServiceService.apiList.searchCustomersUrl +
-          "?searchKey=" +
-          this.searchText +
-          "&page=" +
-          (this.page - 1)
-      )
-      .subscribe((response: any) => {
+
+      var searchDto = new SearchDto();
+      searchDto.searchAllColumns = this.searchAllColumns;
+      searchDto.searchColumns= this.searchdColumns;
+      searchDto.searchKey = this.searchText;
+      console.log('searchDto', searchDto);
+      
+    this.service.post_service(ApiServiceServiceService.apiList.searchCustomersUrl +"?page=" 
+      +(this.page - 1),searchDto).subscribe((response: any) => {
         var responseBody = response["body"];
         var responseData = responseBody["data"];
         this.totalItems = responseData.totalElements;
@@ -384,9 +388,7 @@ export class SuccessfullSignupComponent implements OnInit {
     ];
     this.selectedItems = [];
     console.log('this.selectedItems ',this.selectedItems );
-    
-
-    this.dropdownSettings = {
+      this.dropdownSettings = {
       singleSelection: false,
       idField: 'item_id',
       textField: 'item_text',
@@ -397,9 +399,15 @@ export class SuccessfullSignupComponent implements OnInit {
     };
   }
   onItemSelect(item: any) {
-    console.log(item);
+    this.searchAllColumns=false;
+    this.searchdColumns.push(item.item_id);
+    console.log('this.searchColumns',this.searchdColumns);
+    
   }
   onSelectAll(items: any) {
-    console.log(items);
+    this.searchAllColumns = true;
+    console.log('All Item', items);
+    
+    
   }
 }

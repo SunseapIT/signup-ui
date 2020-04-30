@@ -45,8 +45,8 @@ const routes: Routes = [
   { path: ORDER_ROUTES.PAYMENT, component : TokenizationPageComponent},
   { path: PAYMENT_ROUTES.TEST, component : TestComponent},
 
-  { path : 'admin-login', loadChildren : 'app/sign-up/admin/admin.module#AdminModule'},
-  { path : 'consumer', loadChildren : 'app/sign-up/consumer/consumer.module#ConsumerModule'},
+  // { path : 'admin-login', loadChildren : 'app/sign-up/admin/admin.module#AdminModule'},
+  // { path : 'consumer', loadChildren : 'app/sign-up/consumer/consumer.module#ConsumerModule'},
 
 
   { path: '**', component: PageNotFoundComponent },

@@ -10,7 +10,8 @@ import { IdentificationType, ConfigService, UtilService, IDENTIFICATION_TYPE_OPT
 import { OrderComponent } from '../order.component';
 import { STORAGE_KEYS, ORDER_ROUTES, ORDER_GA_EVENT_NAMES } from '../order.constant';
 import { NgForm } from '@angular/forms';
-import { TimeStampDto } from '@app/sign-up/admin/dto/time-stamp-dto';
+// import { TimeStampDto } from '@app/sign-up/admin/dto/time-stamp-dto';
+import { TimeStampDto } from "../../../core/time-stamp-dto";
 import { ToastrService } from 'ngx-toastr';
 declare var $: any
 const IDENTIFICATION_EXPIRY_DATE_CONFIG = {

@@ -4,7 +4,7 @@ import { Component, Host, OnInit } from "@angular/core";
 import * as _ from "lodash";
 import { GoogleTagManagerService, UtilService } from "@app/core";
 import { OrderComponent } from "../order.component";
-import { TimeStampDto } from "@app/sign-up/admin/dto/time-stamp-dto";
+import { TimeStampDto } from "../../../core/time-stamp-dto";
 import { ToastrService } from "ngx-toastr";
 import { NgForm } from "@angular/forms";
 

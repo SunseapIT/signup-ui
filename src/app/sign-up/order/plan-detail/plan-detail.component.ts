@@ -23,7 +23,9 @@ import {
 } from '@app/core';
 import { NgForm } from '@angular/forms';
 import { PlanBean } from '@app/core/plan-bean';
-import { TimeStampDto } from '@app/sign-up/admin/dto/time-stamp-dto';
+// import { TimeStampDto } from '@app/sign-up/admin/dto/time-stamp-dto';
+import { TimeStampDto } from "../../../core/time-stamp-dto";
+
 import { CustomerDto } from '@app/core/customer-dto';
 
 declare var $: any;

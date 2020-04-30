@@ -11,7 +11,9 @@ import { OrderComponent } from '../order.component';
 import { ORDER_GA_EVENT_NAMES, STORAGE_KEYS } from '../order.constant';
 import { NgForm } from '@angular/forms';
 import { CustomerDto } from '@app/core/customer-dto';
-import { TimeStampDto } from '@app/sign-up/admin/dto/time-stamp-dto';
+// import { TimeStampDto } from '@app/sign-up/admin/dto/time-stamp-dto';
+import { TimeStampDto } from "../../../core/time-stamp-dto";
+
 
 const POSTAL_CODE_WARNING = 'The postal code you have entered is currently not eligible for the Open Electricity Market. ' +
   'Please refer to <a href="https://www.openelectricitymarket.sg/index.html" target="_blank">EMA\'s site</a> for more information.';

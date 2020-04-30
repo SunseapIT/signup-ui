@@ -1,4 +1,6 @@
-import { TimeStampDto } from './../../admin/dto/time-stamp-dto';
+// import { TimeStampDto } from './../../admin/dto/time-stamp-dto';
+import { TimeStampDto } from "../../../core/time-stamp-dto";
+
 
 import { CustomerDto } from './../../../core/customer-dto';
 import { Component, OnInit, Host, ViewEncapsulation } from '@angular/core';

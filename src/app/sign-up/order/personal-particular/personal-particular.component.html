@@ -43,7 +43,7 @@
                     [(ngModel)]="parent.model.email" placeholder="Enter Email" required #email="ngModel" [readonly]="isEmailOtpValidated" blockCopyPaste />
                 <button type="button" class="btn input-button" [disabled]="isEmailOtpValidated || parent.model.email == '' || !parent.model.email || email.invalid" (click)="requestEmailOTP(true)"><span>Verify</span></button>
 
-                <div *ngIf="email.invalid && (email.touched || form.submitted)" class="invalid-feedback">
+                <div *ngIf="email.invalid" class="invalid-feedback">
                     <div *ngIf="email?.errors.required">
                         <i>Email address is required</i>
                     </div>

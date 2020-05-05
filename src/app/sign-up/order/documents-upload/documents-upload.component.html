@@ -58,7 +58,7 @@
                     <div class="form-row">
                         <div class="form-group col-lg-6 col-md-12 col-xs-12 mb-0 mb-lg-auto">
                             <label class="form-control-label" for="spPastMonthBill">SP past month bill</label>
-                            <input type="text" name="spPastMonthBill" class="form-control fileUpload" [(ngModel)]="spPastMonthBill" [value]="uploaded" disabled required #spPastMonthBillError="ngModel">
+                            <input type="text" style="width: 75%;" name="spPastMonthBill" class="form-control fileUpload" [(ngModel)]="spPastMonthBill" [value]="uploaded" disabled required #spPastMonthBillError="ngModel">
                             <div class="upload-btn-remove">
                                 <div *ngIf="spPastMonthBillUploaded" class="d-inline"><button type="button" class="btn" (click)="removeFile($event,1)"><i class="fa fa-times mr-2" aria-hidden="true"></i></button></div>
 
@@ -75,7 +75,7 @@
                         <div class="form-group col-lg-6 col-md-12 col-xs-12 mb-0 mb-lg-auto">
                             <div class="connection-div d-none d-lg-block">or</div>
                             <label class="form-control-label" for="loc">New SP account opening letter</label>
-                            <input type="text" name="loc" class="form-control fileUpload" [(ngModel)]="spBillLocName" [value]="uploaded" disabled required #locError="ngModel">
+                            <input type="text" style="width: 75%;" name="loc" class="form-control fileUpload" [(ngModel)]="spBillLocName" [value]="uploaded" disabled required #locError="ngModel">
                             <div class="upload-btn-remove">
                             </div>
                             <div class="upload-btn-wrapper">

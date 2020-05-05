@@ -3,7 +3,11 @@
 
         <div class="form-group col-md-6">
             <label class="form-control-label" for="servicePostalCode">Postal code</label>
-            <input name="servicePostalCode" id="servicePostalCode" class="form-control" (blur)="validatePostalCode($event.target.value)" maxlength="6" [class.is-invalid]="servicePostalCode.invalid && (servicePostalCode.touched || form.submitted)" required [pattern]="config.validationRegex.postalCode"
+            <input name="servicePostalCode" id="servicePostalCode" class="form-control" 
+            (blur)="validatePostalCode($event.target.value)" maxlength="6"
+            placeholder="Enter Postal Code"
+             [class.is-invalid]="servicePostalCode.invalid && (servicePostalCode.touched || form.submitted)"
+              required [pattern]="config.validationRegex.postalCode"
                 [(ngModel)]="parent.model.premise.servicePostalCode" #servicePostalCode="ngModel" numbersOnly/>
 
             <div *ngIf="servicePostalCode.invalid && (servicePostalCode.touched || form.submitted)" class="invalid-feedback">
@@ -18,12 +22,14 @@
 
         <div class="form-group col-md-6">
             <label class="form-control-label" for="buildingName">Building name</label>
-            <input name="buildingName" id="buildingName" class="form-control" placeholder="(Optional)" [(ngModel)]="serviceAddress.buildingName" />
+            <input name="buildingName" id="buildingName" class="form-control" placeholder="Enter Building Name" [(ngModel)]="serviceAddress.buildingName" />
         </div>
         <!-- (keypress)="keyPress($event)" -->
         <div class="form-group col-lg-6">
             <label class="form-control-label" for="houseNo">Block/House No.</label>
-            <input name="houseNo" id="houseNo" class="form-control" [class.is-invalid]="houseNo.invalid && (houseNo.touched || form.submitted)" required [pattern]="config.validationRegex.blockHouseNo" [(ngModel)]="serviceAddress.houseNo" #houseNo="ngModel" />
+            <input name="houseNo" id="houseNo" 
+            placeholder="Enter House No"
+            class="form-control" [class.is-invalid]="houseNo.invalid && (houseNo.touched || form.submitted)" required [pattern]="config.validationRegex.blockHouseNo" [(ngModel)]="serviceAddress.houseNo" #houseNo="ngModel" />
 
             <div *ngIf="houseNo.invalid && (houseNo.touched || form.submitted)" class="invalid-feedback">
                 <div *ngIf="houseNo?.errors.required">
@@ -38,7 +44,9 @@
         <div class="form-group col-6 col-lg-3">
             <label class="form-control-label" for="level">Level</label>
             <div class="input-nested-icon">
-                <input name="level" id="level" class="form-control" [(ngModel)]="serviceAddress.level" #level="ngModel" />
+                <input name="level" 
+            placeholder="Enter Level"
+                id="level" class="form-control" [(ngModel)]="serviceAddress.level" #level="ngModel" />
                 <span>#</span>
             </div>
 
@@ -52,7 +60,10 @@
         <div class="form-group col-6 col-lg-3">
             <span class="connection-div">-</span>
             <label class="form-control-label" for="unitNo">Unit No.</label>
-            <input name="unitNo" id="unitNo" class="form-control" [(ngModel)]="serviceAddress.unitNo" #unitNo="ngModel" />
+            <input name="unitNo" id="unitNo" class="form-control" [(ngModel)]="serviceAddress.unitNo" #unitNo="ngModel"
+            placeholder="Enter Unit No"
+            
+            />
 
             <div *ngIf="unitNo.invalid && (unitNo.touched || form.submitted)" class="invalid-feedback">
                 <div *ngIf="unitNo?.errors.required">
@@ -63,7 +74,9 @@
 
         <div class="form-group col-12">
             <label class="form-control-label" for="streetName">Street name</label>
-            <input name="streetName" id="streetName" class="form-control" [class.is-invalid]="streetName.invalid && (streetName.touched || form.submitted)" required [(ngModel)]="serviceAddress.streetName" #streetName="ngModel" />
+            <input name="streetName" 
+            placeholder="Enter Street"
+            id="streetName" class="form-control" [class.is-invalid]="streetName.invalid && (streetName.touched || form.submitted)" required [(ngModel)]="serviceAddress.streetName" #streetName="ngModel" />
             <small class="text-secondary font-italic">Postal code and Nation name should not be included.</small>
             <div *ngIf="streetName.invalid && (streetName.touched || form.submitted)" class="invalid-feedback">
                 <div *ngIf="streetName?.errors?.required">

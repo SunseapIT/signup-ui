@@ -6,11 +6,15 @@
                 <ng-container *ngIf="parent.isSPAccountHolder">
 
                     <div class="form-row">
-                        <div class="form-group col-lg-6 col-md-12 col-xs-12 mb-0 mb-lg-auto">
+                        <div class="form-group col-lg-12 col-md-12 col-xs-12 mb-0 mb-lg-auto">
                             <label class="form-control-label" for="spPastMonthBill">SP past month bill</label>
-                            <input type="text" name="spPastMonthBill" class="form-control fileUpload" [(ngModel)]="spPastMonthBill" [value]="uploaded" disabled required #spPastMonthBillError="ngModel">
+                            <input type="text" style="width: 85%;" name="spPastMonthBill"
+                             class="form-control fileUpload" [(ngModel)]="spPastMonthBill"
+                              [value]="uploaded" disabled required #spPastMonthBillError="ngModel">
                             <div class="upload-btn-remove">
-                                <div *ngIf="spPastMonthBillUploaded" class="d-inline"><button type="button" class="btn" (click)="removeFile($event,1)"><i class="fa fa-times mr-2" aria-hidden="true"></i></button></div>
+                                <div *ngIf="spPastMonthBillUploaded" class="d-inline">
+                                    <button type="button" class="btn" (click)="removeFile($event,1)">
+                                        <i class="fa fa-times mr-2" aria-hidden="true"></i></button></div>
                             </div>
                             <div class="upload-btn-wrapper">
                                 <label class="btnUpload" for="file1">Upload</label>
@@ -20,11 +24,10 @@
                                 <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
                             </ng-container>
                         </div>
-                        <div class="form-control-label d-block d-lg-none pl-3">or</div>
-                        <div class="form-group col-lg-6 col-md-12 col-xs-12 mb-0 mb-lg-auto">
-                            <div class="connection-div d-none d-lg-block">or</div>
+                        <div class="form-group col-lg-12 col-md-12 col-xs-12 mb-0 mb-lg-auto" style="text-align:center;margin-top: 2%;">or</div>
+                        <div class="form-group col-lg-12 col-md-12 col-xs-12 mb-0 mb-lg-auto">
                             <label class="form-control-label" for="newSpAccountOpeningLetter">New SP account opening letter</label>
-                            <input type="text" name="newSpAccountOpeningLetter" class="form-control fileUpload" [(ngModel)]="newSpAccountOpeningLetter" [value]="uploaded" disabled required #newSpAccountOpeningLetterError="ngModel">
+                            <input type="text" style="width: 85%;" name="newSpAccountOpeningLetter" class="form-control fileUpload" [(ngModel)]="newSpAccountOpeningLetter" [value]="uploaded" disabled required #newSpAccountOpeningLetterError="ngModel">
                             <div class="upload-btn-remove">
                                 <div *ngIf="newSpAccountOpeningLetterUploaded" class="d-inline"><button type="button" class="btn" (click)="removeFile($event,2)"><i class="fa fa-times mr-2" aria-hidden="true"></i></button></div>
                             </div>
@@ -56,9 +59,9 @@
                 </ng-container>
                 <ng-container *ngIf="!parent.isSPAccountHolder">
                     <div class="form-row">
-                        <div class="form-group col-lg-6 col-md-12 col-xs-12 mb-0 mb-lg-auto">
+                        <div class="form-group col-lg-12 col-md-12 col-xs-12 mb-0 mb-lg-auto">
                             <label class="form-control-label" for="spPastMonthBill">SP past month bill</label>
-                            <input type="text" style="width: 75%;" name="spPastMonthBill" class="form-control fileUpload" [(ngModel)]="spPastMonthBill" [value]="uploaded" disabled required #spPastMonthBillError="ngModel">
+                            <input type="text" style="width: 85%;" name="spPastMonthBill" class="form-control fileUpload" [(ngModel)]="spPastMonthBill" [value]="uploaded" disabled required #spPastMonthBillError="ngModel">
                             <div class="upload-btn-remove">
                                 <div *ngIf="spPastMonthBillUploaded" class="d-inline"><button type="button" class="btn" (click)="removeFile($event,1)"><i class="fa fa-times mr-2" aria-hidden="true"></i></button></div>
 
@@ -71,12 +74,21 @@
                                 <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
                             </ng-container>
                         </div>
-                        <div class="form-control-label d-block d-lg-none pl-3">or</div>
-                        <div class="form-group col-lg-6 col-md-12 col-xs-12 mb-0 mb-lg-auto">
-                            <div class="connection-div d-none d-lg-block">or</div>
+                        
+                    </div>
+
+                    <div class="form-control-label d-block pl-3" style="margin-top: 3%;
+                    text-align: center;
+                    margin-left: -12px;">or</div>
+
+                    <div class="form-row mt-3" style="">
+                        <div class="form-group col-lg-12 col-md-12 col-xs-12 mb-0 mb-lg-auto">
                             <label class="form-control-label" for="loc">New SP account opening letter</label>
-                            <input type="text" style="width: 75%;" name="loc" class="form-control fileUpload" [(ngModel)]="spBillLocName" [value]="uploaded" disabled required #locError="ngModel">
+                            <input type="text" style="width: 85%;" name="loc" class="form-control fileUpload" [(ngModel)]="spBillLocName" [value]="uploaded" disabled required #locError="ngModel">
                             <div class="upload-btn-remove">
+                                <div *ngIf="spPastMonthBillUploaded" class="d-inline">
+                                    <button type="button" class="btn" (click)="removeFile($event,1)">
+                                        <i class="fa fa-times mr-2" aria-hidden="true"></i></button></div>
                             </div>
                             <div class="upload-btn-wrapper">
                                 <label class="btnUpload" for="file4">Upload</label>
@@ -86,13 +98,18 @@
                                 <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
                             </ng-container>
                         </div>
-                    </div>
 
-                    <div class="form-row mt-3">
-                        <div class="form-group  col-lg-6 col-md-12 col-xs-12 mb-0 mb-lg-auto">
+                        <div class="form-group  col-lg-12 col-md-12 col-xs-12 mb-0 mb-lg-auto" style="    text-align: center;
+                        position: relative;margin-top: 2%;">and</div>
+
+                        <div class="form-group  col-lg-12 col-md-12 col-xs-12 mb-0 mb-lg-auto">
                             <label class="form-control-label" for="letterOfAuthorisation">Letter of Authorisation by SP account holder</label>
-                            <input type="text" name="letterOfAuthorisation" class="form-control fileUpload" [(ngModel)]="letterOfAuthorisation" [value]="uploaded" disabled required #letterOfAuthorisationError="ngModel">
+                            <input type="text" style="width: 85%;" name="letterOfAuthorisation" 
+                            class="form-control fileUpload" [(ngModel)]="letterOfAuthorisation" [value]="uploaded" disabled required #letterOfAuthorisationError="ngModel">
                             <div class="upload-btn-remove">
+                                <div *ngIf="spPastMonthBillUploaded" class="d-inline">
+                                    <button type="button" class="btn" (click)="removeFile($event,1)">
+                                        <i class="fa fa-times mr-2" aria-hidden="true"></i></button></div>
                             </div>
                             <div class="upload-btn-wrapper">
                                 <label class="btnUpload" for="file3">Upload</label>

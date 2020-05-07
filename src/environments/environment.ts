@@ -12,21 +12,22 @@ import { environment } from './base';
 
 //environment.apiUrl = 'https://crm-test.sunseap.com';
 // environment.baseUrl= 'http://f00c8894.ngrok.io';
-environment.apiUrl = 'https://signup.uat.sunseap.com';
+// environment.apiUrl = 'https://signup.uat.sunseap.com';
 // environment.apiUrl = 'https://b2c.uat.sunseap.com'; // stage
-environment.dialogUrl = 'https://b2c.sunseap.com'; // prod
+// environment.dialogUrl = 'https://b2c.sunseap.com'; // prod
 // environment.apiUrl = 'http://10.249.39.194:8000'; // minh do
 // environment.apiUrl = 'http://10.248.39.135:80'; // nhan
 // environment.apiUrl = 'http://10.248.39.213:8000'; // XUONG
 // environment.apiUrl = 'http://10.248.39.189:8000'; // Phuc
 
 // Site Key: 6LeHSHMUAAAAAIGKdTE4YljD-t1DHJabr45RMQEP
-// Secret Key: 6LeHSHMUAAAAAOXqqHXsV0p117fa_gn-2t56a2vc
+// Secret Key: 6LfuVukUAAAAACKs_LemrgQaa0Al5z6I1apP4dcN
+
 // environment.reCaptchaSiteKey = '6LeHSHMUAAAAAIGKdTE4YljD-t1DHJabr45RMQEP'; // dev
 // environment.reCaptchaSiteKey = '6LfzRnMUAAAAAEB7lugNNX3WhsPNC7TKxtPSSip0'; // stage
-environment.reCaptchaSiteKey = '6Le8F-QUAAAAANLvdpKtY5jb_RrH2vToFAp4y_M1'; // UAT
+// environment.reCaptchaSiteKey = '6Le8F-QUAAAAANLvdpKtY5jb_RrH2vToFAp4y_M1'; // UAT
 // environment.reCaptchaSiteKey = '6Lc2JeQUAAAAAGbqBARwyat6hA8rYy6zYPbJD2AM' //Prod
-// environment.reCaptchaSiteKey = '6LfuVukUAAAAACKs_LemrgQaa0Al5z6I1apP4dcN'; // CI
+environment.reCaptchaSiteKey = '6LfuVukUAAAAACKs_LemrgQaa0Al5z6I1apP4dcN'; // CI
 
 
 

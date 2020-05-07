@@ -39,8 +39,8 @@
         <div class="row">
             <div class="form-group col-md-6 col-sm-12">
                 <label class="form-control-label" for="email">Email Address</label>
-                <input name="email" id="email" trim="blur" class="form-control text-lowercase" [class.is-valid]="isEmailOtpValidated && parent.model.email" [class.is-invalid]="(!isEmailOtpValidated || parent.model.email == '') && (email.touched || form.submitted)" [pattern]="config.validationRegex.email"
-                    [(ngModel)]="parent.model.email" placeholder="Enter Email" required #email="ngModel" [readonly]="isEmailOtpValidated" blockCopyPaste />
+                <input name="email" id="email" trim="blur" class="form-control text-lowercase" [pattern]="config.validationRegex.email"
+                    [(ngModel)]="parent.model.email" placeholder="Enter Email"  #email="ngModel" [readonly]="isEmailOtpValidated" blockCopyPaste />
                 <button type="button" class="btn input-button" [disabled]="isEmailOtpValidated || parent.model.email == '' || !parent.model.email || email.invalid" (click)="requestEmailOTP(true)"><span>Verify</span></button>
 
                 <div *ngIf="email.invalid" class="invalid-feedback">
@@ -54,8 +54,8 @@
             </div>
             <div class="form-group col-md-6 col-sm-12">
                 <label class="form-control-label" trim="blur" for="mobileNo">Mobile number</label>
-                <input name="mobileNo" id="mobileNo" class="form-control" [class.is-valid]="isMobileOtpValidate && parent.model.mobileNo" [class.is-invalid]="(!isMobileOtpValidate || parent.model.mobileNo == '') && (mobileNo.touched || form.submitted)" [(ngModel)]="parent.model.mobileNo"
-                    #mobileNo="ngModel" placeholder="Enter Mobile No" required pattern="^(8|9)\d{7}$" maxlength="8" [readonly]="isMobileOtpValidate" blockCopyPaste numbersOnly />
+                <input name="mobileNo" id="mobileNo" class="form-control"  [(ngModel)]="parent.model.mobileNo"
+                    #mobileNo="ngModel" placeholder="Enter Mobile No"  pattern="^(8|9)\d{7}$" maxlength="8" [readonly]="isMobileOtpValidate" blockCopyPaste numbersOnly />
 
                 <button type="button" class="btn input-button" [disabled]="isMobileOtpValidate || parent.model.mobileNo == '' || !parent.model.mobileNo || mobileNo.invalid" (click)="requestMobileOTP(true)"><span>Verify</span></button>
                 <div *ngIf="mobileNo.invalid && (mobileNo.touched || form.submitted)" class="invalid-feedback">

@@ -1487,7 +1487,15 @@ p {
 .modal-header .close {
     padding: 1rem 1rem;
     /* margin: -1rem -1rem -1rem auto; */
-    margin-top: 10px;
+    margin-top: 30px;
+    background: #d2232a;
+    height: 35px;
+    width: 35px;
+    /* padding: 4px; */
+    margin-right: -1%;
+    padding-left: 10px;
+    padding-top: 3px;
+    color: white;
 }
 
 .modal-confirm h4 {
@@ -1918,4 +1926,11 @@ p {
 .btn:focus, .btn.focus {
     outline: 0;
     box-shadow: 0 0 0 0rem rgb(255, 255, 255) !important;
+}
+
+
+.hover :hover{
+
+    cursor: pointer;
+
 }

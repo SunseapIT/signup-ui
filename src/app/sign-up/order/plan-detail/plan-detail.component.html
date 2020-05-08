@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="form-group col-md-6">
-            <label class="form-control-label" for="serviceNo">SP Account No.</label>
+            <label class="form-control-label" for="serviceNo">SP Account No</label>
             <input name="serviceNo" id="serviceNo" trim="blur" pattern="(^[1-9]\d{9})|(^[1-9]{9}[-])$"
                 (keypress)="keyPress($event)" class="form-control" placeholder="10 Digits"
                 [class.is-invalid]="serviceNo.invalid && (serviceNo.touched || form.submitted)" required maxlength="10"
@@ -227,8 +227,13 @@
     </div>
 </div>
 
-<ng-template #advisory>
-    <div class="modal-content">
+
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+    <div class="modal-content" style="    width: 827px;
+    position: relative;
+    left: -33px;
+">
 
         <div class="modal-body d-flex flex-column pt-0">
             <div class="row d-none d-sm-block">
@@ -236,145 +241,6 @@
                     <div class="col-md-12">
                         <img src="/assets/sign-up/images/content/advisory_required.png" includeVersion alt="advisory"
                             class="img-fluid">
-                    </div>
-                </div>
-            </div>
-            <div class="d-block d-sm-none d-flex justify-content-between pt-5 img-modal">
-                <img class="modal-1" src="/assets/sign-up/images/content/modal_1.png" includeVersion>
-                <img class="modal-2" src="/assets/sign-up/images/content/modal_2.png" includeVersion>
-            </div>
-            <div class="col-1"></div>
-            <div class="d-block d-sm-none row d-flex text-center p-4">
-                <div class="row mb-3">
-                    <h4>Consumer Advisory for Open Electricity Market</h4>
-                </div>
-                <div class="row">
-                    <div class="col-2">
-                        <span class="c-no">1</span>
-                    </div>
-                    <div class="col-9 p-0 text-justify">
-                        <p><b>Buying electricity from a retailer does not affect your electricity supply.</b> This is
-                            because SP Group will continue to operate the national power grid and deliver electricity to
-                            you.</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-2">
-                        <span class="c-no">2</span>
-                    </div>
-                    <div class="col-9 p-0 text-justify">
-                        <p><b>You can continue to buy electricity from SP Group at the regulated tariff.</b> It is not
-                            compulsory for you to buy electricity from a retailer, and there is no deadline for you to
-                            switch to a retailer. You should take your time
-                            to understand your options before making a decision.</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-2">
-                        <span class="c-no">3</span>
-                    </div>
-                    <div class="col-9 p-0 text-justify">
-                        <div class="row m-0">
-                            <p>There are two types of standard price plans:</p>
-                        </div>
-                        <div>
-                            <div class="d-flex justify-content-center">
-                                <img class="size-img"
-                                    src="/assets/sign-up/images/content/advisory/ConsumerAdvisory_Icons-FixedPrice.png"
-                                    includeVersion alt="">
-                            </div>
-                            <div class="text-justify">
-                                <p>Fixed Price Plans are more suitable for consumers who prefer a constant electricity
-                                    rate throughout the contract duration. However, the electricity rate may be higher
-                                    or lower than the regulated tariff during the contract
-                                    duration, as the regulated tariff is reviewed every quarter.</p>
-                            </div>
-                            <div class="d-flex justify-content-center">
-                                <img class="size-img"
-                                    src="/assets/sign-up/images/content/advisory/ConsumerAdvisory_Icons-DOT.png"
-                                    includeVersion alt="">
-                            </div>
-                            <div class="text-justify">
-                                <p>Discount Off the Regulated Tariff Plans provide a fixed discount off the regulated
-                                    tariff, but the electricity rates will change in tandem with the regulated tariff.
-                                    These plans are more suitable for consumers who do not
-                                    mind changes in electricity rates every quarter so long as it is lower than the
-                                    regulated tariff.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-2">
-                        <span class="c-no">4</span>
-                    </div>
-                    <div class="col-9 p-0 text-justify">
-                        <div>
-                            <p><b>Before you sign up with a retailer:</b></p>
-                        </div>
-                        <div class="col-12 p-0">
-                            <div class="d-flex justify-content-center">
-                                <img class="size-img"
-                                    src="/assets/sign-up/images/content/advisory/ConsumerAdvisory_Icons-Factsheet.png"
-                                    includeVersion alt="">
-                            </div>
-                            <div class="text-justify">
-                                <p>• Ask for a Fact Sheet which summarises the key contractual terms of your preferred
-                                    price plan (e.g. contract price, contract duration, security deposit, early
-                                    termination charges and auto-renewal clauses).</p>
-                            </div>
-                        </div>
-                        <div class="col-12 p-0">
-                            <div class="d-flex justify-content-center">
-                                <img class="size-img"
-                                    src="/assets/sign-up/images/content/advisory/ConsumerAdvisory_Icons-Contract.png"
-                                    includeVersion alt="">
-                            </div>
-                            <div class="text-justify">
-                                <p>• Read through the contract, and ask the retailer to explain the terms and conditions
-                                    if you do not understand them.
-                                </p>
-                                <p>
-                                    • Keep a copy of the contract for your reference.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-2">
-                        <span class="c-no">5</span>
-                    </div>
-                    <div class="col-9 p-0 text-justify">
-                        <div>For any dispute with your contracted retailer, you can approach the Consumers Association
-                            of Singapore (CASE) for assistance.</div>
-                    </div>
-                </div>
-                <div class="col-12 mt-4 d-flex justify-content-center">
-                    <span>
-                        <img class="c-img-icon"
-                            src="/assets/sign-up/images/content/advisory/ConsumerAdvisory_Icons-Website.png"
-                            includeVersion alt="">
-                        <a href="www.case.org.sg"><b>www.case.org.sg</b></a>
-                    </span>
-                </div>
-                <div class="col-12 d-flex justify-content-center">
-                    <span>
-                        <img class="c-img-icon"
-                            src="/assets/sign-up/images/content/advisory/ConsumerAdvisory_Icons-Phone.png"
-                            includeVersion alt="">
-                        <a href="tel:6100 0315"><b>6100 0315</b></a> (Operating hours: Mon to Fri, 9am to 5pm)
-                    </span>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <br />
-                        <br /> Visit <a href="www.openelectricitymarket.sg"><b>www.openelectricitymarket.sg</b></a> or
-                        call
-                        <a href="tel:18002338000"><b>1800-233-8000</b></a> for more information
-                        <br />
-                        <br />
-                        <br />
                     </div>
                 </div>
             </div>
@@ -393,9 +259,11 @@
             <div class="d-flex justify-content-center pt-4 pb-4">
                 <button (click)="closeAdvisoryModal()" class="btn step-next"
                     [ngStyle]="{'pointer-events': parent.isAdvisoryAgreed ? 'auto' : 'none'}">
-                    <span>Next</span> <img src="/assets/sign-up/images/content/next.png" includeVersion>
+                    <span>Next</span> <img src="/assets/sign-up/images/content/next.png">
                 </button>
             </div>
         </div>
     </div>
-</ng-template>
+
+    </div>
+    </div>

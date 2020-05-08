@@ -231,6 +231,15 @@ export class PlanDetailComponent implements OnInit {
     //   useGlobalDomain: false
     // });
 
+    $(document).ready(function(){
+      $("#myModal").modal('show');
+
+    });
+        console.log( 
+        this.parent.model.premise.serviceNo
+        )
+
+
 
     setTimeout(() => {
       this.parent.model.premise.productName = null;
@@ -256,6 +265,8 @@ export class PlanDetailComponent implements OnInit {
           this.parent.model.premise.productName = this.pricingPlanList[index].name;
           this.gtagService.sendEvent(this.pricingPlanList[index].name);
         }
+
+        
       } else {
         const index = _.findIndex(this.pricingPlanList, plan => _.isEqual(plan.name, this.parent.model.premise.productName));
         if (index >= 0) {
@@ -543,7 +554,7 @@ this.formData=form;
   closeAdvisoryModal() {
     this.gtagService.sendEvent(ORDER_GA_EVENT_NAMES.ACK_ADVISORY);
     this.postalCodeOverlayShowUp.firstOverlay = true;
-    this.modal.hide();
+    $("#myModal").modal('hide');
   }
 
   addPromoCode() {

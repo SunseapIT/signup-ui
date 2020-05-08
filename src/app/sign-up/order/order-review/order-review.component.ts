@@ -67,6 +67,10 @@ export class OrderReviewComponent implements OnInit {
   serviceNo: string;
   isLoader: boolean = false;
 
+  type:any
+  lang:any
+  theme:any
+  size:any
   model = {};
 
 

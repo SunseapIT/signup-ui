@@ -12,7 +12,7 @@
                              class="form-control fileUpload" [(ngModel)]="spPastMonthBill"
                               [value]="uploaded" disabled required #spPastMonthBillError="ngModel">
                             <div class="upload-btn-remove">
-                                <div class="d-inline">
+                                <div class="d-inline" *ngIf="spPastMonthBillUploaded">
                                     <button type="button" class="btn" (click)="removeFile($event,1)">
                                         <i class="fa fa-times mr-2" aria-hidden="true"></i></button></div>
                             </div>
@@ -27,13 +27,15 @@
                         <div class="form-group col-lg-12 col-md-12 col-xs-12 mb-0 mb-lg-auto" style="text-align:center;margin-top: 2%;">or</div>
                         <div class="form-group col-lg-12 col-md-12 col-xs-12 mb-0 mb-lg-auto">
                             <label class="form-control-label" for="newSpAccountOpeningLetter">New SP account opening letter</label>
-                            <input type="text" style="width: 85%;" name="newSpAccountOpeningLetter" class="form-control fileUpload" [(ngModel)]="newSpAccountOpeningLetter" [value]="uploaded" disabled required #newSpAccountOpeningLetterError="ngModel">
+                            <input type="text" style="width: 85%;" 
+                            name="newSpAccountOpeningLetter" class="form-control fileUpload" [(ngModel)]="newSpAccountOpeningLetter" [value]="uploaded" disabled required #newSpAccountOpeningLetterError="ngModel">
                             <div class="upload-btn-remove">
-                                <div  class="d-inline"><button type="button" class="btn" (click)="removeFile($event,2)"><i class="fa fa-times mr-2" aria-hidden="true"></i></button></div>
+                                <div  class="d-inline" *ngIf="newSpAccountOpeningLetterUploaded" ><button type="button" class="btn" (click)="removeFile($event,2)"><i class="fa fa-times mr-2" aria-hidden="true"></i></button></div>
                             </div>
                             <div class="upload-btn-wrapper">
                                 <label class="btnUpload" for="file2">Upload</label>
-                                <input type="file" id="file2" #inputFile2 (click)="inputFile2.value = null" name="myfile" (change)="selected($event,2)" />
+                                <input type="file" id="file2" #inputFile2 (click)="inputFile2.value = null" name="myfile"
+                                 (change)="selected($event,2)" />
                             </div>
                             <ng-container class="valid-feedback" *ngIf="openingLetter">
                                 <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
@@ -82,7 +84,7 @@
                              class="form-control fileUpload" [(ngModel)]="spPastMonthBill"
                               [value]="uploaded" disabled required #spPastMonthBillError="ngModel">
                             <div class="upload-btn-remove">
-                                <div class="d-inline">
+                                <div class="d-inline" *ngIf="spPastMonthBillUploaded">
                                     <button type="button" class="btn" (click)="removeFile($event,1)">
                                         <i class="fa fa-times mr-2" aria-hidden="true"></i></button></div>
                             </div>
@@ -108,7 +110,7 @@
                             <input type="text" style="width: 85%;" name="loc" class="form-control fileUpload" 
                             [(ngModel)]="spBillLocName" [value]="uploaded" disabled required #locError="ngModel">
                             <div class="upload-btn-remove">
-                                <div  class="d-inline">
+                                <div  class="d-inline" *ngIf="spBilllocUploaded">
                                     <button type="button" class="btn" (click)="removeFile($event,4)">
                                         <i class="fa fa-times mr-2" aria-hidden="true"></i></button></div>
                             </div>
@@ -132,13 +134,14 @@
                             <div class="hover">
 
                             <div class="upload-btn-remove">
-                                <div class="d-inline">
+                                <div class="d-inline" *ngIf="letterOfAuthorisationUploaded">
                                     <button type="button" class="btn" (click)="removeFile($event,3)">
                                         <i class="fa fa-times mr-2" aria-hidden="true"></i></button></div>
                             </div>
                             <div class="upload-btn-wrapper">
                                 <label class="btnUpload" for="file3">Upload</label>
-                                <input type="file" id="file3" #inputFille3 (click)="inputFille3.value = null" name="myfile1" (change)="selected($event,3)" />
+                                <input type="file" id="file3" #inputFille3 (click)="inputFille3.value = null" name="myfile1"
+                                 (change)="selected($event,3)" />
                             </div>
                         </div>
 

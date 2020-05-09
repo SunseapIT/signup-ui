@@ -232,12 +232,19 @@ export class PlanDetailComponent implements OnInit {
     // });
 
     $(document).ready(function(){
-      $("#myModal").modal('show');
 
+      if(indexedDB){
+
+        indexedDB.deleteDatabase("ngStorage");
+      }
+      $("#myModal").modal('show');
+      
     });
-        console.log( 
-        this.parent.model.premise.serviceNo
-        )
+    localStorage.clear();
+    this.parent.model.premise.serviceNo=''
+  
+
+    
 
 
 

@@ -84,6 +84,9 @@ export class PersonalParticularComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    localStorage.clear();
+
     this.localStorage.getItem<number>(STORAGE_KEYS.VERIFYING_OTP_COUNT).subscribe(count => {
       this.verificationFailCount = count || 0;
     });

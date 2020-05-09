@@ -72,7 +72,7 @@
                         <i>Mobile Number is required</i>
                     </div>
                 </div> -->
-                <input name="mobileNo" id="mobileNo" trim="blur" placeholder="Enter MobileNo"
+                <input name="mobileNo" id="mobileNo" trim="blur" placeholder="Enter Mobile No"
                 class="form-control" [class.is-invalid]="mobileNo.invalid && (mobileNo.touched || form.submitted)" 
                 required [(ngModel)]="parent.model.mobileNo" #mobileNo="ngModel" blockCopyPaste/>
                 <button type="button" class="btn input-button" [disabled]="isMobileOtpValidate || parent.model.mobileNo == '' || !parent.model.mobileNo || mobileNo.invalid" (click)="requestMobileOTP(true)"><span>Verify</span></button>

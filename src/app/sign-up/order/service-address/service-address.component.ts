@@ -69,6 +69,7 @@ export class ServiceAddressComponent implements OnInit {
 
   ngOnInit() {
 
+
     this.postalCode = ""
     this.localStorage.getItem(STORAGE_KEYS.SERVICE_ADDRESS)
       .subscribe(serviceAddress => serviceAddress && (this.serviceAddress = serviceAddress));

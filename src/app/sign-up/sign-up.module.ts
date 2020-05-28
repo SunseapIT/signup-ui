@@ -26,12 +26,12 @@ import { NgxCaptchaModule } from 'ngx-captcha';
     FileUploadModule,
     RecaptchaModule.forRoot(),
     PopoverModule.forRoot(),
-
     PdfViewerModule,
     SignUpRoutingModule,
     NgxPaginationModule,
     PaginationModule,
     CoreModule,
+    NgxCaptchaModule,
     RecaptchaModule,
     SharedModule,
     Angular2CsvModule,

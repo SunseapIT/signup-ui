@@ -1900,17 +1900,12 @@ p {
     border-radius: 30px;
 }
 
-
-.owl-dt-inline-container, .owl-dt-popup-container{
-
+.owl-dt-inline-container,
+.owl-dt-popup-container {
     overflow: overlay;
     height: 400px !important;
-
     top: 30% !important;
-
 }
-
-
 
 .accordion .accordian-header:after {
     font-family: 'FontAwesome';
@@ -1918,19 +1913,24 @@ p {
     float: left;
     position: relative;
     top: 4px;
-
 }
 
-
-
-.btn:focus, .btn.focus {
+.btn:focus,
+.btn.focus {
     outline: 0;
     box-shadow: 0 0 0 0rem rgb(255, 255, 255) !important;
 }
 
-
-.hover :hover{
-
+.hover :hover {
     cursor: pointer;
+}
 
+.admin-message {
+    border: 1px solid #8080807a;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #ffff669c;
+    color: black;
+    font-weight: 500;
+    font-size: 16px;
 }

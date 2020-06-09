@@ -1,8 +1,26 @@
-<div class="message-content form-row content-plan-detail">
-    <div class="row admin-message mb-2">
-        <div class="col-md-8" style="white-space: pre-line;">{{adminMessage}} </div>
+<div class="message-content  content-plan-detail" *ngIf="adminMessage.length > 0">
+    <div class="form-row">
+        <div class="col-md-12 pt-3">
+            <strong>Notification Alert! </strong>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-12 admin-message" style="white-space: pre-line;">
+            <!-- <u>Transfer of your account</u> to Sunseap
+            Energy
+            may take up to
+            <strong>10 working days </strong> after you have successfully signed up.<br> If you are switching
+            over
+            from
+            another retailer
+            <u> <b>OR</b></u>
+            you have a preferred start date, please email us your contract expiry date/preferred start date at <a
+                href="">customercare@sunseap.com</a> -->
+            {{adminMessage}}
+        </div>
     </div>
 </div>
+
 <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
     <div class="form-content form-row content-plan-detail">
         <div class="form-group col-12">

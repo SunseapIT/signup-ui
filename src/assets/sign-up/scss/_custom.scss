@@ -73,6 +73,12 @@ div.left-image {
     background-color: #f6f6f6;
 }
 
+.message-content{
+    padding: 0px 15px;
+    margin-bottom: 20px;
+    background-color: #f6f6f6;
+}
+
 .form-control {
     text-indent: 10px;
     &:focus {
@@ -1926,10 +1932,9 @@ p {
 }
 
 .admin-message {
-    border: 1px solid #8080807a;
-    border-radius: 10px;
+    border-radius: 2px;
     padding: 15px;
-    background-color: #ffff669c;
+    background-color: #f6f6f6;
     color: black;
     font-weight: 500;
     font-size: 16px;

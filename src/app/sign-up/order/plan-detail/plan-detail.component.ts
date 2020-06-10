@@ -51,6 +51,7 @@ export class PlanDetailComponent implements OnInit {
 
   pricingPlanList: PricingPlan[];
   openButtonFlag = false;
+  isPromocodeField: boolean = false;
   showAddFlag = false;
   rebateAmount = 0;
   promotionPercent = 0;
@@ -80,6 +81,7 @@ export class PlanDetailComponent implements OnInit {
   duplicatePromoCode: boolean;
   verified: boolean;
   modalRef: BsModalRef;
+
 
   // siteKey = '6LfyZOIUAAAAAHutzQu3CcAiUTfnReV3mXWVxmH8';
 
@@ -133,6 +135,7 @@ export class PlanDetailComponent implements OnInit {
     }
 
     let j = 0;
+
     while (j < 4 && originalElement) {
       if (this.postalCodeOverlay.nativeElement.id === originalElement.id) {
         if (this.postalCodeOverlayShowUp.firstOverlay) {
@@ -221,31 +224,21 @@ export class PlanDetailComponent implements OnInit {
   handleExpire() { }
   handleLoad() { }
   handleSuccess($event) {
-    console.log('eventcaptcha', event);
-
   }
+
   ngOnInit() {
+    $(document).ready(function () {
 
-    // this.reCaptchaV3Service.execute(this.siteKey, 'homepage', (token) => {
-    //   console.log('This is your token: ', token);
-    //   useGlobalDomain: false
-    // });
-
-    $(document).ready(function(){
-
-      if(indexedDB){
+      if (indexedDB) {
 
         indexedDB.deleteDatabase("ngStorage");
       }
+      // this.advisory.show();
       $("#myModal").modal('show');
-      
+
     });
     localStorage.clear();
-    this.parent.model.premise.serviceNo=''
-  
-
-    
-
+    this.parent.model.premise.serviceNo = ''
 
 
     setTimeout(() => {
@@ -256,7 +249,7 @@ export class PlanDetailComponent implements OnInit {
     this.pricingPlanService.fetchAll().subscribe(collection => {
       if (!this.parent.isAdvisoryAgreed) {
         setTimeout(() => {
-          //  this.advisory.show();
+          this.advisory.show();
           this.modal.open(this.advisory, 'lg', {
             class: 'mt-5 pt-5 ml-2 mr-2 ml-md-5 mr-md-5 unselect modal-mg-3rem',
             ignoreBackdropClick: true
@@ -273,7 +266,7 @@ export class PlanDetailComponent implements OnInit {
           this.gtagService.sendEvent(this.pricingPlanList[index].name);
         }
 
-        
+
       } else {
         const index = _.findIndex(this.pricingPlanList, plan => _.isEqual(plan.name, this.parent.model.premise.productName));
         if (index >= 0) {
@@ -352,18 +345,47 @@ export class PlanDetailComponent implements OnInit {
   selectData
   onSelectPricingPlanChange(event) {
     this.selectData = event.target.value;
-    if (this.selectData) {
-      this.openButtonFlag = true;
+    if (this.promocodeStatus == true) {
+      this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl + "?promoCode="
+        + this.pCode + "&planId=" + btoa(this.selectData), this.customerDto).subscribe((response: any) => {
+          var responseBody = response['body'];
+          var responseData = responseBody['data'];
+          var responseMessage = responseBody['message'];
+          let statusCode = responseBody['statusCode']
+          if (statusCode == 200) {
+            this.promocodeStatus = true;
+            this.promotionMessage = responseData;
+            this.verified = true;
+
+            this.isPromocodeField = false;
+
+          }
+          else {
+            this.promocodeStatus = false;
+            this.promotionMessage = responseMessage;
+            this.verifiedPromocodes = [];  //Clear promo code list     
+            this.isPromocodeField = false;
+            this.parent.model.premise.referral = "";
+            this.parent.model.premise.referral = null;
+
+
+          }
+        })
     }
     else {
-      this.openButtonFlag = false;
+      if (this.selectData) {
+        this.openButtonFlag = true;
+      }
+      else {
+        this.openButtonFlag = false;
+      }
     }
   }
 
   planId;
   pCode
   verifyPromotionCode(promocode) {
-    this.pCode=promocode;
+    this.pCode = promocode;
     var customerDto = new CustomerDto();
     this.planId = this.selectData
     if (this.planId == undefined) {
@@ -376,18 +398,20 @@ export class PlanDetailComponent implements OnInit {
         var responseMessage = responseBody['message'];
         let statusCode = responseBody['statusCode']
         if (statusCode == 200) {
-          this.promocodeStatus = true;          
+          this.promocodeStatus = true;
           this.promotionMessage = responseData;
           this.verifiedPromocodes = []; //clear promo code list
-          this.verifiedPromocodes.push(promocode) 
+          this.verifiedPromocodes.push(promocode)
           this.verified = true;
           this.duplicatePromoCode = false;
-          
+          this.isPromocodeField = false;
+
         }
         else {
           this.promocodeStatus = false;
           this.promotionMessage = responseMessage;
-          this.verifiedPromocodes = [];  //Clear promo code list       
+          this.verifiedPromocodes = [];  //Clear promo code list     
+          this.isPromocodeField = false;
         }
       })
   }
@@ -408,8 +432,8 @@ export class PlanDetailComponent implements OnInit {
   //     this.duplicatePromoCode = false;
   //   }
   // }
-  
-  pverify:boolean=false;
+
+  pverify: boolean = false;
   verifyPromocode(promocode) {
     var customerDto = new CustomerDto();
     this.planId = this.selectData
@@ -424,9 +448,9 @@ export class PlanDetailComponent implements OnInit {
         let statusCode = responseBody['statusCode']
         if (statusCode == 200) {
           this.promocodeStatus = true;
-          this.pverify=true;
+          this.pverify = true;
           this.promotionMessage = responseData;
-           this.verifiedPromocodes = []; //clear promocode list
+          this.verifiedPromocodes = []; //clear promocode list
           this.verifiedPromocodes.push(promocode)
           this.verified = true;
         }
@@ -437,47 +461,63 @@ export class PlanDetailComponent implements OnInit {
         }
       })
   }
-formData:any;
+
+
   onSubmit(form) {
-this.formData=form;
     this.service.get_service(ApiServiceServiceService.apiList.getSpAccountUrl + "?spAccount=" + this.parent.model.premise.serviceNo)
       .subscribe((response: any) => {
         var responseBody = response['body'];
         var responseMessage = responseBody['message'];
         let statusCode = responseBody['statusCode']
         if (statusCode == 200) {
-          if(this.pCode == "" || this.pCode == undefined || this.parent.model.premise.referral== ""){  
+          if (this.parent.model.premise.referral == undefined || this.parent.model.premise.referral == "") {
             this.save(form);
+
+
+          }
+          else if (this.parent.model.premise.referral.length > 0 && this.promocodeStatus == false) {
+            this.isPromocodeField = true;
+            this.parent.model.premise.referral = "";
+            this.promotionMessage = "";
+
+            // this.toster.error('', 'Please verify the promo/referral code that you have entered.')
+          }
+
+          // if ((this.parent.model.premise.referral.length > 0 && this.promocodeStatus == false) || (this.pCode == "" || this.pCode == undefined || this.parent.model.premise.referral == "")) {
+          //   $('#verifyModel').show();
+          // }
+          // else if (this.pCode == "" || this.pCode == undefined || this.parent.model.premise.referral == "") {
+          //   this.save(form);
+          // }
+          else {
+            this.verifyPromotionCode(this.pCode);
+            setTimeout(() => {
+              if (this.promocodeStatus) {
+                this.save(form);
+
+              }
+
+            }, 1000)
+            this.pCode = ""
+            this.pCode = null;
+            this.parent.model.premise.referral = "";
+            this.promotionMessage = "";
+          }
         }
         else {
-          this.verifyPromotionCode(this.pCode);  
-          setTimeout(()=>{
-          if(this.promocodeStatus){
-            this.save(form);
-           
-          }
-        
-       }, 1000)
-      this.pCode= ""
-      this.pCode=null;
-          this.parent.model.premise.referral="";
-          this.promotionMessage="";   
-        }
-      }
-        else { 
+          this.isPromocodeField = false;
           this.toster.error('', responseMessage, {
             timeOut: 3000
           })
         }
-      
-      
+
+
       })
   }
   customerDto = new CustomerDto();
 
-  save(form:NgForm){
-  
-    if (form.valid && this.verifiedPromocodes){
+  save(form: NgForm) {
+    if (form.valid && this.verifiedPromocodes) {
       this.parent.model.premise.startDate = moment(new Date()).add('days', 8).format(this.config.bootstrap.datePicker.dateInputFormat);
       this.localStorage.setItem(STORAGE_KEYS.IS_SP_ACCOUNT_HOLDER, this.parent.isSPAccountHolder).subscribe();
       const selectedPricingPlan = _.find(this.pricingPlanList, { name: this.parent.model.premise.productName });

@@ -595,7 +595,7 @@ export class PlanDetailComponent implements OnInit {
   closeAdvisoryModal() {
     this.gtagService.sendEvent(ORDER_GA_EVENT_NAMES.ACK_ADVISORY);
     this.postalCodeOverlayShowUp.firstOverlay = true;
-    // this.modal.close(this.advisory);
+    this.modal.hide();
   }
 
   addPromoCode() {

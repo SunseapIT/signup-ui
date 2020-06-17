@@ -33,6 +33,13 @@ const LIST_PRICE_PLAN_BY_REF_OR_PRO_CODE = {
   '50XMAS18': ['SUNSEAP-ONE_DOT_12MTHS', 'SUNSEAP-ONE_DOT_24MTHS', 'SUNSEAP-50_DOT', 'SUNSEAP-100_DOT', 'SUNSEAP-ONE_FIX_12MTHS',
     'SUNSEAP-ONE_FIX_24MTHS', 'SUNSEAP-50_FIX', 'SUNSEAP-100_FIX']
 };
+const POSTAL_CODE_WARNING = 'The postal code you have entered is currently not eligible for the Open Electricity Market. ' +
+'Please refer to <a href="https://www.openelectricitymarket.sg/index.html" target="_blank">EMA\'s site</a> for more information.';
+const POSTAL_CODE_ERROR_MESSAGE = 'Thank you for your interest, but we are sorry that we are unable to proceed with your registration.' +
+'<br>' + 'Please register when your ' +
+'<a href="https://www.openelectricitymarket.sg/index.html" target="_blank">postal code becomes eligible for </a>' +
+', and we look forward to go #GreenerTogether with you soon.';
+const POSTAL_CODE_REDIRECT_DELAY = 5000;
 
 @Component({
   selector: 'app-plan-detail',
@@ -163,7 +170,7 @@ export class PlanDetailComponent implements OnInit {
     if (_.size(this.potentialCustomer.postalCode) < 6 || !Number(this.potentialCustomer.postalCode)) {
       this.popover.first.isOpen = !this.popover.first.isOpen;
     } else {
-      this.verifyPostalCode();
+      this.verifyPostalCode(this.potentialCustomer.postalCode);
     }
   }
 
@@ -188,24 +195,70 @@ export class PlanDetailComponent implements OnInit {
       this.preValidatePostalCode();
     }
   }
+  pickedLocation: string = null;
+  warningMessage = '';
 
-  verifyPostalCode() {
-    const postalCodePattern = new RegExp(this.config.validationRegex.postalCode);
-    const inputPostalCode = this.potentialCustomer.postalCode;
-    if (!postalCodePattern.test(inputPostalCode)
-      || (!moment().isSameOrAfter('2019-05-01') && !_.inRange(+inputPostalCode.substring(0, 2), 34, 84))
-      || (moment().isSameOrAfter('2019-05-01') && !_.inRange(+inputPostalCode.substring(0, 2), 1, 84))) {
-      this.postalCodeOverlayShowUp.failedOverlay = true;
-      this.postalCodeOverlayShowUp.secondOverlay = false;
-      this.postalCodeOverlayShowUp.successOverlay = false;
-    } else {
-      this.postalCodeOverlayShowUp.secondOverlay = false;
+  @ViewChild('warningModal') warningModal: any;
+  @ViewChild('pickUpModal') pickUpModal: any;
+
+  verifyPostalCode(code) {
+    let postalString = "https://developers.onemap.sg/commonapi/search?searchVal=" +
+    code + "&returnGeom=N&getAddrDetails=Y&pageNum=1"
+  if (_.size(code) > 1 && !this.isPostalCodeValid(code)) {
+    this.warningMessage = POSTAL_CODE_WARNING;
+    this.modal.open(this.warningModal, 'lg', { ignoreBackdropClick: true });
+  } else {
+    if (_.size(code) === 6) {
+      this.service.get_service(ApiServiceServiceService.apiList.getPostalCode + "?url=" + btoa(postalString)).subscribe((response) => {
+        let responseBody = response['body']
+        let status = responseBody['statusCode']
+        let responseData = responseBody['data']
+        let responseResults = responseData['results']
+        if (responseResults != '') {
+          console.log('eligible');
+          this.postalCodeOverlayShowUp.secondOverlay = false;
       this.postalCodeOverlayShowUp.successOverlay = true;
       this.potentialCustomer = new PotentialCustomer();
       setTimeout(() => {
         this.postalCodeOverlayShowUp.successOverlay = false;
       }, 30000);
+          
+        }
+        else {
+          this.postalCodeOverlayShowUp.failedOverlay = true;
+      this.postalCodeOverlayShowUp.secondOverlay = false;
+      this.postalCodeOverlayShowUp.successOverlay = false;
+         
+        }
+      })
+
+    // const inputPostalCode = this.potentialCustomer.postalCode;
+    // if (!postalCodePattern.test(inputPostalCode)
+    
+    //   || (!moment().isSameOrAfter('2019-05-01') && !_.inRange(+inputPostalCode.substring(0, 2), 34, 84))
+    //   || (moment().isSameOrAfter('2019-05-01') && !_.inRange(+inputPostalCode.substring(0, 2), 1, 84))) {
+    //   this.postalCodeOverlayShowUp.failedOverlay = true;
+    //   this.postalCodeOverlayShowUp.secondOverlay = false;
+    //   this.postalCodeOverlayShowUp.successOverlay = false;
+    // } else {
+    //   this.postalCodeOverlayShowUp.secondOverlay = false;
+    //   this.postalCodeOverlayShowUp.successOverlay = true;
+    //   this.potentialCustomer = new PotentialCustomer();
+    //   setTimeout(() => {
+    //     this.postalCodeOverlayShowUp.successOverlay = false;
+    //   }, 30000);
+    // }
+  }
+}
+  }
+  
+  isPostalCodeValid(code: string): boolean {
+    // Postal codes with the 2 first degits between 01 and 33 and after 1 May 2018 will be allowed
+    if (moment().isSameOrAfter('2019-05-01') && _.inRange(+code.substring(0, 2), 1, 84)) {
+      return _.inRange(+code.substring(0, 2), 1, 84);
     }
+    // Postal codes with the 2 first digits between 58 and 78 will be allowed
+    return _.inRange(+code.substring(0, 2), 34, 84);
   }
 
   registContact() {

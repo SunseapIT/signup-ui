@@ -1,7 +1,7 @@
 <div class="message-content  content-plan-detail" *ngIf="adminMessage.length > 0">
     <div class="form-row">
         <div class="col-md-12 pt-3">
-            <strong>Notification Alert! </strong>
+            <strong style="color: #1579f6">Notice </strong>
         </div>
     </div>
     <div class="form-row">
@@ -62,7 +62,7 @@
 
             <input class="form-control" trim="blur" name="referral" [value]="referral"
                 placeholder="Enter promotion/referral code" (blur)="verifyPromotionCode($event.target.value)"
-                [class.is-invalid]="referral.touched && !promocodeStatus"
+                [class.is-invalid]="referral.touched && !promocodeStatus && parent.model.premise.referral.length > 0"
                 [(ngModel)]="parent.model.premise.referral" #referral="ngModel" autocomplete="off" />
 
             <!-- <button type="button" class="btn input-button" (click)="verifyPromotionCode(parent.model.premise.referral)">
@@ -72,8 +72,7 @@
                 <i class="fa fa-times" aria-hidden="true"></i>
             </button>
             <div *ngIf="duplicatePromoCode" class="text-danger"><i>Promo/ Referral code already exists.</i></div>
-            <div *ngIf="isPromocodeField" class="text-danger"><i>Please verify the promo/referral code that you have
-                    entered.</i></div>
+            
             <div *ngIf="promotionMessage != '' && !duplicatePromoCode"
                 [ngClass]="{'green-text':promocodeStatus,'red-text':!promocodeStatus}"><i>{{promotionMessage}}</i>
             </div>

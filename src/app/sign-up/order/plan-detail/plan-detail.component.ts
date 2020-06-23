@@ -393,9 +393,13 @@ export class PlanDetailComponent implements OnInit {
   //     })
   // }
   selectData
+  isPlanSelected:boolean;
   onSelectPricingPlanChange(event) {
     this.selectData = event.target.value;
-    if (this.promocodeStatus == true) {
+    this.isPlanSelected = true;
+    this.openButtonFlag = true;
+    // if (this.promocodeStatus == true) {
+      if (this.parent.model.premise.referral.length > 0) {
       this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl + "?promoCode="
         + this.pCode + "&planId=" + btoa(this.selectData), this.customerDto).subscribe((response: any) => {
           var responseBody = response['body'];
@@ -415,12 +419,13 @@ export class PlanDetailComponent implements OnInit {
             this.promotionMessage = responseMessage;
             this.verifiedPromocodes = [];  //Clear promo code list     
             this.isPromocodeField = false;
-            this.parent.model.premise.referral = "";
-            this.parent.model.premise.referral = null;
+            // this.parent.model.premise.referral = "";
+            // this.parent.model.premise.referral = null;
 
 
           }
         })
+        this.openButtonFlag = true;
     }
     else {
       if (this.selectData) {
@@ -454,9 +459,27 @@ export class PlanDetailComponent implements OnInit {
           this.isPromocodeField = false;
 
         }
-        else {
+        else if (statusCode == 400 && responseMessage == "Please select plan for Promo Code." &&  
+        this.parent.model.premise.referral.length > 0 ) {
+         
+            this.promotionMessage = responseMessage;
+
+        }
+        else if (statusCode == 400 && responseMessage == "Please select plan for Promo Code." &&  
+        this.parent.model.premise.referral == "" ) {
+         
+            this.promotionMessage = null;
+
+        }
+        else if(statusCode == 404 && this.parent.model.premise.referral.length > 0) {
           this.promocodeStatus = false;
           this.promotionMessage = responseMessage;
+          this.verifiedPromocodes = [];  //Clear promo code list     
+          this.isPromocodeField = false;
+        }
+        else {
+          this.promocodeStatus = false;
+          this.promotionMessage = "";
           this.verifiedPromocodes = [];  //Clear promo code list     
           this.isPromocodeField = false;
         }
@@ -524,8 +547,7 @@ export class PlanDetailComponent implements OnInit {
           }
           else if (this.parent.model.premise.referral.length > 0 && this.promocodeStatus == false) {
             this.isPromocodeField = true;
-            this.parent.model.premise.referral = "";
-            this.promotionMessage = "";
+            
 
             // this.toster.error('', 'Please verify the promo/referral code that you have entered.')
           }

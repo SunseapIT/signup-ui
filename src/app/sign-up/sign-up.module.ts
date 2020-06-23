@@ -17,6 +17,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PaginationModule } from 'ngx-pagination-bootstrap';
 import { NgxCaptchaModule } from 'ngx-captcha';
+import { SafeHtmlPipe } from '@app/shared/pipes/html.pipe';
 
 @NgModule({
   imports: [
@@ -50,6 +51,7 @@ import { NgxCaptchaModule } from 'ngx-captcha';
     SignUpComponent,
     ORDER_COMPONENTS,
     PAYMENT_COMPONENTS,
+    SafeHtmlPipe
   ],
   providers: [
     {

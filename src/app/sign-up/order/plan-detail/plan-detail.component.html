@@ -5,7 +5,8 @@
         </div>
     </div>
     <div class="form-row">
-        <div class="col-md-12 admin-message" style="white-space: pre-line;" [innerHTML]="adminMessage">
+        <div class="col-md-12 admin-message" style="white-space: pre-line;" 
+        [innerHTML]="adminMessage | safeHtml">
         
         </div>
     </div>

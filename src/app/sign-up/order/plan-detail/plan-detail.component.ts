@@ -340,7 +340,6 @@ export class PlanDetailComponent implements OnInit {
 
 
   ngOnDestroy(): void {
-
     this.pdfSrc = null;
     if (this._pdf) {
       this._pdf.destroy();
@@ -476,6 +475,11 @@ export class PlanDetailComponent implements OnInit {
           this.promotionMessage = responseMessage;
           this.verifiedPromocodes = [];  //Clear promo code list     
           this.isPromocodeField = false;
+        }
+        else if (statusCode == 400 && responseMessage == "Promo code is not valid for this plan.") {
+         
+            this.promotionMessage = responseMessage;
+
         }
         else {
           this.promocodeStatus = false;

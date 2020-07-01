@@ -10,8 +10,8 @@ import { IdentificationType, ConfigService, UtilService, IDENTIFICATION_TYPE_OPT
 import { OrderComponent } from '../order.component';
 import { STORAGE_KEYS, ORDER_ROUTES, ORDER_GA_EVENT_NAMES } from '../order.constant';
 import { NgForm } from '@angular/forms';
-import { TimeStampDto } from '@app/core/time-stamp-dto';
 import { ToastrService } from 'ngx-toastr';
+import { TimeStampDto } from '@app/core/time-stamp-dto';
 declare var $: any
 const IDENTIFICATION_EXPIRY_DATE_CONFIG = {
   minMonthsFromToday: 6
@@ -109,6 +109,7 @@ export class PersonalParticularComponent implements OnInit {
 
   formData:any=[];
   onSubmit(form: NgForm) {
+      this.formData=form;
     if (form.valid && this.isMobileOtpValidate && this.isEmailOtpValidated) {
       if (!_.includes([IdentificationType.EmploymentPass, IdentificationType.WorkPermit], this.parent.model.identificationType)) {
         this.parent.model.identificationExpiryDate = '';
@@ -281,24 +282,3 @@ export class PersonalParticularComponent implements OnInit {
       })
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

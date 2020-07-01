@@ -1,4 +1,4 @@
-<div class="message-content  content-plan-detail" *ngIf="adminMessage.length > 0">
+<!-- <div class="message-content  content-plan-detail" *ngIf="adminMessage.length > 0"> -->
     <div class="form-row">
         <div class="col-md-12 pt-3">
             <strong style="color: #1579f6">Notice </strong>
@@ -10,7 +10,7 @@
         
         </div>
     </div>
-</div>
+<!-- </div> -->
 
 <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
     <div class="form-content form-row content-plan-detail">
@@ -72,7 +72,7 @@
             <button type="button" (click)="delete(i)" *ngIf="i" class="btn varify-button">
                 <i class="fa fa-times" aria-hidden="true"></i>
             </button>
-            <div *ngIf="duplicatePromoCode" class="text-danger"><i>Promo/ Referral code already exists.</i></div>
+            <div *ngIf="duplicatePromoCode" class="text-danger"><i>Promo/ Referral code already exists.</i></div> 
             
             <div *ngIf="promotionMessage != '' && !duplicatePromoCode"
                 [ngClass]="{'green-text':promocodeStatus,'red-text':!promocodeStatus}"><i>{{promotionMessage}}</i>
@@ -238,13 +238,13 @@
             <div class="row d-none d-sm-block">
                 <div class="container">
                     <div class="col-md-12">
-                        <img src="/assets/sign-up/images/content/advisory_required.png" includeVersion alt="advisory" class="img-fluid">
+                        <img src="assets/sign-up/images/content/advisory_required.png" includeVersion alt="advisory" class="img-fluid">
                     </div>
                 </div>
             </div>
             <div class="d-block d-sm-none d-flex justify-content-between pt-5 img-modal">
-                <img class="modal-1" src="/assets/sign-up/images/content/modal_1.png" includeVersion>
-                <img class="modal-2" src="/assets/sign-up/images/content/modal_2.png" includeVersion>
+                <img class="modal-1" src="assets/sign-up/images/content/modal_1.png" includeVersion>
+                <img class="modal-2" src="assets/sign-up/images/content/modal_2.png" includeVersion>
             </div>
             <div class="col-1"></div>
             <div class="d-block d-sm-none row d-flex text-center p-4">

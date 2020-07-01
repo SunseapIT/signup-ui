@@ -91,9 +91,6 @@ export class PlanDetailComponent implements OnInit {
   verified: boolean;
   modalRef: BsModalRef;
 
-
-  // siteKey = '6LfyZOIUAAAAAHutzQu3CcAiUTfnReV3mXWVxmH8';
-
   constructor(
     @Host() public parent: OrderComponent,
     public modal: ModalService,
@@ -289,23 +286,22 @@ export class PlanDetailComponent implements OnInit {
     });
     localStorage.clear();
     this.parent.model.premise.serviceNo = ''
+    
     setTimeout(() => {
       this.parent.model.premise.productName = null;
     }, 100);
     this.verifiedPromotionCode = (this.parent.model.referralCode || '');
-    this.modal.open(this.advisory, 'lg', { class: 'mt-5 pt-5 ml-2 mr-2 ml-md-5 mr-md-5 unselect modal-mg-3rem',
-    ignoreBackdropClick: true });
 
     this.pricingPlanService.fetchAll().subscribe(collection => {
-      // if (!this.parent.isAdvisoryAgreed) {
-        // setTimeout(() => {
-        //   this.advisory.show();
-        //   this.modal.open(this.advisory, 'lg', {
-        //     class: 'mt-5 pt-5 ml-2 mr-2 ml-md-5 mr-md-5 unselect modal-mg-3rem',
-        //     ignoreBackdropClick: true
-        //   });
-        // }, 1000);
-      // }
+      if (!this.parent.isAdvisoryAgreed) {
+        setTimeout(() => {
+          //  this.advisory.show();
+          this.modal.open(this.advisory, 'lg', {
+            class: 'mt-5 pt-5 ml-2 mr-2 ml-md-5 mr-md-5 unselect modal-mg-3rem',
+            ignoreBackdropClick: true
+          });
+        }, 1000);
+      }
       this.parent.model.premise.serviceNo = '';
       this.pricingPlanList = collection.items;
       const pricingPlan = _.get(this.activateRoute.snapshot.queryParams, 'plan');
@@ -315,8 +311,6 @@ export class PlanDetailComponent implements OnInit {
           this.parent.model.premise.productName = this.pricingPlanList[index].name;
           this.gtagService.sendEvent(this.pricingPlanList[index].name);
         }
-
-
       } else {
         const index = _.findIndex(this.pricingPlanList, plan => _.isEqual(plan.name, this.parent.model.premise.productName));
         if (index >= 0) {
@@ -482,10 +476,11 @@ export class PlanDetailComponent implements OnInit {
 
         }
         else {
+          this.promotionMessage = responseMessage;
           this.promocodeStatus = false;
-          this.promotionMessage = "";
-          this.verifiedPromocodes = [];  //Clear promo code list     
-          this.isPromocodeField = false;
+          // this.promotionMessage = "";
+          // this.verifiedPromocodes = [];  //Clear promo code list     
+          // this.isPromocodeField = false;
         }
       })
   }

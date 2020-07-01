@@ -76,6 +76,9 @@ export class PlanDetailComponent implements OnInit {
     failedOverlay: false,
     submitSuccessOverlay: false
   };
+
+  selectData
+  isPlanSelected:boolean;
   listPricePlanByRefOrProCode = LIST_PRICE_PLAN_BY_REF_OR_PRO_CODE;
   inputSubmissionAllowedClickOn = ['postalCodeVerification', 'submissionForm', 'submissionSuccess'];
   potentialCustomer: PotentialCustomer = null;
@@ -229,22 +232,6 @@ export class PlanDetailComponent implements OnInit {
         }
       })
 
-    // const inputPostalCode = this.potentialCustomer.postalCode;
-    // if (!postalCodePattern.test(inputPostalCode)
-    
-    //   || (!moment().isSameOrAfter('2019-05-01') && !_.inRange(+inputPostalCode.substring(0, 2), 34, 84))
-    //   || (moment().isSameOrAfter('2019-05-01') && !_.inRange(+inputPostalCode.substring(0, 2), 1, 84))) {
-    //   this.postalCodeOverlayShowUp.failedOverlay = true;
-    //   this.postalCodeOverlayShowUp.secondOverlay = false;
-    //   this.postalCodeOverlayShowUp.successOverlay = false;
-    // } else {
-    //   this.postalCodeOverlayShowUp.secondOverlay = false;
-    //   this.postalCodeOverlayShowUp.successOverlay = true;
-    //   this.potentialCustomer = new PotentialCustomer();
-    //   setTimeout(() => {
-    //     this.postalCodeOverlayShowUp.successOverlay = false;
-    //   }, 30000);
-    // }
   }
 }
   }
@@ -361,32 +348,6 @@ export class PlanDetailComponent implements OnInit {
 
   }
 
-  // viewFactSheet() {
-  //   this.pdfSrc = null;
-  //   this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet +
-  //     "?planName=" + (btoa(this.planName))).subscribe(response => {
-  //       console.log(response);
-  //       if (response.body && (response.body.statusCode == 200)) {
-  //         var responseBody = response['body'];
-  //         var responseData = responseBody['data'];
-  //         var data = "data:application/pdf;base64," + responseData;
-  //         var byteString = atob(responseData);
-  //         var ab = new ArrayBuffer(byteString.length);
-  //         var ia = new Uint8Array(ab);
-  //         for (var i = 0; i < byteString.length; i++) {
-  //           ia[i] = byteString.charCodeAt(i);
-  //         }
-  //         this.pdfSrc = ia;
-  //         this.pdfViewFactSheetModal.show();
-  //       }
-  //       $("#myModal").modal("show")
-  //     }, err => {
-  //       console.log(err.message);
-
-  //     })
-  // }
-  selectData
-  isPlanSelected:boolean;
   onSelectPricingPlanChange(event) {
     this.selectData = event.target.value;
     this.isPlanSelected = true;
@@ -473,6 +434,7 @@ export class PlanDetailComponent implements OnInit {
         else if (statusCode == 400 && responseMessage == "Promo code is not valid for this plan.") {
          
             this.promotionMessage = responseMessage;
+            this.promocodeStatus=false;
 
         }
         else {

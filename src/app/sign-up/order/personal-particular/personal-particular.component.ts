@@ -107,9 +107,7 @@ export class PersonalParticularComponent implements OnInit {
     return this.verificationFailCount >= OTP_SEND_LIMIT;
   }
 
-  formData:any=[];
   onSubmit(form: NgForm) {
-      this.formData=form;
     if (form.valid && this.isMobileOtpValidate && this.isEmailOtpValidated) {
       if (!_.includes([IdentificationType.EmploymentPass, IdentificationType.WorkPermit], this.parent.model.identificationType)) {
         this.parent.model.identificationExpiryDate = '';
@@ -153,7 +151,7 @@ export class PersonalParticularComponent implements OnInit {
           $('#emailOTP').modal('show');
         }
         else {
-          this.toster.success('', 'OTP has been resent to email address.', {
+          this.toster.success('', 'OTP has been resent to Email Address', {
           
           });
           this.otp = ''
@@ -192,13 +190,13 @@ export class PersonalParticularComponent implements OnInit {
       if (statusCode == 200) {
         this.isEmailOtpValidated = true;
         $("#emailOTP").modal('hide');
-        this.toster.success('', 'Email is verified successfully.', {
+        this.toster.success('', 'Email successfully verified', {
           timeOut: 3000
         });
       }
       else {
         this.isEmailOtpValidated = false;
-        this.toster.error('', 'You have entered an invalid OTP.', {
+        this.toster.error('', 'OTP has expired, please try again.', {
           timeOut: 3000
         });
       }
@@ -227,7 +225,7 @@ export class PersonalParticularComponent implements OnInit {
           $('#mobileOTP').modal('show')
         }
         else {
-          this.toster.success('', 'OTP has been resent to mobile number.', {
+          this.toster.success('', 'OTP has been resent to Mobile Number', {
             timeOut: 3000
           });
           this.otpMobile = ''
@@ -269,13 +267,13 @@ export class PersonalParticularComponent implements OnInit {
         if (statusCode == 200) {
           this.isMobileOtpValidate = true;
           $("#mobileOTP").modal('hide');
-          this.toster.success('', 'Mobile number is verified successfully.', {
+          this.toster.success('', 'Mobile Number successfully verified', {
             timeOut: 3000
           });
         }
         else {
           this.isMobileOtpValidate = false;
-          this.toster.error('', 'You have entered an invalid OTP', {
+          this.toster.error('', 'OTP has expired, please try again.', {
             timeOut: 3000
           });
         }

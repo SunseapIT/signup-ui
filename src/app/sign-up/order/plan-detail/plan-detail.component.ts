@@ -23,23 +23,14 @@ import {
 } from '@app/core';
 import { NgForm } from '@angular/forms';
 import { PlanBean } from '@app/core/plan-bean';
-// import { TimeStampDto } from '@app/sign-up/admin/dto/time-stamp-dto';
-import { TimeStampDto } from "../../../core/time-stamp-dto";
-
 import { CustomerDto } from '@app/core/customer-dto';
+import { TimeStampDto } from '@app/core/time-stamp-dto';
 
 declare var $: any;
 const LIST_PRICE_PLAN_BY_REF_OR_PRO_CODE = {
   '50XMAS18': ['SUNSEAP-ONE_DOT_12MTHS', 'SUNSEAP-ONE_DOT_24MTHS', 'SUNSEAP-50_DOT', 'SUNSEAP-100_DOT', 'SUNSEAP-ONE_FIX_12MTHS',
     'SUNSEAP-ONE_FIX_24MTHS', 'SUNSEAP-50_FIX', 'SUNSEAP-100_FIX']
 };
-const POSTAL_CODE_WARNING = 'The postal code you have entered is currently not eligible for the Open Electricity Market. ' +
-'Please refer to <a href="https://www.openelectricitymarket.sg/index.html" target="_blank">EMA\'s site</a> for more information.';
-const POSTAL_CODE_ERROR_MESSAGE = 'Thank you for your interest, but we are sorry that we are unable to proceed with your registration.' +
-'<br>' + 'Please register when your ' +
-'<a href="https://www.openelectricitymarket.sg/index.html" target="_blank">postal code becomes eligible for </a>' +
-', and we look forward to go #GreenerTogether with you soon.';
-const POSTAL_CODE_REDIRECT_DELAY = 5000;
 
 @Component({
   selector: 'app-plan-detail',
@@ -55,17 +46,16 @@ export class PlanDetailComponent implements OnInit {
   _pdf: PDFDocumentProxy;
 
   config = { bootstrap: null, dateTimeFormat: null, validationRegex: null };
-
+  isPromocodeField: boolean = false;
+  isPlanSelected:boolean;
   pricingPlanList: PricingPlan[];
   openButtonFlag = false;
-  isPromocodeField: boolean = false;
+  show:boolean;
   showAddFlag = false;
   rebateAmount = 0;
   promotionPercent = 0;
   promotionMessage = '';
   verifiedPromotionCode = '';
-  planId:any;
-  pCode:any
   isPromotionCodeVerifyFail = false;
   popupDelayTimeout = null;
   postalCodeOverlayShowUp = {
@@ -76,9 +66,6 @@ export class PlanDetailComponent implements OnInit {
     failedOverlay: false,
     submitSuccessOverlay: false
   };
-
-  selectData
-  isPlanSelected:boolean;
   listPricePlanByRefOrProCode = LIST_PRICE_PLAN_BY_REF_OR_PRO_CODE;
   inputSubmissionAllowedClickOn = ['postalCodeVerification', 'submissionForm', 'submissionSuccess'];
   potentialCustomer: PotentialCustomer = null;
@@ -93,7 +80,7 @@ export class PlanDetailComponent implements OnInit {
   duplicatePromoCode: boolean;
   verified: boolean;
   modalRef: BsModalRef;
-
+  selectData;
   constructor(
     @Host() public parent: OrderComponent,
     public modal: ModalService,
@@ -144,7 +131,6 @@ export class PlanDetailComponent implements OnInit {
     }
 
     let j = 0;
-
     while (j < 4 && originalElement) {
       if (this.postalCodeOverlay.nativeElement.id === originalElement.id) {
         if (this.postalCodeOverlayShowUp.firstOverlay) {
@@ -170,7 +156,7 @@ export class PlanDetailComponent implements OnInit {
     if (_.size(this.potentialCustomer.postalCode) < 6 || !Number(this.potentialCustomer.postalCode)) {
       this.popover.first.isOpen = !this.popover.first.isOpen;
     } else {
-      this.verifyPostalCode(this.potentialCustomer.postalCode);
+      this.verifyPostalCode();
     }
   }
 
@@ -195,54 +181,24 @@ export class PlanDetailComponent implements OnInit {
       this.preValidatePostalCode();
     }
   }
-  pickedLocation: string = null;
-  warningMessage = '';
 
-  @ViewChild('warningModal') warningModal: any;
-  @ViewChild('pickUpModal') pickUpModal: any;
-
-  verifyPostalCode(code) {
-    let postalString = "https://developers.onemap.sg/commonapi/search?searchVal=" +
-    code + "&returnGeom=N&getAddrDetails=Y&pageNum=1"
-  if (_.size(code) > 1 && !this.isPostalCodeValid(code)) {
-    this.warningMessage = POSTAL_CODE_WARNING;
-    this.modal.open(this.warningModal, 'lg', { ignoreBackdropClick: true });
-  } else {
-    if (_.size(code) === 6) {
-      this.service.get_service(ApiServiceServiceService.apiList.getPostalCode + "?url=" + btoa(postalString)).subscribe((response) => {
-        let responseBody = response['body']
-        let status = responseBody['statusCode']
-        let responseData = responseBody['data']
-        let responseResults = responseData['results']
-        if (responseResults != '') {
-          console.log('eligible');
-          this.postalCodeOverlayShowUp.secondOverlay = false;
+  verifyPostalCode() {
+    const postalCodePattern = new RegExp(this.config.validationRegex.postalCode);
+    const inputPostalCode = this.potentialCustomer.postalCode;
+    if (!postalCodePattern.test(inputPostalCode)
+      || (!moment().isSameOrAfter('2019-05-01') && !_.inRange(+inputPostalCode.substring(0, 2), 34, 84))
+      || (moment().isSameOrAfter('2019-05-01') && !_.inRange(+inputPostalCode.substring(0, 2), 1, 84))) {
+      this.postalCodeOverlayShowUp.failedOverlay = true;
+      this.postalCodeOverlayShowUp.secondOverlay = false;
+      this.postalCodeOverlayShowUp.successOverlay = false;
+    } else {
+      this.postalCodeOverlayShowUp.secondOverlay = false;
       this.postalCodeOverlayShowUp.successOverlay = true;
       this.potentialCustomer = new PotentialCustomer();
       setTimeout(() => {
         this.postalCodeOverlayShowUp.successOverlay = false;
       }, 30000);
-          
-        }
-        else {
-          this.postalCodeOverlayShowUp.failedOverlay = true;
-      this.postalCodeOverlayShowUp.secondOverlay = false;
-      this.postalCodeOverlayShowUp.successOverlay = false;
-         
-        }
-      })
-
-  }
-}
-  }
-  
-  isPostalCodeValid(code: string): boolean {
-    // Postal codes with the 2 first degits between 01 and 33 and after 1 May 2018 will be allowed
-    if (moment().isSameOrAfter('2019-05-01') && _.inRange(+code.substring(0, 2), 1, 84)) {
-      return _.inRange(+code.substring(0, 2), 1, 84);
     }
-    // Postal codes with the 2 first digits between 58 and 78 will be allowed
-    return _.inRange(+code.substring(0, 2), 34, 84);
   }
 
   registContact() {
@@ -263,17 +219,17 @@ export class PlanDetailComponent implements OnInit {
   handleExpire() { }
   handleLoad() { }
   handleSuccess($event) {
-  }
+    console.log('eventcaptcha', event);
 
+  }
   ngOnInit() {
-    $(document).ready(function () {
-      if (indexedDB) {
-        indexedDB.deleteDatabase("ngStorage");
-      }
-    });
-    localStorage.clear();
-    this.parent.model.premise.serviceNo = ''
-    
+
+    // this.reCaptchaV3Service.execute(this.siteKey, 'homepage', (token) => {
+    //   console.log('This is your token: ', token);
+    //   useGlobalDomain: false
+    // });
+
+
     setTimeout(() => {
       this.parent.model.premise.productName = null;
     }, 100);
@@ -321,6 +277,7 @@ export class PlanDetailComponent implements OnInit {
 
 
   ngOnDestroy(): void {
+
     this.pdfSrc = null;
     if (this._pdf) {
       this._pdf.destroy();
@@ -328,6 +285,8 @@ export class PlanDetailComponent implements OnInit {
 
   }
 
+
+  
   getPlans() {
     this.service.get_service(ApiServiceServiceService.apiList.customerViewPlanUrl).subscribe((response) => {
       var responseBody = response['body'];
@@ -348,12 +307,14 @@ export class PlanDetailComponent implements OnInit {
 
   }
 
+ 
+  
   onSelectPricingPlanChange(event) {
     this.selectData = event.target.value;
     this.isPlanSelected = true;
     this.openButtonFlag = true;
-    // if (this.promocodeStatus == true) {
-      if (this.parent.model.premise.referral.length > 0) {
+    // if (this.promocodeStatus == true) {    
+      if (this.parent.model.premise.referral && this.parent.model.premise.referral.length > 0) {
       this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl + "?promoCode="
         + this.pCode + "&planId=" + btoa(this.selectData), this.customerDto).subscribe((response: any) => {
           var responseBody = response['body'];
@@ -364,9 +325,7 @@ export class PlanDetailComponent implements OnInit {
             this.promocodeStatus = true;
             this.promotionMessage = responseData;
             this.verified = true;
-
             this.isPromocodeField = false;
-
           }
           else {
             this.promocodeStatus = false;
@@ -446,12 +405,13 @@ export class PlanDetailComponent implements OnInit {
         else {
           this.promotionMessage = responseMessage;
           this.promocodeStatus = false;
-          // this.promotionMessage = "";
-          // this.verifiedPromocodes = [];  //Clear promo code list     
-          // this.isPromocodeField = false;
         }
       })
   }
+
+  planId;
+  pCode
+  
 
   // verifyPromotionCode(index) {
   //   let promocode = this.promoCode[index].referralCode.toLowerCase();
@@ -469,8 +429,8 @@ export class PlanDetailComponent implements OnInit {
   //     this.duplicatePromoCode = false;
   //   }
   // }
-
-  pverify: boolean = false;
+  
+  pverify:boolean=false;
   verifyPromocode(promocode) {
     var customerDto = new CustomerDto();
     this.planId = this.selectData
@@ -485,9 +445,9 @@ export class PlanDetailComponent implements OnInit {
         let statusCode = responseBody['statusCode']
         if (statusCode == 200) {
           this.promocodeStatus = true;
-          this.pverify = true;
+          this.pverify=true;
           this.promotionMessage = responseData;
-          this.verifiedPromocodes = []; //clear promocode list
+           this.verifiedPromocodes = []; //clear promocode list
           this.verifiedPromocodes.push(promocode)
           this.verified = true;
         }
@@ -498,62 +458,47 @@ export class PlanDetailComponent implements OnInit {
         }
       })
   }
-
-
+formData:any;
   onSubmit(form) {
+this.formData=form;
     this.service.get_service(ApiServiceServiceService.apiList.getSpAccountUrl + "?spAccount=" + this.parent.model.premise.serviceNo)
       .subscribe((response: any) => {
         var responseBody = response['body'];
         var responseMessage = responseBody['message'];
         let statusCode = responseBody['statusCode']
         if (statusCode == 200) {
-          if (this.parent.model.premise.referral == undefined || this.parent.model.premise.referral == "") {
+          if(this.pCode == "" || this.pCode == undefined || this.parent.model.premise.referral== ""){  
             this.save(form);
-
-
-          }
-          else if (this.parent.model.premise.referral.length > 0 && this.promocodeStatus == false) {
-            this.isPromocodeField = true;
-            
-
-            // this.toster.error('', 'Please verify the promo/referral code that you have entered.')
-          }
-
-          // if ((this.parent.model.premise.referral.length > 0 && this.promocodeStatus == false) || (this.pCode == "" || this.pCode == undefined || this.parent.model.premise.referral == "")) {
-          //   $('#verifyModel').show();
-          // }
-          // else if (this.pCode == "" || this.pCode == undefined || this.parent.model.premise.referral == "") {
-          //   this.save(form);
-          // }
-          else {
-            this.verifyPromotionCode(this.pCode);
-            setTimeout(() => {
-              if (this.promocodeStatus) {
-                this.save(form);
-
-              }
-
-            }, 1000)
-            this.pCode = ""
-            this.pCode = null;
-            this.parent.model.premise.referral = "";
-            this.promotionMessage = "";
-          }
         }
         else {
-          this.isPromocodeField = false;
+          this.verifyPromotionCode(this.pCode);  
+          setTimeout(()=>{
+          if(this.promocodeStatus){
+            this.save(form);
+           
+          }
+        
+       }, 1000)
+      this.pCode= ""
+      this.pCode=null;
+          this.parent.model.premise.referral="";
+          this.promotionMessage="";   
+        }
+      }
+        else { 
           this.toster.error('', responseMessage, {
             timeOut: 3000
           })
         }
-
-
+      
+      
       })
   }
   customerDto = new CustomerDto();
 
-  save(form: NgForm) {
-    if (form.valid && this.verifiedPromocodes) {
+  save(form:NgForm){
+  
+    if (form.valid && this.verifiedPromocodes){
       this.parent.model.premise.startDate = moment(new Date()).add('days', 8).format(this.config.bootstrap.datePicker.dateInputFormat);
       this.localStorage.setItem(STORAGE_KEYS.IS_SP_ACCOUNT_HOLDER, this.parent.isSPAccountHolder).subscribe();
       const selectedPricingPlan = _.find(this.pricingPlanList, { name: this.parent.model.premise.productName });
@@ -578,44 +523,7 @@ export class PlanDetailComponent implements OnInit {
     }
   }
 
-  // onSubmit(form: NgForm) {
-  //   this.service.get_service(ApiServiceServiceService.apiList.getSpAccountUrl + "?spAccount=" + this.parent.model.premise.serviceNo)
-  //     .subscribe((response: any) => {
-  //       var responseBody = response['body'];
-  //       var responseMessage = responseBody['message'];
-  //       let statusCode = responseBody['statusCode']
-  //       if (statusCode == 200) {
-  //         if (form.valid && this.verifiedPromocodes) {
-  //           this.parent.model.premise.startDate = moment(new Date()).add('days', 8).format(this.config.bootstrap.datePicker.dateInputFormat);
-  //           this.localStorage.setItem(STORAGE_KEYS.IS_SP_ACCOUNT_HOLDER, this.parent.isSPAccountHolder).subscribe();
-  //           const selectedPricingPlan = _.find(this.pricingPlanList, { name: this.parent.model.premise.productName });
-  //           this.gtagService.sendEvent(ORDER_GA_EVENT_NAMES.ENTER_YOUR_DETAIL_1);
-  //           var timeStampDto = new TimeStampDto();
-  //           timeStampDto.pageType = "PALN_DETAILS"
-  //           var customerDto = new CustomerDto();
-  //           customerDto.spAccountNumber = form.value.serviceNo;
-  //           customerDto.plan = form.value.productName;
-  //           customerDto.promoCode = this.verifiedPromocodes;
-  //           customerDto.selfSignup = this.parent.isSPAccountHolder;
-  //           this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl, timeStampDto).subscribe((response) => {
-  //             let responseBody = response['body']
-  //             let responseData = responseBody['data']
-  //             let responseToken = responseData['token'];
-  //             localStorage.setItem("Token", responseToken);
-  //             customerDto.token = responseToken;
-  //             localStorage.setItem("customerObj", JSON.stringify(customerDto));
-
-  //           })
-  //           this.parent.saveAndNext();
-  //         }
-  //       }
-  //       else {
-  //         this.toster.error('', responseMessage, {
-  //           timeOut: 3000
-  //         })
-  //       }
-  //     })
-  // }
+  
 
   delayedPopover(pop) {
     this.popupDelayTimeout = setTimeout(() => {
@@ -661,7 +569,12 @@ export class PlanDetailComponent implements OnInit {
     this.service.get_service(ApiServiceServiceService.apiList.getMessageUrl).subscribe((response) => {
       var responseBody = response['body'];
       var responseData = responseBody['data'];
+      if(responseData == ''){
+      }
+      else{
+        this.show=true
       this.adminMessage = responseData
+      }
     })
   }
 

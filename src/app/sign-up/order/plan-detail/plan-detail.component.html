@@ -1,4 +1,4 @@
-<!-- <div class="message-content  content-plan-detail" *ngIf="adminMessage.length > 0"> -->
+<div class="message-content  content-plan-detail" *ngIf="show">
     <div class="form-row">
         <div class="col-md-12 pt-3">
             <strong style="color: #1579f6">Notice </strong>
@@ -10,12 +10,12 @@
         
         </div>
     </div>
-<!-- </div> -->
+</div>
 
 <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
     <div class="form-content form-row content-plan-detail">
         <div class="form-group col-12">
-            <label class="form-control-label" for="productName">Plan details</label>
+            <label class="form-control-label" for="productName">Plan Details</label>
             <select name="productName" id="productName" class="form-control select-font"
                 [class.is-invalid]="productName.invalid && (productName.touched || form.submitted)" required
                 [(ngModel)]="planName" (change)="onSelectPricingPlanChange($event)" #productName="ngModel">

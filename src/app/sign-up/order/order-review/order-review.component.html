@@ -2,18 +2,18 @@
 <form #form="ngForm" (ngSubmit)="onSubmit(form)">
     <div class="form-content ema-scroll-view pl-5 pr-5 myriad-cond" #reviewForm>
         <div class="clearfix pb-4">
-            <div class="float-left font-weight-bold">Plan summary</div>
+            <div class="float-left font-weight-bold">Plan Summary</div>
         </div>
 
         <div class="row">
-            <div class="col-lg-6 col-sm-6">Plan name:</div>
+            <div class="col-lg-6 col-sm-6">Plan Name:</div>
             <div class="col-lg-6 col-sm-6 font-weight-bold">
                 {{ selectedPricingPlan }}
             </div>
         </div>
 
         <div class="row">
-            <div class="col-lg-6 col-sm-6">SP account No:</div>
+            <div class="col-lg-6 col-sm-6">SP Account No:</div>
             <div class="col-lg-5 col-sm-5 font-weight-bold">
                 <div class="card-text-right p-0">
                     <div *ngIf="!spFlag" class="input-group">
@@ -43,12 +43,12 @@
 
 
         <div class="row">
-            <div class="col-lg-6 col-sm-6">Early termination charge:</div>
+            <div class="col-lg-6 col-sm-6">Early Termination Charge:</div>
             <div class="col-lg-6 col-sm-6 font-weight-bold">${{ ETC_FEE_OPTIONS[dwellingType] }} per remaining month</div>
         </div>
 
         <div class="row">
-            <div class="col-lg-6 col-sm-6">Security deposit:</div>
+            <div class="col-lg-6 col-sm-6">Security Deposit:</div>
             <div class="col-lg-6 col-sm-6 font-weight-bold">$0.00</div>
         </div>
 
@@ -59,7 +59,7 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-6 col-sm-6">Full name:</div>
+                <div class="col-lg-6 col-sm-6">Full Name:</div>
                 <div class="col-lg-5 col-sm-5 font-weight-bold">
                     <div class="card-text-right p-0">
                         <div *ngIf="!nameFlag" class="input-group">
@@ -94,24 +94,24 @@
 
 
             <div *ngIf="parent.model.identificationType === IdentificationType.EmploymentPass || parent.model.identificationType === IdentificationType.WorkPermit" class="row pb-2">
-                <div class="col-lg-6 col-sm-6">Expiry date:</div>
+                <div class="col-lg-6 col-sm-6">Expiry Date:</div>
                 <div class="col-lg-6 col-sm-6 font-weight-bold">{{ parent.model.identificationExpiryDate }}</div>
             </div>
 
 
             <div class="row">
-                <div class="col-lg-6 col-sm-6">Email address:</div>
+                <div class="col-lg-6 col-sm-6">Email Address:</div>
                 <div class="col-lg-6 col-sm-6 font-weight-bold">{{ emailAddress }}</div>
             </div>
 
             <div class="row pb-2">
-                <div class="col-lg-6 col-sm-6">Mobile number:</div>
+                <div class="col-lg-6 col-sm-6">Mobile Number:</div>
                 <div class="col-lg-6 col-sm-6 font-weight-bold">{{mobileNumber}}</div>
             </div>
         </div>
 
         <div class="clearfix pb-3">
-            <div class="float-left font-weight-bold">Service address</div>
+            <div class="float-left font-weight-bold">Service Address</div>
         </div>
 
         <div class="row pb-2">
@@ -147,7 +147,7 @@
         </div>
 
         <div class="row pb-2">
-            <div class="col-lg-6 col-sm-6">Street name:</div>
+            <div class="col-lg-6 col-sm-6">Street Name:</div>
             <div class="col-lg-6 col-sm-6 font-weight-bold">
                 <div class="card-text-right p-0">
                     <div class="input-group">
@@ -160,7 +160,7 @@
         </div>
 
         <div class="row pb-2">
-            <div class="col-lg-6 col-sm-6">Building name:</div>
+            <div class="col-lg-6 col-sm-6">Building Name:</div>
             <div class="col-lg-6 col-sm-6 font-weight-bold">
                 <div class="card-text-right p-0">
                     <div class="input-group">
@@ -171,7 +171,7 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-6 col-sm-6">Postal code:</div>
+            <div class="col-lg-6 col-sm-6">Postal Code:</div>
             <div class="col-lg-6 col-sm-6 font-weight-bold">
                 <div class="card-text-right p-0">
                     <div class="input-group">
@@ -182,7 +182,7 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-6 col-sm-6">Dwelling type:</div>
+            <div class="col-lg-6 col-sm-6">Dwelling Type:</div>
             <div class="col-lg-6 col-sm-6 font-weight-bold">
                 {{dwellingType }}
             </div>

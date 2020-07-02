@@ -425,6 +425,12 @@ export class PlanDetailComponent implements OnInit {
             this.promotionMessage = null;
 
         }
+        else if (statusCode == 404 && responseMessage == "Please enter a valid promo/referral code." &&  
+        this.parent.model.premise.referral == "" ) {
+         
+            this.promotionMessage = null;
+
+        }
         else if(statusCode == 404 && this.parent.model.premise.referral.length > 0) {
           this.promocodeStatus = false;
           this.promotionMessage = responseMessage;

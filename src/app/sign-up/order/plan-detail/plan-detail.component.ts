@@ -54,6 +54,9 @@ export class PlanDetailComponent implements OnInit {
   showAddFlag = false;
   rebateAmount = 0;
   promotionPercent = 0;
+  planId;
+  pCode
+  pverify:boolean=false;
   promotionMessage = '';
   verifiedPromotionCode = '';
   isPromotionCodeVerifyFail = false;
@@ -409,28 +412,6 @@ export class PlanDetailComponent implements OnInit {
       })
   }
 
-  planId;
-  pCode
-  
-
-  // verifyPromotionCode(index) {
-  //   let promocode = this.promoCode[index].referralCode.toLowerCase();
-  //   if (this.verifiedPromocodes.length) {
-  //     this.verified = true;
-  //     this.verifiedPromocodes.findIndex(item => item == promocode)
-  //     if (this.verifiedPromocodes.findIndex(item => item == promocode) == -1) {
-  //       this.verifyPromocode(index, promocode);
-  //       this.duplicatePromoCode = false;
-  //     } else {
-  //       this.duplicatePromoCode = true;
-  //     }
-  //   } else {
-  //     this.verifyPromocode(index, promocode);
-  //     this.duplicatePromoCode = false;
-  //   }
-  // }
-  
-  pverify:boolean=false;
   verifyPromocode(promocode) {
     var customerDto = new CustomerDto();
     this.planId = this.selectData
@@ -458,16 +439,14 @@ export class PlanDetailComponent implements OnInit {
         }
       })
   }
-formData:any;
   onSubmit(form) {
-this.formData=form;
     this.service.get_service(ApiServiceServiceService.apiList.getSpAccountUrl + "?spAccount=" + this.parent.model.premise.serviceNo)
       .subscribe((response: any) => {
         var responseBody = response['body'];
         var responseMessage = responseBody['message'];
         let statusCode = responseBody['statusCode']
         if (statusCode == 200) {
-          if(this.pCode == "" || this.pCode == undefined || this.parent.model.premise.referral== ""){  
+          if (this.parent.model.premise.referral == undefined || this.parent.model.premise.referral == "") {
             this.save(form);
         }
         else {
@@ -479,10 +458,7 @@ this.formData=form;
           }
         
        }, 1000)
-      this.pCode= ""
-      this.pCode=null;
-          this.parent.model.premise.referral="";
-          this.promotionMessage="";   
+        
         }
       }
         else { 

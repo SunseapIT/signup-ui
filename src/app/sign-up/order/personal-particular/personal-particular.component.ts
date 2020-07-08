@@ -117,7 +117,7 @@ export class PersonalParticularComponent implements OnInit {
       var objStr = localStorage.getItem("customerObj");
       customerDto = JSON.parse(objStr);
       customerDto.fullName = this.parent.model.identificationName;
-      customerDto.eamilAddress = this.parent.model.email;
+      customerDto.eamilAddress = this.parent.model.email.toLowerCase();
       customerDto.mobileNumber = this.parent.model.mobileNo;
       customerDto.lastName = this.parent.model.lastName
       localStorage.setItem("customerObj", JSON.stringify(customerDto))

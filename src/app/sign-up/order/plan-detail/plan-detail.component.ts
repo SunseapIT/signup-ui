@@ -240,13 +240,13 @@ export class PlanDetailComponent implements OnInit {
 
     this.pricingPlanService.fetchAll().subscribe(collection => {
       if (!this.parent.isAdvisoryAgreed) {
-        setTimeout(() => {
+      
           //  this.advisory.show();
           this.modal.open(this.advisory, 'lg', {
             class: 'mt-5 pt-5 ml-2 mr-2 ml-md-5 mr-md-5 unselect modal-mg-3rem',
             ignoreBackdropClick: true
           });
-        }, 1000);
+      
       }
       this.parent.model.premise.serviceNo = '';
       this.pricingPlanList = collection.items;

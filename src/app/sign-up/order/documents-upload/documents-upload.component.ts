@@ -72,7 +72,7 @@ export class DocumentsUploadComponent implements OnInit {
         
       }
     } else if (
-      !this.parent.isSPAccountHolder &&  this.letterOfAuthorisation &&  (this.spPastMonthBill || this.spBillLocName)  ) {
+      !this.parent.isSPAccountHolder &&  this.letterOfAuthorisation &&  (this.spPastMonthBill || this.newSpAccountOpeningLetter)  ) {
       if (
         this.spPastMonthBillSize > this.fileMaxSize ||
         this.letterOfAuthorisationSize > this.fileMaxSize

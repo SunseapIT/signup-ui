@@ -385,6 +385,7 @@ export class PlanDetailComponent implements OnInit {
         this.parent.model.premise.referral == "" ) {
          
             this.promotionMessage = null;
+            this.verifiedPromocodes = [];
 
         }
         else if (statusCode == 404 && responseMessage == "Please enter a valid promo/referral code." &&  
@@ -403,6 +404,7 @@ export class PlanDetailComponent implements OnInit {
          
             this.promotionMessage = responseMessage;
             this.promocodeStatus=false;
+            this.verifiedPromocodes = [];
 
         }
         else {

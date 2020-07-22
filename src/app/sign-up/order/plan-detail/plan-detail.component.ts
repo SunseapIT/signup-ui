@@ -84,6 +84,7 @@ export class PlanDetailComponent implements OnInit {
   verified: boolean;
   modalRef: BsModalRef;
   selectData;
+  fileName: string;
   constructor(
     @Host() public parent: OrderComponent,
     public modal: ModalService,
@@ -303,6 +304,8 @@ export class PlanDetailComponent implements OnInit {
       + "?planName=" + (btoa(this.planName))).subscribe(response => {
         var responseBody = response['body'];
         var responseData = responseBody['data'];
+         responseData = responseData.FILE_CONTENT;  
+        this.fileName = responseData.FILE_NAME;   
         var data = "data:application/pdf;base64," + responseData;
         this.pdfSrc = data;
       })

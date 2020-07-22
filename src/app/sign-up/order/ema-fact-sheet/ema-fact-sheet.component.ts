@@ -31,6 +31,7 @@ export class EmaFactSheetComponent implements OnInit {
   acknowledge=false;
   acknowledge1=false;
   isLoader:boolean=false;
+  fileName: string;
 
   constructor(
     @Host() public parent: OrderComponent,
@@ -84,7 +85,8 @@ export class EmaFactSheetComponent implements OnInit {
     this.service.getFactSheetGet_service(ApiServiceServiceService.apiList.getFactSheet+"?planName="+(btoa(planName))).subscribe(response=>{
       this.isLoader = false;
       var responseBody = response['body'];
-      var responseData = responseBody['data'];   
+      var responseData = responseBody['data'].FILE_CONTENT;  
+       this.fileName = responseBody['data'].FILE_NAME;   
       this.pdf = responseData;
       var data = "data:application/pdf;base64," +responseData
       this.pdfSrc = data;   
@@ -94,7 +96,7 @@ export class EmaFactSheetComponent implements OnInit {
   downloadFactSheet(){
     const linkSource = this.pdfSrc;
     const downloadLink = document.createElement("a");
-    const fileName = "factSheet.pdf";
+    const fileName = this.fileName;
     downloadLink.href = linkSource;
     downloadLink.download = fileName;
     downloadLink.click();

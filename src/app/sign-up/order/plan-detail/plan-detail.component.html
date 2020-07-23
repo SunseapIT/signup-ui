@@ -20,7 +20,7 @@
                 [class.is-invalid]="productName.invalid && (productName.touched || form.submitted)" required
                 [(ngModel)]="planName" (change)="onSelectPricingPlanChange($event)" #productName="ngModel">
                 <option value='' ng-selected="selected" disabled>Select your plan</option>
-                <option *ngFor="let item of planList" [value]="item.id" class="option-font">
+                <option *ngFor="let item of planList" [value]="item.planName" class="option-font">
                     {{ item.planName }}
                 </option>
             </select>

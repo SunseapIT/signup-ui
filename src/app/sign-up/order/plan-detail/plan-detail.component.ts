@@ -69,6 +69,14 @@ export class PlanDetailComponent implements OnInit {
     failedOverlay: false,
     submitSuccessOverlay: false
   };
+  planTypes = {
+    id : 0,
+    energy: "",
+    discount: "",
+    rate: "",
+    afterGst: "",
+    rateChange: "",
+  };
   listPricePlanByRefOrProCode = LIST_PRICE_PLAN_BY_REF_OR_PRO_CODE;
   inputSubmissionAllowedClickOn = ['postalCodeVerification', 'submissionForm', 'submissionSuccess'];
   potentialCustomer: PotentialCustomer = null;
@@ -318,32 +326,24 @@ export class PlanDetailComponent implements OnInit {
   onSelectPricingPlanChange(event) {
     this.selectData = event.target.value;
     this.isPlanSelected = true;
-    this.openButtonFlag = true;
-    // if (this.promocodeStatus == true) {    
+    this.openButtonFlag = true;    
+    let element = this.planList.find(item => item.planName == this.selectData );  
+        try{
+
+          this.planTypes.id = element['id'];
+                    console.log('this.planTypes.planName',this.planTypes.id);
+          
+          this.planTypes.discount = element['discount'];
+          this.planTypes.afterGst = element['afterGst'];
+          this.planTypes.energy = element['energy'];
+          this.planTypes.rateChange = element['rateChange'];
+          this.planTypes.rate = element['rate'];            
+        }
+        catch(e){
+        }
+
       if (this.parent.model.premise.referral && this.parent.model.premise.referral.length > 0) {
-      this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl + "?promoCode="
-        + this.pCode + "&planId=" + btoa(this.selectData), this.customerDto).subscribe((response: any) => {
-          var responseBody = response['body'];
-          var responseData = responseBody['data'];
-          var responseMessage = responseBody['message'];
-          let statusCode = responseBody['statusCode']
-          if (statusCode == 200) {
-            this.promocodeStatus = true;
-            this.promotionMessage = responseData;
-            this.verified = true;
-            this.isPromocodeField = false;
-          }
-          else {
-            this.promocodeStatus = false;
-            this.promotionMessage = responseMessage;
-            this.verifiedPromocodes = [];  //Clear promo code list     
-            this.isPromocodeField = false;
-            // this.parent.model.premise.referral = "";
-            // this.parent.model.premise.referral = null;
-
-
-          }
-        })
+        this.verifyPromotionCode(this.parent.model.premise.referral)
         this.openButtonFlag = true;
     }
     else {
@@ -358,7 +358,7 @@ export class PlanDetailComponent implements OnInit {
   verifyPromotionCode(promocode) {
     this.pCode = promocode;
     var customerDto = new CustomerDto();
-    this.planId = this.selectData
+    this.planId = this.planTypes.id
     if (this.planId == undefined) {
       this.planId = ""
     }
@@ -388,6 +388,7 @@ export class PlanDetailComponent implements OnInit {
         this.parent.model.premise.referral == "" ) {
          
             this.promotionMessage = null;
+            this.verifiedPromocodes = [];
 
         }
         else if (statusCode == 404 && responseMessage == "Please enter a valid promo/referral code." &&  
@@ -406,6 +407,7 @@ export class PlanDetailComponent implements OnInit {
          
             this.promotionMessage = responseMessage;
             this.promocodeStatus=false;
+            this.verifiedPromocodes = [];
 
         }
         else {
@@ -415,33 +417,7 @@ export class PlanDetailComponent implements OnInit {
       })
   }
 
-  verifyPromocode(promocode) {
-    var customerDto = new CustomerDto();
-    this.planId = this.selectData
-    if (this.planId == undefined) {
-      this.planId = ""
-    }
-    this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl + "?promoCode="
-      + promocode + "&planId=" + btoa(this.planId), customerDto).subscribe((response: any) => {
-        var responseBody = response['body'];
-        var responseData = responseBody['data'];
-        var responseMessage = responseBody['message'];
-        let statusCode = responseBody['statusCode']
-        if (statusCode == 200) {
-          this.promocodeStatus = true;
-          this.pverify=true;
-          this.promotionMessage = responseData;
-           this.verifiedPromocodes = []; //clear promocode list
-          this.verifiedPromocodes.push(promocode)
-          this.verified = true;
-        }
-        else {
-          this.promocodeStatus = false;
-          this.promotionMessage = responseMessage;
-          this.verifiedPromocodes = [];
-        }
-      })
-  }
+ 
   onSubmit(form) {
     this.service.get_service(ApiServiceServiceService.apiList.getSpAccountUrl + "?spAccount=" + this.parent.model.premise.serviceNo)
       .subscribe((response: any) => {
@@ -488,6 +464,8 @@ export class PlanDetailComponent implements OnInit {
       this.customerDto.plan = form.value.productName;
       this.customerDto.promoCode = this.verifiedPromocodes;
       this.customerDto.selfSignup = this.parent.isSPAccountHolder;
+      console.log('this.customerDto',this.customerDto);
+      
       this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl, timeStampDto).subscribe((response) => {
         let responseBody = response['body']
         let responseData = responseBody['data']

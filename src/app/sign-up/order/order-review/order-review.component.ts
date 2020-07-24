@@ -90,6 +90,7 @@ export class OrderReviewComponent implements OnInit {
   captcha:any ="";
   userFullName: any;
   siteKey = environment.reCaptchaSiteKey; 
+  prefferedDate = new Date();
  
 
   constructor(
@@ -280,6 +281,13 @@ export class OrderReviewComponent implements OnInit {
     if (!pattern.test(inputChar) && event.charCode != '0') {
       event.preventDefault();
     }
+  }
+
+  selectPreferredDate :any
+  clearPreferredDate(){
+    this.selectPreferredDate=""
+    console.log('this.selectPreferredDate',this.selectPreferredDate);
+    
   }
 }
 

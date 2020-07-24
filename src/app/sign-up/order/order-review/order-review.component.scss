@@ -13,3 +13,20 @@
   box-shadow: unset !important;
   border: 1px solid #ced4da;
 }
+
+.custom-radio label > span {
+ 
+  width: 93%;
+  margin-right: 5% !important;
+  position: relative !important;
+  top: -5px !important;
+  float: none !important;
+ 
+}
+
+.pDate {
+  width: 50% !important;
+  padding: 20px !important;
+  padding-left: 20px !important;
+  font-size: 18px !important;
+}

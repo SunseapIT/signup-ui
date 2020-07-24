@@ -57,6 +57,7 @@ export class PlanDetailComponent implements OnInit {
   planId;
   pCode
   pverify:boolean=false;
+  customerDto = new CustomerDto();
   promotionMessage = '';
   verifiedPromotionCode = '';
   isPromotionCodeVerifyFail = false;
@@ -230,17 +231,8 @@ export class PlanDetailComponent implements OnInit {
   handleReset() { }
   handleExpire() { }
   handleLoad() { }
-  handleSuccess($event) {
-    console.log('eventcaptcha', event);
-
-  }
+  handleSuccess($event) {}
   ngOnInit() {
-
-    // this.reCaptchaV3Service.execute(this.siteKey, 'homepage', (token) => {
-    //   console.log('This is your token: ', token);
-    //   useGlobalDomain: false
-    // });
-
 
     setTimeout(() => {
       this.parent.model.premise.productName = null;
@@ -249,9 +241,7 @@ export class PlanDetailComponent implements OnInit {
 
     this.pricingPlanService.fetchAll().subscribe(collection => {
       if (!this.parent.isAdvisoryAgreed) {
-      
-          //  this.advisory.show();
-          this.modal.open(this.advisory, 'lg', {
+           this.modal.open(this.advisory, 'lg', {
             class: 'mt-5 pt-5 ml-2 mr-2 ml-md-5 mr-md-5 unselect modal-mg-3rem',
             ignoreBackdropClick: true
           });
@@ -329,15 +319,7 @@ export class PlanDetailComponent implements OnInit {
     this.openButtonFlag = true;    
     let element = this.planList.find(item => item.planName == this.selectData );  
         try{
-
-          this.planTypes.id = element['id'];
-                    console.log('this.planTypes.planName',this.planTypes.id);
-          
-          this.planTypes.discount = element['discount'];
-          this.planTypes.afterGst = element['afterGst'];
-          this.planTypes.energy = element['energy'];
-          this.planTypes.rateChange = element['rateChange'];
-          this.planTypes.rate = element['rate'];            
+          this.planTypes.id = element['id'];                  
         }
         catch(e){
         }
@@ -357,13 +339,12 @@ export class PlanDetailComponent implements OnInit {
   }
   verifyPromotionCode(promocode) {
     this.pCode = promocode;
-    var customerDto = new CustomerDto();
     this.planId = this.planTypes.id
     if (this.planId == undefined) {
       this.planId = ""
     }
     this.service.post_service(ApiServiceServiceService.apiList.verifyPromoUrl + "?promoCode="
-      + this.pCode + "&planId=" + btoa(this.planId), customerDto).subscribe((response: any) => {
+      + this.pCode + "&planId=" + btoa(this.planId), this.customerDto).subscribe((response: any) => {
         var responseBody = response['body'];
         var responseData = responseBody['data'];
         var responseMessage = responseBody['message'];
@@ -449,7 +430,7 @@ export class PlanDetailComponent implements OnInit {
       
       })
   }
-  customerDto = new CustomerDto();
+  
 
   save(form:NgForm){
   
@@ -463,9 +444,7 @@ export class PlanDetailComponent implements OnInit {
       this.customerDto.spAccountNumber = form.value.serviceNo;
       this.customerDto.plan = form.value.productName;
       this.customerDto.promoCode = this.verifiedPromocodes;
-      this.customerDto.selfSignup = this.parent.isSPAccountHolder;
-      console.log('this.customerDto',this.customerDto);
-      
+      this.customerDto.selfSignup = this.parent.isSPAccountHolder;      
       this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl, timeStampDto).subscribe((response) => {
         let responseBody = response['body']
         let responseData = responseBody['data']

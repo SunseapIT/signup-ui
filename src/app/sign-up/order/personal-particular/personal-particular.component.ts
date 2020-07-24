@@ -65,6 +65,7 @@ export class PersonalParticularComponent implements OnInit {
   token: any;
   isEmailOtpValidated: boolean = false;
   isMobileOtpValidate: boolean = false;
+  customerDto = new CustomerDto();
 
 
   constructor(
@@ -108,19 +109,18 @@ export class PersonalParticularComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    if (form.valid && this.isMobileOtpValidate && this.isEmailOtpValidated) {
+    // if (form.valid && this.isMobileOtpValidate && this.isEmailOtpValidated) {
       if (!_.includes([IdentificationType.EmploymentPass, IdentificationType.WorkPermit], this.parent.model.identificationType)) {
         this.parent.model.identificationExpiryDate = '';
       }
       this.gtagService.sendEvent(ORDER_GA_EVENT_NAMES.ENTER_YOUR_DETAIL_2);
-      var customerDto = new CustomerDto();
       var objStr = localStorage.getItem("customerObj");
-      customerDto = JSON.parse(objStr);
-      customerDto.fullName = this.parent.model.identificationName;
-      customerDto.eamilAddress = this.parent.model.email.toLowerCase();
-      customerDto.mobileNumber = this.parent.model.mobileNo;
-      customerDto.lastName = this.parent.model.lastName
-      localStorage.setItem("customerObj", JSON.stringify(customerDto))
+      this.customerDto = JSON.parse(objStr);
+      this.customerDto.fullName = this.parent.model.identificationName;
+      this.customerDto.eamilAddress = this.parent.model.email.toLowerCase();
+      this.customerDto.mobileNumber = this.parent.model.mobileNo;
+      this.customerDto.lastName = this.parent.model.lastName
+      localStorage.setItem("customerObj", JSON.stringify(this.customerDto))
       var timeStampDto = new TimeStampDto();
       timeStampDto.pageType = "PERSONAL_DETAILS",
         timeStampDto.token = localStorage.getItem("Token")
@@ -128,18 +128,17 @@ export class PersonalParticularComponent implements OnInit {
       })
       this.parent.saveAndNext();
       form.resetForm();
-    }
+    // }
   }
 
   requestEmailOTP(verifyEmail) {
     this.verificationProgress = 'pending';
     this.errorMessage = '';
     this.emailVerification.otp = '';
-    var customerDto = new CustomerDto();
     var objStr = localStorage.getItem("customerObj");
-    customerDto = JSON.parse(objStr);
+    this.customerDto = JSON.parse(objStr);
     this.verifiedEmail = this.parent.model.email;
-    this.token = customerDto.token;
+    this.token = this.customerDto.token;
     this.service.post_service(ApiServiceServiceService.apiList.sendEmailOtp + "?token=" + this.token + "&email=" + this.verifiedEmail, null)
       .subscribe((response) => {
         var responseBody = response['body'];
@@ -179,10 +178,9 @@ export class PersonalParticularComponent implements OnInit {
 
 
   validateEmailOTPModal() {
-    var customerDto = new CustomerDto();
     var objStr = localStorage.getItem("customerObj");
-    customerDto = JSON.parse(objStr);
-    var token = customerDto.token;
+    this.customerDto = JSON.parse(objStr);
+    var token = this.customerDto.token;
     var email = this.parent.model.email;
     this.service.get_service(ApiServiceServiceService.apiList.getEmailOtp + "?token=" + token + "&email=" + email + "&otp=" + this.otp).subscribe((response) => {
       var responseBody = response['body'];
@@ -208,10 +206,9 @@ export class PersonalParticularComponent implements OnInit {
     this.verificationProgress = 'pending';
     this.errorMessage = '';
     this.emailVerification.otp = '';
-    var customerDto = new CustomerDto();
     var objStr = localStorage.getItem("customerObj");
-    customerDto = JSON.parse(objStr);
-    this.token = customerDto.token;
+    this.customerDto = JSON.parse(objStr);
+    this.token = this.customerDto.token;
     this.verifiedMobileNo = this.parent.model.mobileNo;
     this.service.post_service(ApiServiceServiceService.apiList.sendMobileOtp + "?token=" + this.token +
       "&mobileNumber=" + this.verifiedMobileNo, null)
@@ -255,10 +252,9 @@ export class PersonalParticularComponent implements OnInit {
 
   //Validate mobile OTP
   validateMobileOTPModal() {
-    var customerDto = new CustomerDto();
     var objStr = localStorage.getItem("customerObj");
-    customerDto = JSON.parse(objStr);
-    var token = customerDto.token;
+    this.customerDto = JSON.parse(objStr);
+    var token = this.customerDto.token;
     var mobileNumber = this.parent.model.mobileNo;
     this.service.post_service(ApiServiceServiceService.apiList.verifyMobileUrl + "?mobileNumber="
       + mobileNumber + "&otp=" + this.otpMobile + "&token=" + token, null).subscribe((response) => {

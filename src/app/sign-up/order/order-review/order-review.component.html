@@ -1,7 +1,34 @@
 <app-circle-loader *ngIf="isLoader"></app-circle-loader>
 <form #form="ngForm" (ngSubmit)="onSubmit(form)">
     <div class="form-content ema-scroll-view pl-5 pr-5 myriad-cond" #reviewForm>
-        <div class="clearfix pb-4">
+            <div class="clearfix pb-4">
+                    <div class="float-left font-weight-bold">Do you have a preferred start date?</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                            <label class="control control--checkbox text-justify">Yes
+                                    <input type="radio" name="preferredDate" [(ngModel)]="parent.preferredDate" [value]= "true">  
+
+                                    <div class="control__indicator"></div>
+                                  </label>
+                             
+                    </div>
+                    <div class="col-md-2">
+                            <label class="control control--checkbox text-justify">No
+                                    <input class="custom-radio" type="radio" name="preferredDate"
+                                    [(ngModel)]="parent.preferredDate" (click)="clearPreferredDate()" [value]= "false">
+                                    <div class="control__indicator"></div>
+                                  </label>
+                                  
+                    </div>
+                </div>
+                <ng-container *ngIf="parent.preferredDate" >
+                        <input class="form-control pDate" placeholder="Select preferred date" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-red' }" [(ngModel)]="selectPreferredDate" name="selectPreferredDate" bsDatepicker readOnly [(bsValue)]="prefferedDate">
+
+        </ng-container>
+     
+              
+        <div class="clearfix pb-4 pt-3">
             <div class="float-left font-weight-bold">Plan Summary</div>
         </div>
 

@@ -35,8 +35,9 @@ app-ema-fact-sheet {
 }
 
 .ema-scroll-view {
-    height: calc(100vh - 294px);
+    height: calc(100vh - 200px);
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 header#header {

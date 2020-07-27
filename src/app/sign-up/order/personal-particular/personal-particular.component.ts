@@ -109,7 +109,7 @@ export class PersonalParticularComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    // if (form.valid && this.isMobileOtpValidate && this.isEmailOtpValidated) {
+    if (form.valid && this.isMobileOtpValidate && this.isEmailOtpValidated) {
       if (!_.includes([IdentificationType.EmploymentPass, IdentificationType.WorkPermit], this.parent.model.identificationType)) {
         this.parent.model.identificationExpiryDate = '';
       }
@@ -128,7 +128,7 @@ export class PersonalParticularComponent implements OnInit {
       })
       this.parent.saveAndNext();
       form.resetForm();
-    // }
+    }
   }
 
   requestEmailOTP(verifyEmail) {

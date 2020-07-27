@@ -23,7 +23,11 @@
                     </div>
                 </div>
                 <ng-container *ngIf="parent.preferredDate" >
-                        <input class="form-control pDate" placeholder="Select preferred date" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-red' }" [(ngModel)]="selectPreferredDate" name="selectPreferredDate" bsDatepicker readOnly [(bsValue)]="prefferedDate">
+                        <input class="form-control pDate" placeholder="Select preferred date" 
+                        [minDate]="todayDate"
+                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-red' }" 
+                        [(ngModel)]="selectPreferredDate" name="selectPreferredDate" 
+                        bsDatepicker readOnly [(bsValue)]="prefferedDate">
 
         </ng-container>
      

@@ -22,6 +22,7 @@ import { Router } from '@angular/router';
 import { CustomerDto } from '@app/core/customer-dto';
 import { ReCaptchaV3Service } from 'ngx-captcha';
 import { environment } from '@env/base';
+import { DatePipe } from '@angular/common';
 
 
 const POSTAL_CODE_WARNING = 'The postal code you have entered is currently not eligible for the Open Electricity Market. ' +
@@ -66,7 +67,7 @@ export class OrderReviewComponent implements OnInit {
   dwellingType: string;
   serviceNo: string;
   isLoader: boolean = false;
-
+  selectPreferredDate :any
   type:any
   lang:any
   theme:any
@@ -90,7 +91,8 @@ export class OrderReviewComponent implements OnInit {
   captcha:any ="";
   userFullName: any;
   siteKey = environment.reCaptchaSiteKey; 
-  prefferedDate = new Date();
+  prefferedDate = Date;
+  todayDate = new Date();
  
 
   constructor(
@@ -100,6 +102,7 @@ export class OrderReviewComponent implements OnInit {
     private configService: ConfigService,
     private gtagService: GoogleTagManagerService,
     private router: Router,
+    private dateFormat: DatePipe,
     private service: ApiServiceServiceService,
     private toster: ToastrService,
     private reCaptchaV3Service: ReCaptchaV3Service
@@ -107,18 +110,6 @@ export class OrderReviewComponent implements OnInit {
     this.config.bootstrap = configService.get('bootstrap');
     const validationRegex = configService.get('validationRegex');
     this.config.validationRegex = validationRegex;
-
-    this.validation = {
-      // identificationNo: { isRequired: true, regex: validationRegex.nricNo, message: 'NRIC No / FIN is invalid.' },
-      // serviceNo: { isRequired: true, regex: validationRegex.spAccountNo, message: 'SP No is invalid.' },
-      // identificationName: { isRequired: true, regex: null, message: 'Full name is required.' },
-      // houseNo: { isRequired: true, regex: validationRegex.blockHouseNo,
-      //   message: 'Block/House No is required and contains at least one number.' },
-      // streetName: { isRequired: true, regex: null, message: 'Street name is required.' },
-      // levelUnit: { isRequired: false, regex: null, message: null },
-      // buildingName: { isRequired: false, regex: null, message: null },
-      // servicePostalCode: { isRequired: true, regex: validationRegex.postalCode, message: POSTAL_CODE_WARNING },
-    };
   }
 
   ngOnInit() {
@@ -250,7 +241,8 @@ export class OrderReviewComponent implements OnInit {
       this.customerDto.lastName = this.lastName;
       this.customerDto.spAccountNumber = this.serviceNo;
       this.customerDto.contentToMarketing = this.parent.checkedConsent;
-      this.customerDto.captchaResponse = this.captcha;      
+      this.customerDto.captchaResponse = this.captcha;   
+      this.customerDto.preferredSignupTime = this.getTimeStamp(this.selectPreferredDate);      
       localStorage.setItem("customerObj", JSON.stringify(this.customerDto));
       this.service.post_service(ApiServiceServiceService.apiList.saveCustomerurl, this.customerDto).subscribe((response) => {
         if (response.body.data) {
@@ -283,11 +275,13 @@ export class OrderReviewComponent implements OnInit {
     }
   }
 
-  selectPreferredDate :any
+  getTimeStamp(time) {
+    return this.dateFormat.transform(time, "yyyy-MM-dd");
+  }
   clearPreferredDate(){
+   
     this.selectPreferredDate=""
-    console.log('this.selectPreferredDate',this.selectPreferredDate);
-    
+
   }
 }
 

@@ -43,8 +43,8 @@ export class OrderComponent implements OnInit, OnDestroy {
   isSPAccountHolder = true;
   isAdvisoryAgreed = false;
   checkedConsent = false;
-  preferredDate = true;
-  preferredDateNo = false;
+  preferredDate = false;
+
 
   token = '';
   allStepRoutes = _.concat(ENTER_DETAIL_STEP_ROUTES, UPLOAD_DOCUMENT_STEP_ROUTES, REVIEW_STEP_ROUTES);

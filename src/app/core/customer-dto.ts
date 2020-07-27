@@ -74,4 +74,6 @@ export class CustomerDto {
 
    etc:string;
 
+   preferredSignupTime : any;
+
 }

@@ -18,6 +18,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { PaginationModule } from 'ngx-pagination-bootstrap';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { SafeHtmlPipe } from '@app/shared/pipes/html.pipe';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   imports: [
@@ -54,6 +55,7 @@ import { SafeHtmlPipe } from '@app/shared/pipes/html.pipe';
     SafeHtmlPipe
   ],
   providers: [
+    DatePipe,
     {
       provide: RECAPTCHA_SETTINGS,
       useValue: { siteKey: environment.reCaptchaSiteKey, size: 'invisible' } as RecaptchaSettings,

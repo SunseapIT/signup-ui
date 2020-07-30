@@ -91,8 +91,8 @@ export class OrderReviewComponent implements OnInit {
   captcha:any ="";
   userFullName: any;
   siteKey = environment.reCaptchaSiteKey; 
-  prefferedDate = Date;
-  todayDate = new Date();
+  startDate = new Date;
+
  
 
   constructor(
@@ -107,12 +107,14 @@ export class OrderReviewComponent implements OnInit {
     private toster: ToastrService,
     private reCaptchaV3Service: ReCaptchaV3Service
   ) {
+    
     this.config.bootstrap = configService.get('bootstrap');
     const validationRegex = configService.get('validationRegex');
     this.config.validationRegex = validationRegex;
   }
 
   ngOnInit() {
+    this.startDate.setDate(this.startDate.getDate() + 5)
       this.reCaptchaV3Service.execute(this.siteKey,  "recaptcha", (token) => {
       useGlobalDomain: false
     });
@@ -233,6 +235,11 @@ export class OrderReviewComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
+    if((this.selectPreferredDate == undefined || this.selectPreferredDate == "") && this.parent.preferredDate == true){
+      this.toster.error('', 'Select preferred start date')
+      this.isLoader = false;
+    }
+    else{
     if (this.acknowledgePrivacy && this.acknowledgeConsent && form.valid) {
       this.isLoader = true;
       let objStr = localStorage.getItem("customerObj");
@@ -266,6 +273,10 @@ export class OrderReviewComponent implements OnInit {
       this.toster.error('', 'Enter the correct details.')
       this.isLoader = false;
     }
+  }
+ 
+    
+ 
   }
   keyPress(event: any) {
     const pattern = /[0-9\-\ ]/;

@@ -114,7 +114,7 @@ export class OrderReviewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.startDate.setDate(this.startDate.getDate() + 5)
+    this.startDate.setDate(this.startDate.getDate() + 14)
       this.reCaptchaV3Service.execute(this.siteKey,  "recaptcha", (token) => {
       useGlobalDomain: false
     });

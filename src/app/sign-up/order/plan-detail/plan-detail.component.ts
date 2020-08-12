@@ -228,10 +228,6 @@ export class PlanDetailComponent implements OnInit {
     });
   }
 
-  handleReset() { }
-  handleExpire() { }
-  handleLoad() { }
-  handleSuccess($event) {}
   ngOnInit() {
 
     setTimeout(() => {
@@ -366,17 +362,14 @@ export class PlanDetailComponent implements OnInit {
 
         }
         else if (statusCode == 400 && responseMessage == "Please select plan for Promo Code." &&  
-        this.parent.model.premise.referral == "" ) {
-         
+        this.parent.model.premise.referral == "" ) {         
             this.promotionMessage = null;
             this.verifiedPromocodes = [];
 
         }
         else if (statusCode == 404 && responseMessage == "Please enter a valid promo/referral code." &&  
-        this.parent.model.premise.referral == "" ) {
-         
+        this.parent.model.premise.referral == "" ) {         
             this.promotionMessage = null;
-
         }
         else if(statusCode == 404 && this.parent.model.premise.referral.length > 0) {
           this.promocodeStatus = false;
@@ -385,7 +378,6 @@ export class PlanDetailComponent implements OnInit {
           this.isPromocodeField = false;
         }
         else if (statusCode == 400 && responseMessage == "Promo code is not valid for this plan.") {
-         
             this.promotionMessage = responseMessage;
             this.promocodeStatus=false;
             this.verifiedPromocodes = [];
@@ -432,8 +424,7 @@ export class PlanDetailComponent implements OnInit {
   }
   
 
-  save(form:NgForm){
-  
+  save(form:NgForm){  
     if (form.valid && this.verifiedPromocodes){
       this.parent.model.premise.startDate = moment(new Date()).add('days', 8).format(this.config.bootstrap.datePicker.dateInputFormat);
       this.localStorage.setItem(STORAGE_KEYS.IS_SP_ACCOUNT_HOLDER, this.parent.isSPAccountHolder).subscribe();
@@ -484,23 +475,7 @@ export class PlanDetailComponent implements OnInit {
     this.modal.hide();
   }
 
-  addPromoCode() {
-    this.promoCode.push({ referralCode: '' })
-    this.promotionMessage = '';
-    this.duplicatePromoCode = false;
-  }
-
-  delete(i: number) {
-    if (this.verified) {
-      this.verifiedPromocodes.splice(i, 1);
-      this.duplicatePromoCode = false;
-      this.promotionMessage = '';
-    }
-    this.promoCode.splice(i, 1);
-    this.duplicatePromoCode = false;
-    this.promotionMessage = '';
-  }
-
+ 
   getAdminMessage() {
     this.service.get_service(ApiServiceServiceService.apiList.getMessageUrl).subscribe((response) => {
       var responseBody = response['body'];

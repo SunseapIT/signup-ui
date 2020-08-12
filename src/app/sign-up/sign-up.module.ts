@@ -1,4 +1,3 @@
-import { PAYMENT_COMPONENTS } from './tokenization/index';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Angular2CsvModule } from 'angular2-csv';
@@ -51,7 +50,6 @@ import { DatePipe } from '@angular/common';
   declarations: [
     SignUpComponent,
     ORDER_COMPONENTS,
-    PAYMENT_COMPONENTS,
     SafeHtmlPipe
   ],
   providers: [

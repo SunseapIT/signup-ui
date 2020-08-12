@@ -1,12 +1,3 @@
-import { TestComponent } from './tokenization/test/test.component';
-
-
-import { PAYMENT_ROUTES } from './tokenization/payment.constant';
-
-import { TokenizationPageComponent } from './tokenization/tokenization-page/tokenization-page.component';
-
-
-
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 

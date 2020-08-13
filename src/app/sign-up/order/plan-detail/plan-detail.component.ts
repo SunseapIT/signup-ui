@@ -143,18 +143,18 @@ export class PlanDetailComponent implements OnInit {
       return;
     }
 
-    let j = 0;
-    while (j < 4 && originalElement) {
-      if (this.postalCodeOverlay.nativeElement.id === originalElement.id) {
-        if (this.postalCodeOverlayShowUp.firstOverlay) {
-          this.postalCodeOverlayShowUp.firstOverlay = false;
-        }
-        this.postalCodeOverlayShowUp.secondOverlay = !this.postalCodeOverlayShowUp.secondOverlay;
-        return;
-      }
-      j++;
-      originalElement = originalElement.parentElement;
-    }
+    // let j = 0;
+    // while (j < 4 && originalElement) {
+    //   if (this.postalCodeOverlay.nativeElement.id === originalElement.id) {
+    //     if (this.postalCodeOverlayShowUp.firstOverlay) {
+    //       this.postalCodeOverlayShowUp.firstOverlay = false;
+    //     }
+    //     this.postalCodeOverlayShowUp.secondOverlay = !this.postalCodeOverlayShowUp.secondOverlay;
+    //     return;
+    //   }
+    //   j++;
+    //   originalElement = originalElement.parentElement;
+    // }
 
     if (this.postalCodeOverlayShowUp.secondOverlay) {
       if (_.size(this.potentialCustomer.postalCode) === 6) {

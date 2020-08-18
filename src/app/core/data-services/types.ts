@@ -37,7 +37,7 @@ export const IDENTIFICATION_TYPE_OPTIONS: { [key: string]: string } = {
 
 export enum DwellingType {
   Bungalow = 'Bungalow',
-  Condo = 'Condominium',
+  Condo = 'Condo',
   Hdb1Room = 'HDB 1-2 rooms',
   // Hdb2Room = 'HDB 2 Room',
   Hdb3Room = 'HDB 3 Room',

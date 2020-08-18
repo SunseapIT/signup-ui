@@ -7,7 +7,8 @@ export const environment = {
   reCaptchaSiteKey: '',
   // baseUrl: "api/",
   // baseUrl : "http://signup-uat.sunseap.com:8086",
-  baseUrl : "https://signup-uat.sunseap.com/api/",
+  // baseUrl : "https://signup-uat.sunseap.com/api/",
+  baseUrl : "http://ci.thrymr.net:9093",
   dialogUrl: ''
 }
 

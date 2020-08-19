@@ -13,7 +13,7 @@ import { environment } from './base';
 //environment.apiUrl = 'https://crm-test.sunseap.com';
 // environment.baseUrl= 'http://f00c8894.ngrok.io';
 // environment.apiUrl = 'https://signup.uat.sunseap.com';
-environment.apiUrl = 'https://b2c.uat.sunseap.com'; // stage
+environment.apiUrl = 'https://signup.sunseap.com'; // stage
 environment.dialogUrl = 'https://b2c.sunseap.com'; // prod
 // environment.apiUrl = 'http://10.249.39.194:8000'; // minh do
 // environment.apiUrl = 'http://10.248.39.135:80'; // nhan
@@ -30,9 +30,9 @@ environment.dialogUrl = 'https://b2c.sunseap.com'; // prod
  //environment.reCaptchaSiteKey = '6LfuVukUAAAAACKs_LemrgQaa0Al5z6I1apP4dcN'; // CI
 //  environment.reCaptchaSiteKey = '6Lc-b-QUAAAAAMBSldHxWKjA3vKbgp9f3x8N0aiU';//PROD
 
-//  environment.reCaptchaSiteKey = '6LcIXL4ZAAAAABH_HufA-P7kLfLcR2vYuyttliWK'; //UATlatest
+ environment.reCaptchaSiteKey = '6LcIXL4ZAAAAABH_HufA-P7kLfLcR2vYuyttliWK'; //UATlatest
 
-environment.reCaptchaSiteKey='6Lc_XL4ZAAAAAIhsRVZFkXzeZRSEZ910OBfw1kS' //CIlatest
+// environment.reCaptchaSiteKey='6Lc_XL4ZAAAAAIhsRVZFkXzeZRSEZ910OBfw1kS' //CIlatest
 
 
 export {

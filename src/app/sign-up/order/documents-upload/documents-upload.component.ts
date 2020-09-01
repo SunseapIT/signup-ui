@@ -57,10 +57,7 @@ export class DocumentsUploadComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit(form: NgForm) {
-    if (
-      (this.parent.isSPAccountHolder && this.spPastMonthBill) ||
-      this.newSpAccountOpeningLetter
-    ) {
+    if(this.parent.isSPAccountHolder && (this.spPastMonthBill ||this.newSpAccountOpeningLetter)) {
       if (
         this.spPastMonthBillSize > this.fileMaxSize ||  this.newSpAccountOpeningLetterSize > this.fileMaxSize
       ) {

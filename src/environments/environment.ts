@@ -28,9 +28,9 @@ environment.dialogUrl = 'https://b2c.sunseap.com'; // prod
 // environment.reCaptchaSiteKey = '6Le8F-QUAAAAANLvdpKtY5jb_RrH2vToFAp4y_M1'; // UAT
 // environment.reCaptchaSiteKey = '6Lc2JeQUAAAAAGbqBARwyat6hA8rYy6zYPbJD2AM' //Prod
  //environment.reCaptchaSiteKey = '6LfuVukUAAAAACKs_LemrgQaa0Al5z6I1apP4dcN'; // CI
-//  environment.reCaptchaSiteKey = '6Lc-b-QUAAAAAMBSldHxWKjA3vKbgp9f3x8N0aiU';//PROD
+ environment.reCaptchaSiteKey = '6Lc-b-QUAAAAAMBSldHxWKjA3vKbgp9f3x8N0aiU';//PROD
 
- environment.reCaptchaSiteKey = '6LcIXL4ZAAAAABH_HufA-P7kLfLcR2vYuyttliWK'; //UATlatest
+//  environment.reCaptchaSiteKey = '6LcIXL4ZAAAAABH_HufA-P7kLfLcR2vYuyttliWK'; //UATlatest
 
 // environment.reCaptchaSiteKey='6Lc_XL4ZAAAAAIhsRVZFkXzeZRSEZ910OBfw1kS' //CIlatest
 

@@ -91,7 +91,7 @@
                 #dwellingType="ngModel">
                 <option [value]="null" disabled> Select your dwelling type </option>
                 <option class="option-font" *ngFor="let option of DWELLING_TYPE_OPTIONS | toArray"
-                 [value]="option.key"> {{ option.value }}</option>
+                 [value]="option.key">{{ option.value }}</option>
             </select>
 
             <div *ngIf="dwellingType.invalid && (dwellingType.touched || form.submitted)" class="invalid-feedback">

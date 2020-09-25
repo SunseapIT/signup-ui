@@ -230,7 +230,31 @@ export class OrderReviewComponent implements OnInit {
     this.streetName = this.customerDto.streetName;
     this.buildingName = this.customerDto.buildingName;
     this.servicePostalCode = this.customerDto.postelCode;
-    this.dwellingType = this.customerDto.dwelingType;
+    // this.dwellingType = this.customerDto.dwelingType
+    if(this.customerDto.dwelingType == "Condominium"){
+      this.dwellingType = "Condo"
+    }
+    if(this.customerDto.dwelingType == "Terrace"){
+      this.dwellingType = "Landed-Terrace"
+    }
+    if(this.customerDto.dwelingType == "Semi-Detached"){
+      this.dwellingType = "Landed-Semi-detached"
+    }
+    if(this.customerDto.dwelingType == "Bungalow"){
+      this.dwellingType = "Landed-Bungalow"
+    }
+    if(this.customerDto.dwelingType == "HDB 1-2 rooms"){
+    this.dwellingType = "HDB 1/2 Rooms"
+    }
+    if(this.customerDto.dwelingType == "HDB 3 Room"){
+      this.dwellingType = "HDB 3 Room"
+      }
+      if(this.customerDto.dwelingType == "HDB 4 Room"){
+        this.dwellingType = "HDB 4 Room"
+        }
+        if(this.customerDto.dwelingType == "HDB 5 Room"){
+          this.dwellingType = "HDB 5 Room / Exec Apt"
+          }
     this.serviceNo = this.customerDto.spAccountNumber;
   }
 

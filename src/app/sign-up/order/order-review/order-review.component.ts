@@ -275,7 +275,8 @@ export class OrderReviewComponent implements OnInit {
       this.customerDto.captchaResponse = this.captcha;   
       this.customerDto.preferredSignupTime = this.getTimeStamp(this.selectPreferredDate);      
       localStorage.setItem("customerObj", JSON.stringify(this.customerDto));
-      this.service.post_service(ApiServiceServiceService.apiList.saveCustomerurl, this.customerDto).subscribe((response) => {
+      this.service.post_service(ApiServiceServiceService.apiList.saveCustomerurl, 
+        this.customerDto).subscribe((response) => {
         if (response.body.data) {
           let responseBody = response['body'];
           let responseData = responseBody['data'];

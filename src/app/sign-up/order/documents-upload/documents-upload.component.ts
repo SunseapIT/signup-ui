@@ -91,14 +91,14 @@ export class DocumentsUploadComponent implements OnInit {
     var customerDto = new CustomerDto();
     var objStr = localStorage.getItem("customerObj");
     customerDto = JSON.parse(objStr);
-    customerDto.files.bill_data = this.bill_data;
-    customerDto.files.bill_fileType = this.bill_data_file;
+    customerDto.files.sp_bill_data = this.bill_data;
+    customerDto.files.sp_bill_fileType = this.bill_data_file;
     customerDto.files.opening_letter_data = this.opening_letter_data;
     customerDto.files.opening_letter_fileType = this.opening_letter_data_file;
     customerDto.files.authorization_data = this.authorization_data;
     customerDto.files.authorization_fileType = this.authorization_data_file;
-    customerDto.files.sp_bill_data = this.sp_bill_data;
-    customerDto.files.sp_bill_fileType = this.sp_bill_data_file;
+    // customerDto.files.sp_bill_data = this.sp_bill_data;
+    // customerDto.files.sp_bill_fileType = this.sp_bill_data_file;
     localStorage.setItem("customerObj", JSON.stringify(customerDto));
     var timeStampDto = new TimeStampDto();
     timeStampDto.pageType = "UPLOAD_DOCUMENTS";
@@ -130,7 +130,7 @@ export class DocumentsUploadComponent implements OnInit {
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
       ) {
         this.spPastMonthBill = file.name;
-        this.bill_data_file = file.type;
+        this.sp_bill_data_file = file.type;
         this.spPastMonthBillSize = file.size;
         this.handleInputChange(file);
         this.spPastMonthBillSuccess = true;

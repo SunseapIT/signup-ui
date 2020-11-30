@@ -130,7 +130,7 @@ export class DocumentsUploadComponent implements OnInit {
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
       ) {
         this.spPastMonthBill = file.name;
-        this.sp_bill_data_file = file.type;
+        this.bill_data_file = file.type;
         this.spPastMonthBillSize = file.size;
         this.handleInputChange(file);
         this.spPastMonthBillSuccess = true;

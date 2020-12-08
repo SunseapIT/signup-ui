@@ -265,7 +265,8 @@ export class OrderReviewComponent implements OnInit {
     }
     else{
     if (this.acknowledgePrivacy && this.acknowledgeConsent && form.valid) {
-      this.isLoader = true;
+              this.isLoader = true;
+      
       let objStr = localStorage.getItem("customerObj");
       this.customerDto = JSON.parse(objStr);
       this.customerDto.fullName = this.fullName;
@@ -294,7 +295,8 @@ export class OrderReviewComponent implements OnInit {
 
         }
       })
-    } else {
+    } 
+    else {
       this.toster.error('', 'Enter the correct details.')
       this.isLoader = false;
     }

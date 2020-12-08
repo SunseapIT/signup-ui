@@ -194,7 +194,7 @@ export class PersonalParticularComponent implements OnInit {
       }
       else {
         this.isEmailOtpValidated = false;
-        this.toster.error('', 'OTP has expired, please try again.', {
+        this.toster.error('', 'OTP has expired / Wrong OTP entered, please try again.', {
           timeOut: 3000
         });
       }
@@ -269,7 +269,7 @@ export class PersonalParticularComponent implements OnInit {
         }
         else {
           this.isMobileOtpValidate = false;
-          this.toster.error('', 'OTP has expired, please try again.', {
+          this.toster.error('', 'OTP has expired / Wrong OTP entered, please try again.', {
             timeOut: 3000
           });
         }

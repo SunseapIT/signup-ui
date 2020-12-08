@@ -1950,3 +1950,10 @@ p {
     font-size: 20px;
     font-family: MyriadPro-Cond;
 }
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .mtn-50{
+        margin-top: -85% !important;
+    }
+ }
+ 

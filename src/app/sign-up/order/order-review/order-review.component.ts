@@ -265,6 +265,7 @@ export class OrderReviewComponent implements OnInit {
     }
     else{
     if (this.acknowledgePrivacy && this.acknowledgeConsent && form.valid) {
+      
               this.isLoader = true;
       
       let objStr = localStorage.getItem("customerObj");

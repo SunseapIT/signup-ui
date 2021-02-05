@@ -118,6 +118,11 @@ export class DocumentsUploadComponent implements OnInit {
     if (fileList.length > 0) {
       const file: File = fileList[0];
       // if (field == 1 && file.type == "application/pdf") {
+      if(file.type == 'application/html'){
+        this.toastr.error("", "Please upload in acceptable file format", {
+          timeOut: 3000,
+        });
+      }
       if (
         field == 1 &&
         (file.type == "application/pdf" ||

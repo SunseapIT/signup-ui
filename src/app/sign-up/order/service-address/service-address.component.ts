@@ -100,7 +100,7 @@ export class ServiceAddressComponent implements OnInit {
           let responseData = responseBody['data']
           let responseResults = responseData['results']
           if (responseResults != '') {
-            this.serviceAddress.buildingName = responseResults[0].BUILDING;
+            this.serviceAddress.buildingName = responseResults[0].BUILDING == 'NIL' ? '' : responseResults[0].BUILDING;
             this.serviceAddress.streetName = responseResults[0].ROAD_NAME;
             this.serviceAddress.houseNo = responseResults[0].BLK_NO;
           }

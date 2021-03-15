@@ -7,7 +7,7 @@
 
                     <div class="form-row">
                         <div class="form-group col-lg-10 offset-lg-1 col-md-12 col-xs-12 mb-0 mb-lg-auto">
-                            <label class="form-control-label" for="spPastMonthBill">SP Past Month Bill</label>
+                            <label class="form-control-label" for="spPastMonthBill">SP/Current Retailer Past Month Bill</label>
                             <input type="text"  name="spPastMonthBill"
                              class="form-control fileUpload" [(ngModel)]="spPastMonthBill"
                               [value]="uploaded" disabled required #spPastMonthBillError="ngModel">
@@ -18,7 +18,8 @@
                             </div>
                             <div class="upload-btn-wrapper">
                                 <label class="btnUpload" for="file1">Upload</label>
-                                <input #fileInput type="file" id="file1" (click)="fileInput.value = null" name="myfile" (change)="selected($event,1)" />
+                                <input #fileInput type="file" id="file1" (click)="fileInput.value = null"
+                                 name="myfile" (change)="selected($event,1)" />
                             </div>
                             <ng-container class="valid-feedback mt-2" *ngIf="spPastMonthBillSuccess">
                                 <span style="font-style: italic; color: green; float: left">Uploaded Successfully</span>
@@ -62,7 +63,7 @@
                 <ng-container *ngIf="!parent.isSPAccountHolder">
                     <div class="form-row">
                         <!-- <div class="form-group col-lg-12 col-md-12 col-xs-12 mb-0 mb-lg-auto">
-                            <label class="form-control-label" for="spPastMonthBill">SP past month bill</label>
+                            <label class="form-control-label" for="spPastMonthBill">SP / Current Retailer Past Month Bill</label>
                             <input type="text" style="width: 85%;" name="spPastMonthBill" class="form-control fileUpload" 
                             [(ngModel)]="spPastMonthBill" [value]="uploaded" disabled required #spPastMonthBillError="ngModel">
                             <div class="upload-btn-remove">
@@ -79,7 +80,7 @@
                             </ng-container>
                         </div> -->
                         <div class="form-group col-lg-10 offset-lg-1 col-md-12 col-xs-12 mb-0 mb-lg-auto">
-                            <label class="form-control-label" for="spPastMonthBill">SP Past Month Bill</label>
+                            <label class="form-control-label" for="spPastMonthBill">SP/Current Retailer Past Month Bill</label>
                             <input type="text"  name="spPastMonthBill"
                              class="form-control fileUpload" [(ngModel)]="spPastMonthBill"
                               [value]="uploaded" disabled required #spPastMonthBillError="ngModel">

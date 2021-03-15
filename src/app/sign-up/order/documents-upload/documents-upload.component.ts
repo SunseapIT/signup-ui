@@ -57,7 +57,8 @@ export class DocumentsUploadComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit(form: NgForm) {
-    if(this.parent.isSPAccountHolder && (this.spPastMonthBill ||this.newSpAccountOpeningLetter)) {
+    if(this.parent.isSPAccountHolder && 
+      (this.spPastMonthBill ||this.newSpAccountOpeningLetter)) {
       if (
         this.spPastMonthBillSize > this.fileMaxSize ||  this.newSpAccountOpeningLetterSize > this.fileMaxSize
       ) {
@@ -228,23 +229,32 @@ export class DocumentsUploadComponent implements OnInit {
   }
 
   removeFile(event, removeid) {
+    console.log(event)
     if (removeid == 1) {
-      this.spPastMonthBill = "";
-      this.spPastMonthBillSuccess = false;
-      this.spPastMonthBillUploaded = false;
-      this.spPastMonthBillSize = "";
+      this.spPastMonthBill = null;
+        this.bill_data_file = null;
+        this.bill_data=''
+        this.spPastMonthBillSize = '';
+        this.spPastMonthBillSuccess = false;
+        this.spPastMonthBillUploaded = false;
+     
     } else if (removeid == 2) {
       this.newSpAccountOpeningLetter = "";
+      this.opening_letter_data_file = '';
       this.openingLetter = false;
+      this.opening_letter_data=''
       this.newSpAccountOpeningLetterUploaded = false;
       this.newSpAccountOpeningLetterSize = "";
     } else if (removeid == 3) {
       this.letterOfAuthorisation = "";
+      this.authorization_data_file = '';
+      this.authorization_data=''
       this.authorization = false;
       this.letterOfAuthorisationUploaded = false;
       this.letterOfAuthorisationSize = "";
     } else if (removeid == 4) {
       this.spBillLocName = "";
+      this.sp_bill_data_file = '';
       this.locAuthorized = false;
       this.spBilllocUploaded= false;
       this.spBillDataSize = "";

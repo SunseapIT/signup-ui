@@ -20,6 +20,7 @@ export class DocumentsUploadComponent implements OnInit {
   opening_letter_data_file: any;
   authorization_data_file: any;
   sp_bill_data_file: any;
+  authorization_fileName: any;
 
   bill_data: string;
   opening_letter_data: string;
@@ -54,23 +55,23 @@ export class DocumentsUploadComponent implements OnInit {
     element.classList.remove("pt-3");
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   onSubmit(form: NgForm) {
-    if(this.parent.isSPAccountHolder && 
-      (this.spPastMonthBill ||this.newSpAccountOpeningLetter)) {
+    if (this.parent.isSPAccountHolder &&
+      (this.spPastMonthBill || this.newSpAccountOpeningLetter)) {
       if (
-        this.spPastMonthBillSize > this.fileMaxSize ||  this.newSpAccountOpeningLetterSize > this.fileMaxSize
+        this.spPastMonthBillSize > this.fileMaxSize || this.newSpAccountOpeningLetterSize > this.fileMaxSize
       ) {
         this.toastr.error("", "File size is too large.", {
           timeOut: 3000,
         });
       } else {
         this.saveDocuments();
-        
+
       }
     } else if (
-      !this.parent.isSPAccountHolder &&  this.letterOfAuthorisation &&  (this.spPastMonthBill || this.newSpAccountOpeningLetter)  ) {
+      !this.parent.isSPAccountHolder && this.letterOfAuthorisation && (this.spPastMonthBill || this.newSpAccountOpeningLetter)) {
       if (
         this.spPastMonthBillSize > this.fileMaxSize ||
         this.letterOfAuthorisationSize > this.fileMaxSize
@@ -94,10 +95,13 @@ export class DocumentsUploadComponent implements OnInit {
     customerDto = JSON.parse(objStr);
     customerDto.files.sp_bill_data = this.bill_data;
     customerDto.files.sp_bill_fileType = this.bill_data_file;
+    customerDto.files.sp_bill_fileName = this.spPastMonthBill;
     customerDto.files.opening_letter_data = this.opening_letter_data;
     customerDto.files.opening_letter_fileType = this.opening_letter_data_file;
+    customerDto.files.opening_letter_fileName = this.newSpAccountOpeningLetter;
     customerDto.files.authorization_data = this.authorization_data;
     customerDto.files.authorization_fileType = this.authorization_data_file;
+    customerDto.files.authorization_fileName = this.letterOfAuthorisation
     // customerDto.files.sp_bill_data = this.sp_bill_data;
     // customerDto.files.sp_bill_fileType = this.sp_bill_data_file;
     localStorage.setItem("customerObj", JSON.stringify(customerDto));
@@ -109,7 +113,7 @@ export class DocumentsUploadComponent implements OnInit {
         ApiServiceServiceService.apiList.updateTimeUrl,
         timeStampDto
       )
-      .subscribe((response) => {});
+      .subscribe((response) => { });
     this.parent.saveAndNext();
   }
 
@@ -119,7 +123,8 @@ export class DocumentsUploadComponent implements OnInit {
     if (fileList.length > 0) {
       const file: File = fileList[0];
       // if (field == 1 && file.type == "application/pdf") {
-      if(file.type == 'application/html'){
+      if (file.type == 'application/html') {
+
         this.toastr.error("", "Please upload in acceptable file format", {
           timeOut: 3000,
         });
@@ -133,7 +138,7 @@ export class DocumentsUploadComponent implements OnInit {
           file.type == "image/gif" ||
           file.type == "application/msword" ||
           file.type ==
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
       ) {
         this.spPastMonthBill = file.name;
         this.bill_data_file = file.type;
@@ -150,7 +155,7 @@ export class DocumentsUploadComponent implements OnInit {
           file.type == "image/gif" ||
           file.type == "application/msword" ||
           file.type ==
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
       ) {
         this.newSpAccountOpeningLetter = file.name;
         this.opening_letter_data_file = file.type;
@@ -158,6 +163,7 @@ export class DocumentsUploadComponent implements OnInit {
         this.handleInputChange(file);
         this.openingLetter = true;
         this.newSpAccountOpeningLetterUploaded = true;
+
       } else if (
         field == 3 &&
         (file.type == "application/pdf" ||
@@ -167,7 +173,7 @@ export class DocumentsUploadComponent implements OnInit {
           file.type == "image/gif" ||
           file.type == "application/msword" ||
           file.type ==
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
       ) {
         this.letterOfAuthorisation = file.name;
         this.authorization_data_file = file.type;
@@ -184,7 +190,7 @@ export class DocumentsUploadComponent implements OnInit {
           file.type == "image/gif" ||
           file.type == "application/msword" ||
           file.type ==
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
       ) {
         this.spBillLocName = file.name;
         this.sp_bill_data_file = file.type;
@@ -207,6 +213,8 @@ export class DocumentsUploadComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
+  // uploadFileUrl = "https://r7j9noo4zc.execute-api.ap-south-1.amazonaws.com/file-test/file-test";
+
   _handleReaderLoaded(e) {
     let reader = e.target;
     var base64result = reader.result.substr(reader.result.indexOf(",") + 1);
@@ -214,13 +222,20 @@ export class DocumentsUploadComponent implements OnInit {
     let id = this.currentId;
     switch (id) {
       case 1:
-        this.bill_data = base64result;
+
+        // this.bill_data = customerDto.customerId.base64result;
+        // this.service.post_service(this.uploadFileUrl + "?name=" + this.spPastMonthBill, this.bill_data).subscribe((response) => {
+        //   console.log("Upload file ======", response);
+
+        // })
         break;
       case 2:
         this.opening_letter_data = base64result;
+
         break;
       case 3:
         this.authorization_data = base64result;
+
         break;
       case 4:
         this.sp_bill_data = base64result;
@@ -232,23 +247,23 @@ export class DocumentsUploadComponent implements OnInit {
     console.log(event)
     if (removeid == 1) {
       this.spPastMonthBill = null;
-        this.bill_data_file = null;
-        this.bill_data=''
-        this.spPastMonthBillSize = '';
-        this.spPastMonthBillSuccess = false;
-        this.spPastMonthBillUploaded = false;
-     
+      this.bill_data_file = null;
+      this.bill_data = ''
+      this.spPastMonthBillSize = '';
+      this.spPastMonthBillSuccess = false;
+      this.spPastMonthBillUploaded = false;
+
     } else if (removeid == 2) {
       this.newSpAccountOpeningLetter = "";
       this.opening_letter_data_file = '';
       this.openingLetter = false;
-      this.opening_letter_data=''
+      this.opening_letter_data = ''
       this.newSpAccountOpeningLetterUploaded = false;
       this.newSpAccountOpeningLetterSize = "";
     } else if (removeid == 3) {
       this.letterOfAuthorisation = "";
       this.authorization_data_file = '';
-      this.authorization_data=''
+      this.authorization_data = ''
       this.authorization = false;
       this.letterOfAuthorisationUploaded = false;
       this.letterOfAuthorisationSize = "";
@@ -256,7 +271,7 @@ export class DocumentsUploadComponent implements OnInit {
       this.spBillLocName = "";
       this.sp_bill_data_file = '';
       this.locAuthorized = false;
-      this.spBilllocUploaded= false;
+      this.spBilllocUploaded = false;
       this.spBillDataSize = "";
     }
   }

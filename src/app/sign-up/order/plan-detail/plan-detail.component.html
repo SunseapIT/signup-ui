@@ -34,10 +34,10 @@
         </div>
         <div class="form-group col-md-6">
             <label class="form-control-label" for="serviceNo">SP Account No</label>
-            <input name="serviceNo" id="serviceNo" trim="blur" pattern="(^[1-9]\d{9})|(^[1-9]{9}[-])$"
+            <input name="serviceNo" id="serviceNo" trim="blur" pattern="(^[0-9]\d{9})|(^[0-9]{9}[-])$"
                 (keypress)="keyPress($event)" class="form-control" placeholder="10 Digits" value="0"
                 [class.is-invalid]="serviceNo.invalid && (serviceNo.touched || form.submitted)" required maxlength="10"
-                blockCopyPaste [(ngModel)]="parent.model.premise.serviceNo" #serviceNo="ngModel" autocomplete="off" />
+                blockCopyPaste [(ngModel)]="serviceNos" #serviceNo="ngModel" autocomplete="off" />
             <ng-template #serviceNoTooltip>
                 <img src='./assets/sign-up/images/content/SP_Account.jpg' alt="SP Account" includeVersion />
             </ng-template>

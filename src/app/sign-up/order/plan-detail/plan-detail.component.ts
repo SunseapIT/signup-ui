@@ -44,7 +44,7 @@ export class PlanDetailComponent implements OnInit {
 
   @ViewChild("pdfViewFactSheetModal") pdfViewFactSheetModal: ModalDirective;
   _pdf: PDFDocumentProxy;
-
+  serviceNos:any
   config = { bootstrap: null, dateTimeFormat: null, validationRegex: null };
   isPromocodeField: boolean = false;
   isPlanSelected:boolean;
@@ -230,6 +230,11 @@ export class PlanDetailComponent implements OnInit {
 
   ngOnInit() {
 
+  
+    this.modal.open(this.advisory, 'lg', {
+      class: 'mt-5 pt-5 ml-2 mr-2 ml-md-5 mr-md-5 unselect modal-mg-3rem',
+      ignoreBackdropClick: true
+    });
     setTimeout(() => {
       this.parent.model.premise.productName = null;
     }, 100);
@@ -237,10 +242,7 @@ export class PlanDetailComponent implements OnInit {
 
     this.pricingPlanService.fetchAll().subscribe(collection => {
       if (!this.parent.isAdvisoryAgreed) {
-           this.modal.open(this.advisory, 'lg', {
-            class: 'mt-5 pt-5 ml-2 mr-2 ml-md-5 mr-md-5 unselect modal-mg-3rem',
-            ignoreBackdropClick: true
-          });
+        
       
       }
       this.parent.model.premise.serviceNo = '';
@@ -392,7 +394,7 @@ export class PlanDetailComponent implements OnInit {
 
  
   onSubmit(form) {
-    this.service.get_service(ApiServiceServiceService.apiList.getSpAccountUrl + "?spAccount=" + this.parent.model.premise.serviceNo)
+    this.service.get_service(ApiServiceServiceService.apiList.getSpAccountUrl + "?spAccount=" + this.serviceNos)
       .subscribe((response: any) => {
         var responseBody = response['body'];
         var responseMessage = responseBody['message'];

@@ -223,7 +223,7 @@ export class DocumentsUploadComponent implements OnInit {
     switch (id) {
       case 1:
 
-        // this.bill_data = customerDto.customerId.base64result;
+        this.bill_data = base64result;
         // this.service.post_service(this.uploadFileUrl + "?name=" + this.spPastMonthBill, this.bill_data).subscribe((response) => {
         //   console.log("Upload file ======", response);
 

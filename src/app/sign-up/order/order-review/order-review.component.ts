@@ -269,13 +269,17 @@ export class OrderReviewComponent implements OnInit {
               this.isLoader = true;
       
       let objStr = localStorage.getItem("customerObj");
+     
       this.customerDto = JSON.parse(objStr);
       this.customerDto.fullName = this.fullName;
       this.customerDto.lastName = this.lastName;
       this.customerDto.spAccountNumber = this.serviceNo;
       this.customerDto.contentToMarketing = this.parent.checkedConsent;
       this.customerDto.captchaResponse = this.captcha;   
-      this.customerDto.preferredSignupTime = this.getTimeStamp(this.selectPreferredDate);      
+      this.customerDto.preferredSignupTime = this.getTimeStamp(this.selectPreferredDate);  
+      // this.customerDto.spBillS3RefId=spBillS3RefId
+      // this.customerDto.openingLetterS3RefId=openingLetterS3RefId
+      // this.customerDto.authorizationS3RefId=authorizationS3RefId
       localStorage.setItem("customerObj", JSON.stringify(this.customerDto));
       this.service.post_service(ApiServiceServiceService.apiList.saveCustomerurl, 
         this.customerDto).subscribe((response) => {

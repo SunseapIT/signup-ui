@@ -59,12 +59,25 @@ export class EmaFactSheetComponent implements OnInit {
     }
   }
 
+  factSheetS3RefId:any
   onSubmit() {
     if (this.confirmationChecked && this.policyChecked) {
       var customerDto = new CustomerDto();
       var objStr = localStorage.getItem("customerObj");
       customerDto = JSON.parse(objStr);
       customerDto.files.factSheet_data = this.pdf;
+      let uploadFileUrl = "https://31w0n4cnk1.execute-api.ap-south-1.amazonaws.com/thrymr/s3";
+      this.service.post_service(uploadFileUrl,this.pdf).subscribe((response) => {
+        console.log("Upload file ======", response);
+        if(response.body.statusCode == 200){
+          this.factSheetS3RefId=response.body.data
+          this.toster.success(response.body.message)
+        }
+        else if(response.body.statusCode == 500){
+          this.toster.error(response.body.message)
+        }
+      })
+      customerDto.files.factSheetS3RefId=this.factSheetS3RefId
       localStorage.setItem("customerObj",JSON.stringify(customerDto))
       var timeStampDto = new TimeStampDto();
       timeStampDto.pageType = "REVIEW_ORDER",

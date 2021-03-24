@@ -14,10 +14,11 @@ environment.apiUrl = 'https://signup.sunseap.com'; // stage
 environment.dialogUrl = 'https://b2c.sunseap.com'; // prod
 
 
- environment.reCaptchaSiteKey = '6LcIXL4ZAAAAABH_HufA-P7kLfLcR2vYuyttliWK'; //UATlatest
+//  environment.reCaptchaSiteKey = '6LcIXL4ZAAAAABH_HufA-P7kLfLcR2vYuyttliWK'; //UATlatest
 
+environment.reCaptchaSiteKey ='6Le8F-QUAAAAANLvdpKtY5jb_RrH2vToFAp4y_M1'
 
-
+//  environment.reCaptchaSiteKey = '6Lc-b-QUAAAAAMBSldHxWKjA3vKbgp9f3x8N0aiU';//PROD
 export {
     environment
 };

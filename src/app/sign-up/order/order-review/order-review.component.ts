@@ -215,6 +215,7 @@ export class OrderReviewComponent implements OnInit {
     this.reviewMapInput[fieldName] = true;
     input.focus();
   }
+  charge:number
 
   getCustomerDetail() {
     var objStr = localStorage.getItem("customerObj");
@@ -233,27 +234,35 @@ export class OrderReviewComponent implements OnInit {
     // this.dwellingType = this.customerDto.dwelingType
     if(this.customerDto.dwelingType == "Condominium"){
       this.dwellingType = "Condo"
+      this.charge=40
     }
     if(this.customerDto.dwelingType == "Terrace"){
       this.dwellingType = "Landed-Terrace"
+      this.charge=50
     }
-    if(this.customerDto.dwelingType == "Semi-Detached"){
+    if(this.customerDto.dwelingType == "Semi-Detached"){  
       this.dwellingType = "Landed-Semi-detached"
+      this.charge=70
     }
     if(this.customerDto.dwelingType == "Bungalow"){
       this.dwellingType = "Landed-Bungalow"
+      this.charge=80
     }
-    if(this.customerDto.dwelingType == "HDB 1-2 rooms"){
+    if(this.customerDto.dwelingType == "HDB 1/2 rooms"){
     this.dwellingType = "HDB 1/2 Rooms"
+    this.charge=15
     }
     if(this.customerDto.dwelingType == "HDB 3 Room"){
       this.dwellingType = "HDB 3 Room"
+      this.charge=20
       }
       if(this.customerDto.dwelingType == "HDB 4 Room"){
         this.dwellingType = "HDB 4 Room"
+      this.charge=25
         }
         if(this.customerDto.dwelingType == "HDB 5 Room"){
           this.dwellingType = "HDB 5 Room / Exec Apt"
+      this.charge=30
           }
     this.serviceNo = this.customerDto.spAccountNumber;
   }

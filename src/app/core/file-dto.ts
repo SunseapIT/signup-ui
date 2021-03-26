@@ -37,12 +37,12 @@ export class Files {
 
   bill_fileType: string;
 
-  spBillS3RefId:any
+  // spBillS3RefId:any
 
-  openingLetterS3RefId:any
+  // openingLetterS3RefId:any
 
-  authorizationS3RefId:any
+  // authorizationS3RefId:any
 
-  factSheetS3RefId:any
+  // factSheetS3RefId:any
 
 }

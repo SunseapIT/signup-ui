@@ -102,9 +102,9 @@ export class DocumentsUploadComponent implements OnInit {
     customerDto.files.authorization_data = this.authorization_data;
     customerDto.files.authorization_fileType = this.authorization_data_file;
     customerDto.files.authorization_fileName = this.letterOfAuthorisation
-    customerDto.files.spBillS3RefId=this.spBillS3RefId
-    customerDto.files.openingLetterS3RefId=this.openingLetterS3RefId
-    customerDto.files.authorizationS3RefId=this.authorizationS3RefId
+    // customerDto.files.spBillS3RefId=this.spBillS3RefId
+    // customerDto.files.openingLetterS3RefId=this.openingLetterS3RefId
+    // customerDto.files.authorizationS3RefId=this.authorizationS3RefId
     // customerDto.files.sp_bill_data = this.sp_bill_data;
     // customerDto.files.sp_bill_fileType = this.sp_bill_data_file;
     localStorage.setItem("customerObj", JSON.stringify(customerDto));
@@ -216,11 +216,11 @@ export class DocumentsUploadComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
-  spBillS3RefId:any
-   openingLetterS3RefId:any
-   authorizationS3RefId:any
+  // spBillS3RefId:any
+  //  openingLetterS3RefId:any
+  //  authorizationS3RefId:any
 
-  uploadFileUrl = "https://31w0n4cnk1.execute-api.ap-south-1.amazonaws.com/thrymr/s3";
+  // uploadFileUrl = "https://31w0n4cnk1.execute-api.ap-south-1.amazonaws.com/thrymr/s3";
 
   _handleReaderLoaded(e) {
     let reader = e.target;
@@ -230,55 +230,55 @@ export class DocumentsUploadComponent implements OnInit {
     switch (id) {
         case 1:
         this.bill_data = base64result;
-        this.service.post_service(this.uploadFileUrl,this.bill_data).subscribe((response) => {
-          console.log("Upload file ======", response);
-          if(response.body.statusCode == 200){
-            this.spBillS3RefId=response.body.data
-            this.toastr.success(response.body.message)
-          }
-          else if(response.body.statusCode == 500){
-            this.toastr.error(response.body.message)
-          }
-        })
+        // this.service.post_service(this.uploadFileUrl,this.bill_data).subscribe((response) => {
+        //   console.log("Upload file ======", response);
+        //   if(response.body.statusCode == 200){
+        //     this.spBillS3RefId=response.body.data
+        //     this.toastr.success(response.body.message)
+        //   }
+        //   else if(response.body.statusCode == 500){
+        //     this.toastr.error(response.body.message)
+        //   }
+        // })
         break;
         case 2:
         this.opening_letter_data = base64result;
-        this.service.post_service(this.uploadFileUrl , this.opening_letter_data).subscribe((response) => {
-          console.log("Upload file ======", response);
-          if(response.body.statusCode == 200){
-            this.openingLetterS3RefId=response.body.data
-            this.toastr.success(response.body.message)
-          }
-          else if(response.body.statusCode == 500){
-            this.toastr.error(response.body.message)
-          }
-        })
+        // this.service.post_service(this.uploadFileUrl , this.opening_letter_data).subscribe((response) => {
+        //   console.log("Upload file ======", response);
+        //   if(response.body.statusCode == 200){
+        //     this.openingLetterS3RefId=response.body.data
+        //     this.toastr.success(response.body.message)
+        //   }
+        //   else if(response.body.statusCode == 500){
+        //     this.toastr.error(response.body.message)
+        //   }
+        // })
         break;
         case 3:
         this.authorization_data = base64result;
-        this.service.post_service(this.uploadFileUrl , this.authorization_data).subscribe((response) => {
-          console.log("Upload file ======", response);
-          if(response.body.statusCode == 200){
-            this.authorizationS3RefId=response.body.data
-            this.toastr.success(response.body.message)
-          }
-          else if(response.body.statusCode == 500){
-            this.toastr.error(response.body.message)
-          }
-        })
+        // this.service.post_service(this.uploadFileUrl , this.authorization_data).subscribe((response) => {
+        //   console.log("Upload file ======", response);
+        //   if(response.body.statusCode == 200){
+        //     this.authorizationS3RefId=response.body.data
+        //     this.toastr.success(response.body.message)
+        //   }
+        //   else if(response.body.statusCode == 500){
+        //     this.toastr.error(response.body.message)
+        //   }
+        // })
         break;
         case 4:
         this.sp_bill_data = base64result;
-        this.service.post_service(this.uploadFileUrl, this.sp_bill_data).subscribe((response) => {
-          console.log("Upload file ======", response);
-          if(response.body.statusCode == 200){
-            localStorage.setItem("datalambda",response.body.data)
-            this.toastr.success(response.body.message)
-          }
-          else if(response.body.statusCode == 400 || response.body.statusCode == 500){
-            this.toastr.error(response.body.message)
-          }
-        })
+        // this.service.post_service(this.uploadFileUrl, this.sp_bill_data).subscribe((response) => {
+        //   console.log("Upload file ======", response);
+        //   if(response.body.statusCode == 200){
+        //     localStorage.setItem("datalambda",response.body.data)
+        //     this.toastr.success(response.body.message)
+        //   }
+        //   else if(response.body.statusCode == 400 || response.body.statusCode == 500){
+        //     this.toastr.error(response.body.message)
+        //   }
+        // })
         break;
     }
   }

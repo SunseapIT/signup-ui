@@ -248,7 +248,7 @@ export class OrderReviewComponent implements OnInit {
       this.dwellingType = "Landed-Bungalow"
       this.charge=80
     }
-    if(this.customerDto.dwelingType == "HDB 1/2 rooms"){
+    if(this.customerDto.dwelingType == "HDB 1-2 rooms"){
     this.dwellingType = "HDB 1/2 Rooms"
     this.charge=15
     }

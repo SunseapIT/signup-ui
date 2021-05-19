@@ -4,6 +4,7 @@ import { Angular2CsvModule } from 'angular2-csv';
 import { BsDatepickerModule, PopoverModule, TooltipModule, ModalModule } from 'ngx-bootstrap';
 import { FileUploadModule } from 'ng2-file-upload';
 import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
+ import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from "ng-recaptcha";
 import { environment } from '@env/environment';
 import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
@@ -25,7 +26,7 @@ import { DatePipe } from '@angular/common';
     BsDatepickerModule.forRoot(),
     TooltipModule.forRoot(),
     FileUploadModule,
-    RecaptchaModule.forRoot(),
+    // RecaptchaModule.forRoot(),
     PopoverModule.forRoot(),
     PdfViewerModule,
     SignUpRoutingModule,
@@ -33,7 +34,7 @@ import { DatePipe } from '@angular/common';
     PaginationModule,
     CoreModule,
     NgxCaptchaModule,
-    RecaptchaModule,
+    // RecaptchaModule,
     SharedModule,
     Angular2CsvModule,
     ToastrModule.forRoot({
@@ -44,7 +45,8 @@ import { DatePipe } from '@angular/common';
     PdfViewerModule,
     InputTrimModule,
     ModalModule.forRoot(),
-    NgxCaptchaModule
+    NgxCaptchaModule,
+    RecaptchaV3Module
 
   ],
   declarations: [
@@ -55,8 +57,10 @@ import { DatePipe } from '@angular/common';
   providers: [
     DatePipe,
     {
-      provide: RECAPTCHA_SETTINGS,
-      useValue: { siteKey: environment.reCaptchaSiteKey, size: 'invisible' } as RecaptchaSettings,
+      provide: RECAPTCHA_V3_SITE_KEY,
+      // provide: RECAPTCHA_SETTINGS,
+      useValue: { siteKey: environment.reCaptchaSiteKey, size: 'invisible' } 
+      // as RecaptchaSettings,
     }
   ],
   bootstrap: [SignUpComponent]

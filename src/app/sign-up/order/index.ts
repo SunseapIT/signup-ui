@@ -11,6 +11,7 @@ import { ServiceAddressComponent } from './service-address/service-address.compo
 import { DocumentUploadInputComponent } from './documents-upload/document-upload-input.component';
 import { ORDER_ROUTES } from './order.constant';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { NewPageNotFoundComponent } from './new-page-not-found/new-page-not-found.component';
 
 export {
   OrderComponent, 
@@ -23,6 +24,7 @@ export {
   PlanDetailComponent, 
   ServiceAddressComponent, 
   PageNotFoundComponent,
+  NewPageNotFoundComponent,
   CircleLoaderComponent,
   ORDER_ROUTES,
 
@@ -40,6 +42,7 @@ export const ORDER_COMPONENTS = [
   ServiceAddressComponent, 
   DocumentUploadInputComponent, 
   PageNotFoundComponent,
+  NewPageNotFoundComponent,
   CircleLoaderComponent,
  
 ];

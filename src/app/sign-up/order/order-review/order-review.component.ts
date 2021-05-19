@@ -92,7 +92,7 @@ export class OrderReviewComponent implements OnInit {
   userFullName: any;
   siteKey = environment.reCaptchaSiteKey; 
   startDate = new Date;
-
+  captchatoken : any;
  
 
   constructor(
@@ -115,9 +115,11 @@ export class OrderReviewComponent implements OnInit {
 
   ngOnInit() {
     this.startDate.setDate(this.startDate.getDate() + 11)
-      this.reCaptchaV3Service.execute(this.siteKey,  "recaptcha", (token) => {
-      useGlobalDomain: false
-    });
+    this.reCaptchaV3Service.execute(this.siteKey,  "recaptcha", (token) => {
+      this.captchatoken = token
+    useGlobalDomain: false
+  });
+    
     this.getCustomerDetail();
   }
   handleReset(){}
@@ -268,6 +270,7 @@ export class OrderReviewComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
+
     if((this.selectPreferredDate == undefined || this.selectPreferredDate == "") && this.parent.preferredDate == true){
       this.toster.error('', 'Select preferred start date')
       this.isLoader = false;
@@ -284,7 +287,7 @@ export class OrderReviewComponent implements OnInit {
       this.customerDto.lastName = this.lastName;
       this.customerDto.spAccountNumber = this.serviceNo;
       this.customerDto.contentToMarketing = this.parent.checkedConsent;
-      this.customerDto.captchaResponse = this.captcha;   
+      this.customerDto.captchaResponse = this.captchatoken;   
       this.customerDto.preferredSignupTime = this.getTimeStamp(this.selectPreferredDate);  
       // this.customerDto.spBillS3RefId=spBillS3RefId
       // this.customerDto.openingLetterS3RefId=openingLetterS3RefId

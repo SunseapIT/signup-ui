@@ -290,7 +290,7 @@
     </label>
 
   
-       <ngx-recaptcha2 #captchaElem [siteKey]="siteKey"  
+       <!-- <ngx-recaptcha2 #captchaElem [siteKey]="siteKey"  
        id="recaptcha"   
        (reset)="handleReset()" (expire)="handleExpire()"
            (load)="handleLoad()" (success)="handleSuccess($event)" 
@@ -303,7 +303,7 @@
         data-type="image"
            #captchaerr="ngModel" 
            required>
-   </ngx-recaptcha2>
+   </ngx-recaptcha2> -->
 
         <div class="pt-5 d-flex justify-content-center mb-4 pb-4">
             <button [disabled]="!acknowledgeConsent || !acknowledgePrivacy" class="btn step-next" type="submit">

@@ -11,6 +11,7 @@ import {
   PersonalParticularComponent, 
   PlanDetailComponent, ServiceAddressComponent, 
   PageNotFoundComponent, 
+  NewPageNotFoundComponent,
   ORDER_ROUTES
 } from './order';
 
@@ -29,7 +30,8 @@ const routes: Routes = [
     ]
   },
   { path: ORDER_ROUTES.ORDER_CONFIRMATION, component: OrderConfirmationComponent },
-  { path: '**', component: PageNotFoundComponent },
+  // { path: '**', component: PageNotFoundComponent },
+  { path: '**', component: NewPageNotFoundComponent },
 ];
 
 @NgModule({

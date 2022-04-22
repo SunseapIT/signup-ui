@@ -21,6 +21,7 @@ export const AppConfig = {
     postalCode: '^([\\d]{6})$',
     blockHouseNo: '.*\\d.*',
     password: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d.*)(?=.*\\W.*)[a-zA-Z0-9\\d\\W\\S].{11,127}$',
-    payAmount: '^\\s*(?=.*[1-9])\\d*(?:\\.\\d{1,2})?\\s*$'
+    payAmount: '^\\s*(?=.*[1-9])\\d*(?:\\.\\d{1,2})?\\s*$',
+    levelNo : '^[0-9]*$'
   }
 };

@@ -44,30 +44,40 @@
         <div class="form-group col-6 col-lg-3">
             <label class="form-control-label" for="level">Level</label>
             <div class="input-nested-icon">
-                <input name="level" 
-            placeholder="Enter Level"
-                id="level" class="form-control" [(ngModel)]="serviceAddress.level" #level="ngModel" />
+
+            <input name="level" id="level" class="form-control" [(ngModel)]="serviceAddress.level" #level="ngModel"
+            placeholder="Enter Level" [class.is-invalid]="level.invalid && (level.touched || form.submitted)" required [pattern]="config.validationRegex.levelNo" />
                 <span>#</span>
-            </div>
+           
 
             <div *ngIf="level.invalid && (level.touched || form.submitted)" class="invalid-feedback">
                 <div *ngIf="level?.errors.required">
-                    <i>Level required</i>
+                    <i>Level is required</i>
+                </div>
+                <div *ngIf="!level?.errors.required && level?.errors.pattern">
+                    <i>Please give numbers only</i>
                 </div>
             </div>
+
+        </div>
+
+           
         </div>
 
         <div class="form-group col-6 col-lg-3">
             <span class="connection-div">-</span>
             <label class="form-control-label" for="unitNo">Unit No.</label>
-            <input name="unitNo" id="unitNo" class="form-control" [(ngModel)]="serviceAddress.unitNo" #unitNo="ngModel"
-            placeholder="Enter Unit No"
+            <input name="unitNo" id="unitNo" class="form-control"  [(ngModel)]="serviceAddress.unitNo" #unitNo="ngModel"
+            placeholder="Enter Unit No" [class.is-invalid]="unitNo.invalid && (unitNo.touched || form.submitted)" required [pattern]="config.validationRegex.levelNo"
             
             />
 
             <div *ngIf="unitNo.invalid && (unitNo.touched || form.submitted)" class="invalid-feedback">
                 <div *ngIf="unitNo?.errors.required">
                     <i>Unit No. is required</i>
+                </div>
+                <div *ngIf="!unitNo?.errors.required && unitNo?.errors.pattern">
+                    <i>Please give numbers only</i>
                 </div>
             </div>
         </div>

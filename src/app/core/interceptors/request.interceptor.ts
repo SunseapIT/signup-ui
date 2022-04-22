@@ -9,8 +9,8 @@ import { environment } from '@env/environment';
 import { HEADER_NEED_CREDENTIALS } from '../data-services';
 
 const HTTP_PATTERN = new RegExp('^(?:[a-z]+:)?//', 'i');
-const API_URL = `${environment.apiUrl}/b2capi/mobileapps/${environment.apiVersion}/`;
-
+const DIALOG_URL = `${environment.dialogUrl}/b2capi/mobileapps/${environment.apiVersion}/`;
+const API_URL = `${environment.apiUrl}/`;
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
 
@@ -22,8 +22,13 @@ export class RequestInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (!HTTP_PATTERN.test(req.url)) {
-      const url = API_URL + req.url;
-      const setHeaders: { [name: string]: any }  = {
+      let url = '';
+      if (req.url.includes('catalogue')) {
+        url = DIALOG_URL + req.url;
+      } else {
+        url = API_URL + req.url;
+      }
+      const setHeaders: { [name: string]: any } = {
         'Context': JSON.stringify(this.context)
       };
 

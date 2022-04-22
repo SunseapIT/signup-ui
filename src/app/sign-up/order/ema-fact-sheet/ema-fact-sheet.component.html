@@ -1,31 +1,32 @@
 <app-circle-loader *ngIf="isLoader"></app-circle-loader>
 <form novalidate="" class="ng-untouched ng-pristine ng-valid">
+    <div class="clearfix p-3">
+        <div class="float-left font-weight-bold">EMA Fact Sheet</div>
+        <button class="float-right btn-up-down-load" (click)="downloadFactSheet()">
+    <span>DOWNLOAD</span></button></div>
     <div class="form-content ema-scroll-view">
-        <div class="clearfix p-3">
-            <div class="float-left font-weight-bold">EMA fact sheet</div>
-            <button class="float-right btn-up-down-load" 
-            (click)="downloadFactSheet()">
-            <span>DOWNLOAD</span></button></div>
+
         <div class="row m-0">
             <div class="container">
                 <div class="col-md-12">
                     <div class="pdf-container">
-                        <pdf-viewer [src]="pdfSrc"   [original-size]="false"></pdf-viewer>
-                      </div>
-                  </div>
+                        <pdf-viewer [src]="pdfSrc" [original-size]="false"></pdf-viewer>
+                    </div>
+                </div>
             </div>
         </div>
-  <div class="row">
-    <label class="control control--checkbox mt-5 ml-3">I acknowledge the EMA fact sheet of my selected plan as displayed here. 
+        <div class="row">
+            <label class="control control--checkbox mt-5 ml-3">I acknowledge the EMA fact sheet of my selected plan as displayed here. 
       <input name="agreed" type="checkbox" [(ngModel)]="confirmationChecked">
       <div class="control__indicator"></div></label>
-    <label class="control control--checkbox ml-3"> I have read, understood and agreed to the standard <a href="https://www.sunseap.com/terms-conditions/residential" target="_blank">Residential Terms and Conditions</a> for my purchase of electricity from Sunseap as displayed in Sunseap’s website. 
+            <label class="control control--checkbox ml-3"> I have read, understood and agreed to the standard <a href="https://www.sunseap.com/terms-conditions/residential" target="_blank">Residential Terms and Conditions</a> for my purchase of electricity from Sunseap as displayed in Sunseap’s website. 
       <input name="agreed" type="checkbox" [(ngModel)]="policyChecked">
       <div class="control__indicator"></div></label>
-  </div>
-  
-  <div class="pt-5 d-flex justify-content-center pb-5">
-    <button [disabled]="(!confirmationChecked && !policyChecked)" (click)="onSubmit()" class="btn step-next"><span>Review Order</span></button></div>
-  
+        </div>
+
+        <div class="d-flex justify-content-center"
+        style="padding-bottom: 6rem !important;padding-top: 1rem !important;">
+            <button [disabled]="(!confirmationChecked && !policyChecked)" (click)="onSubmit()" class="btn step-next"><span>Review Order</span></button></div>
+
     </div>
-  </form>
+</form>

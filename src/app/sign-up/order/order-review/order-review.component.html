@@ -1,319 +1,339 @@
 <app-circle-loader *ngIf="isLoader"></app-circle-loader>
 <form #form="ngForm" (ngSubmit)="onSubmit(form)">
-<div class="form-content ema-scroll-view pl-5 pr-5 myriad-cond" #reviewForm>
-  <div class="clearfix pb-4">
-    <div class="float-left font-weight-bold">Plan summary</div>
-  </div>
+    <div class="form-content ema-scroll-view pl-5 pr-5 myriad-cond" #reviewForm>
+            <div class="clearfix pb-4">
+                    <div class="float-left font-weight-bold">Do you have a preferred start date?</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                            <label class="control control--checkbox text-justify">Yes
+                                    <input type="radio" name="preferredDate" [(ngModel)]="parent.preferredDate" [value]= "true">  
 
-  <div class="row">
-    <div class="col-lg-6 col-sm-6">Plan name:</div>
-    <div class="col-lg-6 col-sm-6 font-weight-bold">
-      {{ selectedPricingPlan }}
-    </div>
-  </div>
+                                    <div class="control__indicator"></div>
+                                  </label>
+                             
+                    </div>
+                    <div class="col-md-2">
+                            <label class="control control--checkbox text-justify">No
+                                    <input class="custom-radio" type="radio" name="preferredDate"
+                                    [(ngModel)]="parent.preferredDate" (click)="clearPreferredDate()" [value]= "false">
+                                    <div class="control__indicator"></div>
+                                  </label>
+                                  
+                    </div>
+                </div>
+                <ng-container *ngIf="parent.preferredDate" >
+                        <input class="form-control pDate" placeholder="Select preferred date" 
+                        [minDate]="startDate"
+                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-red' }" 
+                        [(ngModel)]="selectPreferredDate" name="selectPreferredDate" 
+                        bsDatepicker readOnly>
 
-  <!-- <div class="row pb-2">
-    <div class="col-lg-6">DOT / Fixed rate:</div>
-    <div class="col-lg-6 font-weight-bold">
-      <span *ngIf="isDotPlan">
-        <ng-container *ngFor="let rate of selectedPricingPlan?.promotionTemplates; let last = last">
-          <ng-container>{{ (rate?.percentDiscount * 100).toFixed(2) }}</ng-container>
-          <ng-container *ngIf="!last"> / </ng-container>
-          <ng-container *ngIf="last"> % DOT </ng-container>
         </ng-container>
-        <ng-container *ngFor="let promotion of selectedPricingPlan?.promotionTemplates; let first = first; let last = last">
-          <ng-container *ngIf="first && !last"> (first </ng-container>
-          <ng-container *ngIf="!first"> / next </ng-container>
-          <ng-container *ngIf="!(first && last)"> {{ promotion.defaultApplyingPeriod }} mths</ng-container>
-          <ng-container *ngIf="!first && last">)</ng-container>
-        </ng-container>
-      </span>
-
-      <span *ngIf="!isDotPlan">
-        <ng-container *ngFor="let rate of selectedPricingPlan?.promotionTemplates; let last = last">
-          <ng-container>{{(rate?.rateWithPromotionExcludingTax * 100).toFixed(2)}}</ng-container>
-          <ng-container *ngIf="!last"> / </ng-container>
-          <ng-container *ngIf="last"> cents/kWh FIXED </ng-container>
-        </ng-container>
-        <ng-container *ngFor="let promotion of selectedPricingPlan?.promotionTemplates; let first = first; let last = last">
-          <ng-container *ngIf="first && !last"> (first </ng-container>
-          <ng-container *ngIf="!first"> / next </ng-container>
-          <ng-container *ngIf="!(first && last)"> {{ promotion.defaultApplyingPeriod }} mths </ng-container>
-          <ng-container *ngIf="!first && last">) - Excluding GST</ng-container>
-          <ng-container *ngIf="first && last">- Excluding GST</ng-container>
-        </ng-container>
-      </span><br/>
-
-      <span *ngIf="!isDotPlan">
-        <ng-container *ngFor="let rate of selectedPricingPlan?.promotionTemplates; let last = last">
-          <ng-container>{{(rate?.rateWithPromotion * 100).toFixed(2) }}</ng-container>
-          <ng-container *ngIf="!last"> / </ng-container>
-          <ng-container *ngIf="last"> cents/kWh FIXED </ng-container>
-        </ng-container>
-        <ng-container *ngFor="let promotion of selectedPricingPlan?.promotionTemplates; let first = first; let last = last">
-          <ng-container *ngIf="first && !last"> (first </ng-container>
-          <ng-container *ngIf="!first"> / next </ng-container>
-          <ng-container *ngIf="!(first && last)"> {{ promotion.defaultApplyingPeriod }} mths </ng-container>
-          <ng-container *ngIf="!first && last">) - Including GST</ng-container>
-          <ng-container *ngIf="first && last">- Including GST</ng-container>
-        </ng-container>
-      </span>
-    </div>
-  </div> -->
-
-  <div class="row">
-    <div class="col-lg-6 col-sm-6">SP account No:</div>
-    <div class="col-lg-5 col-sm-5 font-weight-bold">
-      <div class="card-text-right p-0">
-        <div *ngIf="!spFlag" class="input-group">
-         {{serviceNo}} 
-        </div>
-
-        <input *ngIf="spFlag" type="text" 
-        name="serviceNo" 
-        maxlength="10"
-        numbersOnly
-        [(ngModel)]="serviceNo">
-       
-      </div>
-    </div>
-    <div class="col-lg-1 col-sm-1"> 
-      <i *ngIf="!spFlag" class="fas fa-pencil-alt" (click)="spFlag = !spFlag"></i>
-      <i *ngIf="spFlag" class="fa fa-check" (click)="spFlag = !spFlag"></i>
-    </div>
-  </div>
-
-  
-
-  <div class="row">
-    <div class="col-lg-6 col-sm-6">Early termination charge:</div>
-    <div class="col-lg-6 col-sm-6 font-weight-bold">${{ ETC_FEE_OPTIONS[parent.model.premise.dwellingType] }} per remaining month</div>
-  </div>
-
-  <div class="row">
-    <div class="col-lg-6 col-sm-6">Security deposit:</div>
-    <div class="col-lg-6 col-sm-6 font-weight-bold">$0.00</div>
-  </div>
-
-  <div class="order-customer-review">
-    <div class="clearfix">
-      <div class="float-left font-weight-bold">Customer Details</div>
-    
-    </div>
-
-    <div class="row">
-      <div class="col-lg-6 col-sm-6">Full name:</div>
-      <div class="col-lg-5 col-sm-5 font-weight-bold">
-        <div class="card-text-right p-0">
-          <div *ngIf="!nameFlag" class="input-group">
-            {{fullName}}&nbsp;{{lastName}}
-          </div>
-          <input *ngIf="nameFlag" type="text" name="fullName" [(ngModel)]="fullName">
-          <input *ngIf="nameFlag" type="text" name="lastName" [(ngModel)]="lastName">
-        
-      </div>
      
-      </div>
-      <div class="col-lg-1 col-sm-1 ">
-          <i *ngIf="!nameFlag" class="fas fa-pencil-alt" (click)="nameFlag = !nameFlag"></i>
-          <i *ngIf="nameFlag" class="fa fa-check" (click)="nameFlag = !nameFlag"></i>
+              
+        <div class="clearfix pb-4 pt-3">
+            <div class="float-left font-weight-bold">Plan Summary</div>
         </div>
-    </div>
 
-    
-
-    <div *ngIf="parent.model.identificationType === IdentificationType.EmploymentPass || parent.model.identificationType === IdentificationType.WorkPermit" class="row pb-2">
-      <div class="col-lg-6 col-sm-6">Expiry date:</div>
-      <div class="col-lg-6 col-sm-6 font-weight-bold">{{ parent.model.identificationExpiryDate }}</div>
-    </div>
-
-
-    <div class="row">
-      <div class="col-lg-6 col-sm-6">Email address:</div>
-      <div class="col-lg-6 col-sm-6 font-weight-bold">{{ emailAddress }}</div>
-    </div>
-
-    <div class="row pb-2">
-      <div class="col-lg-6 col-sm-6">Mobile number:</div>
-      <div class="col-lg-6 col-sm-6 font-weight-bold">{{mobileNumber}}</div>
-    </div>
-  </div>
-
-  <div class="clearfix pb-3">
-    <div class="float-left font-weight-bold">Service address</div>
-  </div>
-
-  <div class="row pb-2">
-    <div class="col-lg-6 col-sm-6">Block/House No.:</div>
-    <div class="col-lg-6 col-sm-6 font-weight-bold">
-      <div class="card-text-right p-0">
-        <div class="input-group">
-      {{houseNumber}}
+        <div class="row">
+            <div class="col-lg-6 col-sm-6">Plan Name:</div>
+            <div class="col-lg-6 col-sm-6 font-weight-bold">
+                {{ selectedPricingPlan }}
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="row pb-2">
-    <div class="col-lg-6 col-sm-6">Level:</div>
-    <div class="col-lg-6 col-sm-6 font-weight-bold">
-      <div class="card-text-right p-0">
-        <div class="input-group">
-             {{level}}   
+        <div class="row">
+            <div class="col-lg-6 col-sm-6">SP Account No:</div>
+            <div class="col-lg-5 col-sm-5 font-weight-bold">
+                <div class="card-text-right p-0">
+                    <div *ngIf="!spFlag" class="input-group">
+                        {{serviceNo}}
+                    </div>
+                    <div [hidden]="!spFlag">
+                        <input class="form-control" type="text" maxlength="10" trim="blur" name="spAccNumber" pattern="(^[0-9]\d{9})|(^[0-9]{9}[-])$" (keypress)="keyPress($event)" [(ngModel)]="serviceNo" required #spNumber="ngModel" [class.is-invalid]="spNumber.invalid && (spNumber.touched || form.submitted)">
+
+                        <div *ngIf="spNumber?.invalid && (spNumber?.touched || form.submitted)" class="invalid-feedback">
+                            <div *ngIf="spNumber?.errors.required">
+                                <i>Your SP Account No. is required</i>
+                            </div>
+                            <div *ngIf="spNumber?.errors.pattern">
+                                <i>Your SP Account No. is invalid</i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-1 col-sm-1">
+                <i *ngIf="!spFlag" class="fas fa-pencil-alt" (click)="spFlag = !spFlag"></i>
+                <i *ngIf="spFlag" class="fa fa-check" (click)="spFlag = !spFlag"></i>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <div class="row pb-2">
-    <div class="col-lg-6 col-sm-6">Unit No.:</div>
-    <div class="col-lg-6 col-sm-6 font-weight-bold">
-      <div class="card-text-right p-0">
-        <div class="input-group">
-             {{unitNo}}   
+
+
+
+        <div class="row">
+            <div class="col-lg-6 col-sm-6">Early Termination Charge:</div>
+            <div class="col-lg-6 col-sm-6 font-weight-bold">${{charge}} per remaining month</div>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="row pb-2">
-    <div class="col-lg-6 col-sm-6">Street name:</div>
-    <div class="col-lg-6 col-sm-6 font-weight-bold">
-      <div class="card-text-right p-0">
-        <div class="input-group">
-        {{streetName}}
-   
-
+        <div class="row">
+            <div class="col-lg-6 col-sm-6">Security Deposit:</div>
+            <div class="col-lg-6 col-sm-6 font-weight-bold">$0.00</div>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="row pb-2">
-    <div class="col-lg-6 col-sm-6">Building name:</div>
-    <div class="col-lg-6 col-sm-6 font-weight-bold">
-      <div class="card-text-right p-0">
-        <div class="input-group">
-           {{buildingName}}
-        </div>      
-      </div>
-    </div>
-  </div>
+        <div class="order-customer-review">
+            <div class="clearfix">
+                <div class="float-left font-weight-bold">Customer Details</div>
 
-  <div class="row">
-    <div class="col-lg-6 col-sm-6">Postal code:</div>
-    <div class="col-lg-6 col-sm-6 font-weight-bold">
-      <div class="card-text-right p-0">
-        <div class="input-group">
-       {{servicePostalCode}}
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 col-sm-6">Full Name:</div>
+                <div class="col-lg-5 col-sm-5 font-weight-bold">
+                    <div class="card-text-right p-0">
+                        <div *ngIf="!nameFlag" class="input-group">
+                            {{fullName}}&nbsp;{{lastName}}
+                        </div>
+                        <div [hidden]="!nameFlag">
+                            <input type="text" name="fullName" trim="blur" [(ngModel)]="fullName" required [class.is-invalid]="fName.invalid && (fName.touched || form.submitted)" class="form-control" #fName="ngModel">
+                            <div *ngIf="fName?.invalid && (fName?.touched || form.submitted)" class="invalid-feedback">
+                                <div *ngIf="fName?.errors.required">
+                                    <i>Enter First Name</i>
+                                </div>
+                            </div>
+                        </div>
+                        <div [hidden]="!nameFlag">
+                            <input type="text" name="lastName" trim="blur" [class.is-invalid]="lName.invalid && (lName.touched || form.submitted)" [(ngModel)]="lastName" required class="form-control" #lName="ngModel">
+                            <div *ngIf="lName?.invalid && (lName?.touched || form.submitted)" class="invalid-feedback">
+                                <div *ngIf="lName?.errors.required">
+                                    <i>Enter Last Name</i>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-1 col-sm-1 ">
+                    <i *ngIf="!nameFlag" class="fas fa-pencil-alt" (click)="nameFlag = !nameFlag"></i>
+                    <i *ngIf="nameFlag" class="fa fa-check" (click)="nameFlag = !nameFlag"></i>
+                </div>
+            </div>
+
+
+
+            <div *ngIf="parent.model.identificationType === IdentificationType.EmploymentPass || parent.model.identificationType === IdentificationType.WorkPermit" class="row pb-2">
+                <div class="col-lg-6 col-sm-6">Expiry Date:</div>
+                <div class="col-lg-6 col-sm-6 font-weight-bold">{{ parent.model.identificationExpiryDate }}</div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-lg-6 col-sm-6">Email Address:</div>
+                <div class="col-lg-6 col-sm-6 font-weight-bold">{{ emailAddress }}</div>
+            </div>
+
+            <div class="row pb-2">
+                <div class="col-lg-6 col-sm-6">Mobile Number:</div>
+                <div class="col-lg-6 col-sm-6 font-weight-bold">{{mobileNumber}}</div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col-lg-6 col-sm-6">Dwelling type:</div>
-    <div class="col-lg-6 col-sm-6 font-weight-bold">
-      {{dwellingType }}
-    </div>
-  </div>
+        <div class="clearfix pb-3">
+            <div class="float-left font-weight-bold">Service Address</div>
+        </div>
 
-  <div class="order-promotion-summary">
-    <div class="clearfix pb-3">
-      <div class="float-left font-weight-bold">Promotion summary</div>
-    </div>
+        <div class="row pb-2">
+            <div class="col-lg-6 col-sm-6">Block/House No.:</div>
+            <div class="col-lg-6 col-sm-6 font-weight-bold">
+                <div class="card-text-right p-0">
+                    <div class="input-group">
+                        {{houseNumber}}
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <div class="row">
-      <div class="col-lg-6 col-sm-6">Rebate:</div>
-      <div class="col-lg-6 col-sm-6 font-weight-bold">
-        {{ parent.model.referralCode ? ( rebateAmount < 0 ? rebateAmount * (-1) : rebateAmount ) + '$ (Referral/Promo Code: ' + parent.model.referralCode + ')' : 'Not applicable' }}
-      </div>
-    </div>
+        <div class="row pb-2">
+            <div class="col-lg-6 col-sm-6">Level:</div>
+            <div class="col-lg-6 col-sm-6 font-weight-bold">
+                <div class="card-text-right p-0">
+                    <div class="input-group">
+                        {{level}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pb-2">
+            <div class="col-lg-6 col-sm-6">Unit No.:</div>
+            <div class="col-lg-6 col-sm-6 font-weight-bold">
+                <div class="card-text-right p-0">
+                    <div class="input-group">
+                        {{unitNo}}
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <div class="row">
-      <div class="col-lg-6 col-sm-6">Gift:</div>
-      <div class="col-lg-6 col-sm-6 font-weight-bold">Not applicable</div>
-    </div>
+        <div class="row pb-2">
+            <div class="col-lg-6 col-sm-6">Street Name:</div>
+            <div class="col-lg-6 col-sm-6 font-weight-bold">
+                <div class="card-text-right p-0">
+                    <div class="input-group">
+                        {{streetName}}
 
-    <div class="row">
-      <div class="col-lg-6 col-sm-6">Others:</div>
-      <div class="col-lg-6 col-sm-6 font-weight-bold">Not applicable</div>
-    </div>
-  </div>
 
-  <p><strong>Customer Acknowledgement</strong></p>
-  <p class="text-justify">• I have read and understood the Consumer Advisory Notice and Fact Sheet presented to me and agree to all the terms set out in the Fact Sheet.</p>
-  <p class="text-justify">• I confirm that information given in this online sign-up is factual, accurate and complete.</p>
-  <p class="text-justify">• I understand that this is an application to Sunseap Energy Pte. Ltd. (“Sunseap”) for the supply of electricity.</p>
-  <p class="text-justify">• I acknowledge that Sunseap may decline acceptance of my application for such electricity services at its discretion.
-    I agree that my application for such electricity services when accepted, will constitute a binding contract between myself and Sunseap.
-    I accept Sunseap’s standard terms and conditions for the supply of electricity which can be found at www.sunseap.com/terms-conditions/residential.</p>
-  <p class="text-justify">• By providing the information set out above, I consent to Sunseap, and its related corporations (collectively, “Sunseap”),
-    as well as their respective representatives, agents and service providers, collecting, using or disclosing my personal data for purposes reasonably required by Sunseap
-    to provide the products and services which I am applying for, as set out in Sunseap’s Privacy Policy that can be found at https://www.sunseap.com/privacy/, which I have read and understood.</p>
-  <p class="text-justify">• I acknowledge that the registration information is true and correct and that I have read, understood and agreed to the Service Agreement and General Terms & Conditions outlined in this
-    online registration form. By filling up this Registration Form, I hereby agree and consent that my personal data provided in this form may be collected, used, processed and disclosed by
-    Sunseap Energy Pte. Ltd. for the purposes of processing my registration, in accordance with the Personal Data Protection Act 2012 and all subsidiary legislation related thereto. In respect
-    of disclosure, I understand that Sunseap Energy Pte. Ltd. may disclose my personal data to third parties (which may be in or outside of Singapore) where necessary for such purposes.
-    I understand that photography and videography may be conducted during the roadshow event(s) and I consent to Sunseap Energy Pte. Ltd. taking photographs and videos of myself and using
-    the same for the purposes of event reporting, marketing, publicity, and media/social media. I further consent to Sunseap Energy Pte. Ltd. disclosing such photographs and videos to third
-    party media entities (whether in Singapore or otherwise) for publicity purposes and Sunseap Energy Pte. Ltd. may identify me by name.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-  <label class="control control--checkbox text-justify">I consent to Sunseap contacting me for their marketing and promotional purposes. (Optional)
-    <input type="checkbox" [(ngModel)]="checked" name="one"/>
+        <div class="row pb-2">
+            <div class="col-lg-6 col-sm-6">Building Name:</div>
+            <div class="col-lg-6 col-sm-6 font-weight-bold">
+                <div class="card-text-right p-0">
+                    <div class="input-group">
+                        {{buildingName}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-sm-6">Postal Code:</div>
+            <div class="col-lg-6 col-sm-6 font-weight-bold">
+                <div class="card-text-right p-0">
+                    <div class="input-group">
+                        {{servicePostalCode}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-sm-6">Dwelling Type:</div>
+            <div class="col-lg-6 col-sm-6 font-weight-bold">
+                {{dwellingType }}
+            </div>
+        </div>
+
+        <div class="order-promotion-summary">
+            <!-- <div class="clearfix pb-3">
+                <div class="float-left font-weight-bold">Promotion summary</div>
+            </div> -->
+
+            <!-- <div class="row"> -->
+            <!-- <div class="col-lg-6 col-sm-6">Rebate:</div> -->
+            <!-- <div class="col-lg-6 col-sm-6 font-weight-bold"> -->
+            <!-- {{ parent.model.referralCode ? ( rebateAmount -->
+            <!-- < 0 ? rebateAmount * (-1) : rebateAmount ) + '$ (Referral/Promo Code: ' + parent.model.referralCode + ')' : 'Not applicable' }}  -->
+            <!-- </div> -->
+            <!-- </div> -->
+
+            <!-- <div class="row">
+                <div class="col-lg-6 col-sm-6">Gift:</div>
+                <div class="col-lg-6 col-sm-6 font-weight-bold">Not applicable</div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 col-sm-6">Others:</div>
+                <div class="col-lg-6 col-sm-6 font-weight-bold">Not applicable</div>
+            </div> -->
+        </div>
+
+        <p><strong>Customer Acknowledgement</strong></p>
+        <ul style="    margin-left: -20px;
+        margin-top: 15px;">
+        <li class="text-justify"> I understand that I am applying to Sunseap Energy Pte. Ltd.
+             (“Sunseap”) for the purchase of retail electricity and I have read and understood the Consumer Advisory Notice
+              and Fact Sheet presented to me and agree to all the terms set out in the Fact Sheet.
+
+        </li>
+        <li class="text-justify"> 
+          I confirm that information given in this online sign-up is true,accurate and complete.
+        </li>
+        <li class="text-justify"> I acknowledge that Sunseap may not process my 
+            retail electricity application where Sunseap is unable to verify my 
+            identity or for other reasons at its discretion. I agree that when accepted,
+             my application for such electricity services will constitute a binding 
+             contract between myself and Sunseap. I accept Sunseap’s standard terms 
+             and conditions for the purchase of electricity which can be found at 
+             <a href='https://www.sunseap.com/terms-conditions/residential' target="blank">www.sunseap.com/terms-conditions/residential</a>
+
+        </li>
+        <li class="text-justify"> By completing and submitting this Registration Form,
+             I give my consent for Sunseap to collect, use, process and disclose my
+              personal data provided in this form for the purposes of processing my 
+              retail electricity application as set out in Sunseap’s Privacy Notice
+               that can be found at
+               <a href='https://www.sunseap.com/pdf/PrivacyNotice.pdf' target="blank">www.sunseap.com/pdf/PrivacyNotice.pdf</a>
+
+        </li>
+     
+            </ul>
+
+        <label class="control control--checkbox text-justify">I consent to Sunseap contacting me for their marketing and promotional purposes. (Optional)
+    <input type="checkbox" [(ngModel)]="parent.checkedConsent" name="one"/>
     <div class="control__indicator"></div>
   </label>
 
-  <label class="control control--checkbox text-justify">I hereby acknowledge that I have read, understood and consent to the above terms and conditions.
+        <label class="control control--checkbox text-justify">I hereby acknowledge that I have read, understood and consent to the above terms and conditions.
     <input type="checkbox" [(ngModel)]="acknowledgeConsent" name="two"/>
     <div class="control__indicator"></div>
   </label>
 
-  <label class="control control--checkbox text-justify">I acknowledge that I have read and understood the Sunseap Privacy Policy as set out in Sunseap Website https://www.sunseap.com/pdf/PrivacyPolicy.pdf , and consent to the collection, use and disclosure of my personal data details by Sunseap Energy Pte Ltd for the purposes set out in the Sunseap Privacy Policy.
+        <label class="control control--checkbox text-justify">I acknowledge that I have read and understood the Sunseap Privacy Policy as set out in Sunseap Website https://www.sunseap.com/pdf/PrivacyPolicy.pdf , and consent to the collection, use and disclosure of my personal data details by Sunseap Energy Pte Ltd for the purposes set out in the Sunseap Privacy Policy.
       <input type="checkbox" [(ngModel)]="acknowledgePrivacy" name="three"/>
       <div class="control__indicator"></div> 
     </label>
 
+  
+       <!-- <ngx-recaptcha2 #captchaElem [siteKey]="siteKey"  
+       id="recaptcha"   
+       (reset)="handleReset()" (expire)="handleExpire()"
+           (load)="handleLoad()" (success)="handleSuccess($event)" 
+           [ngModelOptions]="{standalone: true}" 
+           [size]="size"
+           [hl]="lang" 
+           [theme]="theme" 
+           [type]="type" 
+           [ngModel]="captcha" 
+        data-type="image"
+           #captchaerr="ngModel" 
+           required>
+   </ngx-recaptcha2> -->
 
-
-  <div class="pt-5 d-flex justify-content-center mb-4 pb-4">
-    <button [disabled]="!acknowledgeConsent || !acknowledgePrivacy" class="btn step-next" type="submit">
+        <div class="pt-5 d-flex justify-content-center mb-4 pb-4">
+            <button [disabled]="!acknowledgeConsent || !acknowledgePrivacy" class="btn step-next" type="submit">
       <span>Confirm Order</span>
     </button>
-  </div>
+        </div>
+        <ng-template #warningModal>
+            <!-- Modal Header -->
+            <div class="modal-header border-bottom-0 pb-0">
+                <h4 class="modal-title">&nbsp;</h4>
+                <button type="button" class="close" (click)="modal.hide();">&times;</button>
+            </div>
 
+            <!-- Modal body -->
+            <div class="modal-body d-flex flex-column pt-0 pl-5 ml-5 pr-5 mr-5">
+                <div class="text-center">
+                    <h5><strong>Data Verification</strong></h5>
+                </div>
+                <div class="pt-5 pb-4 text-center">
+                    <p style="color: red" [innerHTML]="warningMessage"></p>
+                </div>
+            </div>
 
-  <ng-template #warningModal>
-    <!-- Modal Header -->
-    <div class="modal-header border-bottom-0 pb-0">
-      <h4 class="modal-title">&nbsp;</h4>
-      <button type="button" class="close" (click)="modal.hide();">&times;</button>
-    </div>
-
-    <!-- Modal body -->
-    <div class="modal-body d-flex flex-column pt-0 pl-5 ml-5 pr-5 mr-5">
-      <div class="text-center">
-        <h5><strong>Data Verification</strong></h5>
-      </div>
-      <div class="pt-5 pb-4 text-center">
-        <p style="color: red" [innerHTML]="warningMessage"></p>
-      </div>
-    </div>
-
-    <div class="my-4 mx-auto">
-      <button type="button" class="btn btn-submit" (click)="modal.hide();">
+            <div class="my-4 mx-auto">
+                <button type="button" class="btn btn-submit" (click)="modal.hide();">
         <span>OK</span>
       </button>
+            </div>
+
+        </ng-template>
     </div>
 
-  </ng-template>
-</div>
-
 </form>
-<!--<div style="position: absolute; top: calc(100vh - 100px); right: 30px;">-->
-  <!--<div class="share-buttons d-flex justify-content-center pt-sm-4 mt-sm-1">-->
-    <!--<a (click)="scrollToBottom()" href="javascript:void(0)" class="btn rounded-circle btn-social"-->
-       <!--style="border: 1px solid green;" target="_top">-->
-      <!--<i class="fas fa-angle-double-down slide-effect"></i>-->
-    <!--</a>-->
-  <!--</div>-->
-<!--</div>-->

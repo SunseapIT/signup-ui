@@ -11,7 +11,9 @@ import { OrderComponent } from '../order.component';
 import { ORDER_GA_EVENT_NAMES, STORAGE_KEYS } from '../order.constant';
 import { NgForm } from '@angular/forms';
 import { CustomerDto } from '@app/core/customer-dto';
-import { TimeStampDto } from '@app/sign-up/admin/dto/time-stamp-dto';
+// import { TimeStampDto } from '@app/sign-up/admin/dto/time-stamp-dto';
+import { TimeStampDto } from "../../../core/time-stamp-dto";
+
 
 const POSTAL_CODE_WARNING = 'The postal code you have entered is currently not eligible for the Open Electricity Market. ' +
   'Please refer to <a href="https://www.openelectricitymarket.sg/index.html" target="_blank">EMA\'s site</a> for more information.';
@@ -58,16 +60,17 @@ export class ServiceAddressComponent implements OnInit {
     public modal: ModalService,
     configService: ConfigService,
     private utilService: UtilService,
-    private service:ApiServiceServiceService
+    private service: ApiServiceServiceService
   ) {
     this.config.validationRegex = configService.get('validationRegex');
   }
 
-  postalCode:any;
+  postalCode: any;
 
   ngOnInit() {
 
-  this.postalCode=""
+
+    this.postalCode = ""
     this.localStorage.getItem(STORAGE_KEYS.SERVICE_ADDRESS)
       .subscribe(serviceAddress => serviceAddress && (this.serviceAddress = serviceAddress));
 
@@ -79,41 +82,65 @@ export class ServiceAddressComponent implements OnInit {
   prefillAddress() {
     const { building, blockNo, roadName } = this.validLocations[this.pickedLocation];
     this.serviceAddress.buildingName = _.upperCase(building) === 'NIL' ? null : building;
-    this.serviceAddress.houseNo =  _.upperCase(blockNo) === 'NIL' ? null : blockNo;
+    this.serviceAddress.houseNo = _.upperCase(blockNo) === 'NIL' ? null : blockNo;
     this.serviceAddress.streetName = _.upperCase(roadName) === 'NIL' ? null : roadName;
   }
 
   validatePostalCode(code: string) {
+    let postalString = "https://developers.onemap.sg/commonapi/search?searchVal=" +
+      code + "&returnGeom=N&getAddrDetails=Y&pageNum=1"
     if (_.size(code) > 1 && !this.isPostalCodeValid(code)) {
       this.warningMessage = POSTAL_CODE_WARNING;
       this.modal.open(this.warningModal, 'lg', { ignoreBackdropClick: true });
     } else {
       if (_.size(code) === 6) {
-        this.utilService.requestAddresses(code).subscribe(rs => {
-          switch (rs.meta.count) {
-            case 0:
-              this.serviceAddress.buildingName = null;
-              this.serviceAddress.houseNo = null;
-              this.serviceAddress.streetName = null;
-              break;
-            case 1:
-              this.serviceAddress.buildingName = _.upperCase(rs.items[0].building) === 'NIL' ? null : rs.items[0].building;
-              this.serviceAddress.houseNo = _.upperCase(rs.items[0].blockNo) === 'NIL' ? null : rs.items[0].blockNo;
-              this.serviceAddress.streetName = _.upperCase(rs.items[0].roadName) === 'NIL' ? null : rs.items[0].roadName;
-              break;
-            default:
-              this.validLocations = {};
-              if (_.size(rs.items) > 5) {
-                rs.items.splice(0, 5);
-              }
-              _.forEach(rs.items, (item) => {
-                this.validLocations[item.address] = item;
-              });
-              this.pickedLocation = rs.items[0].address;
-              this.modal.open(this.pickUpModal, 'md', { ignoreBackdropClick: false });
-              break;
+        this.service.get_service(ApiServiceServiceService.apiList.getPostalCode + "?url=" + btoa(postalString)).subscribe((response) => {
+          let responseBody = response['body']
+          let status = responseBody['statusCode']
+          let responseData = responseBody['data']
+          let responseResults = responseData['results']
+          if (responseResults != '') {
+            this.serviceAddress.buildingName = responseResults[0].BUILDING == 'NIL' ? '' : responseResults[0].BUILDING;
+            this.serviceAddress.streetName = responseResults[0].ROAD_NAME;
+            this.serviceAddress.houseNo = responseResults[0].BLK_NO;
           }
-        });
+          else {
+            this.pickedLocation = responseResults[0];
+            this.modal.open(this.pickUpModal, 'md', { ignoreBackdropClick: false });
+            this.serviceAddress.buildingName = null;
+            this.serviceAddress.streetName = null;
+            this.serviceAddress.houseNo = null;
+          }
+        })
+
+
+        // this.utilService.requestAddresses(code).subscribe(rs => {
+
+        //       switch (rs.meta.count) {
+        //         case 0:
+        //           this.serviceAddress.buildingName = null;
+        //           this.serviceAddress.houseNo = null;
+        //           this.serviceAddress.streetName = null;
+        //           break;
+        //         case 1:
+        //           this.serviceAddress.buildingName = _.upperCase(rs.items[0].building) === 'NIL' ? null : rs.items[0].building;
+        //           this.serviceAddress.houseNo = _.upperCase(rs.items[0].blockNo) === 'NIL' ? null : rs.items[0].blockNo;
+        //           this.serviceAddress.streetName = _.upperCase(rs.items[0].roadName) === 'NIL' ? null : rs.items[0].roadName;
+        //           break;
+        //         default:
+        //           this.validLocations = {};
+        //           if (_.size(rs.items) > 5) {
+        //             rs.items.splice(0, 5);
+        //           }
+        //           _.forEach(rs.items, (item) => {
+        //             this.validLocations[item.address] = item;
+        //           });
+        //           this.pickedLocation = rs.items[0].address;
+        //           this.modal.open(this.pickUpModal, 'md', { ignoreBackdropClick: false });
+        //           break;
+        //       }
+        //     });
+        //   }
       }
     }
   }
@@ -135,48 +162,56 @@ export class ServiceAddressComponent implements OnInit {
     }
   }
 
-  onSubmit(form : NgForm) {
+  onSubmit(form: NgForm) {
     const parent = this.parent;
     if (form.valid) {
       this.serviceAddress.levelUnit = (this.serviceAddress.level) ? `#${this.serviceAddress.level}-${this.serviceAddress.unitNo}` : '';
       parent.model.premise.serviceAddress = _.chain(this.serviceAddress)
-        .pick([ 'houseNo', 'streetName', 'buildingName', 'levelUnit' ])
+        .pick(['houseNo', 'streetName', 'buildingName', 'levelUnit'])
         .values()
         .without('')
         .join(' ')
         .value();
-        var addressDto = new AddressDto();
-        addressDto.buildingName = form.value.buildingName;
-        addressDto.dwellingType = form.value.dwellingType;
-        addressDto.houseNo = form.value.houseNo;
-        addressDto.postalCode = form.value.servicePostalCode;
-        addressDto.streetName = form.value.streetName;
-        
-     var customerDto = new CustomerDto();
-      var objStr = localStorage.getItem("customerObj");
+      var addressDto = new AddressDto();
+      addressDto.buildingName = form.value.buildingName;
+      addressDto.dwellingType = form.value.dwellingType;
+      addressDto.houseNo = form.value.houseNo;
+      addressDto.postalCode = form.value.servicePostalCode;
+      addressDto.streetName = form.value.streetName;
+      let customerDto = new CustomerDto();
+      let objStr = localStorage.getItem("customerObj");
       customerDto = JSON.parse(objStr);
       customerDto.postelCode = form.value.servicePostalCode;
       customerDto.buildingName = form.value.buildingName;
       customerDto.dwelingType = form.value.dwellingType;
       customerDto.houseNo = form.value.houseNo;
-      customerDto.streetName = form.value.streetName; 
+      customerDto.streetName = form.value.streetName;
       customerDto.unitNo = form.value.unitNo;
       customerDto.level = form.value.level;
-      localStorage.setItem("customerObj",JSON.stringify(customerDto))
-      var timeStampDto = new TimeStampDto();
+      localStorage.setItem("customerObj", JSON.stringify(customerDto))
+      let timeStampDto = new TimeStampDto();
       timeStampDto.pageType = "ADDRESS_DETAILS",
-      timeStampDto.token = localStorage.getItem("Token");
-      this.service.post_service(ApiServiceServiceService.apiList.addAddressUrl,addressDto).subscribe((response)=>{
-      var responseData  = response;
-      var status = responseData['statusCode'];
-      if(status == 200){
-        this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl,timeStampDto).subscribe((response)=>{        
-      
-       })
+        timeStampDto.token = localStorage.getItem("Token");
+      this.service.post_service(ApiServiceServiceService.apiList.addAddressUrl, addressDto).subscribe((response) => {
+        var responseBody = response['body'];
+        var responseMessage = responseBody['message'];
+        let statusCode = responseBody['statusCode']
+        if (statusCode == 200) {
+          this.service.post_service(ApiServiceServiceService.apiList.updateTimeUrl, timeStampDto).subscribe((response) => {
+
+          })
         }
-      })   
-      parent.saveAndNext(); 
-      form.resetForm(); 
-    } 
+      })
+      parent.saveAndNext();
+      form.resetForm();
+    }
   }
+
+  // keyPress(event: any) {
+  //   const pattern = /^([a-zA-Z0-9@#$%]{0,100})$/;
+  //   let inputChar = String.fromCharCode(event.charCode);
+  //   if (!pattern.test(inputChar) && event.charCode != '0') {
+  //     event.preventDefault();
+  //   }
+  // }
 }

@@ -42,6 +42,10 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   isSPAccountHolder = true;
   isAdvisoryAgreed = false;
+  checkedConsent = false;
+  preferredDate = false;
+
+
   token = '';
   allStepRoutes = _.concat(ENTER_DETAIL_STEP_ROUTES, UPLOAD_DOCUMENT_STEP_ROUTES, REVIEW_STEP_ROUTES);
   activeTab: OrderTab;
@@ -71,7 +75,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     const currentRoute = _.get(this.route, ['firstChild', 'snapshot', 'url', 0, 'path']) || ORDER_ROUTES.PLAN_DETAIL;
 
     this.localStorage.getItem<boolean>(STORAGE_KEYS.IS_SP_ACCOUNT_HOLDER).subscribe(isSPAccountHolder => {
-      if (!_.isNull(isSPAccountHolder) ) {
+      if (!_.isNull(isSPAccountHolder)) {
         this.isSPAccountHolder = isSPAccountHolder;
       } else {
         this.isSPAccountHolder = true;
@@ -104,7 +108,7 @@ export class OrderComponent implements OnInit, OnDestroy {
       if (event instanceof NavigationEnd) {
         const route = _.get(this.route, ['firstChild', 'snapshot', 'url', 0, 'path']) || ORDER_ROUTES.PLAN_DETAIL;
         const stepRouteIndex = _.findIndex(this.allStepRoutes, { link: route });
-        this.updateCurrentTab(this.allStepRoutes[ stepRouteIndex ].link);
+        this.updateCurrentTab(this.allStepRoutes[stepRouteIndex].link);
         this.activeStepIndex = stepRouteIndex;
       }
     });
@@ -141,7 +145,7 @@ export class OrderComponent implements OnInit, OnDestroy {
         this.currentStepIndex = nextStepRouteIndex;
       }
 
-      const nextRoute = this.allStepRoutes[ nextStepRouteIndex ];
+      const nextRoute = this.allStepRoutes[nextStepRouteIndex];
       this.navigateToLink(nextRoute.link);
     } else {
       if (!_.isEmpty(this.model)) {
@@ -171,7 +175,7 @@ export class OrderComponent implements OnInit, OnDestroy {
             if (errorStatus === 400) {
               const errMessage = 'We have noticed some errors in your order. Please verify the following: ' + '<br />'
                 + '<ul>'
-                +   '<li>SP Account No</li>'
+                + '<li>SP Account No</li>'
                 + '</ul>'
                 + 'Or contact our support: ' + '<a href="mailto:customercare@sunseap.com?subject=Support;">customercare@sunseap.com</a>';
               this.openErrorModal('Please verify your order and submit again.',
@@ -197,7 +201,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   private navigateToLink(link: string) {
-    this.router.navigate([ '/', link ], { relativeTo: this.route });
+    this.router.navigate(['/', link], { relativeTo: this.route });
   }
 
   private updateCurrentTab(route: string) {
@@ -210,11 +214,11 @@ export class OrderComponent implements OnInit, OnDestroy {
     }
   }
 
-  adminLogin(){
+  adminLogin() {
     this.router.navigateByUrl('admin-login/login')
   }
 
-  payment(){
+  payment() {
     this.router.navigateByUrl('payment/pay')
   }
 

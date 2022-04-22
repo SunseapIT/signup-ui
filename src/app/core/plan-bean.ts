@@ -7,6 +7,14 @@ export class PlanBean {
 
  planName:string;
 
+ energy:string;
+
+ rate: string;
+
+ contractTerm:string;
+
+ planType:string;
+
  factSheetName:string;
 
  

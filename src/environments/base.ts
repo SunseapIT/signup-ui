@@ -5,8 +5,10 @@ export const environment = {
   subDomain: false,
   apiUrl: '',
   reCaptchaSiteKey: '',
-  baseUrl: "http://18.139.224.201:8085"
-  // baseUrl :"http://e8b83f6e.ngrok.io"
-  
- 
-};
+  baseUrl : "/api",
+  // baseUrl: "https://signup-uat.sunseap.com/api/",
+  // baseUrl: "http://signup-uat.sunseap.com:8086",
+  dialogUrl: ''
+}
+
+

@@ -1,9 +1,3 @@
-import { PAYMENT_ROUTES } from './tokenization/payment.constant';
-
-import { TokenizationPageComponent } from './tokenization/tokenization-page/tokenization-page.component';
-
-
-
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -17,6 +11,7 @@ import {
   PersonalParticularComponent, 
   PlanDetailComponent, ServiceAddressComponent, 
   PageNotFoundComponent, 
+  NewPageNotFoundComponent,
   ORDER_ROUTES
 } from './order';
 
@@ -31,18 +26,12 @@ const routes: Routes = [
       { path: ORDER_ROUTES.PAYMENT_MODE, component: PaymentModeComponent },
       { path: ORDER_ROUTES.DOCUMENTS_UPLOAD, component: DocumentsUploadComponent },
       { path: ORDER_ROUTES.EMA_FACT_SHEET, component: EmaFactSheetComponent },
-      { path: ORDER_ROUTES.ORDER_REVIEW, component: OrderReviewComponent },
-     
-     
+      { path: ORDER_ROUTES.ORDER_REVIEW, component: OrderReviewComponent },     
     ]
   },
   { path: ORDER_ROUTES.ORDER_CONFIRMATION, component: OrderConfirmationComponent },
-  { path: PAYMENT_ROUTES.CARD_DETAIL, component : TokenizationPageComponent},
-
-  { path : 'admin-login', loadChildren : 'app/sign-up/admin/admin.module#AdminModule'},
-
-
-  { path: '**', component: PageNotFoundComponent },
+  // { path: '**', component: PageNotFoundComponent },
+  { path: '**', component: NewPageNotFoundComponent },
 ];
 
 @NgModule({
